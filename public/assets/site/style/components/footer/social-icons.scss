@@ -1,0 +1,36 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$footer: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $footer;
+
+.socials {
+    &__wrapper {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: v(10px, icon_gap);
+    }
+
+    &__link {
+        color: v($white, icon_color);
+
+        svg {
+            width: v(30px, icon_size);
+            height: v(30px, icon_size);
+        }
+
+        &:hover {
+            color: v($color1, icon_color_hover)
+        }
+    }
+
+    .peppered-icon {
+        display: block;
+    }
+}

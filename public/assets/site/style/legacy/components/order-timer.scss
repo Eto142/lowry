@@ -1,0 +1,47 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$order_timer: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order_timer;
+
+
+#orderTimer {
+
+    @at-root body:not(.order) & {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1050;
+        text-align: center;
+    }
+
+    &.timeup {
+        animation: FlashInOut 1s infinite;
+    }
+
+    a {
+        display: block;
+        padding: v(10px 15px, padding, $orderTimerPadding);
+        border-top: v(none, border_top, $orderTimerBorder);
+        font-family: v($fontNormal, font_family, $orderTimerFontfamily);
+        font-weight: v(normal, font_weight, $orderTimerWeight);
+        font-size: v(16px, font_size, $orderTimerFontsize);
+        line-height: v(1, line_height, $orderTimerLineHeight);
+        text-align: $orderTimerAlignment;
+        text-decoration: none;
+        text-transform: v(none, text_transform, $orderTimerTexttransform);
+        background: v($colorPrime, background, $colorBgOrderTimer);
+        color: v($white, color, $colorOrderTimer);
+        box-shadow: v($defaultBoxShadow, box_shadow, $orderTimerShadow);
+
+        &:hover {
+            text-decoration: none;
+            color: v($white, color_hover, $colorOrderTimerHover);
+        }
+    }
+}

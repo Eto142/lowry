@@ -1,0 +1,76 @@
+@use 'sass:math';
+@use 'sass:map';
+
+@import '../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$event_list: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $event_list;
+
+.genres {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: v(0, genres_margin);
+    gap: v(10px, brochure_genre_spacing, $brochureGenreSpacing);
+
+    &__item {
+        list-style: none;
+    }
+
+    &__link {
+        display: block;
+        padding: v(0, genre_padding, $cardGenrePadding);
+        border-radius: v(0, genre_border_radius, $cardGenreRadius);
+        font-family: v($fontNormal, genre_font_family, $cardGenreFontFamily);
+        font-weight: v(normal, genre_font_weight, $cardGenreFontWeight);
+        white-space: nowrap;
+        line-height: v(1.2em, genre_line_height);
+        text-decoration: v(none, genre_text_decoration);
+        text-transform: v(uppercase, genre_text_transform, $cardGenreTexttransform);
+        background: v(transparent, genre_background, $cardGenreBackground);
+        color: v($grey2, genre_color, $colorListMeta);
+        @include fontsize(v($fs_tiny, genre_font_size, $cardGenresFontsize));
+
+        &:hover {
+            text-decoration: v(none, genre_text_decoration_hover);
+            background: v(transparent, genre_background_hover, $cardGenreBackgroundHover);
+            color: v($black, genre_color_hover, $colorListMetaHover);
+        }
+    }
+
+    &--brochure {
+        flex: 1;
+        margin: v(0, brochure_genre_margin);
+        padding: v(0, brochure_genres_padding, $brochureGenrePadding);
+        font-family: v(inherit, brochure_genre_font_family, $brochureGenreFontfamily);
+        font-weight: v(normal, brochure_genre_font_weight, $brochureGenreFontweight);
+        line-height: v(1.2em, brochure_genre_line_height, $brochureGenreHeight);
+        text-transform: v(uppercase, brochure_genre_text_transform, $brochureGenreTexttransform);
+        @include fontsize(v($fs_tiny, brochure_genre_font_size, $brochureGenreFontsize));
+
+        .genres__link {
+            padding: v(0, brochure_genre_padding, $brochureGenrePadding);
+            border-radius: v(0, brochure_genre_border_radius, $brochureGenreRadius);
+            text-decoration: v(none, brochure_genre_text_decoration);
+            background: v(transparent, brochure_genre_background, $brochureGenreBackground);
+            color: v($defaultLink, brochure_genre_color, $brochureGenreColor);
+
+            &:hover {
+                text-decoration: v(none, brochure_genre_text_decoration_hover);
+                background: v(transparent, brochure_genre_background_hover, $brochureGenreBackgroundHover);
+                color: v($defaultLinkHover, brochure_genre_color_hover, $brochureGenreColorHover);
+            }
+        }
+    }
+
+    &--top {
+        margin: v(20px 0 0 30px, genres_margin);
+        -webkit-mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+        mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+    }
+}

@@ -1,0 +1,39 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$location: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $location;
+
+
+.listItems,
+.subshow {
+    .location {
+        margin: v(7px 0 0 0, location_margin, $listItemLocationMargin);
+        font-family: v($fontNormalBold, location_font_family, $listItemLocationFontfamily);
+        font-weight: v(bold, location_font_weight, $listItemLocationWeight);
+        line-height: v(1.4, location_line_height, $listItemLocationLineheight);
+        text-transform: v(none, location_text_transform, $listItemLocationTextTransform);
+        color: v(inherit, location_color, $colorlistItemLocation);
+
+        @include fontsize(v($fs_small, location_font_size, $listItemLocationFontsize));
+    }
+
+    .venue {
+        margin: v(7px 0 0 0, venue_margin, $listItemVenueMargin);
+        font-family: v($fontNormal, venue_font_family, $listItemVenueFontfamily);
+        font-weight: v(normal, venue_font_weight, $listItemVenueWeight);
+        line-height: v(1.4, venue_line_height, $listItemVenueLineheight);
+        text-transform: v(none, venue_text_transform, $listItemVenueTextTransform);
+        color: v(inherit, venue_color, $colorlistItemVenue);
+
+        @include fontsize(v($fs_small, venue_font_size, $listItemVenueFontsize));
+    }
+
+    .location + .venue {
+        margin-top: 0;
+    }
+}

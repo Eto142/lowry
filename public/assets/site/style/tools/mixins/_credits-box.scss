@@ -1,0 +1,16 @@
+@mixin credits_box() {
+    .credits {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        margin: $mediaCreditsMargin;
+        padding: $mediaCreditsPadding;
+        font-family: $mediaCreditsFontfamily;
+        font-weight: $mediaCreditsWeight;
+        line-height: $mediaCreditsLineHeight;
+        text-transform: $mediaCreditsTexttransform;
+        background: $mediaCreditsBackground;
+        color: $mediaCreditsColor;
+        @include fontsize($mediaCreditsFontsize);
+    }
+}

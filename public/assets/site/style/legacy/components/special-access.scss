@@ -1,0 +1,243 @@
+@use 'sass:math';
+
+#SA {
+    position: fixed;
+    top: 2px;
+    right: 2px;
+    z-index: 999999;
+    padding: 20px;
+    border-radius: 3px;
+    font-family: sans-serif;
+    font-size: 11px;
+    line-height: 1.4545;
+    background: #000;
+    color: #B4B4B4;
+    box-shadow: 0 0 3px 0 rgba(0,0,0,0.2);
+    overflow: hidden;
+
+    &.env-dev {
+        background: #541719;
+        color: #E4E4E4;
+    }
+    &.closed {
+        padding: 0;
+    }
+    &.closed .inner {
+        display: none;
+    }
+    &:not(.closed) {
+        width: 242px;
+    }
+    &:not(.closed) #SA-tiny-mode {
+        display: none;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        all: unset;
+        display: block;
+        font-family: inherit;
+        + p {
+            margin-top: 1em;
+        }
+    }
+
+    a,
+    a:link,
+    a:visited {
+        all: unset;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: normal;
+        text-decoration: underline;
+        color: rgb(253,68,74);
+        &.icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            line-height: 1;
+            text-align: center;
+            text-decoration: none;
+            color: rgb(253,68,74);
+        }
+    }
+    a:hover {
+        color: #BD3338;
+        &.icon {
+            text-decoration: none;
+            background: rgba(255,255,255,.3);
+        }
+    }
+
+    p a.icon {
+        display: inline-flex;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 0;
+        right: 0;
+
+        &.sa-close {
+            right: 30px;
+        }
+    }
+
+    .button.icon {
+        margin: 0;
+        padding: 4px;
+    }
+
+    .sa_logo {
+        float: left;
+        position: relative;
+        top: 2px;
+    }
+
+    section {
+        margin: 15px 0;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        &:last-child p:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    form {
+        margin: 5px 0;
+    }
+    input,
+    select {
+        box-sizing: border-box;
+        height: 20px;
+        margin: 0 0 .2ex 0;
+        padding: 0 1ex;
+        border: 1px solid #999;
+        font-weight: normal;
+        line-height: 20px;
+        background: #222;
+        color: #E4E4E4;
+    }
+    &.env-dev input,
+    &.env-dev select {
+        background: #421213;
+    }
+    select {
+        width: 100%;
+    }
+    h3 {
+        margin: 0 0 .2em 0;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1;
+        color: #999;
+        + p {
+            margin-top: .6em;
+        }
+    }
+    p {
+        margin: 1em 0;
+        padding: 0;
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    .compact {
+        font-size: 9px;
+        line-height: 1.2;
+        p {
+            margin: 5px 0;
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+    }
+
+    a.button,
+    a.button:link,
+    a.button:visited,
+    button {
+        all: unset;
+        display: inline-flex;
+        cursor: pointer;
+        -webkit-appearance: none;
+        padding: .5ex 1ex;
+        border: none;
+        text-decoration: none;
+        background: rgb(253,68,74);
+        color: #FFF;
+        &:hover {
+            text-decoration: none;
+            background: #BD3338;
+        }
+        svg {
+            float: left;
+            margin-top: 2px;
+            margin-right: 4px;
+        }
+    }
+}
+
+// highlight target parts
+[id^='sa-']:target {
+    display: block;
+    position: relative;
+    z-index: 9999;
+    outline: 10px solid rgb(253,68,74);
+}
+
+#image-crop-overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999999;
+    overflow: auto;
+    font-family: sans-serif;
+    text-align: center;
+    line-height: 1;
+    background: rgba(0,0,0,.75);
+    color: #FFF;
+
+    > div {
+        padding: 120px 60px;
+    }
+    h2 {
+        font-family: inherit;
+        color: inherit;
+    }
+    a,
+    a:link,
+    a:hover,
+    a:active {
+        position: relative;
+        font-family: inherit;
+        font-size: 9px;
+        color: inherit;
+        span {
+            position: absolute;
+            right: 6px;
+            bottom: 0;
+            padding: 2px;
+            background: rgba(0,0,0,.2);
+        }
+    }
+    img {
+        max-width: 200px;
+        max-height: 200px;
+        margin: 6px;
+        border: 2px solid transparent;
+        &:hover {
+            border-color: #FFF;
+        }
+    }
+}

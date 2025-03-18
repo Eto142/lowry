@@ -1,0 +1,658 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// for animations:
+// one or more hero animations, see __defaultBaseValues.scss
+// e.g.: $heroAnimationSaturate, $heroAnimationTwist
+// or a predefined key-frames animation with custom timing
+// e.g.: 2s ease-out hero-twist
+
+// all values should be in a map called:
+$media_gallery: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $media_gallery;
+
+.mediaWrapper {
+
+    @include credits_box();
+
+    .image { //single image item
+        height: v(550px, image_height, $mediaItemHeight);
+        position: relative;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+
+        .imageLayer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: transparent no-repeat center / cover;
+        }
+    }
+
+    img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .wrapper {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .grid-root {
+        display: flex;
+        flex-wrap: wrap;
+        > * {
+            width: calc(1 / 3 * 100% - 16px);
+            margin: 0 8px 15px 8px;
+
+            @media (max-width: $bp_tablet - 1) {
+                width: calc(1 / 2 * 100% - 16px);
+            }
+            @media (max-width: $bp_mobile - 1) {
+                width: calc(1 / 1 * 100% - 16px);
+            }
+        }
+        &.wide {
+            > * {
+                width: calc(1 / 2 * 100% - 16px);
+
+                @media (max-width: $bp_tablet - 1) {
+                    width: calc(1 / 2 * 100% - 16px);
+                }
+                @media (max-width: $bp_mobile - 1) {
+                    width: calc(1 / 1 * 100% - 16px);
+                }
+            }
+        }
+        &.four_tiles {
+            > * {
+                width: calc(1 / 4 * 100% - 16px);
+
+                @media (max-width: $bp_tablet - 1) {
+                    width: calc(50% - 16px);
+                }
+                @media (max-width: $bp_mobile - 1) {
+                    width: calc(100% - 16px);
+                }
+            }
+        }
+        &.compact {
+            > * {
+                width: calc(1 / 5 * 100% - 16px);
+
+                @media (max-width: $bp_tablet - 1) {
+                    width: calc(1 / 3 * 100% - 16px);
+                }
+                @media (max-width: $bp_mobile - 1) {
+                    width: calc(1 / 2 * 100% - 16px);
+                }
+            }
+        }
+
+        @if ($mediaGridCentered == true) {
+            justify-content: center;
+            margin-right: -8px;
+            margin-left: -8px;
+        }
+
+        @if ($mediaGridCentered != true) {
+            @supports (display: grid) {
+                display: grid;
+                grid-column-gap: v(15px, grid_column_gap, $mediaGridColumnSpacing);
+                grid-row-gap: v(15px, grid_row_gap, $mediaGridRowSpacing);
+                grid-template-columns: repeat(3, 1fr);
+
+                &,
+                &.wide,
+                &.four_tiles,
+                &.compact {
+                    > * {
+                        width: auto;
+                        margin: 0;
+                    }
+                }
+
+                @media (max-width: $bp_tablet - 1) {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                @media (max-width: $bp_mobile - 1) {
+                    grid-template-columns: 1fr;
+                }
+
+                &.wide {
+                    grid-template-columns: repeat(2, 1fr);
+
+                    @media (max-width: $bp_mobile - 1) {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                &.four_tiles {
+                    grid-template-columns: repeat(4, 1fr);
+                    > * {
+                        min-width: 0;
+                    }
+
+                    @media (max-width: $bp_tablet - 1) {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                    @media (max-width: $bp_mobile - 1) {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                &.compact {
+                    grid-template-columns: repeat(5, 1fr);
+                    > * {
+                        min-width: 0;
+                    }
+
+                    @media (max-width: $bp_tablet - 1) {
+                        grid-template-columns: repeat(3, 1fr);
+                    }
+                    @media (max-width: $bp_mobile - 1) {
+                        grid-template-columns: repeat(2, 1fr);
+                    }
+                }
+            }
+        }
+    }
+
+    .imageCard {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        border-radius: $defaultCardRadius;
+        text-align: left;
+        text-decoration: none;
+        background: v($white, card_background, $colorBgImageCard);
+        color: v($colorDefaultText, card_color, $colorImageCardDesc);
+        box-shadow: $defaultBoxShadowDark;
+        will-change: transform;
+        overflow: hidden;
+
+        > .wrapper {
+            overflow: hidden;
+            img {
+                padding: v(0, image_padding);
+                border-radius: v(0, image_border_radius);
+                will-change: transform;
+            }
+        }
+
+        &:hover {
+            text-decoration: none;
+            color: v($colorDefaultText, card_color, $colorImageCardDesc);
+            .content .title {
+                text-decoration: v(none, card_title_text_decoration, $mediaTitleDecoration);
+                color: v($colorDefaultText, card_title_color, $colorImageCardTitle);
+            }
+        }
+
+        @each $animation in $mediaAnimations {
+            @include card_animation($animation, '.thumb img', '.desc');
+        }
+
+        @at-root .mediaWrapper[data-animations*='shadow'] .imageCard {
+            @include card_animation('shadow');
+        }
+        @at-root .mediaWrapper[data-animations*='glow'] .imageCard {
+            @include card_animation('glow');
+        }
+        @at-root .mediaWrapper[data-animations*='zoom'] .imageCard {
+            @include card_animation('zoom', '> .wrapper img');
+        }
+        @at-root .mediaWrapper[data-animations*='twist'] .imageCard {
+            @include card_animation('twist', '> .wrapper img');
+        }
+        @at-root .mediaWrapper[data-animations*='saturate'] .imageCard {
+            @include card_animation('saturate', '> .wrapper img');
+        }
+        @at-root .mediaWrapper[data-animations*='desaturate'] .imageCard {
+            @include card_animation('desaturate', '> .wrapper img');
+        }
+        @at-root .mediaWrapper[data-animations*='slide'] .imageCard {
+            @include card_animation('slide');
+        }
+        @at-root .mediaWrapper[data-animations*='shift'] .imageCard {
+            @include card_animation('shift', '', '.content');
+        }
+        @at-root .mediaWrapper[data-animations*='skew'] .imageCard {
+            @include card_animation('skew');
+        }
+
+        .content {
+            padding: v(20px 25px, card_padding, $mediaCardPadding);
+            border-radius: 0 0 $defaultCardRadius $defaultCardRadius;
+
+            @if (v('flat', card_variant, $mediaCardVariant) != 'flat') { // flat (text below image), or nonflat (text on image)
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                background: v($gradientOverlay, card_overlay, $mediaCardGradient);
+            }
+
+            .title {
+                font-family: v($fontNormal, card_title_font_family, $mediaTitleFontfamily);
+                font-weight: v(bold, card_title_font_weight, $mediaTitleWeight);
+                line-height: v(normal, card_title_line_height, $mediaTitleLineHeight);
+                text-transform: v(none, card_title_text_transform, $mediaTitleTexttransform);
+                color: v($colorDefaultText, card_title_color, $colorImageCardTitle);
+
+                @include fontsize(v($fs_medium_title, card_title_font_size, $mediaTitleFontsize));
+
+                + .desc {
+                    margin-top: v(5px, card_desc_spacing, $mediaDescMargin);
+                }
+            }
+            .desc {
+                font-family: v($fontNormal, card_desc_font_family, $mediaDescFontfamily);
+                font-weight: v(normal, card_desc_font_weight, $mediaDescWeight);
+                line-height: v(1.5, card_desc_line_height, $mediaDescLineHeight);
+                text-transform: v(none, card_desc_text_transform, $mediaDescTexttransform);
+
+                @include fontsize(v($fs_normal, card_desc_font_size, $mediaDescFontsize));
+            }
+        }
+    }
+
+    &.single {
+        .imageCard {
+            max-width: 350px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        &.variant-fullW {
+            padding: v(0 15px, full_width_padding);
+            .image {
+                height: auto;
+            }
+        }
+
+        .caption {
+            padding: v(40px, caption_padding, $mediaCaptionPadding);
+            font-family: v($fontNormal, caption_font_family, $mediaCaptionFontfamily);
+            font-weight: v(bold, caption_font_weight, $mediaCaptionWeight);
+            line-height: v(normal, caption_line_height, $mediaCaptionLineHeight);
+            text-transform: v(none, caption_text_transform, $mediaCaptionTexttransform);
+            text-align: v(left, caption_text_align);
+            background: v($color12, caption_background, $colorBgCaptionSingleImage);
+            color: v($white, caption_color, $colorCaptionSingleImageText);
+
+            @include fontsize(v($fs_medium_title, caption_font_size, $mediaCaptionFontsize));
+
+            .title {
+                font-family: v($fontNormal, caption_title_font_family, $mediaCaptionTitleFontfamily);
+                font-weight: v(bold, caption_title_font_weight, $mediaCaptionTitleWeight);
+                line-height: v(normal, caption_title_line_height, $mediaCaptionTitleLineHeight);
+                text-transform: v(none, caption_title_text_transform, $mediaCaptionTitleTexttransform);
+                color: v($white, caption_title_color, $colorCaptionTitleSingleImageText);
+
+                @include fontsize(v($fs_medium_title, caption_title_font_size, $mediaCaptionTitleFontsize));
+
+                + .desc {
+                    margin-top: v(10px, caption_desc_margin_top, $mediaCaptionDescMargin);
+                }
+            }
+            .desc {
+                font-family: v($fontNormal, caption_desc_font_family, $mediaCaptionDescFontfamily);
+                font-weight: v(normal, caption_desc_font_weight, $mediaCaptionDescWeight);
+                line-height: v(normal, caption_desc_line_height, $mediaCaptionDescLineHeight);
+                text-transform: v(none, caption_desc_text_transform, $mediaCaptionDescTexttransform);
+
+                @include fontsize(v($fs_normal, caption_desc_font_size, $mediaCaptionDescFontsize));
+            }
+        }
+
+        .sidebyside {
+            min-height: v(550px, sidebyside_min_height, $mediaItemHeight);
+            background: v($color12, sidebyside_background, $colorBgCaptionSingleImageSideBySide);
+
+            @media (max-width: $bp_mobile - 1) {
+                height: auto;
+                min-height: 0;
+            }
+
+            .caption {
+                width: auto;
+                padding: v(40px, sidebyside_padding, $mediaCaptionPadding);
+                text-align: v(left, sidebyside_text_align);
+                background: v($color12, sidebyside_background, $colorBgCaptionSingleImageSideBySide);
+
+                .title {
+                    font-family: v($fontNormal, sidebyside_title_font_family, $mediaCaptionTitleFontfamilySideBySide);
+                    font-weight: v(bold, sidebyside_title_font_weight, $mediaCaptionTitleWeightSideBySide);
+                    line-height: v(normal, sidebyside_title_line_height, $mediaCaptionTitleLineHeightSideBySide);
+                    text-transform: v(none, sidebyside_title_text_transform, $mediaCaptionTitleTexttransformSideBySide);
+                    color: v($white, sidebyside_title_color, $colorCaptionTitleSingleImageTextSideBySide);
+
+                    @include fontsize(v($fs_medium_title, sidebyside_title_font_size, $mediaCaptionTitleFontsizeSideBySide));
+
+                    + .desc {
+                        margin-top: v(10px, sidebyside_desc_spacing, $mediaCaptionDescMarginSideBySide);
+                    }
+                }
+
+                .desc {
+                    font-family: v($fontNormal, sidebyside_desc_font_family, $mediaCaptionFontfamilySideBySide);
+                    font-weight: v(normal, sidebyside_desc_font_weight, $mediaCaptionWeightSideBySide);
+                    line-height: v(normal, sidebyside_desc_line_height, $mediaCaptionLineHeightSideBySide);
+                    text-transform: v(none, sidebyside_desc_text_transform, $mediaCaptionTexttransformSideBySide);
+                    color: v($white, sidebyside_desc_color, $colorCaptionSingleImageTextSidBySide);
+
+                    @include fontsize(v($baseFontsize, sidebyside_desc_font_size, $mediaCaptionFontsizeSideBySide));
+                }
+            }
+        }
+
+        &.variant-boxed_content,
+        &.variant-boxed_content_flipped{
+            &,
+            & > a:link {
+                @media (min-width: $bp_mobile) {
+                    display: flex;
+                }
+                > * {
+                    flex: 1;
+                }
+            }
+        }
+        &.variant-boxed_content {
+            &,
+            & > a:link {
+                flex-direction: row-reverse;
+            }
+        }
+
+        &.variant-boxed_caption {
+            .container {
+                padding: v(0 15px, caption_container_padding);
+            }
+            .captionWrapper {
+                display: block;
+                &,
+                > * {
+                    position: relative;
+                }
+            }
+
+            .caption {
+                width: 460px;
+                max-width: 90%;
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+
+                @media (max-width: $bp_mobile - 1) {
+                    width: auto;
+                    max-width: none;
+                    position: relative;
+                    top: 0;
+                    transform: none;
+                }
+            }
+            .imgBox { // behind floating caption
+                overflow: hidden;
+                @media (min-width: $bp_mobile) {
+                    margin-left: 30%;
+                }
+            }
+        }
+
+        &.variant-boxed_caption_below {
+            .container {
+                padding: v(0 15px, small_caption_container_padding);
+            }
+            .captionWrapper {
+                display: block;
+                &,
+                > * {
+                    position: relative;
+                }
+            }
+
+            .small-caption {
+                padding: v(15px 0 0 0, small_caption_padding);
+                text-align: v(right, small_caption_text_align);
+                font-family: v($fontNormal, small_caption_title_font_family);
+                font-weight: v(normal, small_caption_title_font_weight);
+                line-height: v(normal, small_caption_title_line_height);
+                text-transform: v(none, small_caption_title_text_transform);
+                color: v($grey2, small_caption_color);
+
+                @include fontsize(v($fs_small, small_caption_title_font_size));
+            }
+        }
+
+        &.variant-boxed_caption_left,
+        &.variant-boxed_caption_right {
+            .inner {
+                border-radius: $defaultCardRadius;
+                background: v($color12, caption_background, $colorBgCaptionSingleImage);
+                box-shadow: $defaultBoxShadowDark;
+                overflow: hidden;
+
+                &.grid-root {
+                    display: grid;
+                    grid-column-gap: v(15px, grid_column_gap, $mediaGridColumnSpacing);
+                    grid-row-gap: v(15px, grid_row_gap, $mediaGridRowSpacing);
+                    grid-template-columns: 1fr;
+
+                    & > * {
+                        width: 100%;
+                        margin: unset;
+                    }
+                }
+
+                .caption {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: v(flex-end, caption_justify_content, $mediaCaptionAlignment);
+                    background: transparent;
+                }
+
+                .image {
+                    height: 100%;
+
+                    img {
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+
+        &.variant-boxed_caption_left .inner.grid-root {
+            @media (min-width: $bp_mobile) {
+                grid-template-columns: 1fr 2fr;
+            }
+        }
+
+        &.variant-boxed_caption_right .inner.grid-root {
+            @media (min-width: $bp_mobile) {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+
+        &.variant-boxed_caption_right .inner {
+            .image {
+                grid-row-start: 1;
+                grid-column-start: 1;
+            }
+        }
+
+        img,
+        .image .imageLayer {
+            will-change: transform;
+            animation-fill-mode: forwards;
+            animation: v(none, animation, $mediaItemAnimation);
+        }
+
+        a:not(.grid-root):link {
+            display: block;
+            @each $animation in $mediaAnimations {
+                @include card_animation($animation, 'img', '.caption > *');
+                @include card_animation($animation, '.imageLayer', '.caption > *');
+            }
+        }
+
+        @at-root .mediaWrapper[data-animations*='shadow'] a:link {
+            @include card_animation('shadow');
+        }
+        @at-root .mediaWrapper[data-animations*='glow'] a:link {
+            @include card_animation('glow');
+        }
+        @at-root .mediaWrapper[data-animations*='zoom'] a:link {
+            @include card_animation('zoom', 'img');
+            @include card_animation('zoom', '.imageLayer');
+        }
+        @at-root .mediaWrapper[data-animations*='twist'] a:link {
+            @include card_animation('twist', 'img');
+            @include card_animation('twist', '.imageLayer');
+        }
+        @at-root .mediaWrapper[data-animations*='saturate'] a:link {
+            @include card_animation('saturate', 'img');
+            @include card_animation('saturate', '.imageLayer');
+        }
+        @at-root .mediaWrapper[data-animations*='desaturate'] a:link {
+            @include card_animation('desaturate', 'img');
+            @include card_animation('desaturate', '.imageLayer');
+        }
+        @at-root .mediaWrapper[data-animations*='slide'] a:link {
+            @include card_animation('slide');
+        }
+        @at-root .mediaWrapper[data-animations*='shift'] a:link {
+            @include card_animation('shift', '', '.caption > *');
+        }
+        @at-root .mediaWrapper[data-animations*='skew'] a:link {
+            @include card_animation('skew');
+        }
+    }
+
+    &.multi {
+        position: relative;
+
+        .container {
+            position: relative;
+        }
+
+        &.variant-fullW_slide .slider-nav {
+            // overrule the nav buttons because they'll always overlay on an image
+            right: 0;
+            left: 0;
+        }
+
+        .mediaSlider {
+            &:not(.slick-initialized) {
+                visibility: hidden;
+            }
+            .slide {
+                position: relative;
+                overflow: hidden;
+                margin: 0 10px;
+                img {
+                    width: auto;
+                    height: $mediaSlideHeight;
+                    max-height: calc(66vw - 10px); // fit a 3:2 image minus spacing
+                }
+                .credits {
+                    margin-right: 10px;
+                }
+            }
+
+            @at-root .mediaWrapper[data-animations*='shadow'] .slide {
+                @include card_animation('shadow');
+            }
+            @at-root .mediaWrapper[data-animations*='glow'] .slide {
+                @include card_animation('glow');
+            }
+            @at-root .mediaWrapper[data-animations*='zoom'] .slide {
+                @include card_animation('zoom', 'img');
+            }
+            @at-root .mediaWrapper[data-animations*='twist'] .slide {
+                @include card_animation('twist', 'img');
+            }
+            @at-root .mediaWrapper[data-animations*='saturate'] .slide {
+                @include card_animation('saturate', 'img');
+            }
+            @at-root .mediaWrapper[data-animations*='desaturate'] .slide {
+                @include card_animation('desaturate', 'img');
+            }
+            @at-root .mediaWrapper[data-animations*='slide'] .slide {
+                @include card_animation('slide');
+            }
+            @at-root .mediaWrapper[data-animations*='skew'] .slide {
+                @include card_animation('skew');
+            }
+        }
+
+        .compact {
+            .imageCard {
+                .content {
+                    padding: v(10px, compact_card_padding, $mediaCompactPadding);
+
+                    .title {
+                        line-height: v(1, compact_card_title_line_height, $mediaCompactTitleLineheight);
+                        @include fontsize(v($fs_normal, compact_card_title_font_size, $mediaCompactTitleFontsize));
+                        + .desc {
+                            margin-top: v(10px, compact_card_desc_spacing, $mediaCompactDescMargin);
+                        }
+                    }
+                    .desc {
+                        line-height: v(1.2, compact_card_descline_height, $mediaCompactDescLineheight);
+                        @include fontsize(v($fs_small, compact_card_desc_font_size, $mediaCompactDescFontsize));
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ekko-lightbox {
+    .modal-content {
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        .modal-body {
+            padding: 0;
+        }
+        .ekko-lightbox-nav-overlay a {
+            opacity: 1;
+        }
+        button {
+            margin: 0;
+            padding: 30px;
+            border: 0;
+            font-size: 50px;
+            background: none;
+            color: v($color12, lightbox_arrow_color, $colorLightboxArrow);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: color .4s ease;
+            text-align: left;
+
+            &:hover {
+                color: v($white, lightbox_arrow_color_hover, $colorLightboxArrowHover);
+                transition: color .2s ease;
+            }
+
+            &.nextBtn {
+                text-align: right;
+            }
+        }
+        .fade {
+            opacity: 0;
+            &.in {
+                opacity: 1;
+            }
+        }
+    }
+}

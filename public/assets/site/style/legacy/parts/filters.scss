@@ -1,0 +1,947 @@
+@use 'sass:math';
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$filters: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $filters;
+
+.filterBox {
+    position: relative;
+    z-index: 2;
+    padding: v(0 15px, padding);
+    background: v($colorComplementary, background);
+
+    @media screen and (max-width: $bp_mobile) {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    form {
+        margin-bottom: 0;
+    }
+
+    .container {
+        padding: v(0 15px, inner_padding);
+    }
+
+    .grid-root {
+        display: flex;
+        flex-wrap: wrap;
+        > * {
+            flex: 1;
+            margin: 0 5px 15px 5px;
+        }
+
+        @supports (display: grid) {
+            display: grid;
+            grid-column-gap: v(10px, grid_column_gap, $filterColumnSpacing);
+            grid-row-gap: v(15px, grid_row_gap, $filterRowSpacing);
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+
+            #filterToggle {
+                grid-column-end: 5;
+            }
+
+            @media (min-width: 600px) and (max-width: $bp_tablet - 1) {
+                grid-template-columns: 1fr 1fr 1fr;
+                #filterToggle {
+                    grid-column-end: 4;
+                }
+            }
+            @media (max-width: 599px) and (min-width: $bp_tiny) {
+                grid-template-columns: 1fr 1fr;
+                #filterToggle {
+                    grid-column-end: 3;
+                }
+            }
+            @media (max-width: $bp_tiny - 1) {
+                grid-template-columns: 1fr;
+                #filterToggle {
+                    grid-column-end: 2;
+                }
+            }
+
+            > * {
+                width: auto;
+                margin: 0;
+            }
+        }
+    }
+
+    &.context-courses {
+        background: v($colorComplementary, background-courses);
+
+        .grid-root {
+            grid-column-gap: 45px;
+            grid-template-columns: 1fr 1fr;
+
+            @media (max-width: $bp_mobile - 1) {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .days-of-week > div {
+            display: grid;
+            grid-column-gap: 5px;
+            grid-row-gap: 5px;
+            grid-template-columns: repeat(7, 1fr);
+            margin-top: 15px;
+
+            .btn {
+                margin: 0;
+                &[value='32'] {
+                    margin-left: 10px
+                }
+            }
+
+            @media (min-width: $bp_mobile) and (max-width: $bp_tablet), (max-width: $bp_tiny - 1) {
+                grid-template-columns: repeat(5, 1fr);
+                .btn[value='32'] {
+                    margin-left: 0;
+                }
+            }
+        }
+
+        .input-ages {
+            margin: 0;
+            padding: v(10px 15px 20px 15px, ages_padding, $filterAgeGroupPadding);
+            border: v(none, ages_border, $filterAgeGroupBorder);
+            border-radius: v(3px, ages_border_radius, $filterAgeGroupRadius);
+            background: v(rgba(0,0,0,.1), ages_background, $filterAgeGroupBackground);
+            text-align: left;
+            label {
+                margin: v(0 0 30px 0, ages_label_margin, $filterAgeGroupLabelMargin);
+                color: v($colorDefaultText, ages_color, $filterAgeGroupColor);
+            }
+            input::placeholder {
+                color: v($colorDefaultText, ages_color, $filterAgeGroupColor);
+            }
+        }
+
+        .age-range {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 0;
+
+            #range-input-placeholder {
+                flex: 1;
+                margin: 0 1em;
+
+                border: v(none, age_border, $filterAgeBorder);
+                border-radius: v(3px, age_border_radius, $filterAgeRadius);
+                background: v($color3, age_background, $filterAgeBackground);
+                box-shadow: none;
+
+                .noUi-connect {
+                    border: v(none, age_border_selected, $filterAgeBorderSelected);
+                    background: v($grey3, age_background_selected, $filterAgeBackgroundSelected);
+                }
+                &.noUi-horizontal {
+                    height: 10px;
+
+                    .noUi-handle {
+                        width: 34px;
+                        height: 34px;
+                        top: -12px;
+                        border: v(none, age_button_border, $filterAgeButtonBorder);
+                        border-radius: 100%;
+                        background: v($white, age_button_background, $filterAgeButtonBackground);
+                        box-shadow: v($defaultBoxShadow, age_button_box_shadow, $filterAgeButtonShadow);
+                        cursor: grab;
+                        &::after,
+                        &::before {
+                            display: none;
+                        }
+                        &:active {
+                            cursor: grabbing;
+                        }
+                    }
+                }
+            }
+
+            input[type='number'] {
+                -webkit-appearance: none;
+                max-width: 3em; // because for some reason the flex layout doesn't work in firefox
+                margin: 0;
+                padding: 0;
+                border: none;
+                background: none;
+                &:last-of-type {
+                    text-align: right;
+                }
+            }
+        }
+    }
+
+
+    #filterHeader {
+        position: relative;
+        z-index: 1;
+        padding: v(30px 15px, top_padding);
+        background: v($color1, top_background, $colorBgFilterHeader);
+        color: v($white, top_color, $colorFilterHeaderText);
+
+        #filterToggle {
+            display: inline-block;
+            white-space: nowrap;
+            justify-self: end;
+            align-self: center;
+            border: none;
+            font-family: v($fontNormal, toggle_font_family, $filterToggleBtnFontfamily);
+            font-weight: v(normal, toggle_font_weight, $filterToggleBtnWeight);
+            line-height: 1;
+            text-transform: v(none, toggle_text_transform, $filterToggleBtnTextTransform);
+            background: transparent;
+            color: v($white, toggle_color, $colorFilterToggleBtnText);
+            cursor: pointer;
+
+            @include fontsize(v($fs_small_title, toggle_font_size, $filterToggleBtnFontsize));
+
+            &:hover {
+                color: v($black, toggle_color_hover, $colorFilterHeaderTextHover);
+            }
+            .fa { margin-right: 1ex; }
+        }
+
+        .input-daterange {
+            position: relative;
+
+            input {
+                width: 100%;
+                height: auto;
+                min-height: v(2em, input_height);
+                padding: v(8px 12px, input_padding, $filterSelectPadding);
+                padding-left: 30px;
+                border-top: v(none, dates_border_top, $showFilterDaterangeBorderTop);
+                border-right: v(none, dates_border_right, $showFilterDaterangeBorderRight);
+                border-bottom: v(none, dates_border_bottom, $showFilterDaterangeBorderBottom);
+                border-left: v(none, dates_border_left, $showFilterDaterangeBorderLeft);
+                border-radius: v(15px, input_border_radius, $filterSelectRadius);
+                font-family: v($fontNormal, dates_font_family, $filterDaterangeInputFontfamily);
+                font-weight: v(normal, dates_font_weight, $filterDaterangeInputWeight);
+                line-height: 1.3;
+                text-transform: v(none, dates_text_transform, $filterDaterangeInputTextTransform);
+                background: v($white, dates_background, $colorFilterDaterangeBg);
+                color: v($grey1, dates_color, $colorFilterDaterangeInputText);
+                text-align: left;
+
+                @at-root #filtersForm[data-datepicker-mode='inline'] #filterHeader .input-daterange input {
+                    width: 100%;
+                }
+                @media (max-width: $bp_tablet - 1) {
+                    width: 100%;
+                }
+
+                @include fontsize(v($fs_normal, input_font_size, $filterDaterangeInputFontsize));
+            }
+
+            @media (max-width: 600px) {
+                .dateRange {
+                    display: none;
+                }
+                .dateRangeSingle {
+                    display: block;
+                }
+            }
+            @media (min-width: 601px) {
+                .dateRange {
+                    display: block;
+                }
+                .dateRangeSingle {
+                    display: none;
+                }
+            }
+
+            i {
+                position: absolute;
+                top: 50%;
+                left: .5em;
+                margin-top: -.5em;
+                color: v($grey1, dates_color, $colorFilterDaterangeInputText);
+                pointer-events: none;
+            }
+        }
+    }
+
+    #filterWrapper {
+        position: relative;
+        z-index: 0;
+        font-family: v(inherit, bottom_font_family, $showFilterWidgetFontfamily);
+        background: v($color1, bottom_background, $colorBgFilterWrapper);
+        color: v($white, bottom_color, $colorFilterWrapperText);
+        will-change: height;
+        transition: all 0.3s ease-in-out;
+
+        > * {
+            transition: 0.2s opacity 0.1s ease-in-out;
+        }
+
+        &[aria-expanded='false'] {
+            height: 0 !important;
+            opacity: 0;
+            overflow: hidden;
+            > * {
+                opacity: 0;
+            }
+        }
+
+        #filterWidgets {
+            width: 100%;
+            position: absolute;
+            top: 0;
+            padding: v(25px 15px, bottom_padding, $showFilterWidgetPadding);
+            border-top: v(none, bottom_border_top, $showFilterWidgetBorderTop);
+            border-right: v(none, bottom_border_right, $showFilterWidgetBorderRight);
+            border-bottom: v(none, bottom_border_bottom, $showFilterWidgetBorderBottom);
+            border-left: v(none, bottom_border_left, $showFilterWidgetBorderLeft);
+
+            .input-row {
+                margin: 0;
+                @media (min-width: $bp_mobile) {
+                    display: flex;
+                    flex-wrap: wrap;
+                }
+            }
+
+            a {
+                margin-left: 15px;
+                color: v($white, expand_color, $colorFilterLabelExpandText);
+                &:hover {
+                    color: v($black, expand_color_hover, $colorFilterLabelExpandTextHover);
+                }
+                &[aria-expanded='true'] {
+                    display: none;
+                }
+            }
+
+            .tagSelector {
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
+
+    fieldset .btn {
+        width: auto;
+        min-width: 4em;
+        margin: v( 5px 5px 5px 0, tag_margin, $filterTagBtnMargin);
+        padding: v(4px 15px, tag_padding, $filterTagBtnPadding);
+        border: v($defaultBtnBorderActive, tag_border, $listFilterBtnBorder);
+        border-radius: v(15px 15px 15px 15px, tag_border_radius, $filterBtnRadius);
+        font-family: v($fontNormal, tag_font_family, $filterTagBtnFontfamily);
+        font-weight: v(normal, tag_font_weight, $filterTagBtnWeight);
+        line-height: v(normal, tag_line_height, $filterTagBtnLineheight);
+        text-transform: v(none, tag_text_transform, $filterTagBtnTextTransform);
+        background: v($color9, tag_background, $colorBgFilterLabelBtn);
+        color: v($white, tag_color, $colorBgFilterLabelBtnText);
+        animation: .3s fade-in ease-in;
+
+        @include fontsize(v($fs_small, tag_font_size, $filterTagBtnFontsize));
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, tag_border_hover, $listFilterBtnBorderHover);
+            background: v($colorBgFilterLabelBtn, tag_background_hover, $colorBgFilterLabelBtnHover);
+            color: v($colorBgFilterLabelBtnText, tag_color_hover, $colorBgFilterLabelBtnTextHover);
+        }
+
+        &.active {
+            border: v($defaultBtnBorderActiveHover, tag_border_selected, $listFilterBtnBorderActive);
+            background: v($colorBgFilterLabelBtn, tag_background_selected, $colorBgFilterLabelBtnActive);
+            color: v($colorBgFilterLabelBtnText, tag_color_selected, $colorBgFilterLabelBtnTextActive);
+        }
+    }
+}
+
+#moreTagsToggle {
+    cursor: pointer;
+}
+
+#courseFilters {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    border-top: v(none, selected_border_top, $showFilterSelectionBorderTop);
+    border-right: v(none, selected_border_right, $showFilterSelectionBorderRight);
+    border-bottom: v(none, selected_border_bottom, $showFilterSelectionBorderBottom);
+    border-left: v(none, selected_border_left, $showFilterSelectionBorderLeft);
+    background: v($color3, selected_background, $colorBgFilterSelection);
+
+    @include fontsize(20px);
+
+    .resetButtons {
+        margin: 0;
+        padding: v(10px 30px, reset_outer_padding, $showFilterSelectionPadding);
+        line-height: inherit;
+        flex: 1;
+        button {
+            display: inline-block;
+            max-width: v(240px, reset_max_width);
+            position: relative;
+            margin: v(5px 5px 5px 0, reset_margin);
+            padding: v(6px 30px 6px 15px, reset_padding);
+            border: v(none, reset_border, $listActiveFilterBtnBorder);
+            border-radius: v(15px 15px 15px 15px, reset_border_radius, $filterBtnRadius);
+            font-family: v($fontNormal, reset_font_family, $filterSelectionBtnFontfamily);
+            font-weight: v(normal, reset_font_weight, $filterSelectionBtnWeight);
+            text-transform: v(none, reset_text_transform, $filterSelectionBtnTextTransform);
+            text-overflow: ellipsis;
+            background: v($color9, reset_background, $colorFilterSelectionBtn);
+            color: v($white, reset_color, $colorFilterSelectionBtnText);
+            overflow: hidden;
+            white-space: nowrap;
+
+            @include fontsize(v($fs_small, reset_font_size, $filterSelectionBtnFontsize));
+
+            &:hover {
+                border: v(none, reset_border_hover, $listActiveFilterBtnBorderHover);
+                background: v($color9, reset_background_hover, $colorFilterSelectionBtnHover);
+                color: v($white, reset_color_hover, $colorFilterSelectionBtnTextHover);
+            }
+
+            .peppered-icon {
+                position: absolute;
+                right: 6px;
+                margin: v(0, button_icon_margin);
+            }
+        }
+        button.removeAll {
+            margin-left: 15px;
+            padding-right: 0;
+            padding-left: 0;
+            background: transparent;
+            color: v($white, clear_color, $colorFilterSelectionRemoveall);
+            border-color: transparent;
+
+            @include fontsize(v($fs_small, clear_font_size, $filterSelectionBtnFontsize));
+
+            &:hover {
+                color: v($black, clear_color_hover, $colorFilterSelectionRemoveallHover);
+            }
+            .fa {
+                margin-right: .5ex;
+            }
+        }
+    }
+
+    .submitFilters {
+        height: v(70px, submit_height, $filterSubmitBtnHeight);
+        margin: v(0, submit_margin, $filterSubmitBtnMargin);
+        border: v(none, submit_border);
+        border-radius: v(0, submit_border_radius, $filterSubmitRadius);
+        background: v($colorBgBtnActive, submit_background);
+        color: v($colorBtnActiveText, submit_color);
+        align-self: flex-end;
+
+        @include fontsize(v($fs_small_title, submit_font_size, $filterSubmitFontsize));
+
+        &:hover {
+            border: v(none, submit_border_hover);
+            background: v($colorBtnActiveHover, submit_background_hover);
+            color: v($colorBtnActiveTextHover, submit_color_hover);
+        }
+        &[disabled] {
+            border: v(none, submit_border_disabled);
+            background: v($colorBgBtnDisabled, submit_background_disabled);
+            color: v($colorBtnDisabledText, submit_color_disabled);
+        }
+    }
+}
+
+.select {
+    min-width: 100%;
+    max-width: 100%;
+    position: relative;
+
+    .select-anchor {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        min-height: v(2em, input_height);
+        padding: v(8px 12px, input_padding, $filterSelectPadding);
+        border-top: v(none, input_border_top, $showFilterSelectBorderTop);
+        border-right: v(none, input_border_right, $showFilterSelectBorderRight);
+        border-bottom: v(none, input_border_bottom, $showFilterSelectBorderBottom);
+        border-left: v(none, input_border_left, $showFilterSelectBorderLeft);
+        border-radius: v(15px 15px 15px 15px, input_border_radius, $filterSelectRadius);
+        line-height: 1.3;
+        background: v($white, input_background, $filterSelectBackground);
+        box-shadow: none;
+        text-align: left;
+        cursor: pointer;
+        transition: border-radius 0.1s ease;
+
+        @include fontsize(v($fs_normal, input_font_size, $filterDaterangeInputFontsize));
+
+        span {
+            margin-right: 10px;
+            text-overflow: ellipsis;
+            color: v($colorDefaultText, input_color);
+            white-space: nowrap;
+            overflow: hidden;
+            &.placeholder {
+                color: v($grey2, placeholder_color);
+            }
+        }
+
+
+        .fa {
+            margin-left: auto;
+            transition: all 0.3s ease-in-out;
+        }
+
+        &[aria-expanded='true'] {
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+
+            .fa {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .select-dropdown {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-height: 250px;
+        position: absolute;
+        clear: both;
+        z-index: 1;
+        margin: 0;
+        padding: 0;
+        font-family: v($fontNormal, popup_font_family);
+        background: v($colorPageBg, popup_background);
+        box-shadow: v($defaultBoxShadow, popup_box_shadow, $datepickerBoxShadow);
+        transform: scaleY(1);
+        transition: all 0.3s ease;
+        transition-delay: 50ms; // delay till border radius transition complete
+        transform-origin: 100% 0;
+        border-color: v($colorDefaultText, popup_border_color);
+
+        hr {
+            margin: 0;
+        }
+
+        ul {
+            overflow-y: scroll;
+            overflow-x: hidden;
+            margin: 0;
+            box-shadow: 0 1px 1px rgba(0,0,0,.1);
+            opacity: 1;
+        }
+
+        .dropdown-footer {
+            padding: 8px;
+            border-top: 1px solid v($colorDefaultText, popup_border_color);
+            text-align: right;
+        }
+
+        button {
+            opacity: 1;
+            transition: all 0.2s ease-in-out;
+        }
+
+        &[aria-expanded='false'] {
+            max-height: 0;
+            transform: scaleY(0);
+            overflow: hidden;
+            visibility: hidden;
+
+            button {
+                opacity: 0;
+            }
+
+            ul {
+                opacity: 0;
+            }
+        }
+        &[aria-expanded='true'] {
+            max-height: unset;
+        }
+    }
+
+    .option-wrapper {
+        list-style: none;
+        display: flex;
+        border-top: v(none, input_border_top, $showFilterSelectBorderTop);
+        border-right: v(none, input_border_right, $showFilterSelectBorderRight);
+        border-bottom: v(none, input_border_bottom, $showFilterSelectBorderBottom);
+        border-left: v(none, input_border_left, $showFilterSelectBorderLeft);
+        font-family: v($fontNormal, popup_font_family);
+        line-height: 1.3;
+        background: v($colorPageBg, input_background);
+        color: v($colorDefaultText, input_color);
+        cursor: pointer;
+
+        @include fontsize(v($fs_normal, input_font_size, $filterDaterangeInputFontsize));
+
+        &:hover {
+            background: transparentize($colorBgSelection, .5);
+            color: v($colorDefaultText, popup_color);
+        }
+
+        label {
+            width: 100%;
+            margin: 0;
+            padding: 6px;
+            font-weight: normal;
+            cursor: inherit;
+            user-select: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        input[type='checkbox'],
+        input[type='radio'] {
+            display: inline-block;
+            width: calc(1em - 3px);
+            height: calc(1em - 3px);
+            margin-right: 0.5em;
+            margin-left: 0.25em;
+            border: 1px solid v($colorDefaultText, option_border_color);
+            background: v($colorPageBg, option_background);
+            box-shadow: inset 0 0 0 2px v($colorPageBg, popup_background);
+            appearance: none;
+            transition: all 0.1s ease-out;
+            outline: none;
+
+            &:checked {
+                border-color: v(currentcolor, option_border_color_checked);
+                background: v($colorBgSelection, option_background_checked);
+            }
+
+            &:focus {
+                outline: 2px solid transparentize($colorBgSelection, .5);
+                outline-offset: 0;
+            }
+        }
+
+        input[type='radio'] {
+            border-radius: 50%;
+        }
+    }
+}
+
+.simple-filter {
+    padding: v(10px 30px, padding);
+    background: none;
+
+    @at-root {
+        .daterangepicker.simple {
+            animation: simple-filters-fade-in 0.3s ease 1, simple-filters-move-up 0.3s ease 1;
+
+            &::after {
+                content: '';
+                display:  block;
+                width: v(10px, simple_filter_popup_arrow_size);
+                height: v(10px, simple_filter_popup_arrow_size);
+                position: absolute;
+                top: -1px;
+                right: 5px;
+                bottom: 0;
+                left: unset !important;
+                z-index: -99;
+                margin-left: 0;
+                border-bottom: v(1px solid $colorDefaultText, simple_filter_popup_border);
+                border-left: v(1px solid $colorDefaultText, simple_filter_popup_border);
+                background-color: v($white, simple_filter_popup_background);
+                transform: rotate(135deg);
+                box-sizing: border-box;
+                transform-origin: 0 0;
+            }
+        }
+    }
+
+    form {
+        display: flex;
+        justify-content: end;
+        gap: 1em;
+        height: v(45px, simple_filter_button_height);
+        position: relative;
+
+        .input-daterange {
+            width: v(45px, simple_filter_button_width);
+        }
+
+        .filter-btn {
+            display: flex;
+            width: v(45px, simple_filter_button_width);
+            min-width: unset;
+            height: v(45px, simple_filter_button_height);
+            position: relative;
+            padding: v(8px, simple_filter_button_padding);
+            border: v($defaultBtnBorderActive, simple_filter_button_border);
+            border-radius: v(50%, simple_filter_button_border_radius);
+            background: v($colorBgBtnActive, simple_filter_button_background);
+            color: v($colorBtnActiveText, simple_filter_button_color);
+            box-shadow: v($defaultBtnShadowActive, simple_filter_button_box_shadow);
+            transition: v($defaultBtnTransitionLeave, simple_filter_button_transition);
+            pointer-events: auto;
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, simple_filter_button_border_hover);
+                background: v($colorBtnActiveHover, simple_filter_button_background_hover);
+                color: v($colorBtnActiveTextHover, simple_filter_button_color_hover);
+                box-shadow: v($defaultBtnShadowActiveHover, simple_filter_button_box_shadow_hover);
+                transition: v($defaultBtnTransitionEnter, simple_filter_button_transition_hover);
+            }
+
+            svg {
+                margin: auto;
+                fill: currentcolor;
+                pointer-events: auto;
+            }
+        }
+
+        .dateRange,
+        .dateRangeSingle {
+            // effectively hide the inputs, but leave them in the flow for position of the popup
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            bottom: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            visibility: hidden;
+            overflow: hidden;
+        }
+
+        h4 {
+            margin: v(0 0 15px , popup_heading_margin);
+            font-family: v($fontNormal, popup_heading_font_family);
+            font-weight: v($basicH4Fontweight, popup_heading_font_weight);
+            line-height: v(1, popup_heading_line_height);
+            text-transform: v($basicH3Texttransform, popup_heading_text_transform);
+            color: v($grey2, popup_heading_color);
+
+            @include fontsize(v($basicH4Fontsize, popup_heading_font_size));
+        }
+
+        .filter-content {
+            display: none;
+            min-width: v(400px, popup_width);
+            position: absolute;
+            top: 60px;
+            right: 0;
+            z-index: 99;
+            padding: v(30px, popup_padding);
+            border: v(1px solid $colorDefaultText, simple_filter_popup_border);
+            background: v($white, simple_filter_popup_background);
+            box-shadow: v($defaultBoxShadow, simple_filter_button_box_shadow);
+            animation: simple-filters-fade-in 0.3s ease 1, simple-filters-move-up 0.3s ease 1;
+
+            @media (max-width: 500px) {
+                width: 80vw;
+                min-width: 80vw;
+                right: -100%;
+                transform: translate(10% ,0);
+                animation: simple-filters-fade-in 0.3s ease 1, simple-filters-move-up-mobile 0.3s ease 1;
+            }
+
+            &[aria-expanded='true'] {
+                display: block;
+            }
+
+            &:after {
+                content: '';
+                width: v(10px, simple_filter_popup_arrow_size);
+                height: v(10px, simple_filter_popup_arrow_size);
+                position: absolute;
+                top: -1px;
+                right: 5px;
+                bottom: 0;
+                z-index: -99;
+                margin-left: 0;
+                border-bottom: v(1px solid $colorDefaultText, simple_filter_popup_border);
+                border-left: v(1px solid $colorDefaultText, simple_filter_popup_border);
+                background-color: v($white, simple_filter_popup_background);
+                transform: rotate(135deg);
+                box-sizing: border-box;
+                transform-origin: 0 0;
+
+                @media (max-width: 500px) {
+                    right: 23%;
+                }
+            }
+        }
+
+        .tagSelector {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        .footer {
+            margin-top: 30px;
+            align-self: end;
+        }
+
+        fieldset .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-evenly;
+            width: auto;
+            min-width: 0;
+            position: relative;
+            margin: v(5px 5px 5px 0, tag_margin, $filterTagBtnMargin);
+            padding: v(4px 15px, tag_padding, $filterTagBtnPadding);
+            border: v($defaultBtnBorderActive, tag_border, $listFilterBtnBorder);
+            border-radius: v(15px 15px 15px 15px, tag_border_radius, $filterBtnRadius);
+            font-family: v($fontNormal, tag_font_family, $filterTagBtnFontfamily);
+            font-weight: v(normal, tag_font_weight, $filterTagBtnWeight);
+            line-height: v(normal, tag_line_height, $filterTagBtnLineheight);
+            text-transform: v(none, tag_text_transform, $filterTagBtnTextTransform);
+            background: v($color9, tag_background, $colorBgFilterLabelBtn);
+            color: v($white, tag_color, $colorBgFilterLabelBtnText);
+            animation: .3s simple-filters-fade-in ease-in;
+
+            @include fontsize(v($fs_small, tag_font_size, $filterTagBtnFontsize));
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, tag_border_hover, $listFilterBtnBorderHover);
+                background: v($colorBgFilterLabelBtn, tag_background_hover, $colorBgFilterLabelBtnHover);
+                color: v($colorBgFilterLabelBtnText, tag_color_hover, $colorBgFilterLabelBtnTextHover);
+            }
+
+            &.active {
+                border: v($defaultBtnBorderActiveHover, tag_border_selected, $listFilterBtnBorderActive);
+                background: v($colorBgFilterLabelBtn, tag_background_selected, $colorBgFilterLabelBtnActive);
+                color: v($colorBgFilterLabelBtnText, tag_color_selected, $colorBgFilterLabelBtnTextActive);
+            }
+
+            .remove-tag {
+                display: flex;
+                align-items: center;
+                width: v(20px, tag_remove_width);
+                height: 100%;
+                position: relative;
+                right: v(-10px, tag_remove_right);
+                margin: 0;
+                padding: 0;
+                color: inherit;
+
+                .peppered-icon {
+                    display: inline-flex;
+                }
+
+                &:not(.active) {
+                    display: none;
+                }
+                svg {
+                    max-width: 100%;
+                }
+            }
+
+            &.applyBtn {
+                width: auto;
+                min-width: v(9em, apply_btn_min_width);
+                margin: v( 5px 5px 5px 0, apply_btn_margin);
+                padding: v(7px 12px, apply_btn_padding);
+                border: v(none, apply_btn_border);
+                border-radius: v(0, apply_btn_border_radius);
+                font-family: v(inherit, apply_btn_font_family);
+                font-weight: v(normal, apply_btn_font_weight);
+                font-size: v($defaultBtnFontsize, apply_btn_font_size);
+                line-height: v(1, apply_btn_line_height);
+                text-transform: v(none, apply_btn_text_transform);
+                background: v($colorBgBtnActive, apply_btn_background);
+                color: v($colorBtnActiveText, apply_btn_color);
+                animation: .3s fade-in ease-in;
+
+                @include fontsize(v($fs_small, apply_btn_font_size));
+
+                &:hover {
+                    border: v(none, apply_btn_border_hover);
+                    background: v($colorBgFilterLabelBtn, apply_btn_background_hover);
+                    color: v($colorBgFilterLabelBtnText, apply_btn_color_hover);
+                }
+
+                &.active {
+                    border: v(none, apply_btn_border_selected);
+                    background: v($colorBgFilterLabelBtn, apply_btn_background_selected);
+                    color: v($colorBgFilterLabelBtnText, apply_btn_color_selected);
+                }
+
+                &.btn-unavailable {
+                    border: v(none, apply_btn_border_unavailable);
+                    background: v($colorBgBtnUnavailable, apply_btn_background_unavailable);
+                    color: v($colorBtnUnavailableText, apply_btn_color_unavailable);
+                }
+            }
+
+            &.resetBtn {
+                width: auto;
+                min-width: v(9em, reset_btn_min_width);
+                margin: v( 5px 5px 5px 0, reset_btn_margin);
+                padding: v(7px 12px, reset_btn_padding);
+                border: v(none, reset_btn_border);
+                border-radius: v(0, reset_btn_border_radius);
+                font-family: v(inherit, reset_btn_font_family);
+                font-weight: v(normal, reset_btn_font_weight);
+                font-size: v($defaultBtnFontsize, reset_btn_font_size);
+                line-height: v(1, reset_btn_line_height);
+                text-transform: v(none, reset_btn_text_transform);
+                background: v($colorBgBtnActive, reset_btn_background);
+                color: v($colorBtnActiveText, reset_btn_color);
+                animation: .3s fade-in ease-in;
+
+                @include fontsize(v($fs_small, reset_btn_font_size));
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, reset_btn_border_hover);
+                    background: v($colorBgFilterLabelBtn, reset_btn_background_hover);
+                    color: v($colorBgFilterLabelBtnText, reset_btn_color_hover);
+                }
+
+                &.active {
+                    border: v($defaultBtnBorderActiveHover, reset_btn_border_selected);
+                    background: v($colorBgFilterLabelBtn, reset_btn_background_selected);
+                    color: v($colorBgFilterLabelBtnText, reset_btn_color_selected);
+                }
+
+                &.btn-unavailable,
+                &.btn-disabled {
+                    border: v($defaultBtnBorderUnavailable, reset_btn_border_unavailable);
+                    background: v($colorBgBtnUnavailable, reset_btn_background_unavailable);
+                    color: v($colorBtnUnavailableText, reset_btn_color_unavailable);
+                }
+            }
+        }
+    }
+
+    @keyframes simple-filters-fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+    @keyframes simple-filters-move-up {
+        from {
+            transform: translateY(40px);
+        }
+        to {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes simple-filters-move-up-mobile {
+        from {
+            transform: translate(10%, 40px);
+        }
+        to {
+            transform: translate(10%, 0);
+        }
+    }
+}

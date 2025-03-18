@@ -1,0 +1,211 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+/*
+    basic layout is
+    [<title>     --space--     <button>]
+
+    when variant is set to "centered"
+    [              <title>             ]
+    [              <button>            ]
+
+    for really small screens you can set alignment to left
+    [<title>                           ]
+    [<button>                          ]
+
+    if there is a link, the title is also clickable, but doesn't look like it
+    ... on mobile you don't have a hover anyway, and a call to action button is
+    always clearer and more explicit
+*/
+
+// all values should be in a map called:
+$highlight_banner: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $highlight_banner;
+
+
+.highlightBannerWrapper {
+    .inner {
+        @include container_width();
+
+        &.with-images + .mediaWrapper {
+            margin-top: v(30px, inner_spacing);
+        }
+    }
+
+    .highlightBanner {
+        display: flex;
+        align-items: v(center, align_items);
+        justify-content: space-between;
+        padding: v(0, padding);
+
+        .buttonWrapper {
+            margin: v(0, margin, $highlightBannerBtnMargin);
+        }
+
+        @media (max-width: $bp_tiny - 1) {
+            display: block;
+            text-align: v(center, text_align_mobile, $highlightBannerAlignmentMobile);
+            .buttonWrapper {
+                margin: v(15px 0 0 0, button_margin_stacked, $highlightBannerBtnMarginStacked);
+            }
+        }
+
+        h2 {
+            margin: v(0, title_margin, $highlightBannerTitleMargin);
+            font-family: v($fontTitleContent, title_font_family, $highlightBannerTitleFontfamily);
+            font-weight: v(bold, title_font_weight, $highlightBannerTitleWeight);
+            font-style: v(normal, title_font_style, $highlightBannerTitleStyle);
+            line-height: v(1, title_line_height, $highlightBannerTitleLineHeight);
+            text-transform: v(none, title_text_transform, $highlightBannerTitleTexttransform);
+            color: v(inherit, title_color, $highlightBannerTitleColor);
+
+            @include fontsize(v($basicH1Fontsize, title_font_size, $highlightBannerTitleFontsize));
+
+            a,
+            a:link,
+            a:visited,
+            a:hover,
+            a:active {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+        .subtitle {
+            margin: v(5px 0 0 0, subtitle_margin, $highlightBannerSubTitleMargin);
+            font-family: v($fontNormal, subtitle_font_family, $highlightBannerSubTitleFontfamily);
+            font-weight: v(bold, subtitle_font_weight, $highlightBannerSubTitleWeight);
+            font-style: v(normal, subtitle_font_style, $highlightBannerSubTitleStyle);
+            line-height: v(1, subtitle_line_height, $highlightBannerSubTitleLineHeight);
+            text-transform: v(none, subtitle_text_transform, $highlightBannerSubTitleTexttransform);
+            color: v(inherit, subtitle_color, $highlightBannerSubTitleColor);
+
+            @include fontsize(v($basicH3Fontsize, subtitle_font_size, $highlightBannerSubTitleFontsize));
+
+            p {
+                margin: v(0, desc_margin, $highlightBannerParagraphMargin);
+            }
+        }
+
+        .btn {
+            padding: v($defaultBtnPadding, button_padding, $highlightBannerBtnPadding);
+            border: v($defaultBtnBorderActive, button_border, $highlightBannerBtnBorder);
+            font-size: v($defaultBtnFontsize, button_font_size, $highlightBannerBtnFontsize);
+            text-decoration: v(none, button_text_decoration);
+            text-transform: v($defaultBtnTexttransform, button_text_transform, $highlightBannerBtnTexttransform);
+            background: v($colorBgBtnActive, button_background, $highlightBannerBtnBackground);
+            color: v($colorBtnActiveText, button_color, $highlightBannerBtnColor);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover, $highlightBannerBtnBorderHover);
+                text-decoration: v(none, button_text_decoration_hover);
+                background: v($colorBtnActiveHover, button_background_hover, $highlightBannerBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, button_color_hover, $highlightBannerBtnColorHover);
+            }
+        }
+    }
+
+    &.variant-centered .highlightBanner {
+        display: block;
+        text-align: center;
+        .buttonWrapper {
+            margin: v(15px 0 0 0, button_margin_stacked, $highlightBannerBtnMarginStacked);
+        }
+    }
+
+    &.variant-image-right .highlightBanner,
+    &.variant-image-left .highlightBanner {
+        // flex-wrap: wrap;
+        align-items: v(flex-start, align_items_image, $highlightImageBannerAlign);
+        justify-content: flex-start;
+        padding: v(0 15px, padding_image, $highlightImageBannerPadding);
+        text-align: left;
+
+        h2 {
+            color: v(inherit, title_color_image, $highlightImageBannerTitleColor);
+        }
+        .subtitle {
+            color: v(inherit, subtitle_color_image, $highlightImageBannerSubTitleColor);
+        }
+
+        .image {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: v(math.div(5, 12) * 100%, image_width, $highlightImageBannerImageWidth);
+            position: relative;
+            margin: 0 v(30px, gutter, $highlightImageBannerGutter) 0 0;
+
+            @include credits_box();
+        }
+
+        .picture {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .desc {
+            flex: 1;
+            padding: v(0, desc_padding_image, $highlightImageBannerDescPadding);
+            align-self: v(center, align_items_desc);
+        }
+
+        .btn {
+            margin: v(30px 0 0 0, button_margin_image, $highlightImageBannerButtonMargin);
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            display: block;
+
+            .image {
+                flex-shrink: 0;
+                width: 100%;
+                margin: 0 0 v(30px, gutter, $highlightImageBannerGutter) 0;
+            }
+        }
+    }
+    &.variant-image-right .highlightBanner {
+        .image {
+            margin: 0 0 0 v(30px, gutter, $highlightImageBannerGutter);
+            @media (max-width: $bp_mobile - 1) {
+                margin: v(30px, gutter, $highlightImageBannerGutter) 0 0 0;
+            }
+        }
+    }
+    &.variant-hd-card {
+        .highlightBanner {
+            flex-direction: column;
+            .desc {
+                display: grid;
+                grid-template-columns: repeat(1, 100%);
+                width: 100%;
+                margin: v(20px, gutter, $highlightImageBannerGutter) 0 0 0;
+                padding: v(0, desc_padding_image, $highlightImageBannerDescPadding);
+                grid-template-rows: repeat(2, auto);
+                .subtitle:not(.contentLibrary) {
+                    font-weight: 700;
+                    font-size: $baseFontsize;
+                }
+                @media screen and (min-width: $bp_mobile) {
+                    grid-template-columns: repeat(2, 50%);
+                    .subtitle {
+                        grid-column: 1;
+                        grid-row: 2;
+                    }
+                    .btn {
+                        grid-column: 2;
+                        display: block;
+                        margin: v(30px 0 0 0, button_margin_image, $highlightImageBannerButtonMargin);
+                        margin-left: auto;
+                    }
+                }
+            }
+        }
+    }
+}

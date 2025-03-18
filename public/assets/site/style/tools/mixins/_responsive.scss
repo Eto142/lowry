@@ -1,0 +1,44 @@
+/// Mixin for applying CSS from a minimum width onward.
+///
+/// @param $breakpoint-name - The name of the breakpoint from which to start applying styles (inclusive).
+///                           Expected to be a key in the $breakpoints map.
+/// Usage:
+/// @include from('tablet') {
+///     // CSS rules here will apply for viewports with a width of 992px and above.
+/// }
+@mixin from($breakpoint-name) {
+    $size: map-get($breakpoints, $breakpoint-name);
+
+    @if $size {
+        @media only screen and (min-width: $size) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn 'that breakpoint does not exist';
+    }
+}
+
+
+/// Mixin for applying CSS up to a maximum width.
+///
+/// @param $breakpoint-name - The name of the breakpoint up to which to apply styles (inclusive).
+///                           Expected to be a key in the $breakpoints map.
+/// Usage:
+/// @include to('mobile') {
+///     // CSS rules here will apply for viewports with a width of 768px and below.
+/// }
+@mixin to($size) {
+    $size: map-get($breakpoints, $breakpoint-name);
+
+    @if $size {
+        @media only screen and (max-width: $size) {
+            @content;
+        }
+    }
+
+    @else {
+        @warn 'that breakpoint does not exist';
+    }
+}

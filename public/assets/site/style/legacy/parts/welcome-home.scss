@@ -1,0 +1,178 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$welcomehome: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $welcomehome;
+
+.welcomeHomeWrapper {
+    .content {
+        display: flex;
+        align-items: center;
+        padding: v(0 15px, padding, $welcomePadding);
+        background: v(transparent, inner_background);
+
+        .icon {
+            margin-right: 15px;
+            align-self: flex-start;
+            &,
+            &:link,
+            &:hover,
+            &:active {
+                text-decoration: none;
+                color: v($white, icon_color, $colorWelcomeAvatarBg);
+            }
+
+            svg {
+                width: v(52px, icon_size);
+                height: v(52px, icon_size);
+            }
+        }
+
+        .message {
+            font-family: v($fontNormal, message_font_family, $welcomeMsgFontfamily);
+            font-weight: v(bold, message_font_weight, $welcomeMsgWeight);
+            line-height: v(0.8, message_line_height, $welcomeMsgLineHeight);
+            text-transform: v(none, message_text_transform, $welcomeMsgTexttransform);
+            color: v($white, message_color, $colorWelcomeMsg);
+            flex: 1;
+
+            a:not(.btn) {
+                &,
+                &:link,
+                &:hover,
+                &:active {
+                    text-decoration: none;
+                    color: inherit;
+                }
+            }
+
+            @include fontsize(v($fs_large_title, message_font_size, $welcomeMsgFontsize));
+        }
+
+        .status {
+            margin-top: v(10px, status_margin_top, $welcomeStatusMarginTop);
+            font-family: v($fontNormal, status_font_family, $welcomeStatustFontfamily);
+            font-weight: v(normal, status_font_weight, $welcomeStatustWeight);
+            line-height: v(1, status_line_height, $welcomeStatustLineHeight);
+            text-transform: v(uppercase, status_text_transform, $welcomeStatustTexttransform);
+            color: v($white, status_color, $colorWelcomeStatus);
+
+            @include fontsize(v($fs_normal, status_font_size, $welcomeStatustFontsize));
+        }
+
+        .link {
+            text-align: right;
+            font-family: v($fontNormal, link_font_family, $welcomeMyAccountFontfamily);
+            font-weight: v(normal, link_font_weight, $welcomeMyAccountWeight);
+            line-height: v(normal, link_line_height, $welcomeMyAccountLineHeight);
+            text-decoration: v(none, link_text_decoration);
+            text-transform: v(none, link_text_transform, $welcomeMyAccountTexttransform);
+            color: v($white, link_color, $colorWelcomeMyAccountLink);
+
+            @include fontsize($welcomeMyAccountFontsize);
+
+            > * {
+                margin: 0;
+            }
+
+            @media (max-width: $bp_mobile) {
+                display: none;
+            }
+
+            a {
+                &,
+                &:link {
+                    color: inherit;
+                }
+
+                &:hover {
+                    text-decoration: v(underline, link_text_decoration_hover);
+                    color: v($black, link_color_hover, $colorWelcomeMyAccountLinkHover);
+                }
+            }
+
+            a.btn {
+                display: inline-block;
+                padding: v($defaultBtnPadding, button_padding);
+                border: v($defaultBtnBorderActive, button_border);
+                text-transform: v($defaultBtnTexttransform, button_text_transform);
+                background: v($colorBgBtnActive, button_background);
+                color: v($colorBtnActiveText, button_color);
+                transition: v($defaultBtnTransitionLeave, button_transition_leave);
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_hover);
+                    background: v($colorBtnActiveHover, button_background_hover);
+                    color: v($colorBtnActiveTextHover, button_color_hover);
+                    transition: v($defaultBtnTransitionEnter, button_transition_enter);
+                }
+
+                @include fontsize(v($defaultBtnFontsize, button_font_size));
+            }
+        }
+
+        @mixin altLinkStyle() {
+            flex-basis: 100%;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        &--link-left {
+            flex-wrap: wrap;
+
+            .link {
+                @include altLinkStyle();
+            }
+        }
+
+        &--show-link-mobile {
+            @media (max-width: $bp_mobile) {
+                flex-wrap: wrap;
+
+                .link {
+                    display: block;
+                    @include altLinkStyle();
+                }
+            }
+        }
+    }
+
+    .balance,
+    .timeslot {
+        display: inline-flex;
+        align-items: center;
+        margin: v(0, note_margin, $welcomeTimeslotMargin);
+        padding: v(10px, note_padding, $welcomeTimeslotPadding);
+        border-radius: v(none, note_border_radius);
+        line-height: 1;
+        background: v($colorPrime, note_background, $welcomeTimeslotBackground);
+        color: v($white, note_color, $welcomeTimeslotColor);
+
+        @include fontsize(v($fs_normal, note_font_size, $welcomeTimeslotFontsize));
+
+        @media (max-width: $bp_tiny) {
+            display: flex;
+        }
+
+        .icon {
+            margin: v(0 10px 0 0, note_icon_margin, $welcomeTimeslotIconMargin);
+            font-size: v(18px, note_icon_font_size, $welcomeTimeslotIconSize);
+        }
+    }
+    .balance {
+        margin: v(0, balance_margin, $welcomeBalanceMargin);
+        padding: v(10px, balance_padding, $welcomeBalancePadding);
+        background: v($colorPrime, balance_background, $welcomeBalanceBackground);
+        color: v($white, balance_color, $welcomeBalanceColor);
+
+        @include fontsize(v($fs_normal, balance_font_size, $welcomeBalanceFontsize));
+
+        .peppered-icon {
+            margin: v(0 10px 0 0, balance_icon_margin, $welcomeBalanceIconMargin);
+            font-size: v(18px, balance_icon_font_size, $welcomeBalanceIconSize);
+        }
+    }
+}

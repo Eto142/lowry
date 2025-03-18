@@ -1,0 +1,207 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$order_header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order_header;
+
+
+#order-header {
+    height: $headerOrderHeight;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    padding: v(0 15px, padding, $orderHeaderPadding);
+    border-bottom: v(1px solid $grey5, border_bottom, $headerOrderBorderBottom);
+    background: v($color1, background, $colorBgHeaderOrder);
+    box-shadow: v(none, box_shadow, $orderHeaderShadow);
+
+    ~ #content {
+        position: relative;
+        z-index: 1;
+        padding-top: $headerOrderHeight;
+
+        [id]:target::before {
+            content: '';
+            display: block;
+            height: $headerOrderHeight;
+            margin-top: -$headerOrderHeight;
+        }
+    }
+
+
+    .inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
+        margin: 0 auto;
+
+        @include container_width();
+
+        > * {
+            flex: 1;
+        }
+    }
+
+    .headerWrapper {
+        position: relative;
+    }
+
+    .brand {
+        height: v($logoHeight, logo_height, $logoOrderHeight);
+        max-height: 100%;
+        padding: v(10px 0, logo_padding, $logoOrderPadding);
+        text-align: left;
+        img {
+            max-width: 100%;
+            height: 100%;
+        }
+    }
+
+    #serviceMenuContainer {
+        .header-account {
+            margin: 0;
+
+            .avatar { margin: 0; }
+        }
+    }
+
+    .avatarWrapper {
+        text-align: right;
+    }
+    .avatar {
+        border: v(none, avatar_border, $orderAvatarBorder);
+        border-radius: v(6px, avatar_border_radius, $orderAvatarRadius);
+        text-transform: v(none, avatar_text_transform, $orderAvatarTexttransform);
+        text-align: right;
+        background: v(transparent, avatar_background, $orderAvatarBackground);
+        color: v($black, avatar_color, $colorServiceMenuOrder);
+
+        &:hover,
+        &:active {
+            border: v(none, avatar_border_hover, $orderAvatarBorderHover);
+            background: v(transparent, avatar_background_hover, $orderAvatarBackgroundHover);
+            color: v($colorPrime, avatar_color_hover, $colorServiceMenuOrderHover);
+        }
+    }
+
+
+    .orderStepWrapper {
+        max-width: v(500px, steps_max_width, $orderStepMaxwidth);
+        position: relative;
+        top: 5px;
+        margin: 0;
+        padding: 0 30px;
+        font-family: v(inherit, steps_font_family, $orderStepFontfamily);
+        font-weight: v(normal, steps_font_weight, $orderStepWeight);
+        font-size: v(12px, steps_font_size, $orderStepFontsize);
+
+        line-height: 1;
+        text-transform: v(none, steps_text_transform, $orderStepTransform);
+        flex: 2;
+
+        @media (max-width: $bp_mobile) {
+            display: none;
+        }
+
+        .orderSteps {
+            width: 100%;
+            margin: -.5em auto 0 auto;
+
+            ul {
+                list-style: none;
+                display: flex;
+                width: 100%;
+                position: relative;
+                z-index: 2;
+                margin: 0;
+
+                li {
+                    width: 25%;
+                    color: v($color4, step_color_inactive, $colorOrderStepInactiveText);
+                    text-align: center;
+
+                    a,
+                    a:link,
+                    a:visited {
+                        color: inherit;
+                    }
+                    a:hover {
+                        color: v($defaultLinkHover, step_color_hover, $colorOrderStepLinkText);
+                    }
+
+                    .fa-stack {
+                        height: 20px;
+                        line-height: 1;
+                    }
+                    .fa {
+                        height: 20px;
+                        font-size: 20px;
+                        line-height: 1;
+                        color: v($color5, step_icon_background, $colorOrderStepFaStack);
+                    }
+                    .fa-stack .fa-circle {
+                        color: v($white, step_icon_color, $colorOrderStepFaChecked);
+                    }
+                    &.checked {
+                        color: v($black, step_color_active, $colorOrderStepFaCheckedText);
+
+                        .fa-check-circle {
+                            color: v($color12, step_icon_color_active, $colorOrderStepFaCheckCircle);
+                        }
+                    }
+                }
+            }
+
+            .stepName {
+                display: inline-block;
+                margin-top: .5em;
+            }
+
+            .bar {
+                position: relative;
+                &::before,
+                &::after {
+                    content: '';
+                    display: block;
+                    width: 75%;
+                    position: absolute;
+                    top: 9px;
+                    left: 12.5%;
+                }
+                &::before {
+                    z-index: 1;
+                    border-top: 2px solid v($colorHighlight, steps_bar_color, $colorOrderStepBarBefore);
+                }
+
+                &::after {
+                    z-index: 2;
+                    border-top: 2px solid v($color5, steps_bar_color_active, $colorOrderStepBarAfter);
+                }
+
+                &.step1:after {
+                    width: 75%;
+                    left: 12.5%;
+                }
+                &.step2:after {
+                    width: 50%;
+                    left: 37.5%;
+                }
+                &.step3:after {
+                    width: 25%;
+                    left: 62.5%;
+                }
+                &.step4:after {
+                    display: none;
+                }
+            }
+        }
+    }
+}

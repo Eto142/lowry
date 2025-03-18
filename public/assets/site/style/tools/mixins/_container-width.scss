@@ -1,0 +1,32 @@
+/**
+ * Sets the outer website box to a maximum width.
+ * Matches these bootstraps breakpoints: wxga, tablet, mobile
+ */
+ @mixin container_width {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+
+    @media (max-width: 767px) {
+        max-width: none;
+    }
+
+    @media (min-width: 768px) {
+        max-width: 750px;
+    }
+
+    @media (min-width: 992px) {
+        max-width: 970px;
+    }
+
+    @media (min-width: 1200px) {
+        max-width: 1170px;
+    }
+
+    .slick-slider {
+        // slides should always have 20px spacing, we stretch the container to get rid of that on the sides
+        margin-right: -10px;
+        margin-left: -10px;
+    }
+}

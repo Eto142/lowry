@@ -1,0 +1,83 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$donations: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $donations;
+
+
+.donationWrapper {
+    padding: v(30px 0, padding, $donationPadding);
+    background: v($color12, background, $colorBgDonationWrapper);
+    color: v($white, color, $colorDonationWrapperText);
+
+    form,
+    fieldset { margin: 0; }
+
+    h2 {
+        margin: v(0 0 5px 0, title_margin, $donationTitleMargin);
+        font-family: v($fontTitleTemplate, title_font_family, $donationTitleFontfamily);
+        font-weight: v(bold, title_font_weight, $donationTitleWeight);
+        line-height: v(normal, title_line_height, $donationTitleLineHeight);
+        text-transform: v(none, title_text_transform, $donationTitleTexttransform);
+        color: v($white, title_color, $colorDonationWrapperH2);
+
+        @include fontsize(v($fs_large_title, title_font_size, $donationTitleFontsize));
+    }
+
+    p {
+        width: 60%;
+        clear: both;
+        font-family: v($fontNormal, desc_font_family, $donationDescFontfamily);
+        font-weight: v(normal, desc_font_weight, $donationDescWeight);
+        line-height: v(1.33, desc_line_height, $donationDescLineHeight);
+        text-transform: v(none, desc_text_transform, $donationDescTexttransform);
+
+        @include fontsize(v($fs_large_subtitle, desc_font_size, $donationDescFontsize));
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            width: 100%;
+        }
+    }
+
+    .checkboxContainer {
+        display: block;
+        margin: v(30px 0, items_margin, $donationItemsPadding);
+
+        label {
+            display: inline-block;
+            padding-right: v(30px, item_padding_right, $donationItemsSpacing);
+            font-family: v($fontNormal, item_font_family, $donationLabelFontfamily);
+            font-weight: v(normal, item_font_weight, $donationLabelWeight);
+            line-height: v(1.17, item_line_height, $donationLabelLineHeight);
+            text-transform: v(none, item_text_transform, $donationLabelTexttransform);
+
+            @include fontsize(v($fs_large_subtitle, item_font_size, $donationLabelFontsize));
+
+            &:last-child { padding-right: 0; }
+
+            @media (max-width: $bp_mobile - 1) {
+                display: block;
+            }
+        }
+    }
+
+    .btn.btn-active {
+        border: v($defaultBtnBorderActive, button_border, $orderDonationBtnBorder);
+        background: v($colorBgBtnActive, button_background, $colorBgDonationWrapperBtnActive);
+        color: v($colorBtnActiveText, button_color, $colorDonationWrapperBtnActiveText);
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, button_border_hover, $orderDonationBtnBorderHover);
+            background: v($colorBtnActiveHover, button_background_hover, $colorBgDonationWrapperBtnActiveHover);
+            color: v($colorBtnActiveTextHover, button_color_hover, $colorDonationWrapperBtnActiveTextHover);
+        }
+    }
+}

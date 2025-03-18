@@ -1,0 +1,3290 @@
+@use 'sass:math';
+
+$brochureDateBackground: $white;
+$brochureDateColor: inherit;
+$brochureDateFontsize: $fs_small;
+$brochureDateLineheight: 1.2;
+$brochureDateMargin: 15px 0 0 15px;
+$brochureDatePadding: .5em;
+$brochureDateRadius: inherit;
+$brochureDescMargin: 15px;
+$brochureDescriptionColor: inherit;
+$brochureDescriptionFontfamily: inherit;
+$brochureDescriptionFontsize: inherit;
+$brochureDescriptionFontweight: normal;
+$brochureDescriptionLineheight: 1.4;
+$brochureDescriptionMargin: 0 30px;
+$brochureDescriptionSpacing: 30px;
+$brochureDescriptionTexttransform: none;
+$brochureDescriptionTitleFontsize: $basicH3Fontsize;
+$brochureEventActiveButtonBackground: $grey3;
+$brochureEventActiveButtonBackgroundHover: $grey3;
+$brochureEventActiveButtonColor: $colorPrime;
+$brochureEventActiveButtonColorHover: $colorPrime;
+$brochureEventBackground: darken($colorPageBg, 3%);
+$brochureEventButtonBackground: darken($colorPageBg, 9%);
+$brochureEventButtonBackgroundHover: darken($colorPageBg, 9%);
+$brochureEventButtonColor: $grey1;
+$brochureEventButtonColorHover: $colorDefaultText;
+$brochureEventButtonPadding: 4px;
+$brochureEventButtonRadius: 100%;
+$brochureEventButtonSize: 32px;
+$brochureEventExpandButtonColor: $grey1;
+$brochureEventExpandButtonColorHover: $colorDefaultText;
+$brochureEventExpandButtonSize: 12px;
+$brochureEventPadding: 10px 15px;
+$brochureEventRadius: $defaultCardRadius;
+$brochureEventsFontsize: $fs_small;
+$brochureEventsMargin: 30px;
+$brochureEventSpacing: 5px;
+$brochureEventsPopoverBackground: $colorPageBg;
+$brochureEventsPopoverPadding: 20px;
+$brochureEventsPopoverRadius: $defaultCardRadius;
+$brochureEventsPopoverShadow: inherit;
+$brochureGenreBackground: transparent;
+$brochureGenreBackgroundHover: transparent;
+$brochureGenreColor: $defaultLink;
+$brochureGenreColorHover: $defaultLinkHover;
+$brochureGenreFontfamily: inherit;
+$brochureGenreFontsize: $fs_tiny;
+$brochureGenreFontweight: normal;
+$brochureGenreHeight: 1.2em;
+$brochureGenrePadding: 0;
+$brochureGenreRadius: 0;
+$brochureGenreSpacing: 10px;
+$brochureGenreTexttransform: uppercase;
+$brochureGridSpacing: 15px;
+$brochureItemAnimations: [];
+$brochureLocationFontsize: $fs_tiny;
+$brochureLocationMargin: 5px 0 0 0;
+$brochureMetaFirstPadding: 0 0 0 15px;
+$brochureMetaLastPadding: 0 15px;
+$brochureMetaPadding: 0 0 15px 0;
+$brochureModalDescMargin: 20px 30px 30px 30px;
+$brochureModalMetaFirstPadding: 0;
+$brochureModalMetaLastPadding: 0;
+$brochureModalMetaPadding: 0 30px 20px 30px;
+$brochureModalPadding: 0 45px;
+$brochureModalPaddingSmall: 0 20px;
+$brochureModalSubtitleFontsize: $basicH4Fontsize;
+$brochureModalSubtitleMargin: 0;
+$brochureModalSupertitleFontsize: $fs_small;
+$brochureModalSupertitleMargin: 0 0 5px 0;
+$brochureModalTitleFontsize: $basicH2Fontsize;
+$brochureModalTitleMargin: 0 0 5px 0;
+$brochureModalWidth: 740px;
+$brochureNavBackground: #FFF;
+$brochureNavBorder: none;
+$brochureNavColor: #000;
+$brochureNavColorLight: #FFF;
+$brochureNavHeight: 30px;
+$brochureNavOffsetTop: 30px;
+$brochureNavOpacity: .8;
+$brochureNavOpacityHover: 1;
+$brochureNavRadius: 100%;
+$brochureNavWidth: 30px;
+$brochureSmallDateColor: $colorDefaultText;
+$brochureSmallDateFontsize: $fs_small;
+$brochureSmallDateMargin: 0;
+$brochureSubtitleColor: $colorDefaultText;
+$brochureSubtitleFontfamily: $fontNormal;
+$brochureSubtitleFontsize: $fs_small;
+$brochureSubtitleFontweight: normal;
+$brochureSubtitleLineheight: normal;
+$brochureSubtitleMargin: 0;
+$brochureSubtitleTexttransform: none;
+$brochureSupertitleBackground: transparent;
+$brochureSupertitleColor: $color1;
+$brochureSupertitleFontfamily: $fontNormal;
+$brochureSupertitleFontsize: $fs_tiny;
+$brochureSupertitleFontweight: normal;
+$brochureSupertitleLineheight: 1;
+$brochureSupertitleMargin: 0 0 5px 0;
+$brochureSupertitlePadding: 0;
+$brochureSupertitleTexttransform: uppercase;
+$brochureTeaserColor: inherit;
+$brochureTeaserFontfamily: inherit;
+$brochureTeaserFontsize: inherit;
+$brochureTeaserFontweight: bold;
+$brochureTeaserLineheight: 1.4;
+$brochureTeaserMargin: 0 30px;
+$brochureTeaserTexttransform: none;
+$brochureTitleColor: $colorDefaultText;
+$brochureTitleColorHover: $colorDefaultText;
+$brochureTitleDecorationHover: none;
+$brochureTitleFontfamily: $fontTitleContent;
+$brochureTitleFontsize: $fs_small_title;
+$brochureTitleLineheight: 1.2;
+$brochureTitleMargin: 0 0 5px 0;
+$brochureTitleTextTransform: none;
+$brochureTitleWeight: bold;
+$brochureVenueFontsize: $fs_tiny;
+$brochureVenueMargin: 5px 0 0 0;
+$brochureVideoMargin: 15px 30px;
+$cardGenreBackground: transparent;
+$cardGenreBackgroundHover: transparent;
+$cardGenreFontFamily: $fontNormal;
+$cardGenreFontWeight: normal;
+$cardGenrePadding: 0;
+$cardGenreRadius: 0;
+$cardGenresFontsize: $fs_tiny;
+$cardGenreTexttransform: uppercase;
+$cardListMobileDateFontfamily: $fontNormal;
+$cardListMobileDateFontsize: $fs_small;
+$cardListMobileDateLineheight: normal;
+$cardListMobileDateTexttransform: uppercase;
+$cardListMobileDateWeight: normal;
+$cardMultiDateFontfamily: $fontNormal;
+$cardMultiDateFontsize: $fs_large;
+$cardMultiDateLineHeight: 1;
+$cardMultiDateSplitAlignment: center;
+$cardMultiDateTexttransform: none;
+$cardMultiDateWeight: normal;
+$cardPriceFontFamily: inherit;
+$cardPriceFontsize: inherit;
+$cardPriceFontWeight: inherit;
+$cardPriceTexttransform: none;
+$cardSupertitleFontfamily: $fontNormal;
+$cardSupertitleFontsize: $fs_small;
+$cardSupertitleLineheight: 1.3;
+$cardSupertitleTexttransform: uppercase;
+$cardSupertitleWeight: normal;
+$colorBgDetailContentsTitleDesc: transparent;
+$colorBgListItems: $white;
+$colorBgListItemSuperTitle: transparent;
+$colorBgMultipleListItems: $color9; // yes, this is for the date box
+$colorBgMultipleListItemsBtn: $colorBgBtnActive;
+$colorBgMultipleListItemsBtnExp: $colorBgBtnActive;
+$colorBgMultipleListItemsBtnHover: $colorBtnActiveHover;
+$colorBgRemoveItem: $white;
+$colorBgRemoveItemHover: $white;
+$colorContentsH2: $white;
+$colorContentsText: $white;
+$colorlistItemSubtitle: $colorDefaultText;
+$colorlistItemTagline: inherit;
+$colorListItemTime: inherit;
+$colorListItemTitle: inherit;
+$colorListItemTitleHover: inherit;
+$colorListMeta: $grey2;
+$colorListMetaHover: $black;
+$colorListMobileDate: $black;
+$colorMetaBorder: $color8;
+$colorMultipleListItemsBtnText: $colorBtnActiveText;
+$colorMultipleListItemsBtnTextExp: $colorBtnActiveText;
+$colorMultipleListItemsBtnTextHover: $colorBtnActiveTextHover;
+$colorMultipleListItemsText: $white;
+$colorOrderRemoveItem: $black;
+$colorOrderRemoveItemHover: $color1;
+$colorSupertitle: $color1;
+$colorWelcomeAvatarBg: $white;
+$colorWelcomeMsg: $white;
+$colorWelcomeMyAccountLink: $white;
+$colorWelcomeMyAccountLinkHover: $black;
+$colorWelcomeStatus: $white;
+$emptyListFontsize: $fs_large_subtitle;
+$emptyListLineheight: 1.22em;
+$listCompactDateTimeAlign: left;
+$listCompactDateTimeAlignment: flex-start;
+$listCompactDateTimeBackground: transparent;
+$listCompactDateTimeInnerMargin: 0;
+$listCompactDateTimeInnerPadding: 20px 30px 10px 15px;
+$listDateTimeInnerMargin: 0;
+$listDateTimeInnerPadding: 0;
+$listDateTimePadding: 30px 20px 10px 20px;
+$listGotoBtnAlignment: right;
+$listGotoBtnBackground: $colorBgBtnActive;
+$listGotoBtnBackgroundHover: $colorBtnActiveHover;
+$listGotoBtnBorder: $defaultBtnBorderActive;
+$listGotoBtnBorderHover: $defaultBtnBorderActiveHover;
+$listGotoBtnColor: $colorBtnActiveText;
+$listGotoBtnColorHover: $colorBtnActiveTextHover;
+$listGotoBtnFont: $defaultBtnFontfamily;
+$listGotoBtnFontsize: $defaultBtnFontsize;
+$listGotoBtnFontWeight: $defaultBtnWeight;
+$listGotoBtnLineHeight: $defaultBtnLineHeight;
+$listGotoBtnPadding: $defaultBtnPadding;
+$listGotoBtnTransform: $defaultBtnTexttransform;
+$listItemAnimations: [];
+$listItemBtnContainerPaddingMobile: 15px;
+$listItemCompactHeight: 150px;
+$listItemDateBorderBottom: none;
+$listItemDateBorderLeft: none;
+$listItemDateBorderRight: none;
+$listItemDateBorderTop: none;
+$listItemDateTimeAlign: left;
+$listItemDateTimeBackground: transparent;
+$listItemDateTimeColor: inherit;
+$listItemDateTimeSeparator: '-';
+$listItemDescPadding: 20px 30px 10px 30px;
+$listItemHeight: 200px;
+$listItemHeightExtended: 540px;
+$listItemInnerPadding: 0;
+$listItemInnerPaddingMobile: 0;
+$listItemMarginBottom: 30px;
+$listItemMetaBackground: transparent;
+$listItemMetaHeightBP4: 41px;
+$listItemMetaHeightBP5: 50px;
+$listItemMetaItemPadding: 0 20px;
+$listItemMetaPadding: 0 15px 0 30px;
+$listItemMetaPaddingBP4: 0 30px 15px 30px;
+$listItemMobileDateMargin: 0 0 5px 0;
+$listItemMobileDatePadding: 0;
+$listItemMultiBorderBottom: none;
+$listItemMultiBorderLeft: none;
+$listItemMultiBorderRight: none;
+$listItemMultiBorderTop: none;
+$listItemMultipleBorder: $defaultBtnBorderActive; // damn, someone forgot to put Btn in the var name...
+$listItemMultipleBorderExp: $defaultBtnBorderActive;
+$listItemMultipleBorderHover: $defaultBtnBorderActiveHover;
+$listItemMultipleBtnAlignment: center;
+$listItemMultipleBtnIconMargin: 0 0 0 10px;
+$listItemMultipleBtnIconSize: inherit;
+$listItemMultipleBtnPadding: $defaultBtnPadding;
+$listItemMultipleBtnWidth: 100%;
+$listItemMultipleRadius: $defaultBtnRadius;
+$listItemMultipleShadow: $defaultBtnShadowActive;
+$listItemMultipleShadowActive: $defaultBtnShadowActiveActive;
+$listItemMultipleShadowExp: $defaultBtnShadowActive;
+$listItemMultipleShadowHover: $defaultBtnShadowActiveHover;
+$listItemStatusColor: inherit;
+$listItemStatusFontfamily: inherit;
+$listItemStatusFontsize: $fs_tiny;
+$listItemStatusFontweight: normal;
+$listItemStatusLineheight: 1.2;
+$listItemStatusLinkColor: inherit;
+$listItemStatusLinkColorHover: $defaultLinkHover;
+$listItemStatusLinkDecoration: none;
+$listItemStatusLinkDecorationHover: $defaultLinkDecorationHover;
+$listItemStatusPadding: $defaultBtnPadding;
+$listItemStatusTextalign: center;
+$listItemStatusTexttransform: none;
+$listItemSubtitleFontfamily: $fontNormal;
+$listItemSubtitleFontsize: $fs_small;
+$listItemSubtitleLineheight: normal;
+$listItemSubtitleMargin: 0;
+$listItemSubtitleTextTransform: none;
+$listItemSubtitleWeight: normal;
+$listItemSuperTitleMargin: 0;
+$listItemSuperTitlePadding: 0;
+$listItemTaglineFontfamily: $fontNormal;
+$listItemTaglineFontsize: $fs_normal;
+$listItemTaglineLineheight: 1;
+$listItemTaglineMargin: 10px 0 0 0;
+$listItemTaglineTextTransform: none;
+$listItemTaglineWeight: normal;
+$listItemTimeFontfamily: $fontNormal;
+$listItemTimeFontsize: $fs_small;
+$listItemTimeLineheight: normal;
+$listItemTimeMargin: 0;
+$listItemTimeTextTransform: none;
+$listItemTimeWeight: normal;
+$listItemTitleFontfamily: $fontTitleContent;
+$listItemTitleFontsize: $fs_small_title;
+$listItemTitleHoverDecoration: underline;
+$listItemTitleLineheight: normal;
+$listItemTitleMarginBottom: 0;
+$listItemTitleTextTransform: none;
+$listItemTitleWeight: bold;
+$listItemVideoButtonsize: 72px;
+$listMetaBorder: 1px solid;
+$listMetaBorderTop: none;
+$listMetaBtnBackground: $colorBgBtnActive;
+$listMetaBtnBackgroundHover: $colorBtnActiveHover;
+$listMetaBtnBorder: $defaultBtnBorderActive;
+$listMetaBtnBorderHover: $defaultBtnBorderActiveHover;
+$listMetaBtnColor: $colorBtnActiveText;
+$listMetaBtnColorHover: $colorBtnActiveTextHover;
+$listMetaBtnMargin: 8px 0 8px 15px;
+$listMetaFontsize: $fs_small;
+$listMetaRemoveBtnMargin: 0 15px 15px 0;
+$listSeparatorAlignment: left;
+$listSeparatorColor: $grey2;
+$listSeparatorFontfamily: $fontNormalBold;
+$listSeparatorFontsize: $basicH3Fontsize;
+$listSeparatorLineheight: 1;
+$listSeparatorMargin: 60px 0 30px 0;
+$listSeparatorTextTransform: none;
+$listSeparatorWeight: bold;
+$orderItemDateTimeBackground: transparent;
+$orderItemDateTimeColor: inherit;
+$orderItemTimeColor: inherit;
+$orderListButtonsPadding: 0 15px 10px 0;
+$orderListRemoveAlignment: center;
+$orderListRemovePadding: 2px 5px;
+$orderListRemoveSize: 12px;
+$searchBarContainerPadding: 0 15px;
+$searchBarFontfamily: $fontNormal;
+$searchBarFontsize: $fs_normal;
+$searchBarFontweight: normal;
+$searchBarIconWidth: 30px;
+$searchBarInputBackground: $white;
+$searchBarInputBorderBottom: none;
+$searchBarInputBorderLeft: none;
+$searchBarInputBorderRight: none;
+$searchBarInputBorderTop: none;
+$searchBarInputColor: $black;
+$searchBarInputHorizontalSpacing: 30px;
+$searchBarInputPadding: 8px 12px;
+$searchBarInputRadius: 15px 15px 15px 15px;
+$searchBarInputVerticalSpacing: 15px;
+$searchBarTextTransform: none;
+$showDetailContentsFontfamily: $fontNormal;
+$showDetailContentsFontsize: $fs_large_subtitle;
+$showDetailContentsH2Fontfamily: $fontTitleTemplate;
+$showDetailContentsH2Fontsize: $fs_large_title;
+$showDetailContentsH2LineHeight: normal;
+$showDetailContentsH2margin: 0 0 30px 0;
+$showDetailContentsH2Texttransform: none;
+$showDetailContentsH2Weight: bold;
+$showDetailContentsLineHeight: 1.67;
+$showDetailContentsTexttransform: none;
+$showDetailContentsTitleDescBorderLeft: none;
+$showDetailContentsTitleDescPadding: 0;
+$showDetailContentsUlMargin: 10px 0 10px 25px;
+$showDetailContentsWeight: normal;
+$welcomeBalanceBackground: $colorPrime;
+$welcomeBalanceColor: $white;
+$welcomeBalanceFontsize: $fs_normal;
+$welcomeBalanceIconMargin: 0 10px 0 0;
+$welcomeBalanceIconSize: 18px;
+$welcomeBalanceMargin: 0;
+$welcomeBalancePadding: 10px;
+$welcomeMsgFontfamily: $fontNormal;
+$welcomeMsgFontsize: $fs_large_title;
+$welcomeMsgLineHeight: 0.8;
+$welcomeMsgTexttransform: none;
+$welcomeMsgWeight: bold;
+$welcomeMyAccountFontfamily: $fontNormal;
+$welcomeMyAccountFontsize: $fs_normal;
+$welcomeMyAccountLineHeight: normal;
+$welcomeMyAccountTexttransform: none;
+$welcomeMyAccountWeight: normal;
+$welcomePadding: 0 15px;
+$welcomeStatusMarginTop: 10px;
+$welcomeStatustFontfamily: $fontNormal;
+$welcomeStatustFontsize: $fs_normal;
+$welcomeStatustLineHeight: 1;
+$welcomeStatustTexttransform: uppercase;
+$welcomeStatustWeight: normal;
+$welcomeTimeslotBackground: $colorPrime;
+$welcomeTimeslotColor: $white;
+$welcomeTimeslotFontsize: $fs_normal;
+$welcomeTimeslotIconMargin: 0 10px 0 0;
+$welcomeTimeslotIconSize: 18px;
+$welcomeTimeslotMargin: 0;
+$welcomeTimeslotPadding: 10px;
+$colorBgShowDetailDate: $color12;
+$colorBgShowHeader: $white;
+$colorShowDetailDate: $white;
+$showDetailDateAlignment: center;
+$showDetailDateFontfamily: $fontNormal;
+$showDetailDateFontsize: $fs_huge_title;
+$showDetailDateLabelMargin: 10px 0 0 0;
+$showDetailDateLabelTexttransform: none;
+$showDetailDateLineHeight: 1;
+$showDetailDateTexttransform: none;
+$showDetailDateTimeAlign: center;
+$showDetailDateTimeBorderBottom: none;
+$showDetailDateTimeBorderLeft: none;
+$showDetailDateTimeBorderRight: none;
+$showDetailDateTimeBorderTop: none;
+$showDetailDateTimeJustify: center;
+$showDetailDateTimePadding: 30px;
+$showDetailDateTimePaddingMobile: 15px;
+$showDetailDateWeight: bold;
+$showDetailDescPaddding: 30px 45px;
+$showHeaderBorder: none;
+$showHeaderDescHeight: 285px;
+$showHeaderDescRadiusBottom: $defaultCardRadius;
+$showHeaderDescRadiusLeft: $defaultCardRadius;
+$showHeaderDescRadiusRight: $defaultCardRadius;
+$showHeaderDescRadiusTop: $defaultCardRadius;
+$showHeaderDescShadow: $defaultBoxShadow;
+$showHeaderHeight: 540px;
+$showHeaderHeightMobile: 320px;
+$showHeaderWrapperMarginBottom: -40px; // pulls the card up over the photo
+$showDetailTimeMargin: 15px 0 0 0;
+$showDetailTimeFontfamily: $showDetailDateFontfamily;
+$showDetailTimeWeight: $showDetailDateWeight;
+$showDetailTimeSize: $showDetailDateFontsize;
+$showDetailTimeTexttransform: $showDetailDateTexttransform;
+$colorShowDetailTime: inherit;
+$cardMultiDateSplitAlignment: center;
+$showDetailSeparatorPadding: 0 1ex;
+$colorBgDetailShowContent: $color8;
+$colorBgShowDetailHeaderBtn: $colorBgBtnActive;
+$colorBgShowDetailHeaderBtnExpanded: $colorBtnActiveHover;
+$colorBgShowDetailHeaderBtnExpandedText: $colorBtnActiveTextHover;
+$colorBgShowDetailHeaderBtnHover: $colorBtnActiveHover;
+$colorBgShowDetailSupertitle: transparent;
+$colorShowDetailGenre: inherit;
+$colorShowDetailGenreHover: $color4;
+$colorShowDetailH1: inherit;
+$colorShowDetailHeaderBtnText: $colorBtnActiveText;
+$colorShowDetailHeaderBtnTextHover: $colorBtnActiveTextHover;
+$colorShowDetailSubtitle: inherit;
+$colorShowDetailSupertitle: $color1;
+$colorShowDetailTagline: inherit;
+$colorShowHeaderCredits: inherit;
+$detailDateTimeBtnBorder: $defaultBtnBorderActive;
+$detailDateTimeBtnBorderExp: $defaultBtnBorderActive;
+$detailDateTimeBtnBorderHover: $defaultBtnBorderActiveHover;
+$detailDateTimeBtnMargin: 45px 0 0 0;
+$detailDateTimeBtnPadding: $defaultBtnPadding;
+$detailDateTimeBtnRadius: $defaultBtnRadius;
+$detailDateTimeBtnShadow: $defaultBtnShadowActive;
+$detailDateTimeBtnShadowActive: $defaultBtnShadowActiveActive;
+$detailDateTimeBtnShadowExpanded: $defaultBtnShadowActive;
+$detailDateTimeBtnShadowHover: $defaultBtnShadowActiveHover;
+$detailDateTimeBtnWidth: auto;
+$showDetailButtonMarginMobile: 15px 0 0 0;
+$showDetailGenreBackground: transparent;
+$showDetailGenreBackgroundHover: transparent;
+$showDetailGenreFontFamily: $fontNormal;
+$showDetailGenreFontSize: 14px;
+$showDetailGenreLineHeight: 1;
+$showDetailGenrePadding: 0;
+$showDetailGenreRadius: 0;
+$showDetailGenreSpacing: 15px;
+$showDetailGenreTextTransform: uppercase;
+$showDetailGenreWeight: none;
+$showDetailH1Fontfamily: $fontTitleContent;
+$showDetailH1Fontsize: $fs_huge_title;
+$showDetailH1LineHeight: normal;
+$showDetailH1Margin: 30px 0 10px 0;
+$showDetailH1Texttransform: none;
+$showDetailH1Weight: bold;
+$showDetailLocationColor: inherit;
+$showDetailLocationFontfamily: $fontNormalBold;
+$showDetailLocationFontsize: $fs_small;
+$showDetailLocationLineheight: 1.4;
+$showDetailLocationMargin: 10px 0 0 0;
+$showDetailLocationTextTransform: none;
+$showDetailLocationWeight: bold;
+$showDetailMetaColor: inherit;
+$showDetailMetaHeartColor: inherit;
+$showDetailMetaHeartColorHover: $color1;
+$showDetailMetaMargin: 30px 0 0 0;
+$showDetailMetaSpacing: 30px;
+$showDetailMetaSpacingMobile: 15px;
+$showDetailPriceBtnBackground: none;
+$showDetailPriceBtnBackgroundHover: none;
+$showDetailPriceBtnColor: inherit;
+$showDetailPriceBtnColorHover: $color1;
+$showDetailPriceBtnFontfamily: $fontNormal;
+$showDetailPriceBtnFontsize: $fs_normal;
+$showDetailPriceBtnTexttransform: none;
+$showDetailPriceBtnWeight: normal;
+$showDetailSubtitleFontfamily: $fontTitleContent;
+$showDetailSubtitleFontsize: $fs_huge_subtitle;
+$showDetailSubtitleLineHeight: 22px;
+$showDetailSubtitleTexttransform: none;
+$showDetailSubtitleWeight: bold;
+$showDetailSupertitleFontfamily: $fontNormal;
+$showDetailSupertitleFontsize: $fs_small;
+$showDetailSupertitleLineHeight: 1.3;
+$showDetailSupertitleMargin: 15px 0 5px 0;
+$showDetailSupertitlePadding: 0;
+$showDetailSupertitleTexttransform: uppercase;
+$showDetailSupertitleWeight: normal;
+$showDetailTaglineFontfamily: inherit;
+$showDetailTaglineFontsize: $baseFontsize;
+$showDetailTaglineLineHeight: inherit;
+$showDetailTaglineMargin: 10px 0 0 0;
+$showDetailTaglineTexttransform: none;
+$showDetailTaglineWeight: inherit;
+$showDetailTopDateColor: inherit;
+$showDetailTopDateFontfamily: inherit;
+$showDetailTopDateFontsize: $baseFontsize;
+$showDetailTopDateLineheight: 1;
+$showDetailTopDateMargin: 30px 0 0 0;
+$showDetailTopDatePadding: 0;
+$showDetailTopDateTexttransform: none;
+$showDetailTopDateWeight: inherit;
+$showDetailVenueColor: inherit;
+$showDetailVenueFontfamily: $fontNormal;
+$showDetailVenueFontsize: $fs_small;
+$showDetailVenueLineheight: 1.4;
+$showDetailVenueMargin: 10px 0 0 0;
+$showDetailVenueTextTransform: none;
+$showDetailVenueWeight: normal;
+$showDetailVideoBackground: #000;
+$showDetailVideoButtonsize: 72px;
+$showHeaderAnimation: none;
+$showHeaderBtnDetailFontsize: $defaultBtnFontsize;
+$showHeaderCreditsFontfamily: inherit;
+$showHeaderCreditsFontsize: inherit;
+$showHeaderCreditsLineHeight: inherit;
+$showHeaderCreditsMargin: 10px 0 0 0;
+$showHeaderCreditsTexttransform: inherit;
+$showHeaderCreditsWeight: inherit;
+$showHeaderOverlay: transparent;
+$showHeaderStatusColor: inherit;
+$showHeaderStatusColorMobile: inherit;
+$showHeaderStatusFontfamily: inherit;
+$showHeaderStatusFontsize: inherit;
+$showHeaderStatusFontweight: normal;
+$showHeaderStatusLineheight: 1.2;
+$showHeaderStatusLinkColor: inherit;
+$showHeaderStatusLinkColorHover: $defaultLinkHover;
+$showHeaderStatusLinkDecoration: none;
+$showHeaderStatusLinkDecorationHover: $defaultLinkDecorationHover;
+$showHeaderStatusMobileLinkColor: inherit;
+$showHeaderStatusMobileLinkColorHover: $defaultLinkHover;
+$showHeaderStatusTextalign: center;
+$showHeaderStatusTexttransform: none;
+$colorBgFeaturedSlidesCard: $grey5;
+$colorBgFeaturedSlidesCardSuperTitle: $colorPrime;
+$colorFeaturedCardDate: grey1;
+$colorFeaturedSlidesCardGenre: $grey2;
+$colorFeaturedSlidesCardSubTitle: inherit;
+$colorFeaturedSlidesCardText: inherit;
+$colorFeaturedSlidesCardTitle: inherit;
+$colorFeaturedSlidesCardTitleHover: inherit;
+$featuredSlidesAnimations: [];
+$featuredSlidesButtonAlignment: left;
+$featuredSlidesButtonBackground: $colorBgBtnActive;
+$featuredSlidesButtonBackgroundHover: $colorBtnActiveHover;
+$featuredSlidesButtonBorder: $defaultBtnBorderActive;
+$featuredSlidesButtonBorderHover: $defaultBtnBorderActiveHover;
+$featuredSlidesButtonColor: $colorBtnActiveText;
+$featuredSlidesButtonColorHover: $colorBtnActiveTextHover;
+$featuredSlidesCardBorder: none;
+$featuredSlidesCardDateFontfamily: $fontNormal;
+$featuredSlidesCardDateFontsize: $fs_small;
+$featuredSlidesCardDateLineheight: 1;
+$featuredSlidesCardDateMargin: 0 0 10px 0;
+$featuredSlidesCardDateTexttransform: none;
+$featuredSlidesCardDateWeight: normal;
+$featuredSlidesCardDescMargin: 0;
+$featuredSlidesCardDescPadding: 15px;
+$featuredSlidesCardDescSeparator: none;
+$featuredSlidesCardGenreFontfamily: $fontNormal;
+$featuredSlidesCardGenreFontsize: $fs_small;
+$featuredSlidesCardGenreLineheight: 1;
+$featuredSlidesCardGenreMargin: 0 15px 0 0;
+$featuredSlidesCardGenreTexttransform: none;
+$featuredSlidesCardGenreWeight: normal;
+$featuredSlidesCardMargin: 20px 10px;
+$featuredSlidesCardSubtitleFontfamily: $fontNormal;
+$featuredSlidesCardSubtitleFontsize: $fs_normal;
+$featuredSlidesCardSubtitleLineheight: 1;
+$featuredSlidesCardSubtitleMargin: 0 0 15px 0;
+$featuredSlidesCardSubtitleTexttransform: uppercase;
+$featuredSlidesCardSubtitleWeight: normal;
+$featuredSlidesCardSupertitleFontsize: $fs_tiny;
+$featuredSlidesCardTextFontfamily: inherit;
+$featuredSlidesCardTextFontsize: $fs_small;
+$featuredSlidesCardTextLineheight: 1.2;
+$featuredSlidesCardTextMargin: 10px 0 15px 0;
+$featuredSlidesCardTextTexttransform: none;
+$featuredSlidesCardTextWeight: normal;
+$featuredSlidesCardTitleDecoration: none;
+$featuredSlidesCardTitleDecorationHover: none;
+$featuredSlidesCardTitleFontfamily: $fontTitleTemplate;
+$featuredSlidesCardTitleFontsize: $fs_medium_title;
+$featuredSlidesCardTitleLineheight: 1.2;
+$featuredSlidesCardTitleMargin: 15px 0 0 0;
+$featuredSlidesCardTitleTexttransform: none;
+$featuredSlidesCardTitleWeight: bold;
+$featuredSlidesNavColor: $grey2;
+$featuredSlidesNavColorHover: $black;
+$cardDateFontfamily: $fontNormal;
+$cardDateFontheight: normal;
+$cardDateFontsize: $fs_small;
+$cardDateFontTextTransform: none;
+$cardDateFontWeight: normal;
+$cardH1Fontfamily: $fontTitleTemplate;
+$cardH1Fontsize: $fs_medium_title;
+$cardH1Lineheight: normal;
+$cardH1Lineheight: normal;
+$cardH1Texttransform: none;
+$cardH1Weight: bold;
+$cardH2FontFamily: $fontNormal;
+$cardH2Fontsize: $fs_small;
+$cardH2Lineheight: normal;
+$cardH2Texttransform: none;
+$cardH2Weight: bold;
+$colorBgSuggestionCard: $white;
+$colorBgSuggestionCardSuperTitle: $color12;
+$colorSuggestionCard: $black;
+$colorSuggestionCardDate: $grey1;
+$colorSuggestionCardGenre: $defaultLink;
+$colorSuggestionCardGenreHover: $defaultLinkHover;
+$colorSuggestionCardSubTitle: $black;
+$colorSuggestionCardSuperTitle: $white;
+$colorSuggestionCardTitle: $black;
+$colorSugHeader: $grey1;
+$sugCardBorder: none;
+$sugCardDateMargin: 10px;
+$sugCardDescPadding: 15px;
+$suggestionCardButtonMargin: 30px 0 0 0;
+$suggestionFontfamily: $fontNormal;
+$suggestionH1MarginBottom: 5px;
+$suggestionH2MarginBottom: 15px;
+$suggestionLineHeight: 1;
+$suggestionTexttransform: none;
+$suggestionWeight: normal;
+$sugHeaderFontfamily: $fontAlt1;
+$sugHeaderLineheight: normal;
+$sugHeaderMarginBottom: 0;
+$sugHeaderPadding: 0 0 30px 0;
+$sugHeaderTextAlign: left;
+$sugHeaderTextTransform: none;
+$sugHeaderWeight: bold;
+$colorFlexFeaturedSlideBg: $white; // background of a flex item
+$homeFlexFeaturedColor: $white;    // base text color in a flex item
+$homeFlexFeaturedColorHover: $colorPrime;
+$homeFlexFeaturedRowMargin: 15px;        // space between the top and bottom of the cards
+$homeFlexFeaturedColumnMargin: 15px;     // space between the sides of the cards
+$homeFlexFeaturedRowPadding: 0;          // to make the outer edges line up with other content
+$homeFlexFeaturedPadding: 30px;          // space inside a card, around the description
+$homeFlexFeaturedPaddingWideSides: 15px; // space inside a card, around the description, in wide layouts
+$homeFlexBoxedWideContent: false;
+$homeFlexImageHeight: 200px; // overruled via part parameters for larger breakpoint
+$homeFlexRadius: 0;
+// super title
+$homeFlexFeaturedSupertitleDisplay: block;
+$homeFlexFeaturedSupertitleMargin: 0;
+$homeFlexFeaturedSupertitlePadding: 0;
+$flexFeaturedSupertitleFontfamily: $fontNormal;
+$flexFeaturedSupertitleWeight: normal;
+$flexFeaturedSupertitleFontsize: $fs_small; // when changing this font-size, also set the 2col and 3col variant below
+$flexFeatured2colSupertitleFontsize: $flexFeaturedSupertitleFontsize;
+$flexFeatured3colSupertitleFontsize: $flexFeaturedSupertitleFontsize;
+$flexFeaturedSupertitleLineHeight: 1.3;
+$flexFeaturedSupertitleTexttransform: uppercase;
+$colorBgFlexFeaturedSupertitle: transparent;
+$colorFlexFeaturedSupertitle: inherit;
+$colorFlexFeaturedSupertitleHover: inherit;
+// title
+$homeFlexFeaturedTitleMarginBottom: 0;
+$flexFeaturedTitleFontfamily: $fontTitleContent;
+$flexFeaturedTitleWeight: bold;
+$flexFeaturedTitleLineHeight: 1;
+$flexFeaturedTitleTexttransform: none;
+$flexFeaturedTitleDecoration: none;
+$flexFeaturedTitleDecorationHover: none;
+$flexFeaturedTitleFontsize: $fs_huge_title; // when changing this font-size, also set the 2col and 3col variant below
+$flexFeatured2colTitleFontsize: $flexFeaturedTitleFontsize;
+$flexFeatured3colTitleFontsize: $flexFeaturedTitleFontsize;
+$colorFlexFeaturedTitle: inherit;
+$colorFlexFeaturedTitleHover: inherit;
+// subtitle
+$homeFlexFeaturedSubtitleMarginBottom: 15px;
+$flexFeaturedSubtitleFontfamily: inherit;
+$flexFeaturedSubtitleWeight: normal;
+$flexFeaturedSubtitleLineHeight: 1;
+$flexFeaturedSubtitleTexttransform: none;
+$flexFeaturedSubtitleFontsize: $fs_normal; // when changing this font-size, also set the 2col and 3col variant below
+$flexFeatured2colSubtitleFontsize: $flexFeaturedSubtitleFontsize;
+$flexFeatured3colSubtitleFontsize: $flexFeaturedSubtitleFontsize;
+$colorFlexFeaturedSubtitle: inherit;
+$colorFlexFeaturedSubtitleHover: inherit;
+// date
+$homeFlexFeaturedDateMarginBottom: 15px;
+$flexFeaturedDateFontfamily: inherit;
+$flexFeaturedDateWeight: normal;
+$flexFeaturedDateLineHeight: normal;
+$flexFeaturedDateTexttransform: none;
+$flexFeaturedDateFontsize: $fs_normal; // when changing this font-size, also set the 2col and 3col variant below
+$flexFeatured2colDateFontsize: $flexFeaturedDateFontsize;
+$flexFeatured3colDateFontsize: $flexFeaturedDateFontsize;
+$colorFlexFeaturedDate: inherit;
+$colorFlexFeaturedDateHover: inherit;
+// button
+$homeFlexFeaturedBtnMarginTop: 15px;
+$homeFlexFeaturedBtnPadding: $defaultBtnPadding;
+$homeFlexFeaturedBtnBorder: $defaultBtnBorderActive;
+$homeFlexFeaturedBtnBorderHover: $defaultBtnBorderActiveHover;
+$homeFlexFeaturedBtnBackground: $colorBgBtnActive;
+$homeFlexFeaturedBtnBackgroundHover: $colorBtnActiveHover;
+$homeFlexFeaturedBtnColor: $colorBtnActiveText;
+$homeFlexFeaturedBtnColorHover: $colorBtnActiveTextHover;
+$homeFlexFeaturedBtnFontsize: $defaultBtnFontsize;
+$homeFlexFeaturedBtnTexttransform: $defaultBtnTexttransform;
+$homeFlexFeaturedBtnAlign: flex-end;
+// Extra buttons above and below the grid
+$featuredExtraTopBtnJustify: space-between;
+$homeFlexBannersExtraBtnAlignment: center;
+$homeFlexBannersExtraBtnMargin: 50px 0;
+$homeFlexBannersExtraTopBtnHeaderMargin: 50px 0;
+$homeFlexBannersExtraTopBtnHeaderFontfamily: $fontNormalBold;
+$homeFlexBannersExtraTopBtnHeaderWeight: bold;
+$homeFlexBannersExtraTopBtnHeaderLineheight: 1;
+$homeFlexBannersExtraTopBtnHeaderTextTransform: none;
+$homeFlexBannersExtraTopBtnHeaderColor: inherit;
+$homeFlexBannersExtraTopBtnHeaderFontsize: $basicH2Fontsize;
+$homeFlexVideoButtonsize: 72px;
+/*
+    optional alternative styles for banners
+    set to true to enable the banners grid to have a different style
+    when doing so, also copy all the variables below so that they inherit properly
+*/
+$homeFlexBannersAlternatives: false;
+$homeFlexFeaturedAlignStrategy: left;
+$homeFlexBannersAlignStrategy: $homeFlexFeaturedAlignStrategy;
+$homeFlexBannersPadding: $homeFlexFeaturedPadding;
+$homeFlexBannersDescColorHover: $homeFlexFeaturedColorHover;
+// banners: title
+$homeFlexBannersTitleMarginBottom: $homeFlexFeaturedTitleMarginBottom;
+$flexBannersTitleFontfamily: $flexFeaturedTitleFontfamily;
+$flexBannersTitleWeight: $flexFeaturedTitleWeight;
+$flexBannersTitleLineHeight: $flexFeaturedTitleLineHeight;
+$flexBannersTitleTexttransform: $flexFeaturedTitleTexttransform;
+$flexBannersTitleDecoration: $flexFeaturedTitleDecoration;
+$flexBannersTitleDecorationHover: $flexFeaturedTitleDecorationHover;
+$flexBannersTitleFontsize: $flexFeaturedTitleFontsize;
+$flexBanners2colTitleFontsize: $flexFeaturedTitleFontsize;
+$flexBanners3colTitleFontsize: $flexFeaturedTitleFontsize;
+$colorFlexBannersTitle: $colorFlexFeaturedTitle;
+$colorFlexBannersTitleHover: $colorFlexFeaturedTitleHover;
+// banners: subtitle/description
+$homeFlexBannersDescriptionMarginBottom: $homeFlexFeaturedSubtitleMarginBottom;
+$flexBannersDescriptionFontfamily: $flexFeaturedSubtitleFontfamily;
+$flexBannersDescriptionWeight: $flexFeaturedSubtitleWeight;
+$flexBannersDescriptionLineHeight: $flexFeaturedSubtitleLineHeight;
+$flexBannersDescriptionTexttransform: $flexFeaturedSubtitleTexttransform;
+$flexBannersDescriptionFontsize: $flexFeaturedSubtitleFontsize;
+$flexBannersDescription2colFontsize: $flexFeaturedSubtitleFontsize;
+$flexBannersDescription3colFontsize: $flexFeaturedSubtitleFontsize;
+$colorFlexBannersDescription: $colorFlexFeaturedSubtitle;
+$colorFlexBannersDescriptionHover: $colorFlexFeaturedSubtitleHover;
+// banners: button
+$homeFlexBannersBtnBorder: $homeFlexFeaturedBtnBorder;
+$homeFlexBannersBtnBorderHover: $homeFlexFeaturedBtnColorHover;
+$homeFlexBannersBtnBackground: $homeFlexFeaturedBtnBackground;
+$homeFlexBannersBtnBackgroundHover: $homeFlexFeaturedBtnBackgroundHover;
+$homeFlexBannersBtnColor: $homeFlexFeaturedBtnColor;
+$homeFlexBannersColorHover: $homeFlexFeaturedBtnColorHover;
+$homeFlexAnimations: [];
+
+$colorBgDatepicker: $white;
+$colorDatepickerBorder: $grey3;
+$colorDatepickerPlaceholder: $grey2;
+$colorDatepicker: $colorDefaultText;
+$colorDatepickerHover: $colorDefaultText;
+$colorDatepickerActive: $white;
+$colorDatepickerDisabled: $unavailable;
+
+$datepickerBoxShadow: $defaultBoxShadow;
+
+$datepickerBtnPadding: 6px 12px;
+$datepickerBtnRadius: $defaultBtnRadius;
+
+$datepickerBtnBorder: $defaultBtnBorderDefault;
+$datepickerBtnBorderHover: $defaultBtnBorderActiveHover;
+$datepickerBtnBackground: $colorBgBtnDefault;
+$datepickerBtnBackgroundHover: $colorBtnActiveHover;
+$datepickerBtnColor: $colorBtnDefaultText;
+$datepickerBtnColorHover: $colorBtnActiveTextHover;
+
+$datepickerBtnPrimaryBorder: $defaultBtnBorderActive;
+$datepickerBtnPrimaryBorderHover: $defaultBtnBorderActiveHover;
+$datepickerBtnPrimaryBackground: $colorBgBtnActive;
+$datepickerBtnPrimaryBackgroundHover: $colorBtnActiveHover;
+$datepickerBtnPrimaryColor: $colorBtnActiveText;
+$datepickerBtnPrimaryColorHover: $colorBtnActiveTextHover;
+
+$datepickerFontsize: $fs_tiny;
+
+$colorBgImageCard: $white;
+$colorBgCaptionSingleImage: $color12;
+$colorBgCaptionSingleImageSideBySide: $color12;
+
+$colorCaptionTitleSingleImageText: $white;
+$colorCaptionTitleSingleImageTextSideBySide: $white;
+$colorCaptionSingleImageText: $white;
+$colorCaptionSingleImageTextSidBySide: $white;
+
+$colorImageCardTitle: $colorDefaultText;
+$colorImageCardDesc: $colorDefaultText;
+
+$colorLightboxArrow: $color12;
+$colorLightboxArrowHover: $white;
+
+$mediaCardVariant: 'flat';
+$mediaCardGradient: $gradientOverlay;
+$mediaCardPadding: 20px 25px;
+
+$mediaCaptionHeight: unset;
+$mediaCaptionAlignment: flex-end;
+$mediaCaptionTitleFontfamily: $fontNormal;
+$mediaCaptionTitleFontsize: $fs_medium_title;
+$mediaCaptionTitleLineHeight: normal;
+$mediaCaptionTitleWeight: bold;
+$mediaCaptionTitleTexttransform: none;
+
+$mediaCaptionDescMargin: 10px;
+$mediaCaptionDescFontfamily: $fontNormal;
+$mediaCaptionDescWeight: normal;
+$mediaCaptionDescLineHeight: normal;
+$mediaCaptionDescTexttransform: none;
+$mediaCaptionDescFontsize: $fs_normal;
+
+$mediaCaptionFontfamily: $fontNormal;
+$mediaCaptionFontsize: $fs_medium_title;
+$mediaCaptionLineHeight: normal;
+$mediaCaptionWeight: bold;
+$mediaCaptionTexttransform: none;
+
+$mediaCaptionTitleFontfamilySideBySide: $fontNormal;
+$mediaCaptionTitleFontsizeSideBySide: 26px;
+$mediaCaptionTitleLineHeightSideBySide: normal;
+$mediaCaptionTitleWeightSideBySide: bold;
+$mediaCaptionTitleTexttransformSideBySide: none;
+
+$mediaCaptionDescMarginSideBySide: 10px;
+$mediaCaptionFontfamilySideBySide: $fontNormal;
+$mediaCaptionFontsizeSideBySide: 26px;
+$mediaCaptionLineHeightSideBySide: normal;
+$mediaCaptionWeightSideBySide: bold;
+$mediaCaptionTexttransformSideBySide: none;
+$mediaCaptionPadding: 40px;
+
+$mediaTitleFontfamily: $fontNormal;
+$mediaTitleFontsize: $fs_medium_title;
+$mediaTitleLineHeight: normal;
+$mediaTitleWeight: bold;
+$mediaTitleTexttransform: none;
+$mediaTitleDecoration: none;
+
+$mediaDescMargin: 5px;
+$mediaDescFontfamily: $fontNormal;
+$mediaDescFontsize: $fs_normal;
+$mediaDescLineHeight: 1.5;
+$mediaDescWeight: normal;
+$mediaDescTexttransform: none;
+
+$mediaCompactPadding: 10px;
+$mediaCompactTitleFontsize: $fs_normal;
+$mediaCompactTitleLineheight: 1;
+$mediaCompactDescMargin: 10px;
+$mediaCompactDescFontsize: $fs_small;
+$mediaCompactDescLineheight: 1.2;
+
+$mediaSlideHeight: 550px;  // default crop target, but images maintain the original aspect ratio so we have to limit them here
+
+$mediaGridCentered: false;
+$mediaGridColumnSpacing: 15px;
+$mediaGridRowSpacing: 15px;
+
+$mediaAnimations: [];
+// one or more hero animations, see __defaultBaseValues.scss
+// e.g.: $heroAnimationSaturate, $heroAnimationTwist
+// or a predefined key-frames animation with custom timing
+// e.g.: 2s ease-out hero-twist
+$mediaItemAnimation: none;
+$mediaItemHeight: 550px;
+
+/* ----------------------------------------------------------------
+    Default
+-----------------------------------------------------------------*/
+
+$headerBoxed: true;
+$headerBoxShadow: $defaultBoxShadow;
+$headerBackground: $colorPrime;
+$headerColor: inherit;
+
+$headerShowcaseBackground: transparent;
+$headerShowcaseBorderBottom: none;
+$headerShowcaseBoxShadow: none;
+$headerShowcaseColor: $white;
+
+$brandMargin: 0;
+$brandMarginShowcase: 0;
+$brandMarginSmall: 0;
+$brandPadding: 0;
+$brandHeight: 60px;
+$brandHeightShowcase: 60px;
+
+/* ----------------------------------------------------------------
+    Topbar
+-----------------------------------------------------------------*/
+
+$topbarHoverDecoration: none;
+$topbarColor: inherit;
+$topbarColorHover: $color1;
+$topbarColorShowcase: inherit;
+$topbarColorShowcaseHover: $color1;
+
+$topbarFont: inherit;
+$topbarFontsize: inherit;
+$topbarWeight: normal;
+$topbarTexttransform: none;
+
+$topbarPadding: 0 15px;
+$topbarInnerPadding: 10px 0;
+$topbarPaddingSmall: 0 15px;
+$topbarInnerPaddingSmall: 10px 0;
+$topbarBorder: none;
+$topbarInnerBorder: none;
+$topbarInnerBorderSmall: none; // e.g. when scrolled
+$topbarShadowSmall: none;
+$topbarAlignment: flex-start;
+
+/* ----------------------------------------------------------------
+    Suckerfish top level menu
+-----------------------------------------------------------------*/
+
+$suckerfishHeight: 60px;
+
+$suckerfishBorderTop: none;
+$suckerfishBorderBottom: none;
+$suckerfishPadding: 0 15px;
+
+$suckerfishBackground: $colorPageBg;
+$suckerfishColor: $colorDefaultText;
+$suckerfishColorHover: $color1;
+$suckerfishHoverDecoration: none;
+
+$suckerfishCurrentWeight: inherit;
+$suckerfishCurrentColor: $color1;
+$suckerfishCurrentColorHover: $color1;
+
+$suckerfishFont: inherit;
+$suckerfishFontsize: inherit;
+$suckerfishWeight: normal;
+$suckerfishTexttransform: none;
+
+$suckerfishLogoLeft: 20px;
+$suckerfishLogoTop: auto;
+$suckerfishLogoSpacing: 20px;
+$suckerfishLogoRatio: 2;
+$suckerfishLogoAlways: false;
+
+$suckerfishPointerMargin: 0 0 0 5px;
+$suckerfishPointerColor: currentcolor;
+$suckerfishPointerColorHover: currentcolor;
+
+/* ----------------------------------------------------------------
+    Foldout
+-----------------------------------------------------------------*/
+
+$foldoutBackground: inherit;
+$foldoutColor: inherit;
+$foldoutShadow: none;
+
+$foldoutFont: inherit;
+$foldoutWeight: inherit;
+$foldoutTexttransform: inherit;
+$foldoutFontsize: inherit;
+
+$foldoutBorderTop: none;
+$foldoutBorderBottom: none;
+$foldoutInnerBorderBottom: none;
+$foldoutPadding: 0 15px;
+$foldoutInnerPadding: 0;
+$foldoutContentMargin: 30px 15px;
+$foldoutContentMarginMobile: 15px 0;
+$foldoutOpenHeight: auto;
+
+/* ----------------------------------------------------------------
+    Main menu
+-----------------------------------------------------------------*/
+
+$mainMenuColor: inherit;
+$mainMenuColorHover: $color1;
+$mainMenuHoverDecoration: none;
+$mainMenuCurrentColor: $color1;
+$mainMenuCurrentColorHover: $color1;
+$mainMenuCurrentWeight: inherit;
+$mainMenuBackground: inherit;
+
+$mainMenuArrowColor: currentcolor;
+$mainMenuArrowColorHover: currentcolor;
+$mainMenuArrowTopoffset: auto;
+
+$mainMenuInnerMargin: 0;
+$mainMenuFont: inherit;
+$mainMenuWeight: inherit;
+$mainMenuTexttransform: inherit;
+$mainMenuFontsize: inherit;
+$mainMenuLineheight: 30px;
+
+$mainMenuLinePadding: 30px;
+
+$mainMenuSubBackground: inherit;
+$mainMenuSubPadding: 0 0 15px 0;
+
+$mainMenuSubFont: inherit;
+$mainMenuSubWeight: inherit;
+$mainMenuSubTexttransform: inherit;
+$mainMenuSubFontsize: $fs_normal;
+$mainMenuSubLineheight: 22px;
+$mainMenuSubArrowTopoffset: auto;
+
+$mainMenuSubSubBackground: transparent;
+$mainMenuSubSubPadding: 0;
+$mainMenuSubSubMargin: 15px;
+$mainMenuSubSubFont: inherit;
+$mainMenuSubSubWeight: inherit;
+$mainMenuSubSubTexttransform: inherit;
+$mainMenuSubSubFontsize: inherit;
+$mainMenuSubSubLineheight: inherit;
+
+$mainMenuSocialsMargin: 30px 0 0 0;
+$mainMenuSocialsBorder: none;
+
+/* ----------------------------------------------------------------
+    Service menu
+-----------------------------------------------------------------*/
+
+$serviceItemColor: $mainMenuColor;
+$serviceItemColorHover: $mainMenuColorHover;
+$serviceItemTextdecoration: none;
+$serviceItemTextdecorationHover: none;
+$serviceItemColorShowcase: inherit;
+$serviceItemColorShowcaseHover: $serviceItemColorHover;
+$serviceItemColorSmall: $mainMenuColor;
+$serviceItemColorSmallHover: $mainMenuColorHover;
+$serviceItemHeight: 30px;
+$serviceItemPadding: 0 5px;
+$serviceItemMargin: 0 0 0 15px;
+$serviceIconSize: 20px;
+
+$cartHideEmpty: true; // we usually hide the cart if there is nothing in it
+
+$cartPadding: 5px;
+$cartRadius: 6px;
+$cartColor: $serviceItemColor;
+$cartColorHover: $serviceItemColorHover;
+$cartBackground: $colorSub;
+$cartBackgroundHover: darken($colorSub, 6%);
+
+$languagesTransform: uppercase;
+
+$hamburgerColor: $serviceItemColor;
+$hamburgerColorHover: $serviceItemColorHover;
+$hamburgerColorShowcase: inherit;
+$hamburgerColorShowcaseHover: $serviceItemColorHover;
+
+$hamburgerPosition: 'right';
+$hamburgerSize: 20px;
+$hamburgerRadius: 3px;
+$hamburgerMargin: 0 0 0 15px;
+$hamburgerLabel: hidden;
+$hamburgerLabelMargin: 0 1ex 0 0;
+$hamburgerLabelSize: 10px;
+$hamburgerLabelTextransform: none;
+$hamburgerLabelColor: inherit;
+
+$brandPosition: 'left';
+
+/* ----------------------------------------------------------------
+    Suckerfish drop-down menu variant
+-----------------------------------------------------------------*/
+
+$shortcutsFont: inherit;
+$shortcutsWeight: inherit;
+$shortcutsLineheight: normal;
+$shortcutsFontsize: inherit;
+$shortcutsTexttransform: inherit;
+$shortcutsDecoration: none;
+$shortcutsDecorationHover: none;
+$shortcutsColor: $mainMenuColor;
+$shortcutsColorHover: $mainMenuColorHover;
+$shortcutsColorShowcase: $mainMenuColor;
+$shortcutsColorShowcaseHover: $mainMenuColorHover;
+
+$shortcutsCurrentWeight: inherit;
+$shortcutsCurrentColor: inherit;
+$shortcutsCurrentColorHover: inherit;
+
+$shortcutsPadding: 15px 0;
+$shortcutsItemSpacing: 15px;
+
+/* ----------------------------------------------------------------
+    Search box
+-----------------------------------------------------------------*/
+
+$searchInputBackground: transparent;
+$searchInputColor: inherit;
+
+$headerSearchFontfamily: inherit;
+$headerSearchFontsize: inherit;
+$headerSearchWeight: normal;
+
+$searchInputMargin: 0 15px 0 0;
+$searchInputPadding: 5px 0;
+$searchInputWidth: 30em;
+$headerSearchRadius: 0;
+$headerSearchBorderTop: none;
+$headerSearchBorderRight: none;
+$headerSearchBorderBottom: 1px solid $unavailable;
+$headerSearchBorderLeft: none;
+$headerSearchBorderTopFocus: none;
+$headerSearchBorderRightFocus: none;
+$headerSearchBorderBottomFocus: 1px solid currentcolor;
+$headerSearchBorderLeftFocus: none;
+
+$searchButtonMargin: 0 15px 0 0;
+
+/* ----------------------------------------------------------------
+    Showcase
+-----------------------------------------------------------------*/
+
+$showcaseTitleFontfamily: $fontTitleContent;
+$showcaseTitleFontsize: $fs_huge_title;
+$showcaseTitleLineheight: 1;
+$showcaseTitleWeight: bold;
+$showcaseTitleStyle: normal;
+$showcaseTitleTexttransform: none;
+
+$showcaseTitleMargin: 0;
+$showcaseDescMargin: 0;
+
+$showcaseBtnMargin: 15px 0 0 0;
+
+$showcaseDescFontfamily: $fontNormal;
+$showcaseDescFontsize: $fs_normal;
+$showcaseDescLineheight: 1;
+$showcaseDescWeight: normal;
+$showcaseDescStyle: normal;
+$showcaseDescTexttransform: none;
+
+$showcaseHeight: 90vh;
+$showcaseAlignment: left;
+$showcasePadding: 30px 0;
+$showcaseInnerPadding: 0 15px;
+$showcaseInnerPaddingMobile: 30px;
+$showcaseGradientOverlay: $gradientOverlay;
+
+$headerShowcaseBtnBorder: $defaultBtnBorderActive;
+$headerShowcaseBtnBorderHover: $defaultBtnBorderActiveHover;
+$headerShowcaseBtnBg: $colorBgBtnActive;
+$headerShowcaseBtnBgHover: $colorBtnActiveHover;
+$headerShowcaseBtnColor: $colorBtnActiveText;
+$headerShowcaseBtnColorHover: $colorBtnActiveTextHover;
+
+$showcaseDescLayout: 'left'; // or 'split'
+
+// one or more hero animations, see __defaultBaseValues.scss
+// e.g.: $heroAnimationSaturate, $heroAnimationTwist
+// or a predefined key-frames animation with custom timing
+// e.g.: 2s ease-out hero-twist
+$showcaseAnimation: none;
+
+/* ----------------------------------------------------------------
+    Menu anchor (labels)
+-----------------------------------------------------------------*/
+
+$anchorsBackground: $colorPrimeLight;
+$anchorsColor: inherit;
+$anchorsColorHover: $color1;
+$anchorActiveDecoration: none;
+$anchorsHoverDecoration: none;
+$anchorActiveColor: inherit;
+
+$anchorsFont: $fontNormal;
+$anchorsTexttransform: inherit;
+$anchorsFontsize: inherit;
+$anchorsFontweight: normal;
+
+$anchorActiveFont: $fontNormalBold;
+$anchorActiveWeight: bold;
+
+$anchorsHeight: 45px;
+$anchorPadding: 0;
+
+/* ----------------------------------------------------------------
+    Event sticky menu
+-----------------------------------------------------------------*/
+
+$eventHeaderBackground: $colorPrimeLight;
+$eventHeaderPadding: 15px 0;
+$eventHeaderBorder: none;
+$eventHeaderInnerPadding: 0 15px;
+$eventHeaderInnerPaddingInside: 0;
+$eventHeaderInnerBorder: none;
+$eventHeaderInnerSpacing: 30px;
+
+$eventHeaderButtonBorder: $defaultBtnBorderActive;
+$eventHeaderButtonBorderHover: $defaultBtnBorderActiveHover;
+$eventHeaderButtonBackground: $colorBgBtnActive;
+$eventHeaderButtonBackgroundHover: $colorBtnActiveHover;
+$eventHeaderButtonColor: $colorBtnActiveText;
+$eventHeaderButtonColorHover: $colorBtnActiveTextHover;
+
+$eventHeaderTitleFontfamily: $fontTitleContent;
+$eventHeaderTitleFontsize: $fs_huge_title;
+$eventHeaderTitleFontsizeMobile: 22px;
+$eventHeaderTitleLineHeight: 1;
+$eventHeaderTitleWeight: bold;
+$eventHeaderTitleTexttransform: none;
+$eventHeaderTitleMargin: 0;
+$eventHeaderTitleColor: inherit;
+
+$eventHeaderSubtitleFontfamily: $fontTitleContent;
+$eventHeaderSubtitleFontsize: $fs_huge_subtitle;
+$eventHeaderSubtitleFontsizeMobile: 16px;
+$eventHeaderSubtitleLineHeight: 1;
+$eventHeaderSubtitleWeight: bold;
+$eventHeaderSubtitleWeightMobile: normal;
+$eventHeaderSubtitleTexttransform: none;
+$eventHeaderSubtitleMargin: 0;
+$eventHeaderSubtitleColor: inherit;
+
+$eventHeaderButtonFontsize: $defaultBtnFontsize;
+$eventHeaderButtonWeight: $defaultBtnWeight;
+$eventHeaderButtonTransform: $defaultBtnTexttransform;
+
+$eventHeaderButtonRadius: $defaultBtnRadius;
+$eventHeaderButtonPadding: $defaultBtnPadding;
+
+$colorSoonListItemH3: $colorPrimeDark;
+
+$colorSoonListItemH3Hover: $colorPrimeDark;
+$colorSoonListItemTitle: $colorPrimeDark;
+$colorSoonListItemTitleHover: $color9;
+$colorSoonListItemSubtitle: $colorPrimeDark;
+$colorSoonListItemSubtitleHover: $color9;
+$colorSoonListItemLocation: $color9;
+$colorSoonListItemLocationHover: $color9;
+$colorSoonListItemDate: $colorPrimeDark;
+$colorSoonListItemDateHover: $color9;
+$colorSoonListItemType: inherit;
+$colorSoonListItemViewAll: $colorPrimeDark;
+$colorSoonListItemViewAllHover: $color9;
+
+$colorBgSoonList: $white;
+$colorSoonRevealMargin: 10px 0 0 0;
+$colorSoonRevealRadius: $defaultBtnRadius;
+$colorSoonReveal: $colorSub;
+$colorSoonRevealHover: $color9;
+$colorSoonRevealBackground: transparent;
+$colorSoonRevealBackgroundHover: transparent;
+
+$soonListContainerPadding: 0 15px;
+
+$soonListPadding: 20px 15px;
+$soonListItemPadding: 10px 0;
+$soonListItemBorderBottom: 2px solid $colorPrimeDark;
+$soonListItemH3Padding: 0;
+$soonListItemH3Margin: 0;
+$soonListItemLocationMargin: 10px 0 5px 0;
+$soonListItemViewAllPadding: 10px 0 0 0;
+
+$soonDescBackground: none;
+
+$soonListItemH3Fontfamily: $fontNormal;
+$soonListItemH3Fontsize: $fs_small;
+$soonListItemH3LineHeight: normal;
+$soonListItemH3Weight: bold;
+$soonListItemH3Texttransform: uppercase;
+
+$soonListItemSuperTitleDisplay: block;
+$soonListItemSuperTitleMargin: 0;
+$soonListItemSuperTitlePadding: 0;
+$soonListItemSupertitleFontfamily: $fontNormal;
+$soonListItemSupertitleFontsize: $fs_small;
+$soonListItemSupertitleLineheight: 1.3;
+$soonListItemSupertitleWeight: normal;
+$soonListItemSupertitleTexttransform: uppercase;
+$soonListItemSuperTitleBackground: none;
+$soonListItemSupertitleColor: $color1;
+
+$soonListItemTitleFontfamily: $fontNormalBold;
+$soonListItemTitleFontsize: $fs_large_subtitle;
+$soonListItemTitleLineHeight: 1.2em;
+$soonListItemTitleWeight: bold;
+$soonListItemTitleTexttransform: none;
+
+$soonListItemSubtitleFontfamily: $fontNormal;
+$soonListItemSubtitleFontsize: $fs_small;
+$soonListItemSubtitleLineHeight: 1.2em;
+$soonListItemSubtitleWeight: normal;
+$soonListItemSubtitleTexttransform: none;
+
+$soonListItemLocationFontfamily: $fontNormal;
+$soonListItemLocationFontsize: $fs_tiny;
+$soonListItemLocationLineHeight: 1.2em;
+$soonListItemLocationWeight: normal;
+$soonListItemLocationTexttransform: uppercase;
+
+$soonListItemDateSpacing: 0;
+$soonListItemDateFontfamily: $fontNormal;
+$soonListItemDateFontsize: $fs_normal;
+$soonListItemDateLineHeight: 0.8em;
+$soonListItemDateWeight: normal;
+$soonListItemDateTexttransform: none;
+
+$soonListItemPriceMargin: 0 15px 0 0;
+$soonListItemPriceFontfamily: inherit;
+$soonListItemPriceFontsize: inherit;
+$soonListItemPriceLineHeight: inherit;
+$soonListItemPriceWeight: normal;
+$soonListItemPriceTexttransform: none;
+$soonListItemPriceColor: inherit;
+
+$soonListItemTypeFontfamily: inherit;
+$soonListItemTypeWeight: inherit;
+$soonListItemTypeLineHeight: inherit;
+$soonListItemTypeTexttransform: inherit;
+$soonListItemTypeFontsize: inherit;
+
+$soonListItemGenreSpacing: 1ex;
+$soonListItemGenrePadding: 0;
+$soonListItemGenreBorder: none;
+$soonListItemGenreLineHeight: inherit;
+$soonListItemGenreTransform: inherit;
+$soonListItemGenreDecoration: none;
+$soonListItemGenreBackground: transparent;
+$soonListItemGenreColor: inherit;
+$soonListItemGenreBorderHover: none;
+$soonListItemGenreDecorationHover: underline;
+$soonListItemGenreBackgroundHover: none;
+$soonListItemGenreColorHover: inherit;
+
+$soonListItemBtnBorder: $defaultBtnBorderActive;
+$soonListItemBtnBorderHover: $defaultBtnBorderActiveHover;
+$soonListItemBtnBackground: $colorBgBtnActive;
+$soonListItemBtnBackgroundHover: $colorBtnActiveHover;
+$soonListItemBtnColor: $colorBtnActiveText;
+$soonListItemBtnColorHover: $colorBtnActiveTextHover;
+
+$soonListItemViewAllFontfamily: $fontNormal;
+$soonListItemViewAllFontsize: $fs_normal;
+$soonListItemViewAllLineHeight: normal;
+$soonListItemViewAllWeight: normal;
+$soonListItemViewAllTexttransform: none;
+
+$soonListItemStatusPadding: 0;
+$soonListItemStatusFontfamily: inherit;
+$soonListItemStatusFontweight: normal;
+$soonListItemStatusLineheight: 1.2;
+$soonListItemStatusTexttransform: none;
+$soonListItemStatusTextalign: center;
+$soonListItemStatusColor: inherit;
+$soonListItemStatusFontsize: inherit;
+$soonListItemStatusLinkDecoration: none;
+$soonListItemStatusLinkColor: inherit;
+$soonListItemStatusLinkDecorationHover:$defaultLinkDecorationHover ;
+$soonListItemStatusLinkColorHover: $defaultLinkHover;
+
+$soonSpacing: 20px; // we use half of this, so make it an even number
+
+/* ----------------------------------------------------------------
+    Date selector
+-----------------------------------------------------------------*/
+
+$soonSelectColor: inherit;
+$soonSelectColorHover: inherit;
+$soonSelectBackground: $white;
+$soonSelectBackgroundHover: $colorHighlight;
+$soonSelectBoxshadow: $defaultBoxShadow;
+$soonSelectRadius: 0;
+$soonSelectItemPadding: 10px 15px;
+
+$soonSelectButtonBackground: $black;
+$soonSelectButtonColor: $white;
+$soonSelectButtonBackgroundHover: $black;
+$soonSelectButtonColorHover: $white;
+
+/* ----------------------------------------------------------------
+    Banner
+-----------------------------------------------------------------*/
+
+$soonBannerSize: 1; // 1 for 50/50, 2 for 2/3 1/3
+
+$soonBannerHeight: 460px;
+$soonBannerPadding: 30px;
+
+$soonBannerPositionTop: auto;
+$soonBannerPositionBottom: 0;
+$soonBannerRadius: 0;
+$soonBannerPaddingTop: 30px;
+$soonBannerPaddingBottom: 30px;
+$soonBannerPaddingLeft: 30px;
+$soonBannerPaddingRight: 30px;
+
+$soonBannerAlignment: left;
+$soonBannerColor: $white;
+
+$soonBannerTitleMargin: 0;
+$soonBannerTitleFontfamily: $fontTitleContent;
+$soonBannerTitleWeight: bold;
+$soonBannerTitleLineHeight: 1;
+$soonBannerTitleTexttransform: none;
+$soonBannerTitleFontsize: $fs_huge_title;
+
+$soonBannerSubTitleMargin: 0 0 15px 0;
+$soonBannerSubTitleFontfamily: $fontNormal;
+$soonBannerSubTitleWeight: normal;
+$soonBannerSubTitleLineHeight: 1;
+$soonBannerSubTitleTexttransform: none;
+$soonBannerSubTitleFontsize: $fs_huge_subtitle;
+
+$soonBannerButtonBorder: $defaultBtnBorder;
+$soonBannerButtonRadius: $defaultBtnRadius;
+$soonBannerButtonBorderHover: $defaultBtnBorder;
+
+$soonBannerButtonBackground: $color1;
+$soonBannerButtonColor: $white;
+$soonBannerButtonBackgroundHover: $color2;
+$soonBannerButtonColorHover: $white;
+
+$soonBannerButtonPadding: $defaultBtnPadding;
+$soonBannerButtonFontfamily: $defaultBtnFontfamily;
+$soonBannerButtonWeight: $defaultBtnWeight;
+$soonBannerButtonLineHeight: $defaultBtnLineHeight;
+$soonBannerButtonTexttransform: $defaultBtnTexttransform;
+$soonBannerButtonFontsize: $defaultBtnFontsize;
+
+$soonToggleBorder: 1px solid $grey3;
+$soonToggleRadius: $defaultBtnRadius;
+$soonToggleBackground: $grey3;
+$soonToggleColor: $grey1;
+$soonTogglePadding: $defaultBtnPadding;
+$soonToggleFontFamily: $defaultBtnFontfamily;
+$soonToggleWeight: $defaultBtnWeight;
+$soonToggleTexttransform: $defaultBtnTexttransform;
+$soonToggleFontsize: $defaultBtnFontsize;
+
+$soonToggleDefaultBackground: $grey1;
+$soonToggleDefaultColor: $grey3;
+$soonToggleMovieBackground: $grey1;
+$soonToggleMovieColor: $grey3;
+
+$colorBgFilterHeader: $color1;
+$colorBgFilterLabelBtn: $color9;
+$colorBgFilterLabelBtnActive: $colorBgFilterLabelBtn;
+$colorBgFilterLabelBtnHover: $colorBgFilterLabelBtn;
+$colorBgFilterLabelBtnText: $white;
+$colorBgFilterLabelBtnTextActive: $colorBgFilterLabelBtnText;
+$colorBgFilterLabelBtnTextHover: $colorBgFilterLabelBtnText;
+$colorBgFilterSelection: $color3;
+$colorBgFilterWrapper: $color1;
+$colorFilterDaterangeBg: $white;
+$colorFilterDaterangeInputText: $grey1;
+$colorFilterHeaderText: $white;
+$colorFilterHeaderTextHover: $black;
+$colorFilterLabelExpandText: $white;
+$colorFilterLabelExpandTextHover: $black;
+$colorFilterSelectionBtn: $color9;
+$colorFilterSelectionBtnHover: $color9;
+$colorFilterSelectionBtnText: $white;
+$colorFilterSelectionBtnTextHover: $white;
+$colorFilterSelectionRemoveall: $white;
+$colorFilterSelectionRemoveallHover: $black;
+$colorFilterToggleBtnText: $white;
+$colorFilterWrapperText: $white;
+$filterAgeBackground: $color3;
+$filterAgeBackgroundSelected: $grey3;
+$filterAgeBorder: none;
+$filterAgeBorderSelected: none;
+$filterAgeButtonBackground: $white;
+$filterAgeButtonBorder: none;
+$filterAgeButtonShadow: $defaultBoxShadow;
+$filterAgeGroupBackground: rgba(0,0,0,.1);
+$filterAgeGroupBorder: none;
+$filterAgeGroupColor: $colorDefaultText;
+$filterAgeGroupLabelMargin: 0 0 30px 0;
+$filterAgeGroupPadding: 10px 15px 20px 15px;
+$filterAgeGroupRadius: 3px;
+$filterAgeRadius: 3px;
+$filterBtnRadius: 15px 15px 15px 15px;
+$filterColumnSpacing: 10px;
+$filterDaterangeInputFontfamily: $fontNormal;
+$filterDaterangeInputFontsize: $fs_normal;
+$filterDaterangeInputTextTransform: none;
+$filterDaterangeInputWeight: normal;
+$filterRowSpacing: 15px;
+$filterSelectBackground: $white;
+$filterSelectionBtnFontfamily: $fontNormal;
+$filterSelectionBtnFontsize: $fs_small;
+$filterSelectionBtnTextTransform: none;
+$filterSelectionBtnWeight: normal;
+$filterSelectPadding: 8px 12px;
+$filterSelectRadius: 15px 15px 15px 15px;
+$filterSubmitBtnHeight: 70px;
+$filterSubmitBtnMargin: 0;
+$filterSubmitFontsize: $fs_small_title;
+$filterSubmitRadius: 0;
+$filterTagBtnFontfamily: $fontNormal;
+$filterTagBtnFontsize: $fs_small;
+$filterTagBtnLineheight: normal;
+$filterTagBtnMargin:  5px 5px 5px 0;
+$filterTagBtnPadding: 4px 15px;
+$filterTagBtnTextTransform: none;
+$filterTagBtnWeight: normal;
+$filterToggleBtnFontfamily: $fontNormal;
+$filterToggleBtnFontsize: $fs_small_title;
+$filterToggleBtnTextTransform: none;
+$filterToggleBtnWeight: normal;
+$listActiveFilterBtnBorder: none;
+$listActiveFilterBtnBorderHover: none;
+$showFilterDaterangeBorderBottom: none;
+$showFilterDaterangeBorderLeft: none;
+$showFilterDaterangeBorderRight: none;
+$showFilterDaterangeBorderTop: none;
+$showFilterSelectBorderBottom: none;
+$showFilterSelectBorderLeft: none;
+$showFilterSelectBorderRight: none;
+$showFilterSelectBorderTop: none;
+$showFilterSelectionBorderBottom: none;
+$showFilterSelectionBorderLeft: none;
+$showFilterSelectionBorderRight: none;
+$showFilterSelectionBorderTop: none;
+$showFilterSelectionPadding: 10px 30px;
+$showFilterWidgetBorderBottom: none;
+$showFilterWidgetBorderLeft: none;
+$showFilterWidgetBorderRight: none;
+$showFilterWidgetBorderTop: 1px solid $color3;
+$showFilterWidgetFontfamily: inherit;
+$showFilterWidgetPadding: 25px 15px;
+
+$colorBgFilterTRPopover: $white;
+$colorFilterTRArrowBottom: $colorPrime;
+$colorFilterTRPopover: $white;
+$colorFilterTRPopoverArrow: $grey3;
+$colorFilterTRPopoverArrowHover: $grey5;
+$colorFilterTRPopoverHover: $grey5;
+$colorFilterTRPopoverHoverBackground: none;
+$colorFilterTRPopoverItem: $black;
+$colorFilterTRPopoverItemActive: $colorPrime;
+$colorFilterTRPopoverItemActiveHover: $colorPrimeDark;
+$colorFilterTRPopoverItemBorderBottom: none;
+$colorFilterTRPopoverItemHover: $grey3;
+$colorFilterTRPopoverText: $white;
+$colorFilterTRText: $white;
+$filterTRArrow: false;
+$filterTRArrowBottomHeight: 75px;
+$filterTRArrowBottomWidth: 100px;
+$filterTRCanvasFloat: none;
+$filterTRCanvasMargin: 0 auto;
+$filterTRCanvasTextAlign: left;
+$filterTRPopoverArrowFontsize: $fs_large;
+$filterTRPopoverArrowRight: 6px;
+$filterTRPopoverArrowTop: 0;
+$filterTRPopoverBGColor: none;
+$filterTRPopoverBorderBottom: 2px solid $grey3;
+$filterTRPopoverButtonPadding: 0 1ex 0 0;
+$filterTRPopoverButtonRadius: 0;
+$filterTRPopoverFontfamily: $fontNormal;
+$filterTRPopoverFontsize: $fs_huge_title;
+$filterTRPopoverItemFontfamily: $fontNormal;
+$filterTRPopoverItemFontsize: $fs_normal;
+$filterTRPopoverItemLineheight: 1.4;
+$filterTRPopoverItemMargin: 3px 0;
+$filterTRPopoverItemTextTransform: none;
+$filterTRPopoverItemWeight: normal;
+$filterTRPopoverLineheight: 70px;
+$filterTRPopoverMaxHeight: 300px;
+$filterTRPopoverPadding: 20px;
+$filterTRPopoverTextTransform: none;
+$filterTRPopoverWeight: normal;
+$filterTRSpanPadding: 0 .5ex 0 0;
+$filterTRTextFontfamily: $fontNormalBold;
+$filterTRTextFontsize: $fs_huge_title;
+$filterTRTextLineheight: 70px;
+$filterTRTextTextTransform: none;
+$filterTRTextWeight: bold;
+$searchListH1Margin: 0 0 30px 0;
+$searchListTitleMargin: 60px 0 0 0;
+$searchListH2Margin: 60px 0 30px 0;
+$searchListH3Margin: 0;
+$searchListPMargin: 0;
+
+$searchListH1Fontfamily: $fontTitleTemplate;
+$searchListH1Fontsize: $basicH1Fontsize;
+$searchListH1LineHeight: 1;
+$searchListH1Weight: bold;
+$searchListH1Texttransform: none;
+
+$searchListH2Fontfamily: $fontNormalBold;
+$searchListH2Fontsize: $basicH2Fontsize;
+$searchListH2LineHeight: normal;
+$searchListH2Weight: bold;
+$searchListH2Texttransform: none;
+
+$searchListH3Fontfamily: $fontNormalBold;
+$searchListH3Fontsize: $basicH3Fontsize;
+$searchListH3LineHeight: normal;
+$searchListH3Weight: bold;
+$searchListH3Texttransform: none;
+
+$colorSearchListTeaserH1: $colorDefaultText;
+$searchListH2Color: $colorDefaultText;
+$searchListPColor: $colorDefaultText;
+$colorShowcaseTitle: $white;
+$colorShowcaseDesc: $white;
+$colorShowcaseTitleMobile: $colorShowcaseTitle;
+$colorShowcaseDescMobile: $colorShowcaseDesc;
+$showcaseTitleMargin: 10px 0;
+$showcaseDescMargin: 0;
+$showcaseBtnWidth: auto;
+$showcaseTitleMarginMobile: 10px 0;
+$showcaseDescMarginMobile: 0 0 30px 0;
+$showcaseBtnWidthMobile: auto;
+$headerShowcaseBtnBorderMobile: none;
+$headerShowcaseBtnBorderMobileHover: none;
+$eticketBackground: #F1F1F1;
+$eticketColor: $black;
+
+$eticketBackgroundSecondary: $colorPrime;
+$eticketForegroundSecondary: $white;
+
+$eticketBackgroundDark: $color4;
+$eticketForegroundDark: $white;
+
+$eticketBackgroundLight: #F3F1F1;
+$eticketForegroundLight: $black;
+
+$eticketLink: $color1;
+$eticketLinkHover: $color2;
+
+$eticketButtonWidth: $defaultBtnWidth;
+$eticketButtonPadding: $defaultBtnPadding;
+$eticketButtonFontfamily: inherit;
+$eticketButtonLineHeight: 1;
+$eticketButtonWeight: normal;
+$eticketButtonTexttransform: none;
+$eticketButtonBorderActive: none;
+$eticketButtonBorderActiveHover: none;
+$eticketButtonRadius: 0;
+
+$eticketBoxShadow: $defaultBoxShadow;
+
+$eticketLogoHeight: 50px;
+
+$colorBgListWrapper: inherit;
+$colorBgOrderPulloutContent: $white;
+$colorOrderPulloutContent: inherit;
+
+$listPulloutPadding: 0 30px;
+$listItemPulloutPadding: 30px;
+$listItemPulloutMargin: 0 0 3px 0;
+$orderItemPulloutPadding: 30px;
+$listItemPulloutLastRadius: $defaultCardRadius;
+$listItemPulloutLastMarginBottom: 10px;
+
+$subShowLineHeight: 1;
+$subShowElementSpacing: 30px;
+
+$cardMultiPulloutDateMargin: 0;
+$cardMultiDatePadding: 0;
+$cardMultiPulloutDateFontfamily: $fontNormal;
+$cardMultiPulloutDateFontsize: $fs_large;
+$cardMultiPulloutDateWeight: normal;
+$cardMultiPulloutDateTexttransform: none;
+$colorcardMultiDate: inherit;
+
+$subShowDetailTimeMargin: 5px 0 0 0;
+$cardMultiTimeFontfamily: $fontNormal;
+$cardMultiTimeFontsize: $fs_normal;
+$cardMultiTimeLineHeight: normal;
+$cardMultiTimeWeight: normal;
+$cardMultiTimeTexttransform: none;
+$colorcardMultiTime: inherit;
+
+$listItemBorderTop: none;
+$listItemBorderRight: none;
+$listItemBorderBottom: none;
+$listItemBorderLeft: none;
+
+// price indicator
+$orderBASPriceIndicatorFontfamily: $fontNormal;
+$orderBASPriceIndicatorFontsize: $fs_small;
+$orderBASPriceIndicatorLineHeight: normal;
+$orderBASPriceIndicatorWeight: normal;
+$orderBASPriceIndicatorTexttransform: none;
+$colorPriceIndicator: $white;
+$colorPriceIndicatorBg: $colorPrime;
+
+// order button
+$subShowBtnWidth: 128px;
+$subShowBtnPadding: $defaultBtnPadding;
+$subShowBtnAlignment: center;
+$subShowBtnBorder: $defaultBtnBorderActive;
+$subShowBtnBackground: $colorBgBtnActive;
+$subShowBtnColor: $colorBtnActiveText;
+
+$subShowBtnBorderHover: $defaultBtnBorderActiveHover;
+$subShowBtnBackgroundHover: $colorBtnActiveHover;
+$subShowBtnColorHover: $colorBtnActiveTextHover;
+
+$subShowBtnIconMargin: 0 0 0 1px;
+$subShowBtnIconSize: inherit;
+
+// prices
+$cardSubshowPriceBtnFontfamily: $fontNormal;
+$cardSubshowPriceBtnFontsize: $fs_normal;
+$cardSubshowPriceBtnWeight: normal;
+$cardSubshowPriceBtnTexttransform: none;
+
+$colorBgSubshowPrice: $white;
+$colorSubshowPrice: inherit;
+$colorSubshowPriceHover: $color1;
+
+// supertitle
+$subeventSuperTitleDisplay: inline-block;
+$subeventSuperTitleMargin: 0;
+$subeventSuperTitlePadding: 0;
+$subeventSupertitleFontfamily: $fontNormal;
+$subeventSupertitleWeight: normal;
+$subeventSupertitleLineheight: 1.3;
+$subeventSupertitleTexttransform: uppercase;
+$subeventSupertitleBackground: none;
+$subeventSuperTitleColor: $color1;
+$subeventSupertitleFontsize: $fs_small;
+
+$subeventInfoFontfamily: $fontNormal;
+$subeventInfoWeight: normal;
+$subeventInfoLineheight: normal;
+$subeventInfoTextTransform: none;
+$subeventInfoColor: inherit;
+
+$subeventInfoLinkDecoration: $defaultLinkDecoration;
+$subeventInfoLinkDecorationHover: $defaultLinkDecorationHover;
+$subeventInfoLinkColor: $defaultLink;
+$subeventInfoLinkColorHover: $defaultLinkHover;
+
+// ------------- Order -------------
+
+$colorTicketFormInput: $colorDefaultText;
+$colorRankGroupingBorder: $grey3;
+
+$ticketLblFontfamily: $fontNormal;
+$ticketLblFontsize: $fs_normal;
+$ticketLblLineHeight: normal;
+$ticketLblWeight: normal;
+$ticketLblTexttransform: none;
+
+$ticketLblDisabledDecoration: line-through;
+$ticketLblDisabledColor: $unavailable;
+
+$ticketPriceFontfamily: $fontNormal;
+$ticketPriceFontsize: $fs_normal;
+$ticketPriceLineHeight: normal;
+$ticketPriceWeight: normal;
+$ticketPriceTexttransform: none;
+
+$ticketAmountFontfamily: $fontNormal;
+$ticketAmountFontsize: $fs_normal;
+$ticketAmountWeight: normal;
+$ticketAmountTexttransform: none;
+
+$ticketOptionFontfamily: $fontNormal;
+$ticketOptionFontsize: $fs_normal;
+$ticketOptionLineHeight: normal;
+$ticketOptionWeight: normal;
+$ticketOptionTexttransform: none;
+
+$ticketExtraTitleFontfamily: $fontNormal;
+$ticketExtraTitleFontsize: $fs_large_subtitle;
+$ticketExtraTitleLineHeight: 0.89;
+$ticketExtraTitleWeight: bold;
+$ticketExtraTitleTexttransform: none;
+
+$ticketExtraDescFontfamily: $fontNormal;
+$ticketExtraDescFontsize: $fs_small;
+$ticketExtraDescLineHeight: 1.14;
+$ticketExtraDescWeight: normal;
+$ticketExtraDescTexttransform: none;
+
+// buttons
+$orderButtonBorder: $defaultBtnBorderDefault;
+$orderButtonBackground: $colorBgBtnDefault;
+$orderButtonColor: $colorBtnDefaultText;
+$orderButtonBorderHover: $defaultBtnBorderActiveHover;
+$orderButtonBackgroundHover: $colorBtnActiveHover;
+$orderButtonColorHover: $colorBtnActiveTextHover;
+
+$orderButtonActiveBorder: $defaultBtnBorderActive;
+$orderButtonActiveBackground: $colorBgBtnActive;
+$orderButtonActiveColor: $colorBtnActiveText;
+$orderButtonActiveBorderHover: $defaultBtnBorderActiveHover;
+$orderButtonActiveBackgroundHover: $colorBtnActiveHover;
+$orderButtonActiveColorHover: $colorBtnActiveTextHover;
+
+$orderButtonRebookBorder: $defaultBtnBorderDefault;
+$orderButtonRebookBackground: $colorBgBtnDefault;
+$orderButtonRebookColor: $colorBtnDefaultText;
+$orderButtonRebookBorderHover: $defaultBtnBorderActiveHover;
+$orderButtonRebookBackgroundHover: $colorBtnActiveHover;
+$orderButtonRebookColorHover: $colorBtnActiveTextHover;
+
+$subShowStatusWidth: 128px;
+$subShowStatusPadding: $defaultBtnPadding;
+$subShowStatusFontfamily: inherit;
+$subShowStatusFontweight: normal;
+$subShowStatusLineheight: 1.2;
+$subShowStatusTexttransform: none;
+$subShowStatusTextalign: center;
+$subShowStatusFontsize: $fs_small;
+$subShowStatusColor: inherit;
+$subShowStatusLinkColor: inherit;
+$subShowStatusLinkDecoration: none;
+$subShowStatusLinkColorHover: $defaultLinkHover;
+$subShowStatusLinkDecorationHover: $defaultLinkDecorationHover;
+
+$subShowLocationToggleFontweight: normal;
+$subShowLocationToggleFontsize: $fs_tiny;
+
+// messages
+$movieSubshowContainerPadding: 30px 0 20px 0;
+$movieSubshowColumnMargin: 0 15px 0 15px;
+
+$movieSubshowBtnMargin: 0 15px 10px 0;
+$movieSubshowBtnMinWidth: 80px;
+$movieSubshowBtnPropertyMargin: 0 0 0 1ex;
+$movieSubshowBtnPropertyTop: 0;
+
+$cardSubshowMovieBtnPropertyPadding: 0;
+$cardSubshowMovieBtnPropertyFontfamily: $fontNormal;
+$cardSubshowMovieBtnPropertyFontsize: $fs_tiny;
+$cardSubshowMovieBtnPropertyWeight: normal;
+$cardSubshowMovieBtnPropertyTexttransform: uppercase;
+$cardSubshowMovieBtnPropertyBackground: transparent;
+$cardSubshowMovieBtnPropertyColor: inherit;
+$showDetailTeaserFontfamily: $fontNormal;
+$showDetailTeaserFontsize: $fs_large;
+$showDetailTeaserLineHeight: 1.5;
+$showDetailTeaserWeight: bold;
+$showDetailTeaserTexttransform: none;
+
+$colorShowDetailTeaser: inherit;
+
+$newsListTitleFontfamily: $fontTitleTemplate;
+$newsListTitleFontsize: $fs_large_title;
+$newsListTitleLineHeight: 1.19;
+$newsListTitleWeight: bold;
+$newsListTitleTexttransform: none;
+$colorNewsListTitle: $grey1;
+
+$colorHomeNewsList: $color9;
+$colorHomeNewsListHover: $color1;
+
+$newsListLinkFontfamily: $fontNormal;
+$newsListLinkFontsize: $fs_large_subtitle;
+$newsListLinkLineHeight: normal;
+$newsListLinkWeight: normal;
+$newsListLinkTexttransform: none;
+
+$colorBgHomeNewsletter: $color9;
+$colorHomeNewsletterText: $white;
+
+$newsletterTitleFontfamily: $fontTitleTemplate;
+$newsletterTitleFontsize: $fs_large_title;
+$newsletterTitleLineHeight: normal;
+$newsletterTitleWeight: bold;
+$newsletterTitleTexttransform: none;
+$newsletterTitleColor: inherit;
+
+$newsletterDescFontfamily: $fontNormal;
+$newsletterDescFontsize: $fs_large_subtitle;
+$newsletterDescLineHeight: 1.44;
+$newsletterDescWeight: normal;
+$newsletterDescTexttransform: none;
+$newsletterDescColor: inherit;
+
+$newsItemMargin: 0 0 0 10px;
+$newsItemPadding: 0 0 10px 0;
+$newsItemBullitMargin: 4px 0 0 0;
+$newsItemLinkMargin: 0 0 0 20px;
+$newsItemHoverBorderBottom: none;
+
+$newsletterWidgetRadius: 0;
+$newsletterWidgetPadding: 40px 40px 60px 40px;
+$newsletterWidgetBtnMargin: 20px 0 0 0;
+$newsletterH2MarginBottom: 5px;
+$newsletterBtnBorder: $defaultBtnBorderActive;
+$newsletterBtnBorderHover: $defaultBtnBorderActiveHover;
+$newsletterBtnBackground: $colorBgBtnActive;
+$newsletterBtnBackgroundHover: $colorBtnActiveHover;
+$newsletterBtnColor: $colorBtnActiveText;
+$newsletterBtnColorHover: $colorBtnActiveTextHover;
+
+$newsletterLayout: 'normal'; // or 'split'
+$highlightBannerAlignmentMobile: center;
+
+// title
+$highlightBannerTitleMargin: 0;
+$highlightBannerTitleFontfamily: $fontTitleContent;
+$highlightBannerTitleWeight: bold;
+$highlightBannerTitleStyle: normal;
+$highlightBannerTitleLineHeight: 1;
+$highlightBannerTitleTexttransform: none;
+$highlightBannerTitleFontsize: $basicH1Fontsize;
+$highlightBannerTitleColor: inherit;
+
+// subtitle
+$highlightBannerSubTitleMargin: 5px 0 0 0;
+$highlightBannerSubTitleFontfamily: $fontNormal;
+$highlightBannerSubTitleWeight: bold;
+$highlightBannerSubTitleStyle: normal;
+$highlightBannerSubTitleLineHeight: 1;
+$highlightBannerSubTitleTexttransform: none;
+$highlightBannerSubTitleFontsize: $basicH3Fontsize;
+$highlightBannerSubTitleColor: inherit;
+
+$highlightBannerParagraphMargin: 0;
+
+// button
+$highlightBannerBtnMargin: 0;
+$highlightBannerBtnMarginStacked: 15px 0 0 0;
+$highlightBannerBtnPadding: $defaultBtnPadding;
+$highlightBannerBtnBorder: $defaultBtnBorderActive;
+$highlightBannerBtnBorderHover: $defaultBtnBorderActiveHover;
+$highlightBannerBtnFontsize: $defaultBtnFontsize;
+$highlightBannerBtnTexttransform: $defaultBtnTexttransform;
+$highlightBannerBtnBackground: $colorBgBtnActive;
+$highlightBannerBtnBackgroundHover: $colorBtnActiveHover;
+$highlightBannerBtnColor: $colorBtnActiveText;
+$highlightBannerBtnColorHover: $colorBtnActiveTextHover;
+
+// variant with image left/right
+$highlightImageBannerAlign: flex-start;
+$highlightImageBannerImageWidth: math.div(5, 12) * 100%;
+$highlightImageBannerPadding: 0 15px;
+$highlightImageBannerGutter: 30px;
+$highlightImageBannerDescPadding: 0;
+$highlightImageBannerButtonMargin: 30px 0 0 0;
+
+$highlightImageBannerTitleColor: inherit;
+$highlightImageBannerSubTitleColor: inherit;
+$colorMtH2Border: $color8;
+
+$formTitleMarginBottom: 0;
+$formTitleFontfamily: $fontTitleTemplate;
+$formTitleFontsize: $fs_large_title;
+$formTitleWeight: bold;
+$formTitleLineHeight: normal;
+$formTitleTexttransform: none;
+
+$formLegendFontfamily: $fontTitleTemplate;
+$formLegendFontsize: $fs_small_title;
+$formLegendLineHeight: normal;
+$formLegendWeight: bold;
+$formLegendTexttransform: none;
+$colorFormLegend: $grey1;
+
+$formLabelMargin: 0 0 5px 0;
+$formLabelDescMargin: 0 0 5px 0;
+$formLabelFontfamily: $fontNormal;
+$formLabelFontsize: $fs_normal;
+$formLabelLineHeight: 1.31;
+$formLabelWeight: normal;
+$formLabelTexttransform: none;
+
+$colorMtBorderForm: $black;
+$colorMtFormInput: $black;
+
+$accountBtnBorder: $defaultBtnBorderActive;
+$accountBtnBorderHover: $defaultBtnBorderActiveHover;
+
+$accountInlineInfoSize: 12px;
+
+$formInputFontfamily: $fontNormal;
+$formInputFontsize: $fs_normal;
+$formInputLineHeight: normal;
+$formInputWeight: normal;
+$formInputTexttransform: none;
+$formInputFontstyle: italic;
+
+$customFormErrorFontfamily: $fontNormal;
+$customFormErrorFontsize: $fs_small;
+$customFormErrorLineHeight: 1;
+$customFormErrorWeight: normal;
+$customFormErrorStyle: normal;
+$customFormErrorTexttransform: none;
+
+$customFormBorderTop: none;
+$customFormHeaderPadding: 0 0 30px 0;
+$customFormHeaderMargin: 60px 0 0 0;
+
+$customFormHeaderFontfamily: $fontNormalBold;
+$customFormHeaderFontsize: $fs_large_title;
+$customFormHeaderLineHeight: normal;
+$customFormHeaderWeight: bold;
+$customFormHeaderTexttransform: none;
+
+$colorOrderRemoveItem: $black;
+$colorOrderRemoveItemHover: $color1;
+
+$loginContainerWidth: 40rem;
+$loginButtonMargin: 15px 0 0 0;
+$loginFieldMargin: 0 0 15px 0;
+$loginFieldPadding: 0 6px;
+$loginFieldHeight: 34px;
+
+$accountHomeH1Fontsize: $basicH1Fontsize;
+$accountHomeH1Margin: 0 0 10px 0;
+$accountHomeH2Fontsize: $basicH3Fontsize;
+$accountHomeH2Margin: 0 0 10px 0;
+$pageListPadding: 30px 15px;
+
+$pageListBackground: $colorPageBg;
+
+$pageListFilterPadding: 30px;
+$pageListFilterBackground: $colorPrime;
+$pageListFilterColor: $white;
+$pageListFilterColorHover: $grey3;
+$pageListFilterTransform: $basicH3Texttransform;
+$pageListFilterFontsize: $basicH3Fontsize;
+
+$pageListFilterPointerSize: 30px;
+
+$pageListNavColor: $grey2;
+$pageListNavColorHover: $black;
+
+$pageListSlideMargin: 20px 10px;
+
+$pageCardBorder: none;
+
+$pageCardBackground: $white;
+$pageCardColor: inherit;
+$pageCardFontsize: $fs_small;
+
+$pageCardTitleMarginBottom: 15px;
+$pageCardTitleFontfamily: $fontAlt1;
+$pageCardTitleFontsize: $fs_large;
+$pageCardTitleLineheight: normal;
+$pageCardTitleWeight: bold;
+$pageCardTitleTexttransform: none;
+$pageCardTitleColor: inherit;
+$pageCardTitleColorHover: inherit;
+
+$pageCardTeaserFontfamily: inherit;
+$pageCardTeaserFontsize: inherit;
+$pageCardTeaserLineheight: normal;
+$pageCardTeaserWeight: normal;
+$pageCardTeaserTexttransform: none;
+
+$pageCardFooterPadding: 25px 0 0 0;
+
+$pageCardTypeImageMargin: 0 10px 0 0;
+$pageCardTypeMargin: 5px 30px 0 0;
+$pageCardTypeHeight: 30px;
+$pageCardTypeFontfamily: $fontNormalBold;
+$pageCardTypeWeight: bold;
+$pageCardTypeLineheight: 1.2;
+$pageCardTypeTexttransform: none;
+$pageCardTypeColor: $black;
+$pageCardTypeColorHover: $grey2;
+$pageCardTypeFontsize: $fs_normal;
+
+$pageCardAnimations: [];
+
+// general layout
+$footerWidgetpadding: 60px 0 60px 0;
+$footerWidgetSpacing: 15px;
+$footerWidth: 9; // in columns, for full width footer try 12
+$footerPadding: 0 15px;
+
+// general fonts
+$footerFontfamily: $fontNormal;
+$footerFontWeight: normal;
+$footerFontsize: $fs_small;
+$footerLineHeight: 20px;
+$footerTexttransform: none;
+$footerTextAlignMobile: center;
+$colorFooterText: $white;
+
+// headings
+$footerHeadingMargin: 0 0 15px 0;
+$footerHeadingFontFamily: $fontNormalBold;
+$footerHeadingFontsize: $fs_small;
+$footerHeaderFontWeight: bold;
+$footerHeadingLineHeight: normal;
+$footerHeadingTexttransform: none;
+$colorHeaderFooter: $white;
+
+// links
+$colorFooterLink: $color10;
+$colorFooterLinkHover: $color8;
+$colorBgFooter: $color11;
+
+$footerLinkDecoration: none;
+$footerLinkDecorationHover: underline;
+
+// social media
+$footerSubscribeWidgetMarginTop: 30px;
+
+$colorBtnSubscribeBorder: $defaultBtnBorderActive;
+$colorBtnSubscribeBorderHover: $defaultBtnBorderActiveHover;
+$colorBtnSubscribe: $colorBgBtnActive;
+$colorBtnSubscribeHover: $colorBtnActiveHover;
+$colorBtnSubscribeText: $colorBtnActiveText;
+$colorBtnSubscribeTextHover: $colorBtnActiveTextHover;
+
+$themeDetailListH2MarginBottom: 30px;
+$themeDetailListH2Fontfamily: $fontNormal;
+$themeDetailListH2Fontsize: 28px;
+$themeDetailListH2LineHeight: normal;
+$themeDetailListH2Weight: normal;
+$themeDetailListH2Texttransform: none;
+
+$detailThemeShowlistBtnWidth: 170px;
+$detailThemeShowlistBtnRadius: $defaultBtnRadius;
+$detailThemeShowlistBtnBorder: $defaultBtnBorderActive;
+$detailThemeShowlistBtnBorderHover: $defaultBtnBorderActiveHover;
+$detailThemeShowlistBtnBackground: $colorBgBtnActive;
+$detailThemeShowlistBtnBackgroundHover: $colorBtnActiveHover;
+$detailThemeShowlistBtnColor: $colorBtnActiveText;
+$detailThemeShowlistBtnColorHover: $colorBtnActiveTextHover;
+
+$colorOrderSeriesBg: $grey2;
+
+$helpTitleFontfamily: $fontNormal;
+$helpTitleLineHeight: normal;
+$helpTitleWeight: bold;
+$helpTitleTexttransform: none;
+
+$helpDescFontfamily: $fontNormal;
+$helpDescFontsize: $fs_large_subtitle;
+$helpDescLineHeight: 1.33;
+$helpDescWeight: normal;
+$helpDescTexttransform: none;
+
+$orderDiscountBtnBorder: $defaultBtnBorderActive;
+$orderDiscountBtnBorderHover: $defaultBtnBorderActiveHover;
+$orderDiscountBtnRadius: $defaultBtnRadius;
+$orderDiscountBtnBackground: $colorBgBtnActive;
+$orderDiscountBtnBackgroundHover: $colorBtnActiveHover;
+$orderDiscountBtnColor: $colorBtnActiveText;
+$orderDiscountBtnColorHover: $colorBtnActiveTextHover;
+
+$orderUpsellFontfamily: $fontNormal;
+$orderUpsellFontsize: inherit;
+$orderUpsellLineheight: inherit;
+$orderUpsellWeight: normal;
+$orderUpsellTexttransform: none;
+$orderUpsellColor: inherit;
+
+$orderUpsellTitleMargin: 0 0 5px ;
+$orderUpsellTitleFontfamily: $fontNormal;
+$orderUpsellTitleFontsize: $basicH4Fontsize;
+$orderUpsellTitleWeight: $basicH4Fontweight;
+$orderUpsellTitleLineheight: 1;
+$orderUpsellTitleTexttransform: $basicH3Texttransform;
+
+$orderExtrasFontfamily: $fontNormal;
+$orderExtrasFontsize: inherit;
+$orderExtrasLineheight: inherit;
+$orderExtrasWeight: normal;
+$orderExtrasTexttransform: none;
+
+$orderExtrasTitleMargin: 0 0 5px ;
+$orderExtrasTitleFontfamily: $fontNormal;
+$orderExtrasTitleFontsize: $basicH4Fontsize;
+$orderExtrasTitleWeight: $basicH4Fontweight;
+$orderExtrasTitleLineheight: 1;
+$orderExtrasTitleTexttransform: $basicH3Texttransform;
+
+$orderUpsellErrorBackground: $white;
+$orderUpsellErrorColor: inherit;
+$orderUpsellErrorShadow: 0 0 10px rgba(0, 0, 0, 0.1);
+$orderUpsellErrorPointersize: 16px;
+
+$sugHeaderPadding: 0 0 40px 15px;
+$sugHeaderTextAlign: right;
+$sugHeaderMarginBottom: 0;
+$sugHeaderFontfamily: $fontAlt1;
+$sugHeaderLineheight: normal;
+$sugHeaderWeight: bold;
+$sugHeaderTextTransform: none;
+$sugHeaderColor: $black;
+
+$themeCardDecorationHover: $defaultLinkDecorationHover;
+
+$themeCardBackground: $colorPageBg;
+$themeCardGradientOverlay: $gradientOverlay;
+$themeCardSpacing: 30px;
+$themeCardPadding: 30px;
+
+$themeCardCompactHeight: 360px;
+$themeCardCompactHeightBP5: 293px;
+
+$themeTitleMargin: 0;
+$themePMargin: 10px 0 0 0;
+
+$colorH2Theme: $white;
+$colorH2ThemeHover: $white;
+
+$themeListH2Padding: 0 0 20px 0;
+$themeH2Fontfamily: $fontNormal;
+$themeH2Fontsize: $fs_huge_title;
+$themeH2LineHeight: 1.15;
+$themeH2Fontweight: bold;
+$themeH2TextTransform: none;
+
+$themeItemTextAlign: left;
+$themePFontfamily: $fontNormal;
+$themePFontsize: $fs_small;
+$themePLineHeight: normal;
+$themePFontweight: normal;
+$themePTextTransform: none;
+
+$themeFiftyFiftyAlignment: 'center';
+
+$themeCardAnimations: [];
+
+$showDetailCreditsTitleDescPadding: 0;
+$showDetailCreditsTitleDescBorderLeft: none;
+
+$colorBgDetailCreditsTitleDesc: transparent;
+
+$showDetailCreditsH2Fontfamily: $fontTitleTemplate;
+$showDetailCreditsH2Fontsize: $fs_large_title;
+$showDetailCreditsH2LineHeight: normal;
+$showDetailCreditsH2Weight: bold;
+$showDetailCreditsH2Texttransform: none;
+$colorCreditsH2: $white;
+
+$showDetailCreditsFontfamily: $fontNormal;
+$showDetailCreditsFontsize: $fs_large_subtitle;
+$showDetailCreditsLineHeight: 1.67;
+$showDetailCreditsWeight: normal;
+$showDetailCreditsTexttransform: none;
+$colorCreditsText: $white;
+
+$showDetailDesc2Fontfamily: $fontNormal;
+$showDetailDesc2Fontsize: $fs_large_subtitle;
+$showDetailDesc2LineHeight: 1.67;
+$showDetailDesc2Weight: normal;
+$showDetailDesc2Texttransform: none;
+$discountButtonMargin: $loginButtonMargin;
+$discountButtonPadding: $defaultBtnPadding;
+$discountButtonBorder: $defaultBtnBorderActive;
+$discountButtonRadius: $defaultBtnRadius;
+$discountButtonFontfamily: $defaultBtnFontfamily;
+$discountButtonFontweight: $defaultBtnWeight;
+$discountButtonLineheight: $defaultBtnLineHeight;
+$discountButtonTexttransform: $defaultBtnTexttransform;
+$discountButtonBackground: $colorBgBtnActive;
+$discountButtonColor: $colorBtnActiveText;
+$discountButtonTransitionLeave: $defaultBtnTransitionLeave;
+$discountButtonFontsize: $defaultBtnFontsize;
+
+$discountButtonBorderHover: $defaultBtnBorderActiveHover;
+$discountButtonBackgroundHover: $colorBtnActiveHover;
+$discountButtonColorHover: $colorBtnActiveTextHover;
+$discountButtonTransitionEnter: $defaultBtnTransitionEnter;
+
+$discountButtonBorderDisabled: $defaultBtnBorderDisabled;
+$discountButtonBackgroundDisabled: $colorBgBtnDisabled;
+$discountButtonColorDisabled: $colorBtnDisabledText;
+
+$discountFormLabelMargin: 0 0 5px 0;
+$discountFormLabelDescMargin: 0 0 5px 0;
+$discountFormLabelFontfamily: $fontNormal;
+$discountFormLabelFontsize: $fs_normal;
+$discountFormLabelLineHeight: 1.31;
+$discountFormLabelWeight: normal;
+$discountFormLabelTexttransform: none;
+
+$discountFieldFontfamily: $fontNormal;
+$discountFieldFontsize: $fs_normal;
+$discountFieldFontweight: normal;
+$discountFieldTexttransform: none;
+$discountFieldFontstyle: italic;
+
+$discountFieldMargin: 0 0 15px 0;
+$discountFieldPadding: 0 6px;
+$discountFieldHeight: 34px;
+
+$featNewsPadding: 0 15px;
+
+$featNewsHeaderMarginBottom: 30px;
+$featNewsHeaderJustify: space-between;
+
+$featNewsHeaderTitleMarginBottom: 0;
+
+$featNewsHeaderFontfamily: $fontAlt1;
+$featNewsHeaderFontsize: 50px;
+$featNewsHeaderWeight: bold;
+$featNewsHeaderLineheight: normal;
+$featNewsHeaderTextTransform: none;
+
+$colorFeatNewsHeader: $grey1;
+$orderBannerMargin: 30px 0 0 0;
+
+$orderBannerDisplay: block; // or flex
+$orderBannerMode: normal; // or flat
+
+$orderBannerPadding: 90px 15px 30px 15px;
+$orderBannerPaddingMobile: 20px 15px;
+$orderBannerAlignmentMobile: center;
+
+$orderBannerDescPadding: 0;
+
+// title
+$orderBannerTitleMargin: 0;
+$orderBannerTitleFontfamily: $fontTitleContent;
+$orderBannerTitleWeight: bold;
+$orderBannerTitleStyle: normal;
+$orderBannerTitleLineHeight: 1;
+$orderBannerTitleTexttransform: none;
+$orderBannerTitleFontsize: $basicH1Fontsize;
+$orderBannerTitleColor: $white;
+
+// subtitle
+$orderBannerSubTitleMargin: 5px 0 0 0;
+$orderBannerSubTitleFontfamily: $fontNormal;
+$orderBannerSubTitleWeight: bold;
+$orderBannerSubTitleStyle: normal;
+$orderBannerSubTitleLineHeight: 1;
+$orderBannerSubTitleTexttransform: none;
+$orderBannerSubTitleFontsize: $basicH3Fontsize;
+$orderBannerSubTitleColor: $white;
+
+$orderBannerParagraphMargin: 0;
+
+// button
+$orderBannerBtnMargin: 30px 0 0 0;
+$orderBannerBtnMarginStacked: 15px 0 0 0;
+$orderBannerBtnPadding: $defaultBtnPadding;
+$orderBannerBtnBorder: $defaultBtnBorderActive;
+$orderBannerBtnBorderHover: $defaultBtnBorderActiveHover;
+$orderBannerBtnFontsize: $defaultBtnFontsize;
+$orderBannerBtnTexttransform: $defaultBtnTexttransform;
+$orderBannerBtnBackground: $colorBgBtnActive;
+$orderBannerBtnBackgroundHover: $colorBtnActiveHover;
+$orderBannerBtnColor: $colorBtnActiveText;
+$orderBannerBtnColorHover: $colorBtnActiveTextHover;
+
+$orderBannerAnimations: [];
+$footerOrderColumns: 10;
+$footerOrderPadding: 20px 0;
+$footerOrderInnerPadding: 0 30px;
+
+$colorBgFooterOrder: $color12;
+$colorBgFooterOrderInner: transparent;
+$colorFooterOrderText: $white;
+$colorFooterOrderLink: $white;
+$colorFooterOrderLinkHover: $color1;
+
+$colorBgFooterOrderBtnDisabled: $colorBgBtnDisabled;
+$colorFooterOrderBtnDisabledText: $colorBtnDisabledText;
+$colorBgFooterOrderBtnActive: $black;
+$colorBgFooterOrderBtnActiveText: $white;
+$colorBgFooterOrderBtnActiveHover: $white;
+$colorFooterOrderBtnActiveTextHover: $black;
+
+$colorFooterOrderBtnErrorColor: $colorMsgError;
+
+$footerOrderFontfamily: $fontNormal;
+$footerOrderFontsize: $fs_small;
+
+$changeOrderLinkFontfamily: inherit;
+$changeOrderLinkFontsize: $fs_small;
+$changeOrderLinkLineHeight: normal;
+$changeOrderLinkWeight: normal;
+$changeOrderLinkTexttransform: none;
+
+$confirmOrderSubtotalLabelFontfamily: inherit;
+$confirmOrderSubtotalLabelFontsize: $fs_normal;
+$confirmOrderSubtotalLabelLineHeight: normal;
+$confirmOrderSubtotalLabelWeight: normal;
+$confirmOrderSubtotalLabelTexttransform: none;
+
+$confirmOrderSubtotalAmountFontfamily: inherit;
+$confirmOrderSubtotalAmountFontsize: $fs_normal;
+$confirmOrderSubtotalAmountLineHeight: normal;
+$confirmOrderSubtotalAmountWeight: normal;
+$confirmOrderSubtotalAmountTexttransform: none;
+
+$confirmOrderTotalLabelFontfamily: inherit;
+$confirmOrderTotalLabelFontsize: $fs_normal;
+$confirmOrderTotalLabelLineHeight: normal;
+$confirmOrderTotalLabelWeight: normal;
+$confirmOrderTotalLabelTexttransform: none;
+
+$confirmOrderTotalAmountFontfamily: inherit;
+$confirmOrderTotalAmountFontsize: $fs_large;
+$confirmOrderTotalAmountLineHeight: normal;
+$confirmOrderTotalAmountWeight: normal;
+$confirmOrderTotalAmountTexttransform: none;
+
+$confirmOrderTimerMsgFontfamily: inherit;
+$confirmOrderTimerMsgFontsize: $fs_small;
+$confirmOrderTimerMsgLineHeight: normal;
+$confirmOrderTimerMsgWeight: normal;
+$confirmOrderTimerMsgTexttransform: none;
+
+$infoDetailH1Margin: 15px 0;
+$infoDetailTeaserMargin: 40px;
+$infoDetailH1Fontfamily: $fontTitleTemplate;
+$infoDetailH1Fontsize: $basicH1Fontsize;
+$infoDetailH1LineHeight: 1;
+$infoDetailH1Weight: bold;
+$infoDetailH1Texttransform: none;
+
+$infoDetailTeaserFontfamily: $fontNormal;
+$infoDetailTeaserFontsize: $basicH3Fontsize;
+$infoDetailTeaserLineHeight: 1.2;
+$infoDetailTeaserWeight: normal;
+$infoDetailTeaserTexttransform: none;
+
+$colorInfoDetailTeaserH1: $colorDefaultText;
+$colorInfoDetailTeaserText: $colorDefaultText;
+
+$pageTitleHeight: 540px;
+$pageTitleHeightMobile: 320px;
+
+// case with text over background
+$colorInfoHeaderTitle: $white;
+$colorInfoHeaderText: $white;
+$pageTitleOverlay: $gradientOverlay;
+$pageTitleContentContainerMargin: 50px 15px 30px 15px;
+
+// specials for theme detail
+$themePartOfBorder: none;
+$themePartOfBorderHover: none;
+$themePartOfRadius: 10px 10px 10px 10px;
+$themePartOfMargin: 0;
+$themePartOfPadding: 3px 5px;
+$themePartOfFontfamily: $fontNormal;
+$themePartOfFontsize: $fs_small;
+$themePartOfLineHeight: normal;
+$themePartOfWeight: normal;
+$themePartOfTexttransform: none;
+
+$colorBgThemePartOf: $black;
+$colorBgThemePartOfHover: $white;
+$colorBgThemePartOfText: $white;
+$colorBgThemePartOfTextHover: $colorPrime;
+
+$detailHeaderBtnMargin: 15px 0 0 0;
+$detailHeaderBtnBorder: $defaultBtnBorderActive;
+$detailHeaderBtnBorderHover: $defaultBtnBorderActiveHover;
+$colorBgThemeBtn: $colorBgBtnActive;
+$colorBgThemeBtnHover: $colorBtnActiveHover;
+$colorThemeBtnText: $colorBtnActiveText;
+$colorThemeBtnTextHover: $colorBtnActiveTextHover;
+
+$themeDetailH2Margin: 0;
+$themeDetailH2Fontfamily: $fontTitleTemplate;
+$themeDetailH2Fontsize: $basicH3Fontsize;
+$themeDetailH2LineHeight: 1;
+$themeDetailH2Weight: bold;
+$themeDetailH2Texttransform: none;
+$colorThemePageTitleH2: $black;
+
+$colorFavouriteAlt: $white;
+$colorFavouriteAltHover: $color12;
+$orderListWrapperPadding: 30px 0 60px 0;
+
+$compactDateFontsize: $fs_small_title;
+$compactTimeFontsize: $fs_normal;
+$postFooterPadding: 30px 0;
+
+$footerFontfamily: inherit;
+$footerFontsize: $fs_small;
+$footerLineHeight: 20px;
+
+$postFooterJustification: space-around;
+
+$colorBgPostFooter: $color8;
+$colorPostFooterText: $color9;
+$colorPostFooterTextHover: $color1;
+$productCardBorder: none;
+$productCardRadius: $defaultCardRadius;
+$productCardBackground: $white;
+$productCardShadow: $defaultBoxShadow;
+
+$productFooterPadding: 10px 20px;
+$productFooterBorder: 1px solid $grey3;
+$productFooterBackground: transparent;
+
+$productTitleMargin: 0 0 5px 0;
+$productTitleFontfamily: $fontTitleContent;
+$productTitleFontsize: $fs_small_title;
+$productTitleLineheight: normal;
+$productTitleWeight: bold;
+$productTitleTextTransform: none;
+$productTitleTextColor: inherit;
+
+$productSubtitleMargin: 0;
+$productSubtitleFontfamily: $fontNormal;
+$productSubtitleFontsize: $fs_small;
+$productSubtitleLineheight: normal;
+$productSubtitleWeight: normal;
+$productSubtitleTextTransform: none;
+$productSubtitleColor: inherit;
+
+$productOptionSelectMargin: 15px;
+$productOptionSpacing: 5px;
+$showDetailQuoteFontfamily: $fontNormal;
+$showDetailQuoteFontsize: $fs_medium_title;
+$showDetailQuoteLineHeight: normal;
+$showDetailQuoteWeight: normal;
+$showDetailQuoteTexttransform: none;
+
+$showDetailQuoteNormalStyle: normal;
+$showDetailQuoteStyle: italic;
+
+$showDetailQuoteAuthorFontFamily: $fontNormal;
+$showDetailQuoteAuthorFontsize: $fs_small;
+$showDetailQuoteAuthorLineHeight: normal;
+$showDetailQuoteAuthorWeight: normal;
+$showDetailQuoteAuthorStyle: normal;
+$showDetailQuoteAuthorTexttransform: none;
+
+$colorQuoteText: inherit;
+$colorQuoteQuotation: $color1;
+$colorQuoteAuthor: $color9;
+
+$quoteArrow: true;
+$colorQuoteArrow: $colorQuoteAuthor;
+$quoteArrowOffset: 60px;
+
+$quoteLine: 1px solid $colorQuoteAuthor;
+$quoteContainerMargin: 30px;
+$quoteMargin: 30px 30px 0 30px;
+$quoteAuthorMargin: 30px;
+
+$quoteFooterPadding: 20px;
+$quoteFooterMargin: 30px;
+
+$quoteBefore: '"';
+$quoteAfter: '"';
+
+$pageTitleAnimation: none;
+
+$filterHeaderBorderBottom: none;
+$colorListHeaderTitle: $grey1;
+
+$listHeaderTitleFontfamily: $fontNormal;
+$listHeaderTitleFontsize: $basicH1Fontsize;
+$listHeaderTitleWeight: bold;
+$listHeaderTitleLineheight: normal;
+$listHeaderTitleTexttransform: none;
+
+$colorListHeaderDesc: $grey1;
+
+$listHeaderDescFontfamily: $fontNormal;
+$listHeaderDescFontsize: $fs_normal;
+$listHeaderDescLineheight: 1.25;
+$listHeaderDescWeight: normal;
+$listHeaderDescTexttransform: none;
+
+$colorShortcut: inherit;
+$colorShortcutHover: $color1;
+
+$shortcutMenuPadding: 30px 15px;
+$shortcutLinkSpacing: 30px;
+$shortcutLinkTextdecoration: none;
+$shortcutLinkTextdecorationHover: underline;
+
+$shortcutFontfamily: $fontNormal;
+$shortcutFontsize: $fs_small_title;
+$shortcutLineheight: normal;
+$shortcutWeight: bold;
+$shortcutTexttransform: none;
+$orderFooterDisabledBtnBorder: $defaultBtnBorderDisabled;
+
+$orderFooterActiveBtnBorder: $defaultBtnBorderActive;
+$orderFooterActiveBtnBorderHover: $defaultBtnBorderActiveHover;
+$orderBASLabelPadding: 1px 12px 2px 8px;
+$listFilterBtnBorder: $defaultBtnBorderActive;
+$listFilterBtnBorderHover: $defaultBtnBorderActiveHover;
+$listFilterBtnBorderActive: $defaultBtnBorderActiveHover;
+$seatselectFont: $system_stack;
+$seatselectFontSize: 12px;
+$seatselectLineheight: 18px;
+
+$seatselectPanelBackground: #F2F2F2;
+$seatselectTicketsPanelBackground: #E0E0E0;
+
+$seatselectIconColor: #909090;
+$seatselectIconColorHover: #000;
+
+$seatselectButtonBackground: #D9D9D9;
+$seatselectButtonBorder: 1px solid #D0D0D0;
+$seatselectButtonColor: #000;
+$seatselectButtonBackgroundHover: #E0E0E0;
+$seatselectButtonBorderHover: 1px solid #D0D0D0;
+$seatselectButtonColorHover: #000;
+$seatselectButtonRadius: $defaultBtnRadius;
+
+$seatselectButtonActiveBackground: #F7460C;
+$seatselectButtonActiveBackgroundHover: #F77043;
+$seatselectButtonActiveBorder: 1px solid darken($seatselectButtonActiveBackground, 6%);
+$seatselectButtonActiveBorderHover: 1px solid darken($seatselectButtonActiveBackground, 6%);
+$seatselectButtonActiveColor: #FFF;
+$seatselectButtonActiveColorHover: #FFF;
+$seatselectButtonActiveShadow: $defaultBtnShadowActive;
+$seatselectButtonActiveShadowHover: $defaultBtnShadowActiveHover;
+$seatselectButtonActiveShadowActive: $defaultBtnShadowActiveActive;
+
+$seatselectWarningColor: $colorMsgWarning;
+$seatselectErrorColor: $colorMsgError;
+
+// price buttons
+$seatselectPriceBorder: none;
+$seatselectPriceRadius: $defaultBtnRadius;
+
+// unselected
+$seatselectPriceDefaultBackground: #D9D9D9;
+$seatselectPriceDefaultColor: darken(#909090, 6%);
+$seatselectPriceDefaultColorHover: darken(#909090, 12%);
+
+// selected
+$seatselectPriceBackground: #00AA82;
+$seatselectPriceColor: darken(#909090, 12%);
+
+$seatselectPriceInvalidBackground: $colorMsgWarning;
+$seatselectPriceInvalidColor: #FFF;
+
+$seatselectButtonDisabledBackground: $unavailable;
+$seatselectButtonDisabledColor: #D0D0D0;
+
+$seatselectPriceBackgroundSync: $seatselectButtonActiveBackground;
+$seatselectPriceColorSync: $seatselectButtonActiveColor;
+$seatselectPriceBackgroundSyncHover: $seatselectButtonActiveBackgroundHover;
+$seatselectPriceColorSyncHover: $seatselectButtonActiveColorHover;
+
+// extras
+$seatselectExtraDescriptionColor: #676767;
+$seatselectExtraBackground: #00AA82;
+$seatselectExtraColor: #FFF;
+
+// seats
+$seatselectSeatStroke: 2;
+$seatselectSeatBlockedColor: $unavailable;
+$seatselectSeatDisabledColor: $colorMsgError;
+
+// intro, examples
+$seatselectIntroIconColor: $colorMsgError;
+$seatselectSeatExampleColor: $colorPrime;
+$seatselectIntroButtonBorder: $defaultBtnBorderActive;
+$seatselectIntroButtonBorderHover: $defaultBtnBorderActiveHover;
+$seatselectIntroButtonBackground: $colorBgBtnActive;
+$seatselectIntroButtonBackgroundHover: $colorBtnActiveHover;
+$seatselectIntroButtonColor: $colorBtnActiveText;
+$seatselectIntroButtonColorHover: $colorBtnActiveTextHover;
+$ncTitleFont: 'American Typewriter', serif;
+$ncBodyFont: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+
+$ncTextColor: #FFF;
+$ncTextShadow: 1px 1px 3px rgba(0,0,0,0.5);
+
+$ncSlidesBackground: #000 url('/platform/images/nc/background_default.png') no-repeat center / cover;
+$ncSlidesClockBackground: $ncSlidesBackground;
+$ncSlidesDefaultBackground: $ncSlidesBackground;
+
+$ncGradient: linear-gradient(to bottom, transparent, rgba(00,00,00,0.5));
+
+$ncLogoWidth: 10vw;
+$ncLogoHeight: 10vw;
+$ncLogoTop: 25px;
+$ncLogoLeft: 25px;
+$ncLogoBackground: transparent url('/platform/images/nc/logo.svg') no-repeat center / contain;
+
+$ncLineBackground: transparent url('/platform/images/nc/line.svg') no-repeat center;
+$ncLineWidth: 30%;
+$ncLineHeight: 30px;
+
+$ncGraphicWidth: 10vw;
+$ncGraphicHeight: 10vw;
+$ncGraphicBottom: 25px;
+$ncGraphicRight: 25px;
+$ncGraphicBackground: transparent url('/platform/images/nc/graphic.svg') no-repeat center / contain;
+
+$ncTitleTransform: none;
+$ncSubTitleTransform: none;
+$ncDateWeight: normal;
+$ncDateTransform: none;
+
+$ncBodyFontsize: 3vw;
+$ncH1Fontsize: 8vw;
+$ncH1Weight: bold;
+$ncTitleFontsize: 6vw;
+$ncTitleWeight: bold;
+$ncSubTitleFontsize: 3vw;
+$ncDateFontsize: 2vw;
+
+$ncTextBottomOffset: 5%;
+
+$ncClockMode: 'analog';
+$ncClockBackground: rgba(255,255,255,0.5);
+$ncClockBorder: 20px solid #FFF;
+$ncClockShadow: 0 0 4px rgba(0,0,0,0.5);
+$ncClockHandColor: #000;
+$ncClockSecondsHandColor: #F00;
+$ncClockCoverBackground: #FFF;
+$ncClockFontsize: 16vw;
+$ncClockDateFontsize: 4vw;
+
+$ncTeaserVisibility: 'visible';
+$ncTeaserFontsize: 3vw;
+
+$ncNoticeLogoVisibility: 'visible';
+$ncNoticeGraphicVisibility: 'visible';
+$cartContinueshopping: false;
+
+$cartPosition: 'right'; // or 'center'
+
+$cartRadius: $defaultCardRadius;
+$cartShadow: $defaultBoxShadow;
+$cartBackdrop: rgba(0,0,0,.2);
+
+$cartBadgePadding: 2px;
+$cartBadgeFontsize: $fs_tiny;
+$colorCartHeaderBadge: $white;
+$colorCartHeaderBadgeBg: $color12;
+
+$cartHeaderBorder: 1px solid $grey7;
+$cartHeaderFontfamily: $fontTitleTemplate;
+$cartHeaderFontsize: $fs_small_title;
+$cartHeaderWeight: bold;
+$cartHeaderTexttransform: none;
+$cartHeaderBg: $colorPageBg;
+
+$cartFooterPadding: 15px;
+$cartFooterBorder: 1px solid $grey1;
+$colorCartFooterBg: $color12;
+
+// items
+$cartItemCardThumbBackground: $grey3;
+$cartItemCardGlow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
+
+$colorCartItemCard: $white;
+$cartItemCardTitleFontfamily: $fontTitleContent;
+$cartItemCardTitleFontsize: $fs_normal;
+$cartItemCardTitleLineheight: normal;
+$cartItemCardTitleWeight: bold;
+$cartItemCardTitleTexttransform: none;
+$colorCartItemCardTitle: $black;
+
+$cartItemCardMetaFontfamily: $fontNormal;
+$cartItemCardMetaFontsize: $fs_small;
+$cartItemCardMetaLineheight: 1.17;
+$cartItemCardMetaWeight: normal;
+$cartItemCardMetaTexttransform: none;
+$colorCartItemCardMeta: $color9;
+
+$colorCartItemCardLink: $color1;
+
+// item added message
+$cartItemCardAddedFontfamily: $fontNormal;
+$cartItemCardAddedFontsize: $fs_small;
+$cartItemCardAddedWeight: normal;
+$cartItemCardAddedTexttransform: none;
+$colorCartItemCardAdded: $black;
+
+// upsell messages
+$cartItemCardUpsellFontfamily: $fontNormal;
+$cartItemCardUpsellFontsize: $fs_small;
+$cartItemCardUpsellLineheight: 1.15;
+$cartItemCardUpsellWeight: normal;
+$cartItemCardUpsellTexttransform: none;
+$colorCartItemCardUpsell: $black;
+
+$cartItemCardUpsellTitleMargin: 0;
+$cartItemCardUpsellTitleFontfamily: $fontNormal;
+$cartItemCardUpsellTitleFontsize: $fs_normal;
+$cartItemCardUpsellTitleLineheight: 1;
+$cartItemCardUpsellTitleWeight: bold;
+$cartItemCardUpsellTitleTexttransform: none;
+
+$cartItemCardUpsellDescMargin: 0;
+$cartItemCardUpsellDescFontfamily: $fontNormal;
+$cartItemCardUpsellDescFontsize: $fs_tiny;
+$cartItemCardUpsellDescLineheight: 1.17;
+$cartItemCardUpsellDescWeight: normal;
+$cartItemCardUpsellDescTexttransform: none;
+$cartItemCardUpsellDescColor: inherit;
+
+// empty cart
+$cartItemCardEmptyFontfamily: $fontNormal;
+$cartItemCardEmptyFontsize: $fs_small;
+$cartItemCardEmptyLineheight: normal;
+$cartItemCardEmptyWeight: normal;
+$cartItemEmptyMetaTexttransform: none;
+$colorCartItemCardEmpty: $grey1;
+
+$cartOrderBtnBorder: $defaultBtnBorderActive;
+$cartOrderBtnBorderHover: $defaultBtnBorderActiveHover;
+
+// buttons
+$cartOrderBtnBackground: $colorBgBtnActive;
+$cartOrderBtnBackgroundHover: $colorBtnActiveHover;
+$cartOrderBtnColor: $colorBtnActiveText;
+$cartOrderBtnColorHover: $colorBtnActiveTextHover;
+
+$cartContinueshoppingBtnAlign: left;
+$cartContinueshoppingBtnBorder: none;
+$cartContinueshoppingBtnBorderHover: none;
+$cartContinueshoppingBtnBackground: transparent;
+$cartContinueshoppingBtnBackgroundHover: transparent;
+$cartContinueshoppingBtnColor: inherit;
+$cartContinueshoppingBtnColorHover: inherit;
+
+$colorCartItemRemoveSubshow: $defaultLink;
+$colorCartItemRemoveSubshowHover: $defaultLinkHover;
+
+$cookieConsentBackground: $grey5;
+$cookieConsentColor: inherit;
+$cookieConsentLineMargin: $richtextPMargin;
+$cookieConsentContentMargin: 0;
+
+$cookieConsentOptionPadding: 0 0 0 2em;
+
+$cookieConsentBannerShadow: $defaultBoxShadow;
+$cookieConsentBannerPadding: 60px 15px;
+$cookieConsentBannerBorder: none;
+
+$cookieConsentTitleFontsize: $basicH1Fontsize;
+$cookieConsentTitleMargin: 0 0 30px 0;
+$cookieConsentTitleFontweight: $basicH1Fontweight;
+$cookieConsentTitleTexttransform: $basicH1Texttransform;
+
+$cookieConsentLinkDecoration: $defaultLinkDecoration;
+$cookieConsentLinkDecorationHover: $defaultLinkDecorationHover;
+$cookieConsentLinkColor: $defaultLink;
+$cookieConsentLinkColorHover: $defaultLinkHover;
+
+$cookieConsentMorelinkColor: inherit;
+$cookieConsentMorelinkWeight: bold;
+$cookieConsentMorelinkDecoration: none;
+$cookieConsentMorelinkColorHover: inherit;
+$cookieConsentMorelinkDecorationHover: underline;
+
+$cookieConsentSpinnerBackground: transparentize($grey5, .3);
+$cookieConsentSpinnerColor: $grey1;
+$colorFavourite: $black;
+$colorFavouriteHover: $color12;
+
+// description content
+$showDetailDesc1Fontfamily: $fontNormal;
+$showDetailDesc1Fontsize: $fs_large_subtitle;
+$showDetailDesc1LineHeight: 1.67;
+$showDetailDesc1Texttransform: none;
+
+$showDetailMetaSpacing: 30px;
+
+// meta part-of
+$colorDetailMetaPartofBg: none;
+
+$showDetailPartofFontfamily: $fontNormal;
+$showDetailPartofWeight: bold;
+$showDetailPartofTexttransform: none;
+
+$showDetailPartofLblFontfamily: $fontNormal;
+$showDetailPartofLblFontsize: $fs_small;
+$showDetailPartofLblLineHeight: normal;
+$showDetailPartofLblWeight: normal;
+$showDetailPartofLblTexttransform: none;
+
+$colorShowDetailPartof: $color12;
+$colorShowDetailPartofPart: $color12;
+$colorShowDetailPartofPartHover: $black;
+
+// meta extra info
+$showDetailExtraInfoMarginBottom: 0;
+
+$colorShowDetailExtraInfo: $grey1;
+$colorDetailMetaExtraBg: none;
+
+$showDetailExtraInfoFontfamily: $fontNormal;
+$showDetailExtraInfoFontsize: $fs_small;
+$showDetailExtraInfoLineHeight: normal;
+$showDetailExtraInfoWeight: normal;
+$showDetailExtraInfoTexttransform: none;
+
+// meta tags
+$colorDetailMetaTagsBg: none;
+
+$showDetailTagsRadius: 2px;
+$showDetailTagsMarginBottom: 5px;
+$showDetailTagsMarginRight: 5px;
+$showDetailTagsPadding: 4px 15px;
+
+$showDetailTagsFontfamily: $fontNormal;
+$showDetailTagsFontsize: $fs_tiny;
+$showDetailTagsLineHeight: normal;
+$showDetailTagsWeight: normal;
+$showDetailTagsTexttransform: none;
+
+$colorBgShowDetailTags: $black;
+$colorBgShowDetailTagsHover: $color1;
+$colorShowDetailTagsText: $white;
+$colorShowDetailTagsTextHover: $white;
+
+// meta movies
+$showDetailMetaMovieFontfamily: $fontNormal;
+$showDetailMetaMovieWeight: normal;
+$showDetailMetaMovieLineHeight: normal;
+$showDetailMetaMovieTexttransform: none;
+$showDetailMetaMovieFontsize: $fs_small;
+
+$showDetailMetaMovieTitleFontfamily: $fontNormalBold;
+$showDetailMetaMovieTitleWeight: bold;
+$showDetailMetaMovieTitleLineHeight: normal;
+$showDetailMetaMovieTitleTexttransform: none;
+$showDetailMetaMovieTitleFontsize: $fs_small;
+
+$colorDetailMetaMovieBg: none;
+$colorShowDetailMetaMovie: inherit;
+$showDetailMetaMovieLineMargin: 15px;
+$reviewsPadding: 60px;
+$reviewsBackground: $color1;
+$reviewsColor: $white;
+$reviewsFontfamily: $fontNormal;
+$reviewsLineHeight: inherit;
+$reviewsWeight: normal;
+
+$reviewsTitleColor: inherit;
+$reviewsTitleFontfamily: $fontNormalBold;
+$reviewsTitleLineHeight: inherit;
+$reviewsTitleWeight: bold;
+
+$reviewsTitleMargin: 0;
+$reviewsTitleFontsize: $basicH2Fontsize;
+
+$reviewsDescFontfamily: $fontNormal;
+$reviewsDescWeight: normal;
+$reviewsDescFontsize: inherit;
+$reviewsDescMargin:  0 0 15px 0;
+
+$reviewsCreditsFontsize: inherit;
+
+$reviewsHoverColor: $reviewsColor;
+$reviewsHoverTitleColor: $reviewsTitleColor;
+$reviewsHoverDecoration: underline;
+
+$userMenuBackground: $white;
+
+$colorPopoverMtContent: $black;
+$colorPopoverMtContentHover: $color1;
+$userMenuHeaderColor: $color1;
+
+$userMenuLinkDecoration: none;
+$userMenuLinkDecorationHover: underline;
+
+$userMenuPopupPadding: 0 5px 5px 5px;
+$userMenuPadding: 15px;
+
+$userMenuPrimaryFont: $fontNormalBold;
+$userMenuPrimaryWeight: bold;
+$userMenuPrimaryLineheight: 30px;
+$userMenuPrimaryTexttransform: none;
+$userMenuPrimaryFontsize: $fs_large_subtitle;
+$userMenuPrimaryMargin: 0 0 15px 0;
+$userMenuLineMargin: 0 0 15px 0;
+
+$userMenuHeaderMargin: 0;
+$userMenuHeaderSubinfoMargin: 0 0 15px 0;
+
+$userMenuIconColor: inherit;
+$userMenuShadow: $defaultBoxShadow;
+
+$languageMenuPopupPadding: 10px;
+$languageMenuBackground: $userMenuBackground;
+$languageMenuShadow: $userMenuShadow;
+$languageMenuTransform: uppercase;
+
+$mtMenuLinkFontfamily: $fontNormal;
+$mtMenuLinkFontsize: $fs_small;
+$mtMenuLinkLineheight: 1.45;
+$mtMenuLinkWeight: normal;
+$mtMenuLinkTexttransform: none;
+
+$userMenuTimeslotMargin: 0 0 1em -5px;
+$userMenuTimeslotPadding: 5px;
+$userMenuTimeslotBackground: $colorPrime;
+$userMenuTimeslotColor: $white;
+
+$userMenuBalanceMargin: 0 0 1em -5px;
+$userMenuBalancePadding: 5px;
+$userMenuBalanceBackground: $colorPrime;
+$userMenuBalanceColor: $white;
+
+$logoOrderHeight: $logoHeight;
+$logoOrderPadding: 10px 0;
+
+$colorBgHeaderOrder: $color1;
+$colorHeaderOrderBorder: $color8;
+$headerOrderBorderBottom: 1px solid $colorHeaderOrderBorder;
+
+$orderStepMaxwidth: 500px;
+$orderHeaderPadding: 0 15px;
+$orderHeaderShadow: none;
+
+$orderStepFontsize: $fs_tiny;
+$orderStepFontfamily: inherit;
+$orderStepWeight: normal;
+$orderStepTransform: none;
+
+$colorOrderStepInactiveText: $color4;
+$colorOrderStepLinkText: $defaultLinkHover;
+$colorOrderStepFaStack: $color5;
+$colorOrderStepFaChecked: $white;
+$colorOrderStepFaCheckedText: $black;
+$colorOrderStepFaCheckCircle: $color12;
+$colorOrderStepBarBefore: $color12;
+$colorOrderStepBarAfter: $color5;
+
+$colorServiceMenuOrder: $black;
+$colorServiceMenuOrderHover: $colorPrime;
+
+$orderAvatarTexttransform: none;
+$orderAvatarBackground: transparent;
+$orderAvatarBorder: none;
+$orderAvatarRadius: 6px;
+$orderAvatarBackgroundHover: transparent;
+$orderAvatarBorderHover: none;
+$listItemLocationMargin: 7px 0 0 0;
+$listItemVenueMargin: 7px 0 0 0;
+
+$listItemLocationFontfamily: $fontNormalBold;
+$listItemLocationFontsize: $fs_small;
+$listItemLocationWeight: bold;
+$listItemLocationLineheight: 1.4;
+$listItemLocationTextTransform: none;
+$colorlistItemLocation: inherit;
+
+$listItemVenueFontfamily: $fontNormal;
+$listItemVenueFontsize: $fs_small;
+$listItemVenueLineheight: 1;
+$listItemVenueWeight: normal;
+$listItemVenueLineheight: 1.4;
+$listItemVenueTextTransform: none;
+$colorlistItemVenue: inherit;
+$modalBaseWidth: 600px;
+$modalMaxWidth: 40rem;
+$modalMargin: 30px;
+
+$modalBorder: none;
+$modalRadius: $defaultCardRadius;
+$modalBackground: $colorPageBg;
+$modalColor: $colorDefaultText;
+$modalBackdrop: rgba(0,0,0,.2);
+$modalShadow: $defaultBoxShadowDark;
+$modalPadding: 30px 30px 15px 30px;
+$modalTitleMargin: 0 0 30px 0;
+
+$modalTitleFontfamily: $fontNormalBold;
+$modalTitleLineHeight: normal;
+$modalTitleWeight: bold;
+$modalTitleTexttransform: none;
+$modalTitleColor: inherit;
+$modalTitleSize: $basicH2Fontsize;
+$donationPadding: 30px 0;
+$donationItemsPadding: 30px 0;
+$donationItemsSpacing: 30px;
+
+$colorBgDonationWrapper: $color12;
+$colorDonationWrapperText: $white;
+
+$orderDonationBtnBorder: $defaultBtnBorderActive;
+$orderDonationBtnBorderHover: $defaultBtnBorderActiveHover;
+$colorBgDonationWrapperBtnActive: $colorBgBtnActive;
+$colorBgDonationWrapperBtnActiveHover: $colorBtnActiveHover;
+$colorDonationWrapperBtnActiveText: $colorBtnActiveText;
+$colorDonationWrapperBtnActiveTextHover: $colorBtnActiveTextHover;
+
+$colorDonationWrapperH2: $white;
+$donationTitleMargin: 0 0 5px 0;
+$donationTitleFontfamily: $fontTitleTemplate;
+$donationTitleFontsize: $fs_large_title;
+$donationTitleLineHeight: normal;
+$donationTitleWeight: bold;
+$donationTitleTexttransform: none;
+
+$donationDescFontfamily: $fontNormal;
+$donationDescFontsize: $fs_large_subtitle;
+$donationDescLineHeight: 1.33;
+$donationDescWeight: normal;
+$donationDescTexttransform: none;
+
+$donationLabelFontfamily: $fontNormal;
+$donationLabelFontsize: $fs_large_subtitle;
+$donationLabelLineHeight: 1.17;
+$donationLabelWeight: normal;
+$donationLabelTexttransform: none;
+$footerHorzPAdding: 15px 0;
+$footerHorzAlignment: center;
+$footerHorzBorderTop: none;
+$footerWidth: 12; // in columns, for less wide footer on large screens, try 10
+
+$colorBgHorzFooter: $black;
+$colorHorzFooterText: $white;
+$colorHorzFooterTextHover: $color1;
+
+$footerHorzFontfamily: $fontNormal;
+$footerHorzFontsize: $fs_small;
+$footerHorzLineHeight: normal;
+$footerHorzWeight: normal;
+$footerHorzTexttransform: none;
+
+$footerHorzTextPaddingTop: 35px;
+$footerHorzTextPaddingBottom: 10px;
+
+$footerHorzImgHeight: 50px;
+$footerHorzImgPaddingTop: 10px;
+$footerHorzImgPaddingBottom: 10px;
+$footerHorzImgPaddingRight: 0;
+$footerHorzImgPaddingLeft: 0;
+$newsArchiveTitleMargin: $basicH1FontMargin;
+$newsArchiveTitleFontfamily: $fontNormalBold;
+$newsArchiveTitleWeight: $basicH1Fontweight;
+$newsArchiveTitleLineHeight: normal;
+$newsArchiveTitleTexttransform: $basicH1Texttransform;
+$newsArchiveTitleColor: inherit;
+$newsArchiveTitleFontsize: $basicH1Fontsize;
+
+$newsArchiveBackground: transparent;
+$newsArchivePadding: 0 15px 30px 15px;
+
+$featNewsCardBorder: none;
+$featNewsCardDescPadding: 0 30px 15px 30px;
+
+$colorBgFeatNewsCard: $white;
+$featNewsCardColor: inherit;
+$featNewsFontsize: $fs_small;
+
+$featNewsSuperTitleMargin: 30px 30px 15px 30px;
+
+$featNewsH1MarginTop: 0;
+$featNewsH1MarginBottom: 15px;
+$featNewsH1Fontfamily: $fontAlt1;
+$featNewsH1Fontsize: $fs_large;
+$featNewsH1Lineheight: normal;
+$featNewsH1Weight: bold;
+$featNewsH1Texttransform: none;
+$featNewsH1Color: inherit;
+$featNewsH1ColorHover: inherit;
+
+$featNewsTeaserFontfamily: inherit;
+$featNewsTeaserFontsize: inherit;
+$featNewsTeaserLineheight: normal;
+$featNewsTeaserWeight: normal;
+$featNewsTeaserTexttransform: none;
+
+$featNewsSuperTitleFontfamily: $fontNormal;
+$featNewsSuperTitleFontsize: $fs_small;
+$featNewsSuperTitleLineheight: normal;
+$featNewsSuperTitleWeight: normal;
+$featNewsSuperTitleTextTransform: uppercase;
+$colorBgFeatNewsSuperTitle: $white;
+$colorFeatNewsSuperTitle: $grey1;
+
+$colorBgFeatNewsCardBtn: $colorPrime;
+$colorBgFeatNewsCardBtnHover: $black;
+
+$featNewsCardButtonFontfamily: $defaultBtnFontfamily;
+$featNewsCardButtonWeight: $defaultBtnWeight;
+$featNewsCardButtonTexttransform: $defaultBtnTexttransform;
+$featNewsCardButtonFontsize: $defaultBtnFontsize;
+
+$featNewsCardButtonMargin: 15px 30px 30px 30px;
+
+$featNewsAnimations: [];
+$numberSliderHeight: 6px;
+$numberSliderBorder: none;
+$numberSliderRadius: $defaultBtnRadius;
+$numberSliderBackground: $grey3;
+$numberSliderRangeBackground: $grey2;
+
+$numberSliderTooltipBackground: $colorPageBg;
+$numberSliderTooltipColor: $colorDefaultText;
+
+$numberSliderHandleHeight: 36px;
+$numberSliderHandleBorder: none;
+$numberSliderHandleRadius: 100%;
+$numberSliderHandleBackground: $colorPrime;
+$numberSliderHandleShadow: $iconOverlayShadow;
+$orderTimerFontfamily: $fontNormal;
+$orderTimerFontsize: $fs_normal;
+$orderTimerLineHeight: 1;
+$orderTimerWeight: normal;
+$orderTimerTexttransform: none;
+
+$orderTimerBorder: none;
+$orderTimerShadow: $defaultBoxShadow;
+
+$colorBgOrderTimer: $colorPrime;
+$colorOrderTimer: $white;
+$colorOrderTimerHover: $white;
+
+$orderTimerPadding: 10px 15px;
+$orderTimerPaddingTop: 30px;
+$orderTimerPaddingRight: 0;
+$orderTimerPaddingBottom: 30px;
+$orderTimerPaddingLeft: 0;
+
+$paginationMargin: 30px 0;
+
+$simplePagingCentered: false;
+
+$simplePagingSelectMargin: 0 30px;
+$simplePagingSelectFontfamily: $fontNormal;
+$simplePagingSelectFontsize: inherit;
+$simplePagingSelectWeight: normal;
+$simplePagingSelectColor: inherit;
+$simplePagingSelectColorHover: inherit;
+
+$simplePagingLabelFontfamily: $fontNormal;
+$simplePagingLabelFontsize: inherit;
+$simplePagingLabelWeight: normal;
+$simplePagingLabelTexttransform: none;
+$simplePagingLabelColor: inherit;
+
+$simplePagingBtnWidth: $defaultBtnWidth;
+$simplePagingBtnPadding: $defaultBtnPadding;
+$simplePagingBtnRadius: $defaultBtnRadius;
+$simplePagingBtnFontfamily: $defaultBtnFontfamily;
+$simplePagingBtnFontweight: $defaultBtnWeight;
+$simplePagingBtnLineHeight: $defaultBtnLineHeight;
+$simplePagingBtnTexttransform: $defaultBtnTexttransform;
+$simplePagingBtnBorder: $defaultBtnBorder;
+$simplePagingBtnBorderHover: $defaultBtnBorderActiveHover;
+$simplePagingBtnBackground: $colorBgBtnDefault;
+$simplePagingBtnBackgroundHover: $colorBtnActiveHover;
+$simplePagingBtnColor: $colorBtnDefaultText;
+$simplePagingBtnColorHover: $colorBtnActiveTextHover;
+$showDetailSubshowPriceFontfamily: $fontNormal;
+$showDetailSubshowPriceFontsize: $fs_small;
+$showDetailSubshowPriceLineHeight: 1.67;
+$showDetailSubshowPriceWeight: normal;
+$showDetailSubshowPriceTexttransform: none;
+
+$popoverPadding: 10px 15px;
+
+$popoverTicketTypeFontfamily: $fontNormal;
+$popoverTicketTypeFontsize: $fs_small;
+$popoverTicketTypeLineHeight: 1.67;
+$popoverTicketTypeWeight: bold;
+$popoverTicketTypeTexttransform: none;
+
+$colorBgPopover: $color11;
+$colorPopoverText: $white;
+$colorPopoverPrice: $color10;
+$pageTitleH1Margin: 30px 0;
+$pageTitleH1Fontfamily: $fontTitleTemplate;
+$pageTitleH1Fontsize: $fs_large_title;
+$pageTitleH1LineHeight: normal;
+$pageTitleH1Weight: bold;
+$pageTitleH1Texttransform: none;
+$colorPageTitleH1Plain: $white;
+
+$pageTitleSubtitleFontfamily: $fontNormal;
+$pageTitleSubtitleFontsize: $fs_large_subtitle;
+$pageTitleSubtitleLineHeight: normal;
+$pageTitleSubtitleWeight: normal;
+$pageTitleSubtitleTexttransform: none;
+$colorPageTitleSubtitlePlain: $white;
+
+@if ($legacy_default_fontsizes) {
+    $themeDetailListH2Fontsize: 28px;
+    $basicH1Fontsize: 36px;
+    $brochureEventExpandButtonSize: 11px;
+    $cardMultiDateFontsize: 25px;
+    $cardMultiPulloutDateFontsize: 25px;
+    $cardSubshowMovieBtnPropertyFontsize: 10px;
+    $donationTitleFontsize: 32px;
+    $filterTRPopoverFontsize: 60px;
+    $filterTRTextFontsize: 60px;
+    $newsListTitleFontsize: 32px;
+    $pageTitleH1Fontsize: 28px;
+    $showcaseTitleFontsize: 36px;
+    $showDetailCreditsH2Fontsize: 32px;
+    $welcomeMsgFontsize: 32px;
+    $showDetailContentsH2Fontsize: 32px;
+    $featNewsHeaderFontsize: 50px;
+}

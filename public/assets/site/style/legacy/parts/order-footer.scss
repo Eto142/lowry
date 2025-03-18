@@ -1,0 +1,227 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$order_footer: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order_footer;
+
+#footerOrder {
+    position: relative;
+    padding: v(20px 0, padding, $footerOrderPadding);
+    font-family: v($fontNormal, font_family, $footerOrderFontfamily);
+    font-size: v(14px, font_size, $footerOrderFontsize);
+    background: v($color12, background, $colorBgFooterOrder);
+    color: v($white, color, $colorFooterOrderText);
+
+    .container {
+        max-width: math.div($footerOrderColumns, 12) * 1170px;
+        padding: v(0 30px, inner_padding, $footerOrderInnerPadding);
+        background: v(transparent, inner_background, $colorBgFooterOrderInner);
+    }
+
+    form {
+        display: inline-block;
+        margin: 0;
+    }
+
+    table {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+
+        &.loading {
+            opacity: .8;
+        }
+    }
+
+    .btn-clean {
+        display: inline-flex;
+        align-items: center;
+        min-width: 0;
+        font-family: v(inherit, link_font_family, $changeOrderLinkFontfamily);
+        font-weight: v(normal, link_font_weight, $changeOrderLinkWeight);
+        line-height: v(normal, link_line_height, $changeOrderLinkLineHeight);
+        text-transform: v(none, link_text_transform, $changeOrderLinkTexttransform);
+        color: v($white, link_color, $colorFooterOrderLink);
+
+        @include fontsize(v($fs_small, link_font_size, $changeOrderLinkFontsize));
+
+        > * + * { margin-left: 1ex; }
+
+        &:hover {
+            color: v($color1, link_color_hover, $colorFooterOrderLinkHover);
+        }
+    }
+
+    .inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        > * + * {
+            margin-left: 30px;
+        }
+
+        @media (max-width: $bp_mobile) {
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            > * {
+                margin: 0 0 15px 0;
+            }
+            > * + * {
+                margin: 0 0 30px 0;
+            }
+        }
+
+        @media (max-width: $bp_tiny) {
+            align-items: stretch;
+        }
+    }
+
+    .order-actions {
+        display: flex;
+        > * + * {
+            margin-left: 30px;
+        }
+
+        @media (max-width: $bp_tiny) {
+            display: grid;
+            justify-content: center;
+
+            > * + * {
+                margin: 15px auto 0 auto;
+            }
+        }
+    }
+
+    .order-totals {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        > * + * {
+            margin-left: 30px;
+        }
+
+        th,
+        td {
+            vertical-align: baseline;
+        }
+        th {
+            padding: 0;
+        }
+        td {
+            padding: 0 0 0 1ex;
+        }
+
+        tr:last-child:not(:first-child) > * {
+            padding-top: 5px;
+        }
+
+        @media (max-width: $bp_tiny) {
+            display: block;
+            text-align: right;
+            > * + * {
+                margin: 15px 0 0 0;
+            }
+        }
+
+        .subTotalLabel {
+            font-family: v(inherit, subtotal_label_font_family, $confirmOrderSubtotalLabelFontfamily);
+            font-weight: v(normal, subtotal_label_font_weight, $confirmOrderSubtotalLabelWeight);
+            line-height: v(normal, subtotal__labelline_height, $confirmOrderSubtotalLabelLineHeight);
+            text-transform: v(none, subtotal_label_text_transform, $confirmOrderSubtotalLabelTexttransform);
+
+            @include fontsize(v($fs_normal, subtotal_label_font_size, $confirmOrderSubtotalLabelFontsize));
+        }
+
+        .subAmount {
+            font-family: v(inherit, subtotal_font_family, $confirmOrderSubtotalAmountFontfamily);
+            font-weight: v(normal, subtotal_font_weight, $confirmOrderSubtotalAmountWeight);
+            line-height: v(normal, subtotal_line_height, $confirmOrderSubtotalAmountLineHeight);
+            text-transform: v(none, subtotal_text_transform, $confirmOrderSubtotalAmountTexttransform);
+            text-align: right;
+
+            @include fontsize(v($fs_normal, subtotal_font_size, $confirmOrderSubtotalAmountFontsize));
+        }
+
+        .totalLabel {
+            font-family: v(inherit, total_label_font_family, $confirmOrderTotalLabelFontfamily);
+            font-weight: v(normal, total_label_font_weight, $confirmOrderTotalLabelWeight);
+            line-height: v(normal, total_label_line_height, $confirmOrderTotalLabelLineHeight);
+            text-transform: v(none, total_label_text_transform, $confirmOrderTotalLabelTexttransform);
+
+            @include fontsize(v($fs_normal, total_label_font_size, $confirmOrderTotalLabelFontsize));
+        }
+
+        .totalAmount {
+            font-family: v(inherit, total_font_family, $confirmOrderTotalAmountFontfamily);
+            font-weight: v(normal, total_font_weight, $confirmOrderTotalAmountWeight);
+            line-height: v(normal, total_line_height, $confirmOrderTotalAmountLineHeight);
+            text-transform: v(none, total_text_transform, $confirmOrderTotalAmountTexttransform);
+            text-align: right;
+            white-space: nowrap;
+
+            @include fontsize(v($fs_large, total_font_size, $confirmOrderTotalAmountFontsize));
+        }
+
+        .timerMsg {
+            margin-top: 5px;
+            padding-right: 30px;
+            font-family: v(inherit, timer_font_family, $confirmOrderTimerMsgFontfamily);
+            font-weight: v(normal, timer_font_weight, $confirmOrderTimerMsgWeight);
+            line-height: v(normal, timer_line_height, $confirmOrderTimerMsgLineHeight);
+            text-transform: v(none, timer_text_transform, $confirmOrderTimerMsgTexttransform);
+
+            &.timeup {
+                animation: FlashInOut 1s infinite;
+            }
+
+            @include fontsize(v($fs_small, timer_font_size, $confirmOrderTimerMsgFontsize));
+        }
+
+        form {
+            @media (max-width: $bp_tiny) {
+                display: block;
+            }
+        }
+
+        .btn {
+            position: relative;
+
+            @media (max-width: $bp_tiny) {
+                display: block;
+                width: 100%;
+            }
+
+            .fa.error {
+                color: v($colorMsgError, error_color, $colorFooterOrderBtnErrorColor);
+            }
+
+            &.btn-active {
+                border: v($defaultBtnBorderActive, button_border_primary, $orderFooterActiveBtnBorder);
+                background: v($black, button_background_primary, $colorBgFooterOrderBtnActive);
+                color: v($white, button_color_primary, $colorBgFooterOrderBtnActiveText);
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_hover, $orderFooterActiveBtnBorderHover);
+                    background: v($white, button_background_hover, $colorBgFooterOrderBtnActiveHover);
+                    color: v($black, button_color_hover, $colorFooterOrderBtnActiveTextHover);
+                }
+            }
+
+            &:disabled,
+            &:disabled:hover {
+                border: v($defaultBtnBorderDisabled, button_border_disabled, $orderFooterDisabledBtnBorder);
+                background: v($colorBgBtnDisabled, button_background_disabled, $colorBgFooterOrderBtnDisabled);
+                color: v($colorBtnDisabledText, button_color_disabled, $colorFooterOrderBtnDisabledText);
+            }
+        }
+    }
+}

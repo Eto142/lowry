@@ -1,0 +1,321 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$featured_slides: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $featured_slides;
+
+.featuredSlidesWrapper {
+    .inner {
+        position: relative;
+        padding: v(30px 15px, padding, $pageListPadding);
+    }
+
+    &.layout-boxed .inner {
+        @include container_width();
+    }
+
+    // Fade out slider
+    &.fadeout {
+        @media (min-width: $bp_mobile + 1) {
+            .slick-list {
+                -webkit-mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+                mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+            }
+        }
+    }
+
+    .slick-track {
+        display: flex;
+    }
+
+    .slider:not(.slick-initialized) {
+        visibility: hidden;
+    }
+
+    .featuredSlidesCard {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        float: none;
+        position: relative;
+        margin: v(20px 10px, card_margin, $featuredSlidesCardMargin);
+        border: v(none, card_border, $featuredSlidesCardBorder);
+        border-radius: v($defaultCardRadius, card_border_radius);
+        background: v($grey5, card_background, $colorBgFeaturedSlidesCard);
+        box-shadow: v($defaultBoxShadow, card_box_shadow);
+        transition: box-shadow .2s ease;
+
+        &:hover {
+            box-shadow: v($defaultBoxShadowDark, card_box_shadow_hover);
+            transition: box-shadow .4s ease;
+        }
+
+        .thumb {
+            display: block;
+            position: relative;
+            border-radius: v($defaultCardRadius, card_border_radius) v($defaultCardRadius, card_border_radius) 0 0;
+            overflow: hidden;
+            img {
+                width: 100%;
+                padding: v(0, image_padding);
+                border-radius: v(0, image_border_radius);
+            }
+        }
+
+        @each $animation in v([], animations, $featuredSlidesAnimations) {
+            @include card_animation($animation, '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='shadow'] .featuredSlidesCard {
+            @include card_animation('shadow', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='glow'] .featuredSlidesCard {
+            @include card_animation('glow', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='zoom'] .featuredSlidesCard {
+            @include card_animation('zoom', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='twist'] .featuredSlidesCard {
+            @include card_animation('twist', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='saturate'] .featuredSlidesCard {
+            @include card_animation('saturate', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='desaturate'] .featuredSlidesCard {
+            @include card_animation('desaturate', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='slide'] .featuredSlidesCard {
+            @include card_animation('slide', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='shift'] .featuredSlidesCard {
+            @include card_animation('shift', '.thumb img', '.desc');
+        }
+        @at-root .featuredSlidesWrapper[data-animations*='skew'] .featuredSlidesCard {
+            @include card_animation('skew', '.thumb img', '.desc');
+        }
+
+        .desc {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: v(0, desc_margin, $featuredSlidesCardDescMargin);
+            padding: v(15px, desc_padding, $featuredSlidesCardDescPadding);
+            border-right: v(none, desc_border_right, $featuredSlidesCardDescSeparator);
+            flex-grow: 1;
+
+            .top {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+
+                h3.image-middle {
+                    display: block;
+                    display: -webkit-box;
+                    height: 4em;
+                    line-height: 1.3em;
+                    -webkit-line-clamp: 3;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .bottom {
+                margin: v(15px 0 0 0, button_margin);
+                text-align: v(left, button_alignment, $featuredSlidesButtonAlignment);
+            }
+
+            .btn {
+                display: inline-block;
+
+                border: v($defaultBtnBorderActive, button_border, $featuredSlidesButtonBorder);
+                background: v($colorBgBtnActive, button_background, $featuredSlidesButtonBackground);
+                color: v($colorBtnActiveText, button_color, $featuredSlidesButtonColor);
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_hover, $featuredSlidesButtonBorderHover);
+                    background: v($colorBtnActiveHover, button_background_hover, $featuredSlidesButtonBackgroundHover);
+                    color: v($colorBtnActiveTextHover, button_color_hover, $featuredSlidesButtonColorHover);
+                }
+            }
+        }
+
+        .supertitle {
+            order: -1;
+            display: block;
+            align-self: v(flex-start, supertitle_align_self);
+            margin: v(15px 0 5px 0, supertitle_margin);
+            padding: v(0, supertitle_padding);
+            font-family: v($fontNormal, supertitle_font_family, $cardSupertitleFontfamily);
+            font-weight: v(normal, supertitle_font_weight, $cardSupertitleWeight);
+            line-height: v(1.3, supertitle_line_height, $cardSupertitleLineheight);
+            text-transform: v(uppercase, supertitle_text_transform, $cardSupertitleTexttransform);
+            background: v(transparent, supertitle_background, $colorBgListItemSuperTitle);
+            color: v($color1, supertitle_color, $colorSupertitle);
+
+            @include fontsize(v($fs_tiny, supertitle_font_size, $featuredSlidesCardSupertitleFontsize));
+        }
+
+        h3 {
+            margin: v(15px 0 0 0, title_margin, $featuredSlidesCardTitleMargin);
+            font-family: v($fontTitleTemplate, title_font_family, $featuredSlidesCardTitleFontfamily);
+            font-weight: v(bold, title_font_weight, $featuredSlidesCardTitleWeight);
+            line-height: v(normal, title_line_height, $featuredSlidesCardTitleLineheight);
+            text-transform: v(none, title_text_transform, $featuredSlidesCardTitleTexttransform);
+            color: v(inherit, title_color, $colorFeaturedSlidesCardTitle);
+
+            @include fontsize(v($fs_medium_title, title_font_size, $featuredSlidesCardTitleFontsize));
+
+            a {
+                display: block;
+                text-decoration: v(none, title_text_decoration, $featuredSlidesCardTitleDecoration);
+                color: inherit;
+            }
+
+            &:hover {
+                text-decoration: v(none, title_text_decoration_hover, $featuredSlidesCardTitleDecorationHover);
+                color: v(inherit, title_color_hover, $colorFeaturedSlidesCardTitleHover);
+            }
+
+            &.with-supertitle {
+                margin-top: 0;
+            }
+        }
+
+        .subtitle {
+            margin: v(0 0 15px 0, subtitle_margin, $featuredSlidesCardSubtitleMargin);
+            font-family: v($fontNormal, subtitle_font_family, $featuredSlidesCardSubtitleFontfamily);
+            font-weight: v(normal, subtitle_font_weight, $featuredSlidesCardSubtitleWeight);
+            font-style: v(normal, subtitle_font_style);
+            line-height: v(normal, subtitle_line_height, $featuredSlidesCardSubtitleLineheight);
+            text-transform: v(uppercase, subtitle_text_transform, $featuredSlidesCardSubtitleTexttransform);
+            color: v(inherit, subtitle_color, $colorFeaturedSlidesCardSubTitle);
+
+            @include fontsize(v($fs_normal, subtitle_font_size, $featuredSlidesCardSubtitleFontsize));
+        }
+
+        .tagline {
+            margin: v(10px 0 15px 0, tagline_margin, $featuredSlidesCardTextMargin);
+            font-family: v(inherit, tagline_font_family, $featuredSlidesCardTextFontfamily);
+            font-weight: v(normal, tagline_font_weight, $featuredSlidesCardTextWeight);
+            font-style: v(normal, tagline_font_style);
+            line-height: v(1.2, tagline_line-height, $featuredSlidesCardTextLineheight);
+            text-transform: v(none, tagline_text_transform, $featuredSlidesCardTextTexttransform);
+            color: v(inherit, tagline_color, $colorFeaturedSlidesCardText);
+
+            @include fontsize(v($fs_small, tagline_font_size, $featuredSlidesCardTextFontsize));
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .date {
+            order: -2;
+            margin: v(0 0 10px 0, date_margin, $featuredSlidesCardDateMargin);
+            font-family: v($fontNormal, date_font_family, $featuredSlidesCardDateFontfamily);
+            font-weight: v(normal, date_font_weight, $featuredSlidesCardDateWeight);
+            font-style: v(normal, date_font_style);
+            line-height: v(1, date_line-height, $featuredSlidesCardDateLineheight);
+            text-transform: v(none, date_text_transform, $featuredSlidesCardDateTexttransform);
+            color: v($grey1, date_color, $colorFeaturedCardDate);
+
+            @include fontsize(v($fs_small, date_font_size, $featuredSlidesCardDateFontsize));
+        }
+
+
+        .genres,
+        .tags {
+            margin: v(0 0 15px 0, genres_margin);
+
+            li {
+                list-style: none;
+                display: inline-block;
+                margin: v(0 15px 0 0, genre_margin, $featuredSlidesCardGenreMargin);
+                font-family: v($fontNormal, genre_font_family, $featuredSlidesCardGenreFontfamily);
+                font-weight: v(normal, genre_font_weight, $featuredSlidesCardGenreWeight);
+                line-height: v(1, genre_line_height, $featuredSlidesCardGenreLineheight);
+                text-transform: v(none, genre_text_transform, $featuredSlidesCardGenreTexttransform);
+                color: v($grey2, genre_color, $colorFeaturedSlidesCardGenre);
+
+                @include fontsize(v($fs_small, genre_font_size, $featuredSlidesCardGenreFontsize));
+
+                a {
+                    color: inherit;
+                    &:hover {
+                        color: v($defaultLinkHover, genre_color_hover);
+                    }
+                }
+            }
+        }
+
+        &.default {
+            min-height: 360px;
+            position: relative;
+
+            .thumb {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+            }
+
+            img {
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            .desc {
+                justify-content: flex-end;
+                z-index: 1;
+                pointer-events: none;
+                color: v($white, non_flat_color);
+                .top {
+                    flex-grow: 0;
+                }
+
+                .btn {
+                    pointer-events: initial;
+                }
+
+                .supertitle {
+                    color: v(inherit, non_flat_supertitle_color);
+                }
+                h3 {
+                    color: v(inherit, non_flat_title_color);
+                    pointer-events: initial;
+                    &:hover {
+                        color: v(inherit, non_flat_title_color_hover);
+                    }
+                }
+                .subtitle {
+                    color: v(inherit, non_flat_subtitle_color);
+                }
+                .richtext {
+                    color: v(inherit, non_flat_tagline_color);
+                }
+                .date {
+                    color: v(inherit, non_flat_date_color);
+                }
+                .tags {
+                    color: v(inherit, non_flat_genre_color);
+                }
+            }
+        }
+    }
+
+    .featuredSlidesNav {
+        button {
+            color: v($grey2, nav_color, $featuredSlidesNavColor);
+
+            &:hover {
+                color: v($black, nav_color_hover, $featuredSlidesNavColorHover);
+            }
+        }
+    }
+}

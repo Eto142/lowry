@@ -1,0 +1,32 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$news_archive: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $news_archive;
+
+
+.newsArchiveRoot {
+    background: v(transparent, background, $newsArchiveBackground);
+}
+
+.newsArchive {
+    .grid_root {
+        @include cards_grid();
+    }
+    padding: v(0 15px 30px 15px, padding, $newsArchivePadding);
+
+    h1 {
+        margin: v($basicH1FontMargin, heading_margin, $newsArchiveTitleMargin);
+        font-family: v($fontNormalBold, heading_font_family, $newsArchiveTitleFontfamily);
+        font-weight: v($basicH1Fontweight, heading_font_weight, $newsArchiveTitleWeight);
+        line-height: v(normal, heading_line_height, $newsArchiveTitleLineHeight);
+        text-transform: v($basicH1Texttransform, heading_text_transform, $newsArchiveTitleTexttransform);
+        color: v(inherit, heading_color, $newsArchiveTitleColor);
+
+        @include fontsize(v($basicH1Fontsize, heading_font_size, $newsArchiveTitleFontsize));
+    }
+}

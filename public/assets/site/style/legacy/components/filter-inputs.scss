@@ -1,0 +1,159 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$filter_inputs: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $filter_inputs;
+
+// dedupe some re-use
+$popup_bg: v($white, popup_background, $colorBgDatepicker);
+$popup_border: v($colorDefaultText, popup_border_color, $colorDatepickerBorder);
+$popup_color: v($colorDefaultText, popup_color, $colorDatepicker);
+
+.daterangepicker {
+    margin-top: 0;
+    border-radius: 0;
+    background: $popup_bg;
+    border-color: $popup_border;
+    color: $popup_color;
+    box-shadow: v($defaultBoxShadow, popup_box_shadow, $datepickerBoxShadow);
+
+    &::before,
+    &::after {
+        display: none;
+    }
+
+    .drp-calendar {
+        &.left {
+            padding: 15px 0 15px 15px;
+        }
+        &.right {
+            padding: 15px;
+        }
+    }
+
+    .drp-calendar.left,
+    .drp-buttons {
+        border-color: $popup_border;
+    }
+
+    .calendar-table {
+        background: $popup_bg;
+        border-color: $popup_bg;
+        color: $popup_color;
+
+        td,
+        th {
+            font-size: v(12px, popup_font_size, $datepickerFontsize);
+        }
+
+        td {
+            border-radius: 0;
+            color: $popup_color;
+        }
+        td.today:not(.active) {
+            outline: 1px solid transparentize($popup_color, .75);
+        }
+        td.in-range {
+            background: transparentize($colorBgSelection, .75);
+            color: $popup_color;
+        }
+        td.available:hover {
+            background: transparentize($colorBgSelection, .5);
+            color: $popup_color;
+        }
+        td:not(.has-event) {
+            color: mix(v($unavailable, popup_color_disabled, $colorDatepickerDisabled), $popup_color);
+        }
+        td.has-longterm,
+        td.has-event {
+            font-weight: bold;
+            color: $popup_color;
+        }
+        td.start-date,
+        td.end-date {
+            border-radius: 0;
+        }
+        td.active,
+        td.active:hover {
+            font-weight: bold;
+            background: $colorBgSelection;
+            color: v($white, popup_color_active, $colorDatepickerActive);
+            &.start-date:not(.end-date) {
+                border-top-left-radius: 50%;
+                border-bottom-left-radius: 50%;
+            }
+            &.end-date:not(.start-date) {
+                border-top-right-radius: 50%;
+                border-bottom-right-radius: 50%;
+            }
+        }
+        td.off {
+            font-weight: normal;
+            background: inherit;
+            color: v($unavailable, popup_color_disabled, $colorDatepickerDisabled);
+        }
+
+        .next,
+        .prev {
+            color: $popup_color;
+            span {
+                color: inherit;
+                border-color: currentcolor;
+            }
+            &:hover {
+                background: transparent;
+                color: v($colorDefaultText, popup_color_hover, $colorDatepickerHover);
+            }
+        }
+    }
+
+    .ranges ul {
+        @media (max-width: 563px) {
+            text-align: center;
+            li {
+                display: inline-block;
+            }
+        }
+        li.active {
+            font-weight: bold;
+            background: $colorBgSelection;
+            color: v($white, popup_color_active, $colorDatepickerActive);
+        }
+    }
+}
+
+.input-daterange input::placeholder {
+    color: v($grey2, date_placeholder_color) !important;
+}
+
+.daterangepicker .drp-buttons .btn,
+.select-dropdown .btn {
+    width: auto;
+    min-width: 0;
+    padding: v(6px 12px, button_padding, $datepickerBtnPadding);
+    border: v($defaultBtnBorderDefault, button_border, $datepickerBtnBorder);
+    border-radius: v($defaultBtnRadius, button_border_radius, $datepickerBtnRadius);
+    font-size: v(12px, button_font_size, $datepickerFontsize);
+    background: v($colorBgBtnDefault, button_background, $datepickerBtnBackground);
+    color: v($colorBtnDefaultText, button_color, $datepickerBtnColor);
+
+    &:hover {
+        border: v($defaultBtnBorderActiveHover, button_border_hover, $datepickerBtnBorderHover);
+        background: v($colorBtnActiveHover, button_background_hover, $datepickerBtnBackgroundHover);
+        color: v($colorBtnActiveTextHover, button_color_hover, $datepickerBtnColorHover);
+    }
+    &.btn-primary {
+        border: v($defaultBtnBorderActive, button_border_primary, $datepickerBtnPrimaryBorder);
+        background: v($colorBgBtnActive, button_background_primary, $datepickerBtnPrimaryBackground);
+        color: v($colorBtnActiveText, button_color_primary, $datepickerBtnPrimaryColor);
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, button_border_primary_hover, $datepickerBtnPrimaryBorderHover);
+            background: v($colorBtnActiveHover, button_background_primary_hover, $datepickerBtnPrimaryBackgroundHover);
+            color: v($colorBtnActiveTextHover, button_color_primary_hover, $datepickerBtnPrimaryColorHover);
+        }
+    }
+}

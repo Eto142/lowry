@@ -1,0 +1,72 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$description_image: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $description_image;
+
+.descriptionImageWrapper {
+    .inner {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        grid-gap: v(30px, grid_spacing);
+
+        @media (max-width: $bp_tiny) {
+            grid-template-columns: 1fr;
+        }
+
+        &.image_on_right .image {
+            @media (min-width: $bp_tablet) {
+                order: 2;
+            }
+        }
+
+        .image > * {
+            display: block;
+            position: relative;
+            padding: v(0, img_padding);
+            img {
+                width: 100%;
+            }
+            @include credits_box();
+        }
+
+        .desc {
+            display: flex;
+            flex-direction: column;
+            justify-content: v(flex-start, desc_justify_content);
+            padding: v(0, desc_padding);
+            background: v(transparent, desc_background);
+            color: v(inherit, desc_color);
+            flex-grow: 1;
+
+            h2 {
+                margin: v(0, title_margin);
+                font-family: v($fontTitleContent, title_font_family);
+                font-weight: v(bold, title_font_weight);
+                font-style: v(normal, title_font_style);
+                line-height: v(1, title_line_height);
+                text-transform: v(none, title_text_transform);
+                color: v(inherit, title_color);
+
+                @include fontsize(v($basicH2Fontsize, title_font_size));
+            }
+
+            h2 ~ .richtext {
+                padding: v(15px 0 0 0, desc_padding);
+            }
+
+            .richtext {
+                padding: v(0, desc_padding);
+                font-family: v($fontNormal, desc_font_family);
+                line-height: v(1.67, desc_line_height);
+                text-transform: v(none, desc_text_transform);
+
+                @include fontsize(v($baseFontsize, desc_font_size));
+            }
+        }
+    }
+}

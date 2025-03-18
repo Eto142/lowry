@@ -1,0 +1,680 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$soon: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $soon;
+
+$soonSpacing: v(20px, spacing, $soonSpacing);
+
+.soon2Wrapper {
+    > .container {
+        display: flex;
+        align-items: flex-start;
+        padding: v(0 15px, padding, $soonListContainerPadding);
+        > * {
+            flex: 1;
+        }
+    }
+
+    .soon2Banner {
+        display: block;
+        flex: $soonBannerSize;
+        position: relative;
+        margin-right: math.div($soonSpacing, 2);
+        border-radius: v(0, banner_border_radius, $soonBannerRadius);
+        background: v(none, background, $soonDescBackground);
+        overflow: hidden;
+
+        &:not(.flat) {
+            min-height: v(460px, banner_height, $soonBannerHeight);
+            padding: v(30px, banner_padding, $soonBannerPadding);
+            background-position: center;
+            background-size: cover;
+
+            .clickLayer {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+            }
+            .desc {
+                position: absolute;
+                top: v(auto, banner_top, $soonBannerPositionTop);
+                right: 0;
+                bottom: v(0, banner_bottom, $soonBannerPositionBottom);
+                left: 0;
+            }
+        }
+        &.flat {
+            img {
+                width: 100%;
+            }
+        }
+
+        .desc {
+            padding-top: v(30px, banner_padding_top, $soonBannerPaddingTop);
+            padding-right: v(30px, banner_padding_right, $soonBannerPaddingRight);
+            padding-bottom: v(30px, banner_padding_bottom, $soonBannerPaddingBottom);
+            padding-left: v(30px, banner_padding_left, $soonBannerPaddingLeft);
+            text-align: v(left, banner_text_align, $soonBannerAlignment);
+            color: v($white, banner_color, $soonBannerColor);
+        }
+        .title,
+        h3 {
+            margin: v(0, banner_title_margin, $soonBannerTitleMargin);
+            padding: 0;
+            font-family: v($fontTitleContent, banner_title_font_family, $soonBannerTitleFontfamily);
+            font-weight: v(bold, banner_title_font_weight, $soonBannerTitleWeight);
+            line-height: v(1, banner_title_line_height, $soonBannerTitleLineHeight);
+            text-transform: v(none, banner_title_text_transform, $soonBannerTitleTexttransform);
+
+            a,
+            a:link {
+                text-decoration: v($defaultLinkDecoration, banner_title_text_decoration);
+                color: inherit;
+            }
+
+            a:hover,
+            a:active {
+                text-decoration: v($defaultLinkDecorationHover, banner_title_text_decoration_hover);
+                color: inherit;
+            }
+
+            @include fontsize(v($fs_huge_title, banner_title_font_size, $soonBannerTitleFontsize));
+        }
+        .subtitle {
+            margin: v(0 0 15px 0, banner_subtitle_margin, $soonBannerSubTitleMargin);
+            padding: 0;
+            font-family: v($fontNormal, banner_subtitle_font_family, $soonBannerSubTitleFontfamily);
+            font-weight: v(normal, banner_subtitle_font_weight, $soonBannerSubTitleWeight);
+            line-height: v(1, banner_subtitle_line_height, $soonBannerSubTitleLineHeight);
+            text-transform: v(none, banner_subtitle_text_transform, $soonBannerSubTitleTexttransform);
+
+            @include fontsize(v($fs_huge_subtitle, banner_subtitle_font_size, $soonBannerSubTitleFontsize));
+
+            p {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        .btn {
+            padding: v($defaultBtnPadding, banner_button_padding, $soonBannerButtonPadding);
+            border: v($defaultBtnBorder, banner_button_border, $soonBannerButtonBorder);
+            border-radius: v($defaultBtnRadius, banner_button_border_radius, $soonBannerButtonRadius);
+
+            font-family: v($defaultBtnFontfamily, banner_button_font_family, $soonBannerButtonFontfamily);
+            font-weight: v($defaultBtnWeight, banner_button_font_weight, $soonBannerButtonWeight);
+            line-height: v($defaultBtnLineHeight, banner_button_line_height, $soonBannerButtonLineHeight);
+            text-transform: v($defaultBtnTexttransform, banner_button_text_transform, $soonBannerButtonTexttransform);
+
+            background: v($color1, banner_button_background, $soonBannerButtonBackground);
+            color: v($white, banner_button_color, $soonBannerButtonColor);
+
+            @include fontsize(v($defaultBtnFontsize, banner_button_font_size, $soonBannerButtonFontsize));
+
+            &:hover,
+            &:active {
+                border: v($defaultBtnBorder, banner_button_border_hover, $soonBannerButtonBorderHover);
+                background: v($color2, banner_button_background_hover, $soonBannerButtonBackgroundHover);
+                color: v($white, banner_button_color_hover, $soonBannerButtonColorHover);
+            }
+        }
+    }
+
+    @media (max-width: $bp_mobile - 1) {
+        &.banner-on-mobile > .container {
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: stretch;
+
+            .soon2Banner {
+                margin-right: 0;
+                margin-bottom: 30px;
+            }
+        }
+        &.banner-on-mobile.variant-flipped > .container {
+            .soon2Banner {
+                margin-top: 30px;
+                margin-bottom: 0;
+            }
+        }
+        &:not(.banner-on-mobile) {
+            .soon2Banner {
+                display: none;
+            }
+        }
+    }
+
+    // space between banner and list, if there is a banner
+    .soon2Banner + .soon2List {
+        @media (min-width: $bp_mobile + 1) {
+            margin-left: math.div($soonSpacing, 2);
+        }
+    }
+    &.variant-flipped { // variant
+        .soon2Banner {
+            margin-right: 0;
+            margin-left: math.div($soonSpacing, 2);
+            order: 2;
+        }
+        .soon2Banner + .soon2List {
+            @media (min-width: $bp_mobile + 1) {
+                margin-right: math.div($soonSpacing, 2);
+            }
+            margin-left: 0;
+        }
+    }
+    &.list-toggle {
+        tr.extra:not(.revealed) {
+            display: none !important;
+        }
+        tr.production-type-movie {
+            display: none;
+        }
+        &[data-list-toggled='movie'] {
+            tr.production-type-movie {
+                display: table-row;
+            }
+            tr:not(.production-type-movie) {
+                display: none;
+            }
+        }
+    }
+
+    .soon2List .soon-toggle-header {
+        margin: v(0 0 10px 0, list_title_margin, $soonListItemH3Margin);
+        @media (min-width: $bp_tiny) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h2 {
+                margin: 0 15px 0 0;
+            }
+        }
+    }
+
+    .soon-toggle {
+        display: inline-flex;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        border: v(1px solid $grey3, toggle_border, $soonToggleBorder);
+        border-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+        font-family: v($defaultBtnFontfamily, toggle_font_family, $soonToggleFontFamily);
+        font-weight: v($defaultBtnWeight, toggle_font_weight, $soonToggleWeight);
+        text-transform: v($defaultBtnTexttransform, toggle_text_transform, $soonToggleTexttransform);
+        background: v($grey3, toggle_background, $soonToggleBackground);
+        color: v($grey1, toggle_color, $soonToggleColor);
+        cursor: pointer;
+
+        @include fontsize(v($defaultBtnFontsize, toggle_font_size, $soonToggleFontsize));
+
+        span {
+            display: inline-block;
+            padding: v($defaultBtnPadding, toggle_padding, $soonTogglePadding);
+            transition: $defaultBtnTransitionLeave;
+            &:hover {
+                transition: $defaultBtnTransitionEnter;
+            }
+            &:hover,
+            &:active {
+                background: v($grey1, toggle_default_background, $soonToggleDefaultBackground);
+                color: v($grey3, toggle_default_color, $soonToggleDefaultColor);
+            }
+            &.movie:hover,
+            &.movie:active {
+                border-top-right-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+                border-bottom-right-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+                background: v($grey1, toggle_movie_background, $soonToggleMovieBackground);
+                color: v($grey3, toggle_movie_color, $soonToggleMovieColor);
+            }
+            &.default:hover,
+            &.default:active {
+                border-top-left-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+                border-bottom-left-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+            }
+        }
+    }
+    &:not([data-list-toggled='movie']) {
+        .soon-toggle span.default {
+            background: v($grey1, toggle_default_background, $soonToggleDefaultBackground);
+            border-top-left-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+            border-bottom-left-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+            color: v($grey3, toggle_default_color, $soonToggleDefaultColor);
+        }
+        .revealButton.movie,
+        .viewAll.movie {
+            display: none;
+        }
+    }
+    &[data-list-toggled='movie'] {
+        .soon-toggle span.movie {
+            background: v($grey1, toggle_movie_background, $soonToggleMovieBackground);
+            color: v($grey3, toggle_movie_color, $soonToggleMovieColor);
+            border-top-right-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+            border-bottom-right-radius: v($defaultBtnRadius, toggle_border_radius, $soonToggleRadius);
+        }
+        .revealButton:not(.movie),
+        .viewAll:not(.movie) {
+            display: none;
+        }
+    }
+
+    .revealButton {
+        display: block;
+        width: 30px;
+        height: 30px;
+        float: left;
+        margin: v($colorSub, reveal_margin, $colorSoonRevealMargin);
+        padding: 0;
+        border: none;
+        border-radius: v($colorSub, reveal_border_radius, $colorSoonRevealRadius);
+        font-size: 30px;
+        line-height: 1;
+        background: v(transparent, reveal_background, $colorSoonRevealBackground);
+        color: v($colorSub, reveal_color, $colorSoonReveal);
+        -webkit-appearance: none;
+        will-change: transform;
+        transition: all .2s ease-in-out;
+
+        &:hover,
+        &:active {
+            background: v(transparent, reveal_background_hover, $colorSoonRevealBackgroundHover);
+            color: v($color9, reveal_color_hover, $colorSoonRevealHover);
+        }
+
+        &.toggled {
+            transform: rotate(-180deg);
+        }
+    }
+
+    .soon2List {
+        flex-shrink: 0;
+
+        .list {
+            padding: v(0, list_padding, $soonListPadding);
+            border-radius: v(0, list_border_radius);
+            background: v($white, list_background, $colorBgSoonList);
+            color: v($colorPrimeDark, list_color, $colorSoonListItemH3);
+        }
+
+        .soon-envelope {
+            overflow: hidden;
+            transition: height .2s ease-in-out;
+        }
+
+        .select-wrapper,
+        .select-wrapper a,
+        h2 {
+            margin: v(0, list_heading_margin, $soonListItemH3Margin);
+            padding: v(0, list_heading_padding, $soonListItemH3Padding);
+            font-family: v($fontNormal, list_heading_font_family, $soonListItemH3Fontfamily);
+            font-weight: v(bold, list_heading_font_weight, $soonListItemH3Weight);
+            line-height: v(normal, list_heading_line_height, $soonListItemH3LineHeight);
+            text-transform: v(uppercase, list_heading_text_transform, $soonListItemH3Texttransform);
+
+            @include fontsize(v($fs_small, list_heading_font_size, $soonListItemH3Fontsize));
+        }
+
+        .btn {
+            @media (max-width: $bp_mobile - 1) {
+                min-width: 0;
+            }
+
+            border: v($defaultBtnBorderActive, list_button_border, $soonListItemBtnBorder);
+            background: v($colorBgBtnActive, list_button_background, $soonListItemBtnBackground);
+            color: v($colorBtnActiveText, list_button_color, $soonListItemBtnColor);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, list_button_border_hover, $soonListItemBtnBorderHover);
+                background: v($colorBtnActiveHover, list_button_background_hover, $soonListItemBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, list_button_color_hover, $soonListItemBtnColorHover);
+            }
+        }
+
+        .status-info {
+            display: block;
+            padding: v(0, list_status_padding, $soonListItemStatusPadding);
+            font-family: v(inherit, list_status_font_family, $soonListItemStatusFontfamily);
+            font-weight: v(normal, list_status_font_weight, $soonListItemStatusFontweight);
+            line-height: v(1.2, list_status_line_height, $soonListItemStatusLineheight);
+            text-transform: v(none, list_status_text_transform, $soonListItemStatusTexttransform);
+            text-align: v(center, list_status_text_align, $soonListItemStatusTextalign);
+            white-space: normal;
+            color: v(inherit, list_status_color, $soonListItemStatusColor);
+
+            @include fontsize(v(inherit, list_status_font_size, $soonListItemStatusFontsize));
+
+            &:link {
+                text-decoration: v(none, list_status_text_decoration_link, $soonListItemStatusLinkDecoration);
+                color: v(inherit, list_status_color_link, $soonListItemStatusLinkColor);
+                &:hover {
+                    text-decoration: v(none, list_status_text_decoration_link_hover, $soonListItemStatusLinkDecorationHover);
+                    color: v($defaultLinkHover, list_status_color_link_hover, $soonListItemStatusLinkColorHover);
+                }
+            }
+        }
+
+        @media (max-width: $bp_tiny - 1) {
+            .btn,
+            .status-info {
+                display: inline-flex;
+                padding: v(5px 10px, list_button_padding_mobile);
+                .label,
+                .property {
+                    @include screenreader_only();
+                }
+                .peppered-icon {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .select-wrapper {
+            position:relative;
+            clear: both;
+            button {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                margin: 0;
+                padding: v(10px 15px, select_item_padding, $soonSelectItemPadding);
+                border: none;
+                text-transform: inherit;
+                background: none;
+                -webkit-appearance: none;
+                background: v($black, select_button_background, $soonSelectButtonBackground);
+                color: v($white, select_button_color, $soonSelectButtonColor);
+                &:hover {
+                    background: v($black, select_button_background_hover, $soonSelectButtonBackgroundHover);
+                    color: v($white, select_button_color_hover, $soonSelectButtonColorHover);
+                }
+            }
+
+            .toggleEnvelope {
+                list-style: none;
+                width: 100%;
+                min-width: 160px;
+                float: left;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                z-index: 1000;
+                border: none;
+                border-radius: v(0, select_border_radius, $soonSelectRadius);
+                background: v($white, select_background, $soonSelectBackground);
+                box-shadow: v($defaultBoxShadow, select_box_shadow, $soonSelectBoxshadow);
+                visibility: hidden;
+                a {
+                    display: block;
+                    clear: both;
+                    margin: 0;
+                    padding: v(10px 15px, select_item_padding, $soonSelectItemPadding);
+                    color: v(inherit, select_color, $soonSelectColor);
+                    white-space: nowrap;
+                    &:hover {
+                        background: v($colorHighlight, select_background_hover, $soonSelectBackgroundHover);
+                        color: v(inherit, select_color_hover, $soonSelectColorHover);
+                    }
+                }
+
+                &[aria-expanded='true'] {
+                    visibility: visible;
+                }
+            }
+        }
+
+
+        form {
+            display: inline-block;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        tr {
+            border-bottom: v(2px solid $colorPrimeDark, list_item_border_bottom, $soonListItemBorderBottom);
+        }
+
+        td {
+            padding: v(10px 0, list_item_padding, $soonListItemPadding);
+            vertical-align: top;
+            &.event {
+                width: 100%;
+            }
+            &:not(:last-child) {
+                padding-right: 15px;
+            }
+            &.action {
+                text-align: right;
+                white-space: nowrap;
+                > * {
+                    vertical-align: top;
+                }
+            }
+        }
+
+        .supertitle {
+            display: v(block, list_supertitle_display, $soonListItemSuperTitleDisplay);
+            margin: v(0, list_supertitle_margin, $soonListItemSuperTitleMargin);
+            padding: v(0, list_supertitle_padding, $soonListItemSuperTitlePadding);
+            font-family: v($fontNormal, list_supertitle_font_family, $soonListItemSupertitleFontfamily);
+            font-weight: v(normal, list_supertitle_font_weight, $soonListItemSupertitleWeight);
+            line-height: v(1.3, list_supertitle_line_height, $soonListItemSupertitleLineheight);
+            text-transform: v(uppercase, list_supertitle_text_transform, $soonListItemSupertitleTexttransform);
+            background: v(none, list_supertitle_background, $soonListItemSuperTitleBackground);
+            color: v($color1, list_supertitle_color, $soonListItemSupertitleColor);
+
+            @include fontsize(v($fs_small, list_supertitle_font_size, $soonListItemSupertitleFontsize));
+        }
+
+        .title {
+            font-family: v($fontNormalBold, list_title_font_family, $soonListItemTitleFontfamily);
+            font-weight: v(bold, list_title_font_weight, $soonListItemTitleWeight);
+            line-height: v(1.2em, list_title_line_height, $soonListItemTitleLineHeight);
+            text-decoration: v($defaultLinkDecoration, list_title_text_decoration);
+            text-transform: v(none, list_title_text_transform, $soonListItemTitleTexttransform);
+            color: v($colorPrimeDark, list_title_color, $colorSoonListItemTitle);
+
+            @include fontsize(v($fs_large_subtitle, list_title_font_size, $soonListItemTitleFontsize));
+
+            @media (max-width: $bp_tiny - 1) {
+                -webkit-hyphens: auto;
+                hyphens: auto;
+            }
+
+            &:hover,
+            &:active {
+                text-decoration: v($defaultLinkDecorationHover, list_title_text_decoration_hover);
+                color: v($color9, list_title_color_hover, $colorSoonListItemTitleHover);
+            }
+        }
+
+        .subtitle {
+            font-family: v($fontNormal, list_subtitle_font_family, $soonListItemSubtitleFontfamily);
+            font-weight: v(normal, list_subtitle_font_weight, $soonListItemSubtitleWeight);
+            line-height: v(1.2em, list_subtitle_line_height, $soonListItemSubtitleLineHeight);
+            text-transform: v(none, list_subtitle_text_transform, $soonListItemSubtitleTexttransform);
+            color: v($colorPrimeDark, list_subtitle_color, $colorSoonListItemSubtitle);
+
+            @include fontsize(v($fs_small, list_subtitle_font_size, $soonListItemSubtitleFontsize));
+        }
+
+        .date {
+            font-family: v($fontNormal, list_date_font_family, $soonListItemDateFontfamily);
+            font-weight: v(normal, list_date_font_weight, $soonListItemDateWeight);
+            line-height: v(0.8em, list_date_line_height, $soonListItemDateLineHeight);
+            text-transform: v(none, list_date_text_transform, $soonListItemDateTexttransform);
+            white-space: nowrap;
+            color: v($colorPrimeDark, list_date_color, $colorSoonListItemDate);
+
+            @include fontsize(v($fs_normal, list_date_font_size, $soonListItemDateFontsize));
+
+            span {
+                display: block;
+                + span {
+                    margin-top: v(0, list_date_spacing, $soonListItemDateSpacing);
+                }
+            }
+        }
+
+        .time {
+            font-family: v(inherit, list_time_font_family);
+            font-weight: v(inherit, list_time_font_weight);
+            line-height: v(inherit, list_time_line_height);
+            text-transform: v(inherit, list_time_text_transform);
+            white-space: nowrap;
+            color: v(inherit, list_time_color);
+
+            @include fontsize(v(inherit, list_time_font_size));
+        }
+
+        .price {
+            display: inline-block;
+            margin: v(0 15px 0 0, list_price_margin, $soonListItemPriceMargin);
+            font-family: v(inherit, list_price_font_family, $soonListItemPriceFontfamily);
+            font-weight: v(normal, list_price_font_weight, $soonListItemPriceWeight);
+            line-height: v(inherit, list_price_line_height, $soonListItemPriceLineHeight);
+            text-transform: v(none, list_price_text_transform, $soonListItemPriceTexttransform);
+            color: v(inherit, list_price_color, $soonListItemPriceColor);
+
+            @include fontsize(v(inherit, list_price_font_size, $soonListItemPriceFontsize));
+
+            @media (max-width: $bp_mobile - 1) {
+                display: none;
+            }
+        }
+
+        .genres {
+            flex-grow: 1;
+            margin-bottom: 10px;
+
+            li {
+                list-style: none;
+                display: inline-block;
+                margin-right: v(5px, genre_spacing);
+                margin-bottom: 5px;
+
+                a {
+                    display: block;
+                    padding: v(0, genre_padding);
+                    border: v(none, genre_border);
+                    border-radius: v(0, genre_border_radius);
+                    font-family: v($fontNormal, genre_font_family);
+                    font-weight: v(none, genre_font_weight);
+                    line-height: v(1.4px, genre_line_height);
+                    text-decoration: v($defaultLinkDecoration, genre_text_decoration);
+                    text-transform: v(uppercase, genre_text_transform);
+                    background: v(transparent, genre_background);
+                    color: v($defaultLink, genre_color);
+
+                    &:hover {
+                        border: v(none, genre_border_hover);
+                        text-decoration: v($defaultLinkDecorationHover, genre_text_decoration_hover);
+                        background: v(transparent, genre_background_hover);
+                        color: v($defaultLinkHover, genre_color_hover);
+                    }
+
+                    @include fontsize(v($fs_small, genre_font_size));
+                }
+            }
+        }
+
+        td.type {
+            font-family: v(inherit, list_type_font_family, $soonListItemTypeFontfamily);
+            font-weight: v(inherit, list_type_font_weight, $soonListItemTypeWeight);
+            line-height: v(inherit, list_type_line_height, $soonListItemTypeLineHeight);
+            text-transform: v(inherit, list_type_text_transform, $soonListItemTypeTexttransform);
+            color: v(inherit, list_type_color, $colorSoonListItemType);
+            white-space: nowrap;
+
+            @include fontsize(v(inherit, list_type_font_size, $soonListItemTypeFontsize));
+
+            @media (max-width: $bp_mobile - 1) {
+                display: none;
+            }
+
+            a + a {
+                margin-left: v(1ex, list_genre_spacing, $soonListItemGenreSpacing);
+            }
+
+            a,
+            a:link,
+            a:visited {
+                display: inline-block;
+                padding: v(0, list_genre_padding, $soonListItemGenrePadding);
+                border: v(none, list_genre_border, $soonListItemGenreBorder);
+                line-height: v(inherit, list_genre_line_height, $soonListItemGenreLineHeight);
+                text-decoration: v(none, list_genre_text_decoration, $soonListItemGenreDecoration);
+                text-transform: v(inherit, list_genre_text_transform, $soonListItemGenreTransform);
+                background: v(transparent, list_genre_background, $soonListItemGenreBackground);
+                color: v(inherit, list_genre_color, $soonListItemGenreColor);
+                &:hover {
+                    border: v(none, list_genre_border_hover, $soonListItemGenreBorderHover);
+                    text-decoration: v(underline, list_genre_text_decoration_hover, $soonListItemGenreDecorationHover);
+                    background: v(none, list_genre_background_hover, $soonListItemGenreBackgroundHover);
+                    color: v(inherit, list_genre_color_hover, $soonListItemGenreColorHover);
+                }
+            }
+        }
+
+        .location,
+        .venue {
+            display: inline-block;
+            margin: v(10px 0 5px 0, list_location_margin, $soonListItemLocationMargin);
+            font-family: v($fontNormal, list_location_font_family, $soonListItemLocationFontfamily);
+            font-weight: v(normal, list_location_font_weight, $soonListItemLocationWeight);
+            line-height: v(1.2em, list_location_line_height, $soonListItemLocationLineHeight);
+            text-transform: v(uppercase, list_location_text_transform, $soonListItemLocationTexttransform);
+            color: v($color9, list_location_color, $colorSoonListItemLocation);
+
+            @include fontsize(v($fs_tiny, list_location_font_size, $soonListItemLocationFontsize));
+        }
+        .location + .venue::before {
+            content: '—';
+        }
+
+        .viewAll {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: v(10px 0 0 0, list_view_padding, $soonListItemViewAllPadding);
+            font-family: v($fontNormal, list_view_font_family, $soonListItemViewAllFontfamily);
+            font-weight: v(normal, list_view_font_weight, $soonListItemViewAllWeight);
+            line-height: v(normal, list_view_line_height, $soonListItemViewAllLineHeight);
+            text-decoration: v(none, list_view_text_decoration);
+            text-transform: v(none, list_view_text_transform, $soonListItemViewAllTexttransform);
+            color: v($colorPrimeDark, list_view_color, $colorSoonListItemViewAll);
+
+            @include fontsize(v($fs_normal, list_view_font_size, $soonListItemViewAllFontsize));
+
+            &:hover,
+            &:active {
+                text-decoration: v(underline, list_view_text_decoration_hover);
+                color: v($color9, list_view_color_hover, $colorSoonListItemViewAllHover);
+            }
+
+            @if (v(true, list_view_icon) == false) {
+                .peppered-icon {
+                    display: none;
+                }
+            }
+
+            // legacy font-awesome icon potentially in the text
+            .fa {
+                margin-left: 5px;
+            }
+        }
+    }
+}

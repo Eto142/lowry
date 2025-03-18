@@ -1,0 +1,132 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$order_banner: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order_banner;
+
+$banner_mode: v(normal, mode, $orderBannerMode);
+
+
+.orderBannerWrapper {
+    margin: v(30px 0 0 0, margin, $orderBannerMargin);
+
+    .orderBanner {
+        display: v(block, display, $orderBannerDisplay);
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+
+        padding: v(90px 15px 30px 15px, padding, $orderBannerPadding);
+        @media (max-width: $bp_mobile - 1) {
+            padding: v(20px 15px, padding_mobile, $orderBannerPaddingMobile);
+        }
+
+        + .orderBanner {
+            margin-top: 30px;
+        }
+
+        .desc {
+            padding: v(0, desc_padding, $orderBannerDescPadding);
+        }
+
+        .image {
+            overflow: hidden;
+        }
+
+        .imageLayer {
+            display: block;
+
+            @if ($banner_mode == 'normal') {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: -1;
+            }
+            @if ($banner_mode == 'flat') {
+                padding-bottom: math.div(900, 1920) * 100%;
+            }
+            background: transparent no-repeat center center / cover;
+        }
+        .image.with-link + .desc {
+            @if ($banner_mode == 'normal') {
+                pointer-events: none;
+            }
+        }
+
+        .buttonWrapper {
+            margin: v(30px 0 0 0, button_margin, $orderBannerBtnMargin);
+        }
+
+        @media (max-width: $bp_tiny - 1) {
+            display: block;
+            text-align: v(center, text_align_mobile, $orderBannerAlignmentMobile);
+            .buttonWrapper {
+                margin: v(15px 0 0 0, button_margin_stacked, $orderBannerBtnMarginStacked);
+            }
+        }
+
+        h2 {
+            margin: v(0, title_margin, $orderBannerTitleMargin);
+            font-family: v($fontTitleContent, title_font_family, $orderBannerTitleFontfamily);
+            font-weight: v(bold, title_font_weight, $orderBannerTitleWeight);
+            font-style: v(normal, title_font_style, $orderBannerTitleStyle);
+            line-height: v(1, title_line_height, $orderBannerTitleLineHeight);
+            text-transform: v(none, title_text_transform, $orderBannerTitleTexttransform);
+            color: v($white, title_color,$orderBannerTitleColor);
+
+            @include fontsize(v($basicH1Fontsize, title_font_size, $orderBannerTitleFontsize));
+
+            a,
+            a:link,
+            a:visited,
+            a:hover,
+            a:active {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+        .subtitle {
+            margin: v(5px 0 0 0, subtitle_margin, $orderBannerSubTitleMargin);
+            font-family: v($fontNormal, subtitle_font_family, $orderBannerSubTitleFontfamily);
+            font-weight: v(bold, subtitle_font_weight, $orderBannerSubTitleWeight);
+            font-style: v(normal, subtitle_font_style, $orderBannerSubTitleStyle);
+            line-height: v(1, subtitle_line_height, $orderBannerSubTitleLineHeight);
+            text-transform: v(none, subtitle_text_transform, $orderBannerSubTitleTexttransform);
+            color: v($white, subtitle_color, $orderBannerSubTitleColor);
+
+            @include fontsize(v($basicH3Fontsize, subtitle_font_size, $orderBannerSubTitleFontsize));
+
+            p {
+                margin: v(0, desc_margin, $orderBannerParagraphMargin);
+            }
+        }
+
+        .btn {
+            padding: v($defaultBtnPadding, button_padding, $orderBannerBtnPadding);
+            border: v($defaultBtnBorderActive, button_border, $orderBannerBtnBorder);
+            font-size: v($defaultBtnFontsize, button_font_size, $orderBannerBtnFontsize);
+            text-transform: v($defaultBtnTexttransform, button_text_transform, $orderBannerBtnTexttransform);
+            background: v($colorBgBtnActive, button_background, $orderBannerBtnBackground);
+            color: v($colorBtnActiveText, button_color, $orderBannerBtnColor);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover, $orderBannerBtnBorderHover);
+                background: v($colorBtnActiveHover, button_background_hover, $orderBannerBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, button_color_hover, $orderBannerBtnColorHover);
+            }
+        }
+
+        @each $animation in v([], animations, $orderBannerAnimations) {
+            @include card_animation($animation, '.imageLayer', '.desc');
+        }
+    }
+}

@@ -1,0 +1,121 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$searchbar: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $searchbar;
+
+
+.searchBar {
+    .container {
+        padding: v(0 15px, inner_padding, $searchBarContainerPadding);
+    }
+
+    form {
+        margin: 0;
+    }
+
+    .search-box form,
+    .input-daterange {
+        position: relative;
+    }
+
+    [name='s'],
+    .input-daterange input {
+        width: 100%;
+        height: auto;
+        min-height: 2em;
+        padding: v(8px 12px, input_padding, $searchBarInputPadding);
+        padding-right: v(30px, icon_size, $searchBarIconWidth);
+        border-top: v(none, input_border_top, $searchBarInputBorderTop);
+        border-right: v(none, input_border_right, $searchBarInputBorderRight);
+        border-bottom: v(none, input_border_bottom, $searchBarInputBorderBottom);
+        border-left: v(none, input_border_left, $searchBarInputBorderLeft);
+        border-radius: v(15px, input_border_radius, $searchBarInputRadius);
+        font-family: v($fontNormal, input_font_family, $searchBarFontfamily);
+        font-weight: v(normal, input_font_weight, $searchBarFontweight);
+        line-height: 1;
+        text-transform: v(none, input_text_transform, $searchBarTextTransform);
+        background: v($white, input_background, $searchBarInputBackground);
+        color: v($black, input_color, $searchBarInputColor);
+        text-align: left;
+
+        @at-root #filtersForm[data-datepicker-mode='inline'] #filterHeader .input-daterange input {
+            width: 100%;
+        }
+        @media (max-width: $bp_tablet - 1) {
+            width: 100%;
+        }
+
+        @include fontsize(v($fs_normal, input_font_size, $searchBarFontsize));
+    }
+
+    [type='submit'],
+    .fa-calendar {
+        position: absolute;
+        top: 50%;
+        right: .5em;
+        margin-top: -.5em;
+        color: inherit;
+    }
+
+    [type='submit'] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: v(30px, icon_size, $searchBarIconWidth);
+        height: 100%;
+        top: 0;
+        margin: 0;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    .fa-calendar {
+        pointer-events: none;
+    }
+
+
+    .inner {
+        > * + * {
+            margin-top: v(15px, vertical_spacing, $searchBarInputVerticalSpacing);
+        }
+
+        @media (min-width: 601px) {
+            display: flex;
+            > * {
+                flex: 2;
+            }
+            > :first-child {
+                flex: 6;
+            }
+            > * + * {
+                margin-top: 0;
+                margin-left: v(30px, horizontal_spacing, $searchBarInputHorizontalSpacing);
+            }
+        }
+    }
+
+
+    @media (max-width: 600px) {
+        .dateRange {
+            display: none;
+        }
+        .dateRangeSingle {
+            display: block;
+        }
+    }
+    @media (min-width: 601px) {
+        .dateRange {
+            display: block;
+        }
+        .dateRangeSingle {
+            display: none;
+        }
+    }
+}

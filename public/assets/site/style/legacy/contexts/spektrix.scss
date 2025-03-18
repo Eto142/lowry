@@ -1,0 +1,19 @@
+// Added to legacy context intentionally. We are hard overriding
+// the GLightbox styles in a specific context. We want to keep any
+// lightbox style refactor out of this scope of work right now.
+// This level of scoping can't sit within components.
+.purchase-page.spektrix {
+    .glightbox-container {
+        .ginner-container {
+            @include from('mobile') {
+                padding: 4rem;
+            }
+            @include from('tablet') {
+                padding: 8rem;
+            }
+        }
+    }
+    .glightbox-button-hidden {
+        display: none;
+    }
+}

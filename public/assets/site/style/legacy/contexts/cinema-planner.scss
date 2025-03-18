@@ -1,0 +1,401 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$cinema_planner: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $cinema_planner;
+
+$scrollable_header_breakpoint: $bp_mobile;
+$mobile_layout_breakpoint: $bp_tiny;
+
+.cinema-planner{
+    padding-bottom: v(40px, padding_bottom);
+    scroll-margin-top: $headerHeightSmall;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: v(100px, header_height);
+        z-index: 1;
+        background: v($grey4, header_background);
+        overflow: auto;
+        will-change: transform, opacity;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        h2 {
+            margin: v(auto 15px, header_title_margin);
+            color: v(inherit, header_title_color);
+        }
+
+        @media (max-width: $scrollable_header_breakpoint) {
+            cursor: grab;
+            justify-content: start;
+        }
+
+        @media (max-width: $mobile_layout_breakpoint) {
+            background: v($color9, header_background_mobile);
+            h2 {
+                color: v($white, header_title_color_mobile);
+            }
+        }
+
+        .day-filters {
+            list-style: none;
+            display: flex;
+            margin: auto 15px;
+
+            li {
+                &:not(:last-child) {
+                    margin-right: 10px;
+                }
+
+                .day-option {
+                    width: 100%;
+                    min-width: 60px;
+                    border: v(1.5px solid $color9, filter_border);
+                    background: v(transparent, filter_background);
+
+                    @media (max-width: $mobile_layout_breakpoint) {
+                        min-width: 40px;
+                        padding: 10px 15px;
+                        border: v(1.5px solid $white, filter_border_mobile);
+                        color: v($white, filter_color_mobile);
+                    }
+
+                    // disable hover state on touch devices for filter buttons
+                    @media (hover: hover) and (pointer: fine) {
+                        &:hover {
+                            border: v(1.5px solid $color1, filter_border_hover);
+                            background: v($color1, filter_background_hover);
+                        }
+                    }
+                }
+
+                .day-option[aria-selected='true'] {
+                    border: v(1.5px solid $color1, filter_border_active);
+                    background: v($color1, filter_background_active);
+                    color: v($white, filter_color_active);
+                }
+            }
+        }
+    }
+
+    .header-buffer.pinned {
+        animation: buffer-inserted .2s ease-in-out;
+    }
+
+    .header.pinned {
+        height: v(80px, pinned_header_height);
+        position: sticky;
+        top: $headerHeightSmall - 1; // remove 1px gap
+        right: 0;
+        box-shadow: v($defaultBoxShadow, pinned_header_shadow);
+        animation: header-slideIn .2s ease-in-out;
+    }
+
+    @at-root header.has-anchormenu {
+        ~ #content .cinema-planner .header.pinned {
+            top: $headerHeightSmall + $anchorsHeight - 1;
+        }
+    }
+
+    @keyframes header-slideIn {
+        0% {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes buffer-inserted {
+        from {
+            height: 0;
+        }
+        to {
+            height: v(100px, header_height);
+        }
+    }
+
+    .content{
+        display: flex;
+        justify-content: center;
+        margin: 15px;
+
+        @media (max-width: $mobile_layout_breakpoint) {
+            margin: v(0, content_margin_mobile);
+        }
+
+        .empty-list {
+            display: none;
+            position: relative;
+            padding-bottom: 30px;
+            text-align: center;
+            line-height: v($baseLineheight, empty_line_height);
+            background: inherit;
+            box-shadow: none;
+
+            @include fontsize(v(inherit, empty_font_size));
+
+            .peppered-icon {
+                position: relative;
+                margin: 20px auto;
+                color: $unavailable;
+                svg {
+                    width: 60px;
+                    height: 60px;
+                }
+            }
+        }
+
+        .movie-cards {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            @media (min-width: $bp_retina) {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            @media (min-width: $bp_fullhd) {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            @media (max-width: $bp_720p) {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @media (max-width: 850px) {
+                grid-template-columns: 1fr;
+            }
+
+            .movie-card {
+                width: v(420px, movie_card_width);
+                min-width: v(420px, movie_card_min_width);
+                margin: v(5px, movie_card_margin);
+                padding: v(20px, movie_card_padding);
+                border-radius: v(10px, movie_card_border_radius);
+                background: v($white, movie_card_background);
+                box-shadow: v($defaultBoxShadow, movie_card_box_shadow);
+
+                @media (max-width: $mobile_layout_breakpoint) {
+                    width: v(100vw, movie_card_width_mobile);
+                    min-width: v(unset, movie_card_min_width_mobile);
+                    margin: v(0 0 10px 0, movie_card_margin_mobile);
+                    border-radius: v(0, card_border_radius_mobile);
+                }
+
+                .card-header {
+                    min-height: 110px;
+                    position: relative;
+
+                    &::before {
+                        content: '';
+                        width: v(420px, movie_card_width);
+                        height: 110px;
+                        position: absolute;
+                        right: - v(20px, movie_card_padding);
+                        bottom: -10px;
+                        background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.05) 100%);
+                    }
+
+                    a {
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .info-link {
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        padding: v(0, info_link_padding);
+                        text-decoration: v($defaultLinkDecoration, info_link_text_decoration);
+                        color: v($defaultLink, info_link_color);
+                        &:hover {
+                            text-decoration: v($defaultLinkDecoration, info_link_text_decoration_hover);
+                            color: v($defaultLinkHover, info_link_color_hover);
+                        }
+                    }
+
+                    .poster {
+                        max-width: v(90px, poster_max_width);
+                        height: v(auto, poster_height);
+                        position: absolute;
+                        top: 5px;
+                        border-radius: v(3px, poster_border_radius);
+                    }
+
+                    .inner {
+                        display: flex;
+                        flex-direction: column;
+                        margin-left: v(90px, poster_max_width) + 15px;
+                        order: 1;
+
+                        h4 {
+                            margin-bottom: 0;
+                            text-transform: v(uppercase, movie_title_text_transform);
+                            color: v($colorDefaultText, movie_title_color);
+                        }
+
+                        .subtitle,
+                        .venue {
+                            color: v($grey1, date_extra_color);
+                            @include fontsize(v($fs_small, subtitle_font_size));
+                        }
+
+                        .supertitle {
+                            margin: v(0, supertitle_margin);
+                            padding: v(0, supertitle_padding);
+                            font-weight: v(normal, supertitle_font_weight);
+                            text-transform: v(uppercase, supertitle_text_transform);
+                            color: v($color1, supertitle_color);
+                            order: -1;
+
+                            @include fontsize(v($fs_tiny, supertitle_font_size));
+                        }
+
+                        .duration {
+                            margin: v(5px 0 0 0, time_margin);
+                            font-weight: v(bold, time_font_weight);
+                            color: v($colorDefaultText, time_font_color);
+                            @include fontsize(v($fs_tiny, time_font_size));
+                        }
+                    }
+                }
+
+                .events {
+                    margin: 30px 0 20px 0;
+
+                    .day {
+                        display: grid;
+                        align-items: stretch;
+                        grid-template-columns: 3fr 15px 10fr;
+                        width: 100%;
+
+                        .date {
+                            width: v(90px, poster_max_width);
+                            margin: 5px 0;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-align: right;
+                            align-self: start;
+
+                            @media (max-width: $mobile_layout_breakpoint) {
+                                width: v(75px, poster_max_width_mobile);
+                            }
+
+                            .date-day {
+                                @include fontsize(v($fs_tiny, date_day_font_size));
+                                font-weight: v(bold, date_day_font_weight);
+                                text-transform: v(uppercase, date_day_text_transform);
+                            }
+
+                            .date-extra {
+                                display: block;
+                                color: v($color4, date_extra_color);
+                                @include fontsize(v($fs_tiny, date_extra_font_size));
+                            }
+                        }
+
+                        .separator {
+                            width: 5px;
+                            margin: 5px;
+                            border-radius: 10px;
+                        }
+
+                        .separator.not-empty {
+                            background: v($grey4, separator_background);
+                            transition: all .3s ease-out;
+                        }
+
+                        .no-show-placeholder {
+                            display: none;
+                            margin: auto 0;
+                            text-transform: v(uppercase, placeholder_text_transform);
+                            color: v($grey2, placeholder_color);
+                            @include fontsize(v($fs_tiny, placeholder_font_size));
+                        }
+
+                        .shows {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fill, minmax(auto, 130px));
+
+                            @media (max-width: 260px) {
+                                grid-template-columns: 1fr;
+                            }
+
+                            a {
+                                min-width: 130px;
+                                margin: 5px 5px 5px 0;
+                                padding: 8px 10px;
+                                text-align: start;
+
+                                @media (max-width: $mobile_layout_breakpoint) {
+                                    min-width: unset;
+                                }
+                            }
+
+                            a.btn {
+                                margin: v(5px 5px 5px 0, show_button_margin);
+                                border: v($defaultBtnBorderActive, show_button_border);
+                                background: v($colorBgBtnActive, show_button_background);
+                                color: v($colorBtnActiveText, show_button_color);
+
+                                &:hover {
+                                    border: v($defaultBtnBorderActiveHover, show_button_border_hover);
+                                    background: v($colorBtnActiveHover, show_button_background_hover);
+                                    color: v($colorBtnActiveTextHover, show_button_color_hover);
+                                }
+                            }
+
+                            a.status-info {
+                                margin: 5px 5px 5px 0;
+                                border: v($defaultBtnBorderUnavailable, show_button_border_disabled);
+                                border-radius: $defaultBtnRadius;
+                                background: v($colorBgBtnUnavailable, show_button_background_disabled);
+                                color: v($colorBtnUnavailableText, show_button_color_disabled);
+                                box-shadow: v($defaultBtnShadowDisabled, show_button_box_shadow);
+                            }
+
+                            .movie-time-start {
+                                @include fontsize(v($fs_normal, movie_time_start_font_size));
+                                margin-right: 10px;
+                            }
+
+                            .movie-time-end {
+                                margin-left: 10px;
+                            }
+
+                            .property {
+                                margin-top: 3px;
+                            }
+
+                            .movie-time-separator,
+                            .movie-time-end {
+                                font-weight: normal;
+                                opacity: v(0.5, time_text_opacity);
+                                @include fontsize(v($fs_tiny, time_font_size));
+                            }
+                        }
+                    }
+                }
+            }
+
+            .movie-card.hide-on-mobile {
+                @media (max-width: $bp_mobile) {
+                    display: none;
+                }
+            }
+        }
+    }
+}

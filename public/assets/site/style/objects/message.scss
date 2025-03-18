@@ -1,0 +1,151 @@
+.msg {
+    position: relative;
+    margin: 30px 0;
+    padding: 0 0 0 30px;
+    line-height: 20px;
+
+    .fa,
+    .peppered-icon {
+        position: absolute;
+        left: 0;
+        margin-right: 5px;
+    }
+
+    .btn {
+        width: auto;
+        margin-top: 30px;
+    }
+
+    p { display: inline; }
+
+    &.box {
+        max-width: 40rem;
+        position: relative;
+        margin: 0 auto 30px auto;
+        padding: 15px 30px 15px 40px;
+        border: 1px solid $colorMsgNotice;
+        border-radius: $defaultCardRadius;
+        line-height: 20px;
+        background: $colorPageBg;
+        color: $colorDefaultText;
+        &.error {
+            border-color: $colorMsgError;
+        }
+        &.warning {
+            border-color: $colorMsgWarning;
+        }
+        .fa,
+        .peppered-icon {
+            position: absolute;
+            left: 10px;
+            margin: 0;
+        }
+    }
+
+
+    .notice .fa,
+    .notice .peppered-icon,
+    .success .fa,
+    .success .peppered-icon {
+        color: $colorMsgNotice;
+    }
+    .warning .fa,
+    .warning .peppered-icon {
+        color: $colorMsgWarning;
+    }
+    .error .fa,
+    .error .peppered-icon {
+        color: $colorMsgError;
+    }
+
+    /* ----------------------------------------------------------------
+        Quotes & Blockquotes
+    -----------------------------------------------------------------*/
+
+    blockquote p { margin-bottom: 15px; } // <--- like a quote in the editor? wtf?
+
+    blockquote.pull-left {
+        max-width: 300px;
+        margin: 5px 20px 10px 0;
+        padding-right: 0;
+    }
+
+    blockquote.pull-right {
+        max-width: 300px;
+        margin: 5px 0 10px 20px;
+        padding-left: 0;
+    }
+
+    .quote { // <-- where do we even use this??
+        position: relative;
+        border: none !important;
+    }
+
+    .quote p { position: relative; }
+
+    .quote:before {
+        content: '\e7ad';
+        width: 48px;
+        height: 48px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-family: 'font-icons', sans-serif; // <- what font is this??
+        font-weight: normal;
+        font-style: normal;
+        line-height: 48px;
+        color: #EEE; // <- what is a hardcoded color doing here
+        speak: none;
+        font-variant: normal;
+
+        @include fontsize(42px);
+    }
+
+    .quote.blockquote-reverse:before {
+        content: '\e7ae';
+        right: 0;
+        left: auto;
+    }
+
+
+
+    /* ----------------------------------------------------------------
+        Bootstrap Specific
+    -----------------------------------------------------------------*/
+
+
+    label.radio,
+    label.checkbox { padding-left: 20px; }
+
+    /* ----------------------------------------------------------------
+        Google Recaptcha v2
+    -----------------------------------------------------------------*/
+
+    .g-recaptcha-rendered ~ button {
+        margin-top: 15px;
+    }
+    .modal .grecaptcha-badge {
+        display: none !important;
+    }
+
+    /* ----------------------------------------------------------------
+        Google Recaptcha v3
+        https://developers.google.com/recaptcha/docs/faq#id-like-to-hide-the-recaptcha-badge.-what-is-allowed
+    -----------------------------------------------------------------*/
+    .grecaptcha-badge { visibility: hidden; }
+    .grecaptcha-branding {
+        margin-top: 30px;
+        font-size: .8em;
+        color: $grey2;
+        a,
+        a:link,
+        a:visited {
+            text-decoration: underline;
+            color: inherit;
+        }
+        a:hover,
+        a:active {
+            color: $defaultLinkHover;
+        }
+    }
+}

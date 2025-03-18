@@ -1,0 +1,90 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$form: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $form;
+
+.formWrapper {
+    @include inner_width();
+}
+
+.form--spektrix {
+    .form {
+        width: v(50%, form_width_spektrix);
+        &__row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: v(1rem, form_margin_spektrix);
+            gap: 0.5rem;
+
+            label,
+            input {
+                flex: 0 0 auto;
+                width: 100%;
+                margin-bottom: 0;
+            }
+
+            // set label widths to 100% to create a stacked layout
+            @include from('mobile') {
+                label {
+                    width: v(16.66666667%, form_label_width_spektrix);
+                }
+                input {
+                    width: v(41.66666667%, form_input_width_spektrix);
+                }
+            }
+        }
+        &__error {
+            margin-bottom: 1.5rem;
+            padding: .75rem;
+            background-color: v($grey3, form_error_background_spektrix);
+            color: v($colorMsgError, form_error_color_spektrix);
+
+            p {
+                margin: 0;
+            }
+        }
+    }
+
+    .interests {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        .form__row {
+            display: block;
+            label {
+                display: flex;
+                align-items: baseline;
+                width: auto;
+            }
+            input[type='checkbox'] {
+                flex: none;
+                width: auto;
+                margin-inline-end: 0.5rem;
+            }
+        }
+    }
+
+    &.is-loading {
+        button {
+            opacity: 0.3;
+        }
+    }
+
+    &.was-validated {
+        input:invalid {
+            border-color: v($colorMsgError, form_error_color_spektrix);
+        }
+    }
+}
+
+// hidden by default, will be displayed by FormHandler js script
+// Allows PC team to create custom success template
+.form-success {
+    display: none;
+}

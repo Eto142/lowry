@@ -1,0 +1,703 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$flexgrid: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $flexgrid;
+
+@mixin alignments($strategy) {
+    /*
+        alignment strategies:
+
+        left:      center:
+        [             =
+        [ [          = =
+        [ [ [       = = =
+    */
+
+    @if ($strategy == 'center') {
+        text-align: center;
+    }
+}
+
+.featuredFlexgrid {
+    &.layout-full-width {
+        padding-right: v(0, full_width_padding);
+        padding-left: v(0, full_width_padding);
+    }
+
+    .featuredExtraBtn {
+        text-align: v(center, extrabutton_alignment, $homeFlexBannersExtraBtnAlignment);
+        .btn {
+            margin: v(50px 0, extrabutton_margin, $homeFlexBannersExtraBtnMargin);
+        }
+    }
+
+    .featuredExtraTopBtn {
+        .inner {
+            text-align: center;
+            @media (min-width: $bp_mobile) {
+                display: flex;
+                align-items: center;
+                justify-content: v(space-between, heading_button_justify_content, $featuredExtraTopBtnJustify);
+            }
+            .btn {
+                width: auto;
+                min-width: v(170px, heading_button_min_width);
+            }
+        }
+        h2 {
+            margin: v(50px 0, heading_margin, $homeFlexBannersExtraTopBtnHeaderMargin);
+            font-family: v($fontNormalBold, heading_font_family, $homeFlexBannersExtraTopBtnHeaderFontfamily);
+            font-weight: v(bold, heading_font_weight, $homeFlexBannersExtraTopBtnHeaderWeight);
+            line-height: v(1, heading_line_height, $homeFlexBannersExtraTopBtnHeaderLineheight);
+            text-transform: v(none, heading_text_transform, $homeFlexBannersExtraTopBtnHeaderTextTransform);
+            color: v(inherit, heading_color, $homeFlexBannersExtraTopBtnHeaderColor);
+
+            @include fontsize(v($basicH2Fontsize, heading_font_size, $homeFlexBannersExtraTopBtnHeaderFontsize));
+        }
+        .btn {
+            margin: v(50px 0, heading_button_margin, $homeFlexBannersExtraBtnMargin);
+            border: v($defaultBtnBorderActive, heading_button_border);
+            background: v($colorBgBtnActive, heading_button_background);
+            color: v($colorBtnActiveText, heading_button_color);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, heading_button_border_hover);
+                background: v($colorBtnActiveHover, heading_button_background_hover);
+                color: v($colorBtnActiveTextHover, heading_button_color_hover);
+            }
+        }
+    }
+
+    .flexRow {
+        display: flex;
+        flex-wrap: wrap;
+        padding: v(0, row_padding, $homeFlexFeaturedRowPadding);
+        > * {
+            width: 100%;
+            margin: 0 5px;
+        }
+        &[data-item-count='2'] > * {
+            width: 575px;
+        }
+        &[data-item-count='3'] > * {
+            width: 380px;
+        }
+        &[data-item-count='4'] > * {
+            width: 280px;
+        }
+
+        @supports (display: grid) {
+            display: grid;
+            grid-column-gap: v(15px, grid_column_gap, $homeFlexFeaturedColumnMargin);
+            grid-row-gap: v(15px, grid_row_gap, $homeFlexFeaturedRowMargin);
+            grid-template-columns: 1fr;
+
+            &[data-item-count] > * {
+                width: 100%;
+                margin: 0;
+            }
+            &[data-item-count='2'] {
+                grid-template-columns: 1fr 1fr;
+            }
+            &[data-item-count='3'] {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            &[data-item-count='4'] {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+
+            @media (max-width: $bp_tablet - 1) {
+                &[data-item-count='2'],
+                &[data-item-count='3'] {
+                    grid-template-columns: 1fr 1fr;
+                }
+                &[data-item-count='3'] .flexItem:last-child {
+                    grid-column: span 2;
+                }
+                &[data-item-count='4'] {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            display: block;
+            .flexItem + .flexItem {
+                margin-top: v(15px, grid_row_gap, $homeFlexFeaturedRowMargin);
+            }
+        }
+
+        $outer_border_radius: v(0, outer_border_radius);
+        @if ($outer_border_radius) {
+            &:first-child > .flexItem:first-child {
+                border-top-left-radius: $outer_border_radius;
+            }
+            &:first-child > .flexItem:last-child {
+                border-top-right-radius: $outer_border_radius;
+            }
+            &:last-child > .flexItem:first-child {
+                border-bottom-left-radius: $outer_border_radius;
+            }
+            &:last-child > .flexItem:last-child {
+                border-bottom-right-radius: $outer_border_radius;
+            }
+        }
+
+        + .flexRow {
+            margin-top: v(15px, grid_row_gap, $homeFlexFeaturedRowMargin);
+        }
+
+        &[data-item-count='0'] {
+            display: none !important; // remove empty rows
+        }
+
+        @include alignments(v(left, alignment_strategy, $homeFlexFeaturedAlignStrategy));
+    }
+    &.layout-boxed {
+        .flexRow {
+            @include container_width();
+        }
+    }
+
+
+    .flex-image {
+        display: block;
+        // height: $homeFlexImageHeight;
+        background: transparent no-repeat center / cover;
+    }
+    &:not(.variant-flat) .flex-image {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+
+    .flexItem {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+        border-radius: v(0, border_radius, $homeFlexRadius);
+        background: v($white, background, $colorFlexFeaturedSlideBg);
+        overflow: hidden;
+
+        a,
+        a:hover {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .top {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            color: inherit;
+            &:hover {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+
+        .desc {
+            display: flex;
+            flex-direction: column;
+            justify-content: v(flex-end, item_justify_content);
+            flex: 1;
+            width: 100%;
+            min-height: 250px;
+            position: relative;
+            padding: v(30px, item_padding, $homeFlexFeaturedPadding);
+            color: v($white, color, $homeFlexFeaturedColor);
+
+            @at-root .featuredFlexgrid.variant-flat .flexItem .desc {
+                background: v($white, background, $colorFlexFeaturedSlideBg);
+            }
+
+            @supports (display: grid) {
+                min-height: 0;
+            }
+        }
+        a:hover .desc {
+            color: v($colorPrime, color_hover, $homeFlexFeaturedColorHover);
+        }
+
+        .supertitle {
+            order: -1;
+            display: block;
+            align-self: v(flex-start, supertitle_align_self);
+            margin: v(0, supertitle_margin, $homeFlexFeaturedSupertitleMargin);
+            font-family: v($fontNormal, supertitle_font_family, $flexFeaturedSupertitleFontfamily);
+            font-weight: v(normal, supertitle_font_weight, $flexFeaturedSupertitleWeight);
+            line-height: v(1.3, supertitle_line_height, $flexFeaturedSupertitleLineHeight);
+            text-transform: v(uppercase, supertitle_text_transform, $flexFeaturedSupertitleTexttransform);
+            span {
+                display: v(block, supertitle_display, $homeFlexFeaturedSupertitleDisplay);
+                padding: v(0, supertitle_padding, $homeFlexFeaturedSupertitlePadding);
+                background: v(transparent, supertitle_background, $colorBgFlexFeaturedSupertitle);
+                color: v(inherit, supertitle_color, $colorFlexFeaturedSupertitle);
+            }
+
+            @include fontsize(v($fs_small, supertitle_font_size, $flexFeaturedSupertitleFontsize));
+        }
+        a:hover .supertitle {
+            color: v(inherit, supertitle_color_hover, $colorFlexFeaturedSupertitleHover);
+        }
+
+        h2,
+        .title {
+            margin-bottom: v(0, title_margin_bottom, $homeFlexFeaturedTitleMarginBottom);
+            font-family: v($fontTitleContent, title_font_family, $flexFeaturedTitleFontfamily);
+            font-weight: v(bold, title_font_weight, $flexFeaturedTitleWeight);
+            line-height: v(1, title_line_height, $flexFeaturedTitleLineHeight);
+            text-decoration: v(none, title_text_decoration, $flexFeaturedTitleDecoration);
+            text-transform: v(none, title_text_transform, $flexFeaturedTitleTexttransform);
+            color: v(inherit, title_color, $colorFlexFeaturedTitle);
+
+            span {
+                display: v(block, title_display);
+                padding: v(0, title_padding);
+                background: v(transparent, title_background);
+                color: inherit;
+            }
+
+            @include fontsize(v($fs_huge_title, title_font_size, $flexFeaturedTitleFontsize));
+        }
+        a:hover h2,
+        a:hover .title {
+            text-decoration: v(none, title_text_decoration_hover, $flexFeaturedTitleDecorationHover);
+            color: v(inherit, title_color_hover, $colorFlexFeaturedTitleHover);
+        }
+
+        .subtitle {
+            margin-bottom: v(15px, subtitle_margin_bottom, $homeFlexFeaturedSubtitleMarginBottom);
+            font-family: v(inherit, subtitle_font_family, $flexFeaturedSubtitleFontfamily);
+            font-weight: v(normal, subtitle_font_weight, $flexFeaturedSubtitleWeight);
+            line-height: v(1, subtitle_line_height, $flexFeaturedSubtitleLineHeight);
+            text-transform: v(none, subtitle_text_transform, $flexFeaturedSubtitleTexttransform);
+            color: v(inherit, subtitle_color, $colorFlexFeaturedSubtitle);
+
+            span {
+                display: v(block, subtitle_display);
+                padding: v(0, subtitle_padding);
+                background: v(transparent, subtitle_background);
+                color: inherit;
+            }
+
+            @include fontsize(v($fs_normal, subtitle_font_size, $flexFeaturedSubtitleFontsize));
+
+            > * {
+                // the subtitle div can contain paragraphs and what not
+                margin: 0;
+            }
+        }
+        a:hover .subtitle {
+            color: v(inherit, subtitle_color_hover, $colorFlexFeaturedSubtitleHover);
+        }
+
+        .date {
+            order: v(initial, date_order);
+            margin-bottom: v(15px, date_margin_bottom, $homeFlexFeaturedDateMarginBottom);
+            font-family: v(inherit, date_font_family, $flexFeaturedDateFontfamily);
+            font-weight: v(normal, date_font_weight, $flexFeaturedDateWeight);
+            line-height: v(normal, date_line_height, $flexFeaturedDateLineHeight);
+            text-transform: v(none, date_text_transform, $flexFeaturedDateTexttransform);
+            color: v(inherit, date_color, $colorFlexFeaturedDate);
+
+            > span {
+                display: v(block, date_display);
+                padding: v(0, date_padding);
+                background: v(transparent, date_background);
+                color: inherit;
+            }
+
+            @include fontsize(v($fs_normal, date_font_size, $flexFeaturedDateFontsize));
+        }
+        a:hover .date {
+            color: v(inherit, date_color_hover, $colorFlexFeaturedDateHover);
+        }
+
+        .btn {
+            margin-top: v(15px, button_margin_top, $homeFlexFeaturedBtnMarginTop);
+            padding: v($defaultBtnPadding, button_padding, $homeFlexFeaturedBtnPadding);
+            border: v($defaultBtnBorderActive, button_border, $homeFlexFeaturedBtnBorder);
+            text-transform: v($defaultBtnTexttransform, button_text_transform, $homeFlexFeaturedBtnTexttransform);
+            background: v($colorBgBtnActive, button_background, $homeFlexFeaturedBtnBackground);
+            color: v($colorBtnActiveText, button_color, $homeFlexFeaturedBtnColor);
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover, $homeFlexFeaturedBtnBorderHover);
+                background: v($colorBtnActiveHover, button_background_hover, $homeFlexFeaturedBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, button_color_hover, $homeFlexFeaturedBtnColorHover);
+            }
+
+            @include fontsize(v($defaultBtnFontsize, button_font_size, $homeFlexFeaturedBtnFontsize));
+        }
+
+        .genres {
+            margin: v(10px 0, genres_margin);
+
+            &__link {
+                margin: v(0 15px 0 0, genre_margin);
+                padding: v(0, genre_padding);
+                border-radius: v($defaultBtnRadius, genre_border_radius);
+                font-family: v($fontNormal, genre_font_family);
+                font-weight: v(normal, genre_font_weight);
+                line-height: v(1, genre_line_height);
+                text-transform: v(none, genre_text_transform);
+                background: v(transparent, genre_background);
+                color: v($grey2, genre_color);
+
+                @include fontsize(v($fs_small, genre_font_size));
+
+                &:hover {
+                    background: v(transparent, genre_background_hover);
+                    color: v($defaultLinkHover, genre_color_hover);
+                }
+            }
+        }
+
+        .thumb[data-video-url] {
+            color: v($colorVideoPlayerHighlights, video_button_color);
+
+            .image {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .video-play-button {
+                all: unset;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: v(72px, video_button_size, $homeFlexVideoButtonsize);
+                height: v(72px, video_button_size, $homeFlexVideoButtonsize);
+                border: none;
+                font-size: v(72px, video_button_size, $homeFlexVideoButtonsize);
+                background: none;
+                color: v($colorVideoPlayerHighlights, video_button_color);
+                cursor: pointer;
+                text-shadow: v($iconOverlayShadow, video_button_shadow);
+            }
+        }
+
+        @each $animation in v([], animations, $homeFlexAnimations) {
+            @include card_animation($animation, '.flex-image:not(.video-loaded)', '.desc');
+        }
+
+        @at-root .featuredFlexgrid[data-animations*='shadow'] .flexItem {
+            @include card_animation('shadow', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='glow'] .flexItem {
+            @include card_animation('glow', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='zoom'] .flexItem {
+            @include card_animation('zoom', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='twist'] .flexItem {
+            @include card_animation('twist', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='saturate'] .flexItem {
+            @include card_animation('saturate', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='desaturate'] .flexItem {
+            @include card_animation('desaturate', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='slide'] .flexItem {
+            @include card_animation('slide', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='shift'] .flexItem {
+            @include card_animation('shift', '.flex-image:not(.video-loaded)', '.desc');
+        }
+        @at-root .featuredFlexgrid[data-animations*='skew'] .flexItem {
+            @include card_animation('skew', '.flex-image:not(.video-loaded)', '.desc');
+        }
+
+
+        .thumb.video-loaded {
+            background: #000 !important;
+            iframe {
+                width: 100%;
+                height: 100%;
+                background: #000;
+            }
+        }
+    }
+
+    $alt_banners: v(false, banner_alternatives, $homeFlexBannersAlternatives);
+    @if ($alt_banners == true) {
+        &.group-banners .flexItem {
+            .desc {
+                padding: v($homeFlexFeaturedPadding, banners_padding, $homeFlexBannersPadding);
+            }
+            &:hover .desc {
+                color: v($homeFlexFeaturedColorHover, banners_color_hover, $homeFlexBannersDescColorHover);
+            }
+
+            h2,
+            .title {
+                margin-bottom: v($homeFlexFeaturedTitleMarginBottom, banners_title_margin_bottom, $homeFlexBannersTitleMarginBottom);
+                font-family: v($flexFeaturedTitleFontfamily, banners_title_font_family, $flexBannersTitleFontfamily);
+                font-weight: v($flexFeaturedTitleWeight, banners_title_font_weight, $flexBannersTitleWeight);
+                line-height: v($flexFeaturedTitleLineHeight, banners_title_line_height, $flexBannersTitleLineHeight);
+                text-decoration: v($flexFeaturedTitleDecoration, banners_title_text_decoration, $flexBannersTitleDecoration);
+                text-transform: v($flexFeaturedTitleTexttransform, banners_title_text_transform, $flexBannersTitleTexttransform);
+                color: v($colorFlexFeaturedTitle, banners_title_color, $colorFlexBannersTitle);
+
+                @include fontsize(v($flexFeaturedTitleFontsize, banners_title_font_size, $flexBannersTitleFontsize));
+            }
+            a:hover h2,
+            a:hover .title {
+                text-decoration: v($flexFeaturedTitleDecorationHover, banners_title_text_decoration_hover, $flexBannersTitleDecorationHover);
+                color: v($colorFlexFeaturedTitleHover, banners_title_color_hover, $colorFlexBannersTitleHover);
+            }
+
+            .subtitle {
+                margin-bottom: v($homeFlexFeaturedSubtitleMarginBottom, banners_subtitle_margin_bottom, $homeFlexBannersDescriptionMarginBottom);
+                font-family: v($flexFeaturedSubtitleFontfamily, banners_subtitle_font_family, $flexBannersDescriptionFontfamily);
+                font-weight: v($flexFeaturedSubtitleWeight, banners_subtitle_font_weight, $flexBannersDescriptionWeight);
+                line-height: v($flexFeaturedSubtitleLineHeight, banners_subtitle_line_height, $flexBannersDescriptionLineHeight);
+                text-transform: v($flexFeaturedSubtitleTexttransform, banners_subtitle_text_transform, $flexBannersDescriptionTexttransform);
+                color: v($colorFlexFeaturedSubtitle, banners_subtitle_color, $colorFlexBannersDescription);
+
+                @include fontsize(v($flexFeaturedSubtitleFontsize, banners_subtitle_font_size, $flexBannersDescriptionFontsize));
+            }
+            a:hover .subtitle {
+                color: v($colorFlexFeaturedSubtitleHover, banners_subtitle_color_hover, $colorFlexBannersDescriptionHover);
+            }
+
+            .btn {
+                border: v($homeFlexFeaturedBtnBorder, banners_button_border, $homeFlexBannersBtnBorder);
+                background: v($homeFlexFeaturedBtnBackground, banners_button_background, $homeFlexBannersBtnBackground);
+                color: v($homeFlexFeaturedBtnColor, banners_button_color, $homeFlexBannersBtnColor);
+
+                &:hover {
+                    border: v($homeFlexFeaturedBtnColorHover, banners_button_border_hover, $homeFlexBannersBtnBorderHover);
+                    background: v($homeFlexFeaturedBtnBackgroundHover, banners_button_background_hover, $homeFlexBannersBtnBackgroundHover);
+                    color: v($homeFlexFeaturedBtnColorHover, banners_button_color_hover, $homeFlexBannersColorHover);
+                }
+            }
+        }
+
+        &.group-banners .flexRow {
+            @include alignments(v(left, banners_alignment_strategy, $homeFlexBannersAlignStrategy));
+        }
+    }
+
+    @if (v(false, wide, $homeFlexBoxedWideContent) == true) {
+        &.layout-full-width {
+            .flexRow[data-item-count='1'] {
+                .flexItem .desc {
+                    @include container_width();
+                    @media (min-width: $bp_tablet) {
+                        padding-right: v(15px, wide_padding, $homeFlexFeaturedPaddingWideSides);
+                        padding-left: v(15px, wide_padding, $homeFlexFeaturedPaddingWideSides);
+                    }
+                }
+            }
+        }
+    }
+
+    &.variant-default {
+        .flexItem .desc {
+            // allow clicking on the underlying <a> layer
+            pointer-events: none;
+            a {
+                pointer-events: auto;
+            }
+        }
+    }
+    &.variant-flat {
+        .flexItem .top {
+            flex: 1;
+        }
+        .flexItem .bottom {
+            align-self: v(flex-end, flat_button_align_self, $homeFlexFeaturedBtnAlign);
+        }
+    }
+
+    // you may want to reduce the font-size for 2 and 3 items side-by-side
+    $base_supertitle_size: v(14px, supertitle_font_size, $flexFeaturedSupertitleFontsize);
+    $base_title_size: v(40px, title_font_size, $flexFeaturedTitleFontsize);
+    $base_subtitle_size: v(16px, subtitle_font_size, $flexFeaturedSubtitleFontsize);
+    $base_date_size: v(16px, date_font_size, $flexFeaturedDateFontsize);
+
+    $banners_base_title_size: v(40px, banners_title_font_size, $flexBannersTitleFontsize);
+    $banners_base_subtitle_size: v(16px, banners_subtitle_font_size, $flexBannersDescriptionFontsize);
+
+    .flexRow[data-item-count='2'] .flexItem {
+        .supertitle {
+            @include fontsize(v($base_supertitle_size, two_supertitle_font_size, $flexFeatured2colSupertitleFontsize));
+        }
+        .title {
+            @include fontsize(v($base_title_size, two_title_font_size, $flexFeatured2colTitleFontsize));
+        }
+        .subtitle {
+            @include fontsize(v($base_subtitle_size, two_subtitle_font_size, $flexFeatured2colSubtitleFontsize));
+        }
+        .date {
+            @include fontsize(v($base_date_size, two_date_font_size, $flexFeatured2colDateFontsize));
+        }
+    }
+
+    @if ($alt_banners == true) {
+        &.group-banners .flexRow[data-item-count='2'] .flexItem {
+            .title {
+                @include fontsize(v($banners_base_title_size, banners_two_title_font_size, $flexBanners2colTitleFontsize));
+            }
+            .subtitle {
+                @include fontsize(v($banners_base_subtitle_size, banners_two_subtitle_font_size, $flexBannersDescription2colFontsize));
+            }
+        }
+    }
+
+
+    .flexRow[data-item-count='3'] .flexItem {
+        .supertitle {
+            @include fontsize(v($base_supertitle_size, three_supertitle_font_size, $flexFeatured3colSupertitleFontsize));
+        }
+        .title {
+            @include fontsize(v($base_title_size, three_title_font_size, $flexFeatured3colTitleFontsize));
+        }
+        .subtitle {
+            @include fontsize(v($base_subtitle_size, three_subtitle_font_size, $flexFeatured3colSubtitleFontsize));
+        }
+        .date {
+            @include fontsize(v($base_date_size, three_date_font_size, $flexFeatured3colDateFontsize));
+        }
+    }
+    .flexRow[data-item-count='4'] .flexItem {
+        .supertitle {
+            @include fontsize(v($base_supertitle_size, four_supertitle_font_size, $flexFeatured3colSupertitleFontsize));
+        }
+        .title {
+            @include fontsize(v($base_title_size, four_title_font_size, $flexFeatured3colTitleFontsize));
+        }
+        .subtitle {
+            @include fontsize(v($base_subtitle_size, four_subtitle_font_size, $flexFeatured3colSubtitleFontsize));
+        }
+        .date {
+            @include fontsize(v($base_date_size, four_date_font_size, $flexFeatured3colDateFontsize));
+        }
+    }
+
+    .flexRow[data-item-count='3'] .flexItem,
+    .flexRow[data-item-count='4'] .flexItem {
+        @media (max-width: $bp_tablet - 1) {
+            // the first 2 displayed as two items, so we use that font size
+            .supertitle {
+                @include fontsize(v($base_supertitle_size, two_supertitle_font_size, $flexFeatured2colSupertitleFontsize));
+            }
+            .title {
+                @include fontsize(v($base_title_size, two_title_font_size, $flexFeatured2colTitleFontsize));
+            }
+            .subtitle {
+                @include fontsize(v($base_subtitle_size, two_subtitle_font_size, $flexFeatured2colSubtitleFontsize));
+            }
+            .date {
+                @include fontsize(v($base_date_size, two_date_font_size, $flexFeatured2colDateFontsize));
+            }
+            &:last-child {
+                // the last one is displayed as single item, so we restore the default font size
+                .supertitle {
+                    @include fontsize($base_supertitle_size);
+                }
+                .title {
+                    @include fontsize($base_title_size);
+                }
+                .subtitle {
+                    @include fontsize($base_subtitle_size);
+                }
+                .date {
+                    @include fontsize($base_date_size);
+                }
+            }
+        }
+    }
+
+    @if ($alt_banners == true) {
+        &.group-banners .flexRow[data-item-count='3'] .flexItem {
+            .title {
+                @include fontsize(v($banners_base_subtitle_size, banners_three_title_font_size, $flexBanners3colTitleFontsize));
+            }
+            .subtitle {
+                @include fontsize(v($banners_base_subtitle_size, banners_three_subtitle_font_size, $flexBannersDescription3colFontsize));
+            }
+        }
+        &.group-banners .flexRow[data-item-count='4'] .flexItem {
+            .title {
+                @include fontsize(v($banners_base_subtitle_size, banners_four_title_font_size, $flexBanners3colTitleFontsize));
+            }
+            .subtitle {
+                @include fontsize(v($banners_base_subtitle_size, banners_four_subtitle_font_size, $flexBannersDescription3colFontsize));
+            }
+        }
+
+        &.group-banners .flexRow[data-item-count='3'] .flexItem,
+        &.group-banners .flexRow[data-item-count='4'] .flexItem {
+            @media (max-width: $bp_tablet - 1) {
+                // the first 2 displayed as two items, so we use that font size
+                .title {
+                    @include fontsize(v($banners_base_title_size, banners_two_title_font_size, $flexBanners2colTitleFontsize));
+                }
+                .subtitle {
+                    @include fontsize(v($banners_base_subtitle_size, banners_two_subtitle_font_size, $flexBannersDescription2colFontsize));
+                }
+                &:last-child {
+                    // the last one is displayed as single item, so we restore the default font size
+                    .title {
+                        @include fontsize($banners_base_title_size);
+                    }
+                    .subtitle {
+                        @include fontsize($banners_base_subtitle_size);
+                    }
+                }
+            }
+        }
+    }
+
+
+    .flexRow[data-item-count] {
+        @media (max-width: $bp_mobile - 1) {
+            // all displayed as single item, so we restore the default font size
+            &,
+            &:last-child{
+                .supertitle {
+                    @include fontsize($base_supertitle_size);
+                }
+                .title {
+                    @include fontsize($base_title_size);
+                }
+                .subtitle {
+                    @include fontsize($base_subtitle_size);
+                }
+                .date {
+                    @include fontsize($base_date_size);
+                }
+            }
+        }
+    }
+    @if ($alt_banners == true) {
+        &.group-banners .flexRow[data-item-count] {
+            @media (max-width: $bp_mobile - 1) {
+                // all displayed as single item, so we restore the default font size
+                &,
+                &:last-child{
+                    .title {
+                        @include fontsize($banners_base_title_size);
+                    }
+                    .subtitle {
+                        @include fontsize($banners_base_subtitle_size);
+                    }
+                }
+            }
+        }
+    }
+}

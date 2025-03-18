@@ -1,0 +1,45 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$themegroup_header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $themegroup_header;
+
+
+.themegroupHeader {
+    @include inner_width();
+    .inner {
+        text-align: center;
+    }
+    &.align-left .inner {
+        text-align: left;
+    }
+
+    h1 {
+        margin: v(30px 0, title_margin, $pageTitleH1Margin);
+        font-family: v($fontTitleTemplate, title_font_family, $pageTitleH1Fontfamily);
+        font-weight: v(bold, title_font_weight, $pageTitleH1Weight);
+        line-height: v(normal, title_line_height, $pageTitleH1LineHeight);
+        text-transform: v(none, title_text_transform, $pageTitleH1Texttransform);
+        color: v($white, title_color, $colorPageTitleH1Plain);
+
+        @include fontsize(v($fs_large_title, title_font_size, $pageTitleH1Fontsize));
+    }
+
+    .richtext {
+        font-family: v($fontNormal, teaser_font_family, $pageTitleSubtitleFontfamily);
+        font-weight: v(normal, teaser_font_weight, $pageTitleSubtitleWeight);
+        line-height: v(normal, teaser_line_height, $pageTitleSubtitleLineHeight);
+        text-transform: v(none, teaser_text_transform, $pageTitleSubtitleTexttransform);
+        color: v($white, teaser_color, $colorPageTitleSubtitlePlain);
+
+        @include fontsize(v($fs_large_subtitle, teaser_font_size, $pageTitleSubtitleFontsize));
+
+        > * {
+            margin: 0;
+        }
+    }
+}

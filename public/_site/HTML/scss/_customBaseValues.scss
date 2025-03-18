@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i&display=swap');
+
+@font-face {
+    font-family: 'ABC Gravity Compressed'; // compressed
+    src: url('/fonts/ABCGravity-Compressed.otf');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ABC Gravity'; // normal
+    src: url('/fonts/ABCGravity-Normal.otf');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'ABC Gravity Expanded'; // expanded
+    src: url('/fonts/ABCGravity-Expanded.otf');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DM Sans'; // regular
+    src: url('/fonts/DMSans-Regular.ttf');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DM Sans'; // regular italic
+    src: url('/fonts/DMSans-Regular_Italic.ttf');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'DM Sans'; // bold
+    src: url('/fonts/DMSans-Bold.ttf');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DM Sans'; // bold italic
+    src: url('/fonts/DMSans-Bold_Italic.ttf');
+    font-weight: 700;
+    font-style: italic;
+}
+
+$fontNormal: 'DM Sans', sans-serif;
+$fontNormalBold: $fontNormal;
+$fontAlt1: 'ABC Gravity', sans-serif;
+$fontAltCompressed: 'ABC Gravity Compressed', sans-serif;
+$fontAltExpanded:'ABC Gravity Expanded', sans-serif;
+$fontTitleTemplate: $fontAlt1;
+$fontTitleContent: $fontNormal;
+
+/* ----------------------------------------------------------------
+    Font sizes
+-----------------------------------------------------------------*/
+// base sizes
+$fs_tiny: var(--fs-tiny);
+$fs_small: var(--fs-small);
+$fs_normal: var(--fs-normal);
+$fs_large: var(--fs-large);
+
+// typical title + subtitle + body combinations
+$fs_small_title: var(--fs-small-title);
+$fs_medium_title: var(--fs-medium-title);
+$fs_medium_subtitle: var(--fs-medium-subtitle);
+
+$fs_large_title: var(--fs-large-title);
+$fs_large_subtitle: var(--fs-large-subtitle);
+
+$fs_huge_title: var(--fs-huge-title);
+$fs_huge_subtitle: var(--fs-huge-subtitle);
+
+$fs_gigantic_title: var(--fs-gigantic-title);
+
+// font defaults
+$basicH1Fontsize: var(--fs-huge-title);
+$basicH1Fontweight: 700;
+$basicH1Texttransform: none;
+
+$basicH2Fontsize: var(--fs-large-title);
+$basicH2Fontweight: 700;
+$basicH2Texttransform: none;
+
+$basicH3Fontsize: var(--fs-medium-title);
+$basicH3Fontweight: 700;
+$basicH3Texttransform: none;
+
+$basicH4Fontsize: var(--fs-large);
+$basicH4Fontweight: 700;
+
+$basicH5Fontsize: var(--fs-small-title);
+$basicH5Fontweight: 700;
+
+$basicH6Fontsize: var(--fs-medium);
+$basicH6Fontweight: 700;
+
+$baseFontsize: $fs_normal;
+$baseFontsizeMobile: $fs_normal;
+
+$titleHyphenation: auto;
+$richtextPMargin: 0 0 1.4em 0;
+
+/* ----------------------------------------------------------------
+    Colors
+-----------------------------------------------------------------*/
+
+$lowry_purple: #5F23B4;
+$lowry_purpleLight: #9D82F0;
+$lowry_purpleDark: #2D1D4D;
+
+$lowry_yellow: #FFDB00;
+$lowry_yellowLight: #FAFF7D;
+$lowry_yellowDark: #AEA312;
+
+$lowry_orange: #FF4800;
+$lowry_orangeLight: #F39869;
+$lowry_orangeDark: #C54216;
+
+$lowry_green: #1ED73C;
+$lowry_greenLight: #AADA8E;
+$lowry_greenDark: #1E5818;
+
+$lowry_red: #DC0044;
+$lowry_redLight: #E4909F;
+$lowry_redDark: #A01E2F;
+
+$lowry_blue: #0541E6;
+$lowry_blueLight: #4AA9D5;
+$lowry_blueDark: #182553;
+
+$lowry_brown: #463E36;
+$lowry_brownLight: #C8B8AD;
+$lowry_brownDark: #25201A;
+
+$lowry_silver: #6B787B;
+$lowry_silverLight: #CCD5D8;
+$lowry_silverDark: #2A3C40;
+
+$lowry_army: #46464E;
+$lowry_armyLight: #7F8B85;
+$lowry_armyDark: #2E4339;
+
+$lowry_border: #CCC;
+$lowry_hover: lighten(#000, 25%);
+$lowry_hoverWhite: darken(#FFF, 20%);
+
+$black: #000;
+$white: #FFF;
+$colorPageBg: #FFF;
+$colorDefaultText: $black;
+
+$unavailable: #CCC;
+
+$colorMsgNotice: $lowry_green;
+$colorMsgWarning: $lowry_yellow;
+$colorMsgError: $lowry_redDark;
+
+$defaultLink: $black;
+$defaultLinkHover: $black;
+$defaultLinkDecoration: underline;
+$defaultLinkDecorationHover: none;
+$richtextLinkDecoration: underline;
+$richtextLinkDecorationHover: none;
+
+$colorVideoPlayerHighlights: $lowry_purple;
+
+/* ----------------------------------------------------------------
+    Shadows
+-----------------------------------------------------------------*/
+
+$defaultBoxShadow: none;
+$defaultBoxShadowDark: none;
+$defaultBoxShadowSticky: none;
+$defaultBoxShadowMenu: none;
+
+$gradientOverlay: transparent;
+
+/* ----------------------------------------------------------------
+    Buttons
+-----------------------------------------------------------------*/
+
+$defaultBtnRadius: 50px;
+$defaultBtnWidth: auto;
+$defaultBtnPadding: 10px 15px;
+$defaultBtnBorder: none;
+$defaultBtnBorderHover: none;
+
+$defaultBtnFontfamily: $fontNormal;
+$defaultBtnFontsize: $fs_normal;
+$defaultBtnLineHeight: 1.4;
+$defaultBtnWeight: 700;
+$defaultBtnTexttransform: none;
+
+$defaultBtnTransitionEnter: all .1s ease-in-out;
+$defaultBtnTransitionLeave: all .2s ease-in-out;
+
+$defaultBtnBorderDefault: 1px solid $black;
+$defaultBtnBorderDefaultHover: 1px solid $black;
+$colorBgBtnDefault: $white;
+$colorBtnDefaultText: $black;
+
+$defaultBtnBorderActive: 1px solid $black;
+$defaultBtnBorderActiveHover: 1px solid $lowry_hover;
+$colorBgBtnActive: $black;
+$colorBtnActiveHover: $lowry_hover;
+$colorBtnActiveText: $white;
+$colorBtnActiveTextHover: $white;
+
+$defaultBtnBorderUnavailable: none;
+$colorBgBtnUnavailable: #EBEBEB;
+$colorBtnUnavailableText: $unavailable;
+
+$defaultBtnBorderDisabled: none;
+$colorBgBtnDisabled: #EBEBEB;
+$colorBtnDisabledText: $unavailable;
+
+$defaultBtnBorderOrdered: 1px solid transparent;
+$defaultBtnBorderOrderedHover: 1px solid transparent;
+
+/* ----------------------------------------------------------------
+    Radius
+-----------------------------------------------------------------*/
+
+$defaultFormRadius: 0;
+$defaultCardRadius: 0;
+
+/* ----------------------------------------------------------------
+    Header dimensions
+-----------------------------------------------------------------*/
+
+$headerHeightShowcase: 100px;
+$headerHeight: 100px;
+$headerHeightSmall: 70px;
+$headerOrderHeight: 70px;
+
+$logoHeight: 50px;
+$brandHeight: 50px;
+$brandHeightShowcase: 50px;

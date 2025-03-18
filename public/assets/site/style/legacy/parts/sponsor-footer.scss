@@ -1,0 +1,56 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$sponsor_footer: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $sponsor_footer;
+
+#sponsor-footer {
+    padding: v(15px 0, padding, $footerHorzPAdding);
+    border-top: v(none, border_top, $footerHorzBorderTop);
+    font-family: v($fontNormal, font_family, $footerHorzFontfamily);
+    font-weight: v(normal, font_weight, $footerHorzWeight);
+    line-height: v(normal, line_height, $footerHorzLineHeight);
+    text-align: v(center, text_align, $footerHorzAlignment);
+    text-transform: v(none, text_transform, $footerHorzTexttransform);
+    background: v($black, background, $colorBgHorzFooter);
+    color: v($white, color, $colorHorzFooterText);
+
+    @media (max-width: 767px) {
+        text-align: center;
+    }
+
+    @include fontsize(v($fs_small, font_size, $footerHorzFontsize));
+
+    .inner {
+        @include container_width();
+        @media (min-width: 1200px) {
+            max-width: 1170px * math.div(v(12, width, $footerWidth), 12);
+        }
+    }
+
+    .heading {
+        padding-top: v(35px, heading_padding_top, $footerHorzTextPaddingTop);
+        padding-bottom: v(10px, heading_padding_bottom, $footerHorzTextPaddingBottom);
+    }
+    .logos {
+        a {
+            display: inline-block;
+            + a {
+                margin-left: 15px;
+            }
+        }
+        img {
+            max-height: v(50px, logo_max_height, $footerHorzImgHeight);
+            padding-top: v(10px, logo_padding_top, $footerHorzImgPaddingTop);
+            padding-right: v(0, logo_padding_right, $footerHorzImgPaddingRight);
+            padding-bottom: v(10px, logo_padding_bottom, $footerHorzImgPaddingBottom);
+            padding-left: v(0, logo_padding_left, $footerHorzImgPaddingLeft);
+        }
+    }
+}

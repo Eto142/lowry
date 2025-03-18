@@ -1,0 +1,250 @@
+
+<footer id="footer">
+    
+
+    <span id="sticky_part_4"></span>
+
+    
+    
+
+
+
+<div class="footerWrapper">
+<div class="inner">
+<section class="column">
+                <div><svg class="logo" width="174px" viewBox="0 0 1140 658" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+<path d="M276.43,657.216C207.856,657.216 174.288,614.436 174.288,562.157L174.288,95.06C174.288,42.781 218.573,0 276.43,0C334.288,0 378.572,42.781 378.572,95.06L378.572,562.15C378.572,614.436 344.998,657.21 276.43,657.21L276.43,657.216ZM0,5.359L86.957,5.359L86.957,570.256L154.074,570.256L154.074,651.858L0,651.858L0,5.359ZM916.416,272.934C923.019,258.663 926.327,239.8 926.327,216.353L926.327,106.803C926.327,83.665 922.871,64.648 915.959,49.777C909.053,34.907 898.24,23.783 883.519,16.412C868.798,9.041 849.583,5.359 825.861,5.359L724.486,5.359L724.486,651.858L811.444,651.858L811.444,350.692C818.336,350.692 823.753,351.53 827.654,353.181C831.561,354.832 834.257,357.469 835.765,361.074C837.261,364.679 838.022,369.483 838.022,375.487L838.022,651.851L925.418,651.851L925.418,379.092C925.418,363.77 923.245,351.446 918.892,342.134C914.54,332.822 906.57,325.529 895.016,320.273C887.987,317.075 879.089,314.412 868.34,312.271C875.182,310.278 881.443,307.763 887.123,304.719C900.045,297.806 909.807,287.211 916.416,272.927L916.416,272.934ZM1037.14,325.039L1039.75,325.039L1053.95,5.359L1140,5.359L1103.04,421.479L1082.17,421.543L1081.88,651.858L995.017,651.858L994.721,421.543L973.855,421.479L936.896,5.359L1022.95,5.359L1037.14,325.039ZM486.041,491.357L486.486,491.357L507.21,5.359L593.703,5.359L614.427,491.357L614.871,491.357L624.782,5.359L705.433,5.359L674.347,651.858L566.222,651.858L550.901,179.383L550.024,179.383L534.704,651.858L426.578,651.858L395.479,5.359L476.131,5.359L486.041,491.357ZM288.572,567.206L288.572,90.011C288.572,83.33 283.11,77.868 276.43,77.868C269.75,77.868 264.289,83.33 264.289,90.011L264.289,567.206C264.289,573.887 269.75,579.349 276.43,579.349C283.11,579.349 288.572,573.887 288.572,567.206ZM833.064,265.943C828.86,272.263 822.553,275.41 814.152,275.41L811.45,275.41L811.45,80.196L813.694,80.196C822.708,80.196 829.24,82.53 833.302,87.186C837.351,91.855 839.383,99.29 839.383,109.505L839.383,238.44C839.383,250.467 837.274,259.63 833.07,265.943L833.064,265.943Z" style="fill-rule:nonzero;"/>
+</svg></div>
+</section>
+
+<section class="column">
+                <div><p><a href="https://thelowry.com/pQjo1s7/your-visit---lowry">Opening times</a><br><a href="https://help.thelowry.com/support/home">FAQs</a><br><a href="https://thelowry.com/pQGLpiK/your-visit/ticket-information">Contact us</a><br><a href="https://thelowry.com/pQ0P4sM/terms---conditions----lowry">Terms and Conditions</a><br><a href="https://thelowry.com/pQ7NauZ/about-us---our-policies">Policies</a></p></div>
+</section>
+
+<section class="column">
+                <div><p><a href="https://thelowry.com/pQEQJSd/media-centre">Media centre</a><br><a href="https://thelowry.com/pQpDjCN/blogs---lowry">Blogs</a><br><a href="https://thelowry.com/cms_files/File/Lowry Marketing Asset Guide 2025.pdf" target="_blank" rel="noopener">Marketing asset info</a><br><a href="https://thelowry.com/pQr51FY/visiting-company-information---lowry">Visiting Company Info</a><br><a href="https://shop.thelowry.com/#_ga=2.237593091.286562731.1727705816-1837513924.1678285955">Shop</a></p></div>
+</section>
+
+
+<section class="column">
+    <div class="socials">
+
+        <div class="socials__wrapper">
+                        
+                                <a href="https://www.facebook.com/thelowrysalford/" target="_blank" class="socials__link">
+                <span class='peppered-icon icon-facebook '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'><use xlink:href="https://thelowry.com/images/socials.svg#facebook"></use></svg></span>
+                <span class="screenreader">facebook</span>
+            </a>
+                                <a href="https://www.instagram.com/the_lowry/" target="_blank" class="socials__link">
+                <span class='peppered-icon icon-instagram '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'><use xlink:href="https://thelowry.com/images/socials.svg#instagram"></use></svg></span>
+                <span class="screenreader">instagram</span>
+            </a>
+                                <a href="https://www.tiktok.com/@the_lowry_salford" target="_blank" class="socials__link">
+                <span class='peppered-icon icon-tiktok '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'><use xlink:href="https://thelowry.com/images/socials.svg#tiktok"></use></svg></span>
+                <span class="screenreader">tiktok</span>
+            </a>
+                                <a href="https://uk.linkedin.com/company/the-lowry" target="_blank" class="socials__link">
+                <span class='peppered-icon icon-linkedin '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'><use xlink:href="https://thelowry.com/images/socials.svg#linkedin"></use></svg></span>
+                <span class="screenreader">linkedin</span>
+            </a>
+                                <a href="https://www.youtube.com/@thelowry" target="_blank" class="socials__link">
+                <span class='peppered-icon icon-youtube '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'><use xlink:href="https://thelowry.com/images/socials.svg#youtube"></use></svg></span>
+                <span class="screenreader">youtube</span>
+            </a>
+                                    </div>
+
+<div class="richtext">
+<p><br><a class="btn btn-active" title="Sign up for the mailing list" href="https://thelowry.com/pQ0PmIM/join-lowry-s-mailing-list">Join our mailing list</a></p>
+<p>Address:&nbsp;<strong>Pier 8, The Quays, Salford, M50 3AZ</strong></p>
+</div>
+</div>
+
+                
+                        </section>
+</div>
+</div>
+
+
+    <span id="sticky_part_7"></span>
+
+    
+            
+
+
+
+<div id="postFooter" class="variant-boxedLeftRight">
+<div class="inner">
+<section class="column">
+                &copy; Lowry
+        </section>
+
+
+        <section class="column powered-by">
+    Powered by <a href="https://www.culturesuite.co/" rel="external">Peppered</a>
+</section>
+</div>
+</div>
+
+
+</footer>
+</div>
+
+
+    
+    
+
+
+
+    
+                    <div class="modal modal--waitlist" id="waitlistModal" role="dialog" aria-labelledby="waitlistModalLabel" aria-expanded="false" data-endpoint="/waitinglist/add">
+<div class="modal-dialog" role="document" tabindex="0">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close-button" aria-controls="waitlistModal" aria-expanded="false" aria-label="Close">
+        <div class='close-cross'><span class='screenreader'>Close</span><span class='icon'><span class='bar'></span><span class='bar'></span><span class='bar'></span></span></div></span>
+    </button>
+    <h2 class="modal-title" id="waitlistModalLabel">
+        Put me on the waiting list
+    </h2>
+</div>
+<div class="modal-body">
+    <div class="spinner">
+<div class="rect1"></div>
+<div class="rect2"></div>
+<div class="rect3"></div>
+<div class="rect4"></div>
+<div class="rect5"></div>
+</div>
+
+    <div class="placeholder"></div>
+
+    <div class="msg notice" id="waitlist-success" role="alert" style="display:none;">
+        <span class='peppered-icon icon-success '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='20' height='20' viewBox='0 0 20 20' xml:space='preserve'><g transform='matrix(1,0,0,1,-189,9231)'><path style='fill: currentColor; fill-rule:nonzero;' d='M199,-9211C193.516,-9211.01 189.006,-9215.52 189,-9221C189.007,-9226.48 193.517,-9230.99 199,-9231C204.484,-9230.99 208.994,-9226.48 209,-9221C208.995,-9215.52 204.484,-9211.01 199,-9211ZM194.109,-9222.54C193.874,-9222.55 193.647,-9222.45 193.488,-9222.28L192.244,-9221.04C192.083,-9220.87 191.994,-9220.65 191.998,-9220.42C191.996,-9220.18 192.084,-9219.96 192.244,-9219.79L196.792,-9215.24C196.958,-9215.08 197.183,-9214.99 197.415,-9215C197.646,-9214.99 197.871,-9215.08 198.036,-9215.24L205.887,-9223.1C206.048,-9223.26 206.137,-9223.49 206.133,-9223.72C206.139,-9223.95 206.05,-9224.18 205.887,-9224.34L204.643,-9225.58C204.485,-9225.76 204.257,-9225.85 204.022,-9225.85C203.787,-9225.85 203.559,-9225.76 203.401,-9225.58L197.415,-9219.6L194.732,-9222.28C194.572,-9222.45 194.345,-9222.55 194.11,-9222.54L194.109,-9222.54Z'/></g></svg></span>
+        We have received your application. We will contact you when tickets become available.
+    </div>
+    <div class="msg error" id="waitlist-error" role="alert" style="display:none;">
+        <span class='peppered-icon icon-error '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='20' height='20' viewBox='0 0 20 20' xml:space='preserve'><g transform='matrix(1,0,0,1,-235,9231)'><path style='fill: currentColor; fill-rule:nonzero;' d='M245,-9211C239.516,-9211.01 235.006,-9215.52 235,-9221C235.007,-9226.48 239.517,-9230.99 245,-9231C250.483,-9230.99 254.993,-9226.48 255,-9221C254.994,-9215.52 250.484,-9211.01 245,-9211ZM244.5,-9217C243.951,-9217 243.5,-9216.55 243.5,-9216L243.5,-9215C243.5,-9214.45 243.951,-9214 244.5,-9214L245.5,-9214C246.049,-9214 246.5,-9214.45 246.5,-9215L246.5,-9216C246.5,-9216.55 246.049,-9217 245.5,-9217L244.5,-9217ZM244.5,-9228C243.951,-9228 243.5,-9227.55 243.5,-9227L243.5,-9220C243.5,-9219.45 243.951,-9219 244.5,-9219L245.5,-9219C246.049,-9219 246.5,-9219.45 246.5,-9220L246.5,-9227C246.5,-9227.55 246.049,-9228 245.5,-9228L244.5,-9228Z'/></g></svg></span>
+        Something went wrong. Please call to be put on the waiting list.
+    </div>
+    <button class="btn btn-active" aria-controls="waitlistModal" aria-expanded="false" disabled style="display:none;">
+        OK
+    </button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal" id="wishlistModal" role="dialog" aria-labelledby="wishlistModalLabel" aria-expanded="false">
+<div class="modal-dialog" role="document" tabindex="0">
+<div class="modal-content">
+<div class="modal-header">
+    <button type="button" class="close-button" aria-controls="wishlistModal" aria-expanded="false" aria-label="Close">
+        <div class='close-cross'><span class='screenreader'>Close</span><span class='icon'><span class='bar'></span><span class='bar'></span><span class='bar'></span></span></div></span>
+    </button>
+    <h2 class="modal-title" id="wishlistModalLabel">Wish list</h2>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <p>
+            Added:<br>
+            <span class="item-info"></span>
+        </p>
+        <p>
+            <a class="btn btn-active" aria-controls="wishlistModal" aria-expanded="false" href="https://thelowry.com/whats-on">
+                OK
+            </a>
+            <a class="btn btn-default" href="https://thelowry.com/my/wishlist">
+                To wishlist
+            </a>
+        </p>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<template id="generic-banner">
+<div class="root">
+<div class="banner" tabindex="0">
+<div class="spinner">
+<div class="rect1"></div>
+<div class="rect2"></div>
+<div class="rect3"></div>
+<div class="rect4"></div>
+<div class="rect5"></div>
+</div>
+
+<div class="desc">
+    <h2 class="title"></h2>
+    <div class="subtitle richtext"></div>
+</div>
+<div class="footer">
+    <a href="#" class="btn btn-active"></a>
+</div>
+<button class="close-button">
+    <div class='close-cross'><span class='screenreader'>Close</span><span class='icon'><span class='bar'></span><span class='bar'></span><span class='bar'></span></span></div></span>
+</button>
+</div>
+</div>
+</template>
+
+<template id="cart-banner"
+data-banner-timeout="300"
+data-banner-retrieve-endpoint="/banner/cart"
+data-cart-retrieve-endpoint="/cart/get/">
+<div class="root">
+<div class="banner" role="dialog" aria-labelledby="cart-banner-title" aria-describedby="cart-banner-desc" tabindex="0">
+<div class="image">
+    <a href="#" class="imageLayer"></a>
+</div>
+<div class="desc">
+    <h2 class="title" id="cart-banner-title">
+        <a href="#"></a>
+    </h2>
+    <div class="subtitle richtext" id="cart-banner-desc"></div>
+</div>
+<div class="footer">
+    <a href="#" class="btn btn-active"></a>
+</div>
+<button class="close-button">
+    <div class='close-cross'><span class='screenreader'>Close</span><span class='icon'><span class='bar'></span><span class='bar'></span><span class='bar'></span></span></div></span>
+</button>
+</div>
+</div>
+</template>
+
+<template id="icon-chevron">
+<span class='peppered-icon icon-chevron-down '><svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='20' height='20' viewBox='0 0 20 20' xml:space='preserve'><g transform='matrix(1,0,0,1,5,2)'>
+        <path d='M5,11L0,6L1.5,4.5L5,8.25L8.5,4.5L10,6L5,11Z'/>
+    </g></svg></span>
+</template>
+
+
+    <script>
+let pep_global_config = {};
+pep_global_config['app_environment'] = 'prod';
+pep_global_config['http_host'] = 'thelowry.com';
+</script>
+
+<script crossorigin type="module" src="{{asset('dist/vite/site/js/lib.K6C4ivlm.js')}}"></script>
+<script crossorigin type="module" src="{{asset('dist/vite/site/js/site.dHKKWCqO.js')}}"></script>
+
+
+
+<script>
+// this is the end of the document,
+// so we're sure we done pushing data to the datalayer
+// of course, using the modern object using tracking_data() this is
+// basically superfluous, but still a friendly service for our users
+// and it's explicit > implicit, which is also nice
+dataLayer.push({
+'event': 'datalayer_ready'
+});
+</script>
+
+</body>
+
+<!-- Mirrored from thelowry.com/pQp4jSN/galleries by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Mar 2025 11:42:19 GMT -->
+</html>

@@ -1,0 +1,153 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$footer: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $footer;
+
+
+.footerWrapper {
+    position: relative;
+    font-family: v($fontNormal, font_family, $footerFontfamily);
+    font-weight: v(normal, font_weight, $footerFontWeight);
+    line-height: v(20px, line_height, $footerLineHeight);
+    text-align: v(center, text_align, $footerTextAlignMobile);
+    text-transform: v(none, text_transform, $footerTexttransform);
+    background: v($color11, background, $colorBgFooter);
+    overflow: hidden;
+
+    @media (min-width: 768px) {
+        text-align: left;
+    }
+
+    @include fontsize(v($fs_small, font_size, $footerFontsize));
+
+    .inner {
+        @include container_width();
+        padding: v(0 15px, padding, $footerPadding);
+
+        @media (min-width: 768px) {
+            display: flex;
+        }
+        @media (min-width: 1200px) {
+            max-width: 1170px * math.div(v(9, width, $footerWidth), 12); // width in columns, for full width footer try 12
+        }
+    }
+
+    .column {
+        margin: v(60px 0 60px 0, column_margin, $footerWidgetpadding);
+        color: v($white, color, $colorFooterText);
+        flex: 1;
+
+        @media (min-width: 768px) {
+            &:not(:last-child) {
+                padding-right: v(15px, column_spacing, $footerWidgetSpacing);
+            }
+        }
+
+        &:first-child:last-child {
+            // only one column
+            text-align: center;
+            padding-right: 0;
+        }
+
+        ul {
+            margin-bottom: 0;
+        }
+
+        a:not(.btn) {
+            text-decoration: v(none, link_text_decoration, $footerLinkDecoration);
+            color: v($color10, link_color, $colorFooterLink);
+
+            &:hover {
+                text-decoration: v(underline, link_text_decoration_hover, $footerLinkDecorationHover);
+                color: v($color8, link_color_hover, $colorFooterLinkHover);
+            }
+        }
+    }
+
+    h2,
+    h3 {
+        margin: v(0 0 15px 0, heading_margin, $footerHeadingMargin);
+        font-family: v($fontNormalBold, heading_font_family, $footerHeadingFontFamily);
+        font-weight: v(bold, heading_font_weight, $footerHeaderFontWeight);
+        line-height: v(normal, heading_line_height, $footerHeadingLineHeight);
+        text-transform: v(none, heading_text_transform, $footerHeadingTexttransform);
+        color: v($white, heading_color, $colorHeaderFooter);
+
+        @include fontsize(v($fs_small, heading_font_size, $footerHeadingFontsize));
+    }
+
+    address {
+        margin-bottom: 20px;
+    }
+
+    ul li {
+        list-style: none;
+        padding-bottom: 5px;
+        line-height: 1;
+    }
+
+    .subscribe-widget {
+        margin-top: v(30px, subs_margin_top, $footerSubscribeWidgetMarginTop);
+
+        input {
+            max-width: 30em;
+            margin: 0 auto;
+        }
+
+        .msg {
+            max-width: 30em;
+            margin: 0 auto;
+            padding-top: 10px;
+            font-family: v($fontNormal, formerror_font_family);
+            font-weight: v(normal, formerror_font_weight);
+            font-style: v(normal, formerror_font_style);
+            line-height: v(1, formerror_line_height);
+            text-transform: v(none, formerror_text_transform);
+            text-align: left;
+            animation: message-slide-in .2s ease-in-out;
+            .fa {
+                color: $colorMsgNotice;
+            }
+            &.error .fa {
+                color: $colorMsgError;
+            }
+            &.warning .fa {
+                color: $colorMsgWarning;
+            }
+        }
+
+        .grecaptcha-branding {
+            font-size: v(.6em, grecaptcha_font_size);
+            line-height: v(1.2, grecaptcha_line_height);
+            color: v(inherit, grecaptcha_color);
+            opacity: v(.5, grecaptcha_opacity);
+            a,
+            a:link,
+            a:hover,
+            a:active,
+            a:visited {
+                text-decoration: underline;
+                color: inherit;
+            }
+        }
+    }
+
+    .btn.btn-active {
+        width: auto;
+        border: v($colorBgBtnActive, subs_btn_border, $colorBtnSubscribeBorder);
+        background: v($colorBgBtnActive, subs_btn_background, $colorBtnSubscribe);
+        color: v($colorBtnActiveText, subs_btn_color, $colorBtnSubscribeText);
+        &:hover {
+            border: v($colorBgBtnActive, subs_btn_border_hover, $colorBtnSubscribeBorderHover);
+            background: v($colorBtnActiveHover, subs_btn_background_hover, $colorBtnSubscribeHover);
+            color: v($colorBtnActiveTextHover, subs_btn_color_hover, $colorBtnSubscribeTextHover);
+        }
+    }
+}

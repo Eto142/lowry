@@ -1,0 +1,216 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$popup_banner: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $popup_banner;
+
+
+$full_screen: v(false, full_screen);
+
+@keyframes banner-fade-slide-in-from-bottom {
+    0% {
+        transform: translateY(30vh);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes banner-fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+[data-popup-banner-name] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    overflow: auto;
+    background: rgba(0,0,0,.2);
+    opacity: 0;
+    animation: .2s ease-in-out forwards banner-fade-in;
+
+    @if ($full_screen == false) {
+        padding: 30px;
+    }
+
+    &.loading .banner > *:not(.spinner):not(.close-button) {
+        display: none !important;
+    }
+
+    .banner {
+        position: relative;
+        z-index: 0;
+        padding: v(0, padding);
+        background: v($colorPrime, background);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        color: v($white, title_color);
+        box-shadow: v($defaultBoxShadow, box_shadow);
+        transform: scale(0);
+        animation: .2s ease-in-out forwards modal-slide-in;
+        animation-delay: .15s;
+
+        @if ($full_screen == true) {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            > * {
+                width: 600px;
+                max-width: calc(100% - 60px);
+                margin: 0 auto;
+            }
+        }
+
+        @if ($full_screen == false) {
+            width: 600px;
+            max-width: calc(100% - 60px);
+
+            @media (max-width: 600px) {
+                max-width: 100%;
+                position: fixed;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                animation-name: banner-fade-slide-in-from-bottom;
+                animation-duration: .3s;
+            }
+        }
+
+        .desc {
+            padding: v(30px, desc_padding);
+        }
+
+        .footer {
+            padding: v(0 30px 30px 30px, button_margin);
+        }
+
+        h2 {
+            margin: v(0, title_margin);
+            font-family: v($fontTitleContent, title_font_family);
+            font-weight: v(bold, title_font_weight);
+            font-style: v(normal, title_font_style);
+            line-height: v(1, title_line_height);
+            text-transform: v(none, title_text_transform);
+            color: v($white, title_color);
+
+            @include fontsize(v($basicH1Fontsize, title_font_size));
+
+            a,
+            a:link,
+            a:visited,
+            a:hover,
+            a:active {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+        .subtitle {
+            margin: v(5px 0 0 0, subtitle_margin);
+            font-family: v($fontNormal, subtitle_font_family);
+            font-weight: v(bold, subtitle_font_weight);
+            font-style: v(normal, subtitle_font_style);
+            line-height: v(1, subtitle_line_height);
+            text-transform: v(none, subtitle_text_transform);
+            color: v($white, subtitle_color);
+
+            @include fontsize(v($basicH3Fontsize, subtitle_font_size));
+
+            p {
+                margin: v(0, paragraph_margin);
+            }
+        }
+
+        .btn {
+            padding: v($defaultBtnPadding, button_padding);
+            border: v($defaultBtnBorderActive, button_border);
+            text-transform: v($defaultBtnTexttransform, button_text_transform);
+            background: v($colorBgBtnActive, button_background);
+            color: v($colorBtnActiveText, button_color);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover);
+                background: v($colorBtnActiveHover, button_background_hover);
+                color: v($colorBtnActiveTextHover, button_color_hover);
+            }
+
+            @include fontsize(v($defaultBtnFontsize, button_font_size));
+        }
+
+        @each $animation in v([], animations) {
+            @include card_animation($animation, '.imageLayer', '.desc');
+        }
+    }
+
+    button.close-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: -15px;
+        right: -15px;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 100%;
+        background: v($white, closebutton_background);
+        color: v($black, closebutton_color);
+        opacity: .8;
+        cursor: pointer;
+        will-change: opacity;
+        transition: v($defaultBtnTransitionLeave, closebutton_transition_leave);
+
+        @if ($full_screen == true) {
+            width: 60px;
+            height: 60px;
+            top: 0;
+            right: 0;
+            border-top-right-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 0;
+            .close-cross {
+                top: -5px;
+                left: 5px
+            }
+        }
+
+        @if ($full_screen == false) {
+            @media (max-width: 600px) {
+                top: 0;
+                right: 0;
+                background: transparent;
+                color: v($white, closebutton_color_mobile);
+            }
+        }
+
+        &:hover {
+            transition: v($defaultBtnTransitionEnter, closebutton_transition_enter);
+            opacity: 1;
+        }
+
+        > * {
+            pointer-events: none;
+        }
+    }
+}

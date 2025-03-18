@@ -1,0 +1,239 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$news_newsletter: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $news_newsletter;
+
+.newsListWrapper {
+    &.with-news .container {
+        @media (min-width: $bp_mobile) {
+            display: flex;
+            > * {
+                flex: 1;
+            }
+            > *:first-child:not(:last-child) {
+                margin-right: 30px;
+            }
+            > *:last-child:not(:first-child) {
+                margin-left: 30px;
+            }
+        }
+    }
+
+    &:not(.with-news) {
+        @include inner_width('.newsletter:not(.wide)');
+    }
+
+    .newslist {
+        @media (max-width: $bp_mobile - 1) {
+            margin-bottom: 60px;
+        }
+        h2 {
+            text-align: left;
+            margin-bottom: 10px;
+            font-family: v($fontTitleTemplate, news_heading_font_family, $newsListTitleFontfamily);
+            font-weight: v(bold, news_heading_font_weight, $newsListTitleWeight);
+            line-height: v(1.19, news_heading_line_height, $newsListTitleLineHeight);
+            text-transform: v(none, news_heading_text_transform, $newsListTitleTexttransform);
+            color: v($grey1, news_heading_color, $colorNewsListTitle);
+
+            @include fontsize(v($fs_large_title, news_heading_font_size, $newsListTitleFontsize));
+        }
+
+        ul {
+            text-align: left;
+            list-style: none;
+            float: none;
+            margin-right: 0;
+            margin-bottom: 0;
+
+            li {
+                margin: v(0 0 0 10px, news_item_margin, $newsItemMargin);
+                padding: v(0 0 10px 0, news_item_padding, $newsItemPadding);
+                color: v($color9, news_item_color, $colorHomeNewsList);
+
+                .fa {
+                    position: absolute;
+                    margin: v(4px 0 0 0, news_bullit_margin, $newsItemBullitMargin);
+                }
+
+                .newsLinkContainer {
+                    margin: v(0 0 0 20px, news_link_margin, $newsItemLinkMargin);
+
+                    a {
+                        font-family: v($fontNormal, news_link_font_family, $newsListLinkFontfamily);
+                        font-weight: v(normal, news_link_font_weight, $newsListLinkWeight);
+                        line-height: v(normal, news_link_line_height, $newsListLinkLineHeight);
+                        text-transform: v(none, news_link_text_transform, $newsListLinkTexttransform);
+                        color: v($color9, news_link_color, $colorHomeNewsList);
+
+                        @include fontsize(v($fs_large_subtitle, news_link_font_size, $newsListLinkFontsize));
+
+                        &:hover {
+                            border-bottom: v(none, news_link_border_bottom_hover, $newsItemHoverBorderBottom);
+                            color: v($color1, news_link_color_hover, $colorHomeNewsListHover);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .newsletter {
+        padding: v(40px 40px 60px 40px, newsletter_padding, $newsletterWidgetPadding);
+        border-radius: v(0, newsletter_border_radius, $newsletterWidgetRadius);
+        background: v($color9, newsletter_background, $colorBgHomeNewsletter);
+        color: v($white, newsletter_color, $colorHomeNewsletterText);
+        text-align: v(center, newsletter_text_align);
+
+        @if (v('normal', layout, $newsletterLayout) == 'split') {
+            @media (min-width: $bp_mobile) {
+                @supports (flex-wrap: wrap) { // IE bugs here
+                    display: flex;
+                    flex-wrap: wrap;
+                    text-align: left;
+                    align-items: center;
+                    h2 {
+                        width: 100%;
+                    }
+                    .desc {
+                        flex: 1;
+                    }
+                    .btn {
+                        align-self: flex-end;
+                    }
+                }
+                @supports (display: grid) {
+                    display: grid;
+                    grid-column-gap: v(30px, grid_column_gap);
+                    grid-row-gap: v(30px, grid_row_gap);
+                    grid-template-columns: 3fr 1fr;
+                    > * {
+                        width: auto;
+                        margin: 0;
+                    }
+                }
+                .call2action {
+                    display: flex;
+                    justify-content: flex-end;
+                    height: 100%;
+                }
+            }
+        }
+        &.with-logo {
+            @if (v('normal', layout, $newsletterLayout) == 'split') {
+                @media (min-width: $bp_mobile) {
+                    @supports (display: grid) {
+                        grid-template-columns: 1fr 2fr 1fr;
+                    }
+                }
+            }
+        }
+
+        .msg { padding: 20px 0 0 0; }
+
+        .newsletter-logo {
+            width: v(100px, logo_width);
+        }
+
+
+        h2 {
+            margin-bottom: v(5px, heading_margin_bottom, $newsletterH2MarginBottom);
+            font-family: v($fontTitleTemplate, heading_font_family, $newsletterTitleFontfamily);
+            font-weight: v(bold, heading_font_weight, $newsletterTitleWeight);
+            line-height: v(normal, heading_line_height, $newsletterTitleLineHeight);
+            text-transform: v(none, heading_text_transform, $newsletterTitleTexttransform);
+            color: v(inherit, heading_color, $newsletterTitleColor);
+
+            @include fontsize(v($fs_large_title, heading_font_size, $newsletterTitleFontsize));
+        }
+
+        .desc {
+            font-family: v($fontNormal, desc_font_family, $newsletterDescFontfamily);
+            font-weight: v(normal, desc_font_weight, $newsletterDescWeight);
+            line-height: v(1.44, desc_line_height, $newsletterDescLineHeight);
+            text-transform: v(none, desc_text_transform, $newsletterDescTexttransform);
+            color: v(inherit, desc_color, $newsletterDescColor);
+
+            @include fontsize(v($fs_large_subtitle, desc_font_size, $newsletterDescFontsize));
+        }
+
+        .btn {
+            width: auto;
+            margin: v(20px 0 0 0, button_margin, $newsletterWidgetBtnMargin);
+            border: v($defaultBtnBorderActive, button_border, $newsletterBtnBorder);
+            background: v($colorBgBtnActive, button_background, $newsletterBtnBackground);
+            color: v($colorBtnActiveText, button_color, $newsletterBtnColor);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover, $newsletterBtnBorderHover);
+                background: v($colorBtnActiveHover, button_background_hover, $newsletterBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, button_color_hover, $newsletterBtnColorHover);
+            }
+
+            @if (v('normal', layout, $newsletterLayout) == 'split') {
+                @media (max-width: $bp_mobile) {
+                    @supports (flex-wrap: wrap) {
+                        margin: v(30px 0 0 0, button_margin_mobile);
+                    }
+                    @supports (display: grid) {
+                        margin: v(30px 0 0 0, button_margin_mobile);
+                    }
+                }
+            }
+        }
+
+        .newsletter-subscribe-form {
+            max-width: 20em;
+            margin: 30px auto 0 auto;
+
+            .form-control,
+            .btn {
+                width: 100%;
+                border-radius: $defaultBtnRadius;
+            }
+
+            .btn {
+                margin-top: 0;
+            }
+
+            .msg {
+                margin: 0;
+                padding: 5px 0 0 0;
+                font-family: v($fontNormal, formerror_font_family);
+                font-weight: v(normal, formerror_font_weight);
+                font-style: v(normal, formerror_font_style);
+                line-height: v(1, formerror_line_height);
+                text-transform: v(none, formerror_text_transform);
+                animation: message-slide-in .2s ease-in-out;
+                .fa {
+                    color: $colorMsgNotice;
+                }
+                &.error .fa {
+                    color: $colorMsgError;
+                }
+                &.warning .fa {
+                    color: $colorMsgWarning;
+                }
+            }
+
+            .grecaptcha-branding {
+                font-size: v(.6em, grecaptcha_font_size);
+                line-height: v(1.2, grecaptcha_line_height);
+                color: v(inherit, grecaptcha_color);
+                opacity: v(.5, grecaptcha_opacity);
+                a,
+                a:link,
+                a:hover,
+                a:active,
+                a:visited {
+                    text-decoration: underline;
+                    color: inherit;
+                }
+            }
+        }
+    }
+}

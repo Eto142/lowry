@@ -1,0 +1,268 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$people: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $people;
+
+
+.people-list,
+.people-grid,
+.people-featured {
+    h2 {
+        margin: v(0 0 30px 0, heading_margin);
+        font-family: v($fontTitleTemplate, heading_font_family);
+        font-weight: v(bold, heading_font_weight);
+        line-height: v(normal, heading_line_height);
+        text-transform: v(none, heading_text_transform);
+        color: v($colorDefaultText, heading_color);
+
+        @include fontsize(v($basicH2Fontsize, heading_font_size));
+    }
+}
+
+.people-list {
+    font-family: v(inherit, list_font_family);
+    font-weight: v(normal, list_font_weight);
+    line-height: v(1.4, list_line_height);
+    color: v(inherit, list_color);
+
+    @include fontsize(v(inherit, list_font_size));
+
+    a {
+        text-decoration: v($defaultLinkDecoration, list_link_text_decoration);
+        color: v($defaultLink, list_link_color);
+        &:hover {
+            text-decoration: v($defaultLinkDecorationHover, list_link_text_decoration_hover);
+            color: v($defaultLinkHover, list_link_color_hover);
+        }
+    }
+
+    .roles {
+        font-weight: v(inherit, list_role_font_weight);
+        font-style: v(italic, list_role_font_style);
+
+        &::before {
+            content: v('(', list_role_before)
+        }
+        &::after {
+            content: v(')', list_role_after)
+        }
+    }
+}
+
+
+.people-grid,
+.people-featured {
+    .people-card {
+        display: block;
+        position: relative;
+        margin-bottom: 30px;
+        border-radius: v($defaultCardRadius, card_border_radius);
+        overflow: hidden;
+
+        > * {
+            border-radius: inherit;
+        }
+
+        &:link {
+            &:hover {
+                text-decoration: v(none, title_text_decoration_hover);
+
+                .desc h3 {
+                    text-decoration: v($defaultLinkDecorationHover, title_text_decoration_hover);
+                }
+            }
+
+            @each $animation in v([], animations) {
+                @include card_animation($animation, '.imageLayer', '.desc');
+            }
+        }
+    }
+
+    .picture--people-card{
+        aspect-ratio: auto;
+    }
+
+    picture {
+        display: block;
+        position: relative;
+    }
+
+    .imageLayer {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 30px;
+        background: transparent no-repeat center / cover;
+    }
+
+    .gradientOverlay {
+        background: v($gradientOverlay, overlay);
+    }
+
+    .desc {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        color: inherit;
+
+        .inner {
+            display: flex;
+            flex-direction: v(column, inner_flex_direction); // alternatively set colum-reverse
+            padding: v(30px, inner_padding);
+        }
+
+        h3 {
+            margin: v(5px 0, name_margin);
+            font-family: v($fontNormal, name_font_family);
+            font-weight: v(bold, name_font_weight);
+            line-height: v(normal, name_line_height);
+            text-decoration: v(none, name_text_decoration);
+            text-transform: v(none, name_text_transform);
+            hyphens: auto; // because long last names tend to not fit the tiles
+
+            @include fontsize(v($basicH3Fontsize, name_font_size));
+        }
+        p {
+            margin: v(0, role_margin);
+            font-family: v($fontNormal, role_font_family);
+            font-weight: v(normal, role_font_weight);
+            line-height: v(1.33, role_line_height);
+            text-transform: v(none, role_text_transform);
+
+            @include fontsize(v($fs_small, role_font_size));
+        }
+    }
+}
+
+.people-grid {
+    .grid-root {
+        @include cards_grid();
+    }
+
+    @supports (display: grid) {
+        &.grid-size-2 .grid-root {
+            grid-template-columns: 1fr 1fr;
+
+            @media (max-width: $bp_tablet - 1) {
+                grid-template-columns: 1fr 1fr;
+            }
+            @media (max-width: $bp_mobile - 1) {
+                grid-template-columns: 1fr;
+            }
+        }
+        &.grid-size-5 .grid-root {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+            @media (max-width: $bp_tablet - 1) {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            @media (max-width: $bp_mobile - 1) {
+                grid-template-columns: 1fr 1fr;
+            }
+            @media (max-width: $bp_tiny - 1) {
+                grid-template-columns: 1fr;
+            }
+
+            .desc {
+                h3 {
+                    line-height: v(normal, name_line_height_small);
+                    @include fontsize(v($basicH4Fontsize, name_font_size_small));
+                }
+                p {
+                    line-height: v(1.33, role_line_height_small);
+                    @include fontsize(v($fs_tiny, role_font_size_small));
+                }
+            }
+        }
+    }
+
+    .people-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        width: v(360px, card_size);
+        height: v(360px, card_size);
+        background: v($color1, card_background);
+        color: v($white, card_color);
+        box-shadow: v($defaultBoxShadow, card_box_shadow);
+
+        @supports (display: grid) {
+            width: 100%;
+            height: auto;
+            margin-bottom: 0;
+        }
+
+        &:not(.flat) {
+            padding-bottom: 100%;
+        }
+
+        &.flat {
+            height: auto;
+
+            img {
+                width: 100%;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            .desc {
+                position: relative;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                background: inherit;
+                .inner {
+                    padding: v(10px 15px, desc_padding);
+                }
+            }
+        }
+    }
+}
+
+.people-featured {
+    .people-card {
+        display: flex;
+        height: v(360px, featured_card_size);
+        background: v($color1, featured_card_background);
+        color: v($white, featured_card_color);
+        box-shadow: v($defaultBoxShadow, featured_card_box_shadow);
+
+        > * {
+            flex: 1;
+            min-height: v(360px, featured_card_size);
+            position: relative;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        &:link {
+            text-decoration: none;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        @media (max-width: $bp_tablet - 1px) {
+            display: block;
+            height: auto;
+            > * {
+                min-height: 0;
+            }
+            img {
+                object-fit: contain;
+                height: auto;
+            }
+        }
+    }
+}

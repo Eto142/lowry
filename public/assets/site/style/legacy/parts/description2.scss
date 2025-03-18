@@ -1,0 +1,29 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$description2: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $description2;
+
+.desc2Wrapper {
+    .richtext {
+        font-family: v($fontNormal, font_family, $showDetailDesc2Fontfamily);
+        font-weight: v(normal, font_weight, $showDetailDesc2Weight);
+        line-height: v(1.67, line_height, $showDetailDesc2LineHeight);
+        text-transform: v(none, text_transform, $showDetailDesc2Texttransform);
+        color: v(inherit, color);
+
+        @include fontsize(v($fs_large_subtitle, font_size, $showDetailDesc2Fontsize));
+
+        p {
+            margin: $richtextPMargin;
+        }
+    }
+
+    &:not(.variant-wide) {
+        @include inner_width('.richtext');
+    }
+}

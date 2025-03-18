@@ -1,0 +1,188 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$filters_sentence: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $filters_sentence;
+
+$arrow_width: v(100px, arrow_width, $filterTRArrowBottomWidth);
+$arrow_height: v(75px, arrow_height, $filterTRArrowBottomHeight);
+
+.filtersForm_TR {
+    position: relative;
+    margin: 0;
+    padding: v(30px 0, padding);
+    border-top: v(none, border_top);
+    border-bottom: v(none, border_bottom);
+    background: v($colorComplementary, background);
+
+    form {
+        margin: 0;
+    }
+
+    .inner:not(.wide) {
+        text-align: v(left, outer_text_align, $filterTRCanvasTextAlign);
+        float: v(none, outer_float, $filterTRCanvasFloat);
+        margin: v(0 auto, outer_margin, $filterTRCanvasMargin);
+    }
+
+    @include inner_width('.inner:not(.wide)');
+
+    @if (v(false, arrow, $filterTRArrow) == true) {
+        &::after {
+            content: '';
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -$arrow_width;
+            pointer-events: none;
+            border-style: solid;
+            border-width: $arrow_height $arrow_width 0 $arrow_width;
+            border-color: v($colorPrime, arrow_color, $colorFilterTRArrowBottom) transparent transparent transparent;
+        }
+    }
+
+    .inner div {
+        display: inline-block;
+    }
+
+    span {
+        display: inline-block;
+        padding: v(0 .5ex 0 0, span_padding, $filterTRSpanPadding);
+        font-family: v($fontNormalBold, span_font_family, $filterTRTextFontfamily);
+        font-weight: v(bold, span_font_weight, $filterTRTextWeight);
+        line-height: v(70px, span_line_height, $filterTRTextLineheight);
+        text-transform: v(none, span_text_transform, $filterTRTextTextTransform);
+        color: v($white, span_color, $colorFilterTRText);
+
+        @include fontsize(v($fs_huge_title, span_font_size, $filterTRTextFontsize));
+    }
+
+    @media (min-width: $bp_mobile) {
+        br { display: none; }
+    }
+
+
+    #startDate,
+    #endDate {
+        width: 1px;
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        z-index: 0;
+        padding: 0;
+        font-size: 1px;
+        opacity: 0;
+    }
+
+    .popoverBtn {
+        display: inline-block;
+        position: relative;
+        padding: v(0 .5ex 0 0, span_padding, $filterTRSpanPadding);
+        cursor: pointer;
+        color: v($white, button_color, $colorFilterTRPopoverText);
+
+        @include fontsize(v($fs_huge_title, button_font_size, $filterTRPopoverFontsize));
+
+        span {
+            display: inline-block;
+            position: relative;
+            padding: v(0 1ex 0 0, button_padding, $filterTRPopoverButtonPadding);
+            border-bottom: v(2px solid $grey3, button_border_bottom, $filterTRPopoverBorderBottom);
+            border-radius: v(0, button_border_radius, $filterTRPopoverButtonRadius);
+            font-family: v($fontNormal, button_font_family, $filterTRPopoverFontfamily);
+            font-weight: v(normal, button_font_weight, $filterTRPopoverWeight);
+            line-height: v(70px, button_line_height, $filterTRPopoverLineheight);
+            text-transform: v(none, button_text_transform, $filterTRPopoverTextTransform);
+            background: v(none, button_background, $filterTRPopoverBGColor);
+            color: v($white, button_color, $colorFilterTRPopover);
+
+            @include fontsize(v($fs_huge_title, button_font_size, $filterTRPopoverFontsize));
+        }
+
+        label {
+            display: inline;
+            margin: 0;
+            font-weight: inherit;
+            cursor: pointer;
+        }
+
+        .fa {
+            position: absolute;
+            top: v(0, icon_top, $filterTRPopoverArrowTop);
+            right: v(6px, icon_right, $filterTRPopoverArrowRight);
+            font-size: v(24px, icon_font_size, $filterTRPopoverArrowFontsize);
+            line-height: v(70px, icon_line_height, $filterTRPopoverLineheight);
+            color: v($grey3, icon_color, $colorFilterTRPopoverArrow);
+        }
+
+        &:hover {
+            span {
+                background: v(none, button_background_hover, $colorFilterTRPopoverHoverBackground);
+                color: v($grey5, button_color_hover, $colorFilterTRPopoverHover);
+                border-color: v($grey5, button_border_color_hover, $colorFilterTRPopoverArrowHover);
+            }
+            .fa {
+                color: v($grey5, icon_color_hover, $colorFilterTRPopoverArrowHover);
+            }
+        }
+    }
+}
+
+.popover.poFilter {
+    padding: 0;
+    border-radius: v($defaultCardRadius, popover_border_radius);
+    background: v($white, popover_background, $colorBgFilterTRPopover);
+    animation: .2s fade-in ease-in-out;
+
+    &[aria-expanded='true'] {
+        display: block;
+    }
+    &[aria-expanded='false'] {
+        display: none;
+    }
+
+    > .arrow:after {
+        border-bottom-color: v($white, popover_background, $colorBgFilterTRPopover)!important;
+    }
+
+    .popover-content {
+        max-height: v(300px, popover_max_height, $filterTRPopoverMaxHeight);
+        overflow: auto;
+        padding: v(20px, popover_padding, $filterTRPopoverPadding);
+
+        ul {
+            list-style: none;
+            margin: 0;
+
+            li a {
+                margin: v(3px 0, popover_item_margin, $filterTRPopoverItemMargin);
+                font-family: v($fontNormal, popover_item_font_family, $filterTRPopoverItemFontfamily);
+                font-weight: v(normal, popover_item_font_weight, $filterTRPopoverItemWeight);
+                line-height: v(1.4, popover_item_line_height, $filterTRPopoverItemLineheight);
+                text-transform: v(none, popover_item_text_transform, $filterTRPopoverItemTextTransform);
+                color: v($black, popover_item_color, $colorFilterTRPopoverItem);
+
+                @include fontsize(v($fs_normal, popover_item_font_size, $filterTRPopoverItemFontsize));
+
+                &:hover {
+                    border-bottom: v(none, popover_item_border_bottom_hover, $colorFilterTRPopoverItemBorderBottom);
+                    color: v($grey3, popover_item_color_hover, $colorFilterTRPopoverItemHover);
+                }
+
+                &.active {
+                    color: v($colorPrime, popover_item_color_selected, $colorFilterTRPopoverItemActive);
+
+                    &:hover {
+                        color: v($colorPrimeDark, popover_item_color_selected_hover, $colorFilterTRPopoverItemActiveHover);
+                    }
+                }
+            }
+        }
+    }
+}

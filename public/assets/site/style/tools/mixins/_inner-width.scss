@@ -1,0 +1,16 @@
+/**
+ * Sets the inner content width (for descriptions, etc.).
+ */
+ @mixin inner_width($inner: '.inner') {
+    #{$inner} {
+        @media (min-width: $bp_wxga) {
+            width: 66.66666667%;
+        }
+    }
+    
+    &:not(.align-left) #{$inner} {
+        @media (min-width: $bp_wxga) {
+            margin-left: 16.66666667%;
+        }
+    }
+}

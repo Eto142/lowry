@@ -1,0 +1,2301 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $header;
+
+$anchorsHeight: v(45px, anchors_height, $anchorsHeight);
+$suckerfishHeight: v(60px, suckerfish_height, $suckerfishHeight);
+$showcaseHeight: v(90vh, showcase_height, $showcaseHeight);
+$brandPosition: v(left, brand_position, $brandPosition);
+$headerBoxed: v(true, boxed, $headerBoxed);
+$hamburgerSize: v(20px, hamburger_size, $hamburgerSize);
+$hamburgerPosition: v(right, hamburger_position, $hamburgerPosition);
+$hide_empty_cart: v(true, cart_empty_hidden, $cartHideEmpty);
+$toggle_width: v(60px, theme_switch_width);
+$videoPausePosition: v('right', video_pause_position);
+
+$transparent_topbar: false;
+@if (v(transparent, topbar_background_showcase) == transparent) {
+    $transparent_topbar: true;
+}
+@if (v(false, topbar_background_showcase_is_transparent)) {
+    $transparent_topbar: true;
+}
+
+$recolorShowcaseMenuWhenOpen: v(false, recolor_showcase_menu_when_open);
+$opened-menu-selector: '';
+@if $recolorShowcaseMenuWhenOpen {
+    $opened-menu-selector: ':not(.menu-opened)';
+}
+
+@mixin header_container_width() {
+    @media (min-width: 768px) {
+        max-width: 100%;
+    }
+    @media (min-width: 992px) {
+        max-width: 970px;
+    }
+    @media (min-width: 1200px) {
+        max-width: 1170px;
+    }
+}
+
+@mixin dont-wrap() {
+    ul {
+        flex-wrap: nowrap;
+        justify-content: v(flex-start, topbar_justify_content);
+
+        li {
+            white-space: nowrap;
+        }
+    }
+}
+
+
+/*
+    NOTES:
+    the z-index stack here is inverse from what you're used to, because the
+    later elements sit underneath the prior elements; ie. slide out from
+    under them
+*/
+
+header {
+    position: relative;
+    z-index: 1000;
+
+    ~ footer,
+    ~ main {
+        position: relative;
+    }
+    ~ footer {
+        z-index: 0;
+    }
+    ~ main {
+        z-index: 1;
+    }
+
+    /*
+        offset #-targets so they don't end up below the fixed header
+    */
+    ~ #content {
+        [id^='anchor']:target::before,
+        [id^='pp_page']:target::before {
+            content: '';
+            display: block;
+            $offset: $headerHeightSmall + $anchorsHeight + 15px;
+            height: $offset;
+            margin-top: -($offset);
+        }
+    }
+
+
+    /*
+        the fixed box switches from inline to fixed/sticky, so we add padding
+        here to offset the change in height so that the content doesn't jump
+    */
+    #fixed-box-buffer{
+        will-change: height;
+    }
+    &.is-scrolled.variant-suckerfish:not(.suckerfish-unified) #fixed-box-buffer {
+        height: $headerHeight + $suckerfishHeight;
+        @media (max-width: $bp_mobile - 1) {
+            height: $headerHeightSmall;
+        }
+    }
+    &.is-scrolled #fixed-box-buffer {
+        height: $headerHeight;
+        @media (max-width: $bp_mobile - 1) {
+            height: $headerHeightSmall;
+        }
+    }
+
+
+
+    /*
+        basic link style
+    */
+    a {
+        display: inline-block;
+        text-decoration: none;
+    }
+
+
+    /*
+        showcase image layers
+    */
+    .imagelayer,
+    .gradientOverlay,
+    .clickLayer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: transparent no-repeat center / cover
+    }
+    .gradientOverlay {
+        background: v($gradientOverlay, showcase_overlay, $showcaseGradientOverlay);
+        pointer-events: none;
+    }
+
+
+    /*
+        submenu toggle (with > icon) base style
+    */
+    .submenu-toggle {
+        display: flex;
+        align-items: center;
+
+        > i {
+            width: 1em;
+            height: 1em;
+            position: relative;
+            font-size: 20px;
+            line-height: 1;
+            text-align: center;
+            color: inherit;
+            will-change: transform;
+            transition: transform .14s ease-in-out;
+        }
+        &:hover,
+        &:active {
+            > i {
+                color: inherit;
+            }
+        }
+        &[aria-expanded='true'] > i {
+            transform: rotate(180deg);
+        }
+
+        &.suckerfish {
+            > i {
+                margin: v(0 0 0 5px, suckerfish_pointer_margin, $suckerfishPointerMargin);
+                color: v(currentcolor, suckerfish_pointer_color, $suckerfishPointerColor);
+            }
+            &:hover,
+            &:active {
+                > i {
+                    color: v(currentcolor, suckerfish_pointer_color_hover, $suckerfishPointerColorHover);
+                }
+            }
+        }
+    }
+
+
+    /*
+        the fixed box contains all fixed elements
+    */
+    #fixed-box {
+        position: relative;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 3;
+        background: v($colorPrime, topbar_background, $headerBackground);
+        color: v(inherit, topbar_color, $headerColor);
+        box-shadow: v($defaultBoxShadow, topbar_box_shadow, $headerBoxShadow);
+        will-change: background;
+        transition: all .2s ease-in-out;
+    }
+    &.has-showcase:not(.suckerfish-on-top):not(.is-scrolled)#{$opened-menu-selector} #fixed-box {
+        background: v(transparent, topbar_background_showcase, $headerShowcaseBackground);
+        color: v($white, topbar_color_showcase, $headerShowcaseColor);
+        box-shadow: v(none, topbar_box_shadow_showcase, $headerShowcaseBoxShadow);
+    }
+    &.is-scrolled #fixed-box {
+        @keyframes topbarSlide {
+            from {
+                transform: translateY(-$headerHeightSmall);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        max-height: 100vh;
+        position: fixed;
+        will-change: transform;
+        animation: topbarSlide .2s ease-in-out;
+    }
+    &.has-announcement-bar:not(.is-scrolled) {
+        & + #content {
+            margin-top: v(1.4rem, announcement_bar_height);
+        }
+
+        #fixed-box {
+            top: v(1.4rem, announcement_bar_height);
+        }
+    }
+
+
+    /*
+        the top bar is the always visible part
+        when the page is scrolled (or on mobile) it's less high
+    */
+    #topbar {
+        width: 100%;
+        height: $headerHeight;
+        position: relative;
+        z-index: 2;
+        border-bottom: v(none, topbar_border_bottom, $topbarBorder);
+        font-family: v(inherit, topbar_font_family, $topbarFont);
+        font-weight: v(normal, topbar_font_weight, $topbarWeight);
+        text-transform: v(none, topbar_text_transform, $topbarTexttransform);
+        background: inherit;
+        color: v(inherit, topbar_color, $topbarColor);
+
+        @include fontsize(v(inherit, topbar_font_size, $topbarFontsize));
+
+        > .inner {
+            height: 100%;
+            margin: 0 auto;
+            padding: v(0 15px, topbar_padding, $topbarPadding);
+            > .inside {
+                display: flex;
+                align-items: v(flex-start, topbar_align_items, $topbarAlignment);
+                height: 100%;
+                padding: v(10px 0, topbar_inner_padding, $topbarInnerPadding);
+                border-bottom: v(none, topbar_inner_border_bottom, $topbarInnerBorder);
+
+
+                @if ($brandPosition == 'center') {
+                    > * {
+                        flex: 1;
+                    }
+                }
+            }
+        }
+
+        @if $headerBoxed {
+            > .inner {
+                @include header_container_width();
+            }
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            align-items: center;
+            height: $headerHeightSmall;
+            > .inner {
+                padding: v(0 15px, topbar_padding_small, $topbarPaddingSmall);
+                > .inside {
+                    align-items: center;
+                    padding: v(10px 0, topbar_inner_padding_small, $topbarInnerPaddingSmall);
+                }
+            }
+        }
+
+        .brand {
+            display: block;
+            height: v(60px, logo_height, $brandHeight);
+            max-height: 100%;
+            margin: v(0, logo_margin, $brandMargin);
+
+            @if ($brandPosition == 'center') {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            @media (max-width: $bp_mobile - 1) {
+                height: 100%;
+            }
+
+            img {
+                max-width: 100%;
+                height: 100%;
+                float: left; // prevent the svg becoming centered in the img box
+                padding: v(0, logo_padding, $brandPadding);
+                &.mobile-logo,
+                &.mobile-showcase-logo,
+                &.mobile-sticky-logo,
+                &.sticky-logo,
+                &.showcase-logo {
+                    display: none;
+                }
+
+                @media (max-width: $bp_mobile - 1) {
+                    display: none;
+                    &.mobile-logo {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+        .menus {
+            // shortcuts and service menus
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            line-height: 1;
+            flex: 1;
+            overflow: hidden;
+
+            @if ($brandPosition == 'center' and $hamburgerPosition == 'right') {
+                order: -1;
+                align-items: flex-start;
+            }
+        }
+
+        a,
+        a:link,
+        a:visited {
+            color: v(inherit, topbar_color, $topbarColor);
+        }
+        a:hover,
+        a:active {
+            text-decoration: v(none, topbar_text_decoration_hover, $topbarHoverDecoration);
+            color: v($color1, topbar_color_hover, $topbarColorHover);
+        }
+    }
+
+    @if (v(false, toggle_servicemenu_mobile)) {
+        // when you open the menu, hide the logo but reveal the sevice items
+        @media (max-width: $bp_tiny - 1) {
+            #topbar nav#service-menu {
+                display: none;
+            }
+            &.menu-opened #topbar {
+                .brand {
+                    display: none;
+                }
+                nav#service-menu {
+                    display: flex;
+                }
+            }
+        }
+    }
+    &.is-scrolled #topbar {
+        height: $headerHeightSmall;
+        box-shadow: v(none, topbar_box_shadow_small, $topbarShadowSmall);
+
+        > .inner {
+            padding: v(0 15px, topbar_padding_small, $topbarPaddingSmall);
+            > .inside {
+                align-items: center;
+                padding: v(10px 0, topbar_inner_padding_small, $topbarInnerPaddingSmall);
+                border-bottom: v(none, topbar_border_bottom_small, $topbarInnerBorderSmall);
+            }
+        }
+        .brand {
+            margin: v(0, logo_margin_small, $brandMarginSmall);
+        }
+    }
+    &.suckerfish-unified.suckerfish-on-top #topbar,
+    &.is-scrolled #topbar {
+        .brand {
+            img {
+                &,
+                &.mobile-logo,
+                &.mobile-sticky-logo,
+                &.mobile-showcase-logo,
+                &.showcase-logo {
+                    display: none;
+                }
+                &.sticky-logo {
+                    display: inline-block;
+                }
+
+                @media (max-width: $bp_mobile - 1) {
+                    &,
+                    &.sticky-logo,
+                    &.mobile-logo,
+                    &.mobile-showcase-logo,
+                    &.showcase-logo {
+                        display: none;
+                    }
+                    &.mobile-sticky-logo {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+    &.has-showcase:not(.suckerfish-on-top):not(.is-scrolled) #topbar {
+        @media (min-width: $bp_mobile) {
+            height: $headerHeightShowcase;
+        }
+    }
+    &.has-showcase:not(.suckerfish-on-top):not(.is-scrolled)#{$opened-menu-selector} #topbar {
+        border-bottom: v(none, topbar_border_bottom_showcase, $headerShowcaseBorderBottom);
+        @media (max-width: $bp_mobile - 1) {
+            .brand img {
+                display: none;
+                &.mobile-showcase-logo {
+                    display: inline-block;
+                }
+            }
+        }
+        @media (min-width: $bp_mobile) {
+            .brand {
+                height: v(60px, logo_height_showcase, $brandHeightShowcase);
+                margin: v(0, logo_margin_showcase, $brandMarginShowcase);
+                img {
+                    display: none;
+                    &.showcase-logo {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+
+        a,
+        a:link,
+        a:visited {
+            color: v(inherit, topbar_color_showcase, $topbarColorShowcase);
+        }
+        a:hover,
+        a:active {
+            color: v($color1, topbar_color_showcase, $topbarColorShowcaseHover);
+        }
+    }
+    &.variant-suckerfish:not(.suckerfish-unified):not(.is-scrolled) #topbar,
+    &.variant-suckerfish.has-showcase:not(.suckerfish-on-top):not(.suckerfish-unified):not(.is-scrolled) #topbar {
+        #topbar-suckerfish-menu {
+            display: none;
+        }
+    }
+    &.variant-shortcuts-unified #topbar,
+    &.variant-shortcuts-unified-alt #topbar,
+    &.variant-suckerfish.suckerfish-unified:not(.suckerfish-right) #topbar,
+    &.variant-suckerfish.is-scrolled:not(.suckerfish-right) #topbar {
+        // the menus sit on one line
+        > .inner {
+            > .inside {
+                align-items: center;
+            }
+        }
+        @media (min-width: $bp_wxga) {
+            .menus {
+                flex-direction: row;
+                align-items: center;
+                justify-content: v(space-between, topbar_justify_content);
+            }
+        }
+
+        @if (v(true, logo_suckerfish_float) and $brandPosition != 'center') {
+            // move the logo out of the box, hide if it risks overlapping the menu
+            // < 1200 px wide we don't display the suckerfish menu
+            // as a threshold we assume the logo is about 2 times as wide as it's high,
+            // and it's about as high as the menu
+            @media (min-width: $bp_mobile) {
+                .brand {
+                    position: absolute;
+                    top: v(auto, logo_top_suckerfish, $suckerfishLogoTop);
+                    left: v(20px, logo_left_suckerfish, $suckerfishLogoLeft);
+
+                    @media (min-width: $bp_wxga) and (max-width: ($bp_wxga + $headerHeight * v(2, logo_suckerfish_ratio, $suckerfishLogoRatio))) {
+                        @if (v(false, logo_suckerfish_always, $suckerfishLogoAlways)) {
+                            position: static;
+                            margin-right: v(30px, logo_suckerfish_margin_right, $suckerfishLogoSpacing);
+                        }
+                        @if (v(false, logo_suckerfish_always, $suckerfishLogoAlways) == false) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &.variant-shortcuts-unified-alt #topbar {
+        // menus sit on one line
+        // but shortcuts are separated from the service menu
+        .brand {
+            flex: 0 1 auto;
+        }
+
+        .shortcuts-menu {
+            width: 100%;
+            @include dont-wrap;
+        }
+
+        .menus {
+            justify-content: flex-start;
+            @media (max-width: $bp_mobile - 1) {
+                > * {
+                    display: none;
+                }
+            }
+        }
+        .service-menu {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+    &.has-showcase:not(.is-scrolled).variant-suckerfish.suckerfish-unified:not(.suckerfish-right) #topbar {
+        > .inner {
+            > .inside {
+                align-items: v(center, showcase_menu_align_items);
+            }
+        }
+    }
+    &.variant-suckerfish.suckerfish-right #topbar {
+        // the menus on the right below the service menu
+        > .inner {
+            > .inside {
+                align-items: center;
+            }
+        }
+        @media (min-width: $bp_wxga) {
+            .menus {
+                flex-direction: column-reverse;
+                align-items: flex-end;
+            }
+        }
+    }
+
+    #announcement-bar {
+        position: absolute;
+        top: -1 * v(1.4rem, announcement_bar_height);
+        right: 0;
+        left: 0;
+        z-index: 12; // 1 above the search box
+        background: v($grey3, announcement_bar_background);
+        .inner {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            height: v(1.4rem, announcement_bar_height);
+            margin: 0 auto;
+            padding: v(0 20px, announcement_bar_padding);
+            white-space: nowrap;
+            overflow: hidden;
+            line-height: 1;
+            text-align: right;
+            color: v($grey1, announcement_bar_color);
+
+            @include fontsize(v($fs_tiny, announcement_bar_font_size));
+            @include header_container_width();
+
+            > * {
+                margin: 0;
+                padding: 0;
+            }
+
+            a,
+            a:link,
+            a:visited {
+                text-decoration: none;
+                color: v($grey1, announcement_bar_color);
+                &:hover,
+                &:active {
+                    text-decoration: none;
+                    color: v($color2, announcement_bar_color_hover);
+                }
+            }
+        }
+        img {
+            margin: v(0 0 0 10px, announcement_bar_image_margin);
+        }
+    }
+    &.is-scrolled #announcement-bar {
+        display: none;
+    }
+
+    .shortcuts-menu,
+    #topbar .shortcuts-menu {
+        font-family: v(inherit, shortcuts_font_family, $shortcutsFont);
+        font-weight: v(inherit, shortcuts_font_weight, $shortcutsWeight);
+        line-height: v(normal, shortcuts_line_height, $shortcutsLineheight);
+        text-transform: v(inherit, shortcuts_text_transform, $shortcutsTexttransform);
+
+        @include fontsize(v(inherit, shortcuts_font_size, $shortcutsFontsize));
+
+        a,
+        a:link,
+        a:visited {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            text-decoration: none;
+            > span {
+                text-decoration: v(none, shortcuts_text_decoration, $shortcutsDecoration);
+            }
+            color: v($mainMenuColor, shortcuts_color, $shortcutsColor);
+            &:hover,
+            &:active {
+                > span {
+                    text-decoration: v(none, shortcuts_text_decoration_hover, $shortcutsDecorationHover);
+                }
+                color: v($mainMenuColorHover, shortcuts_color_hover, $shortcutsColorHover);
+            }
+        }
+
+        .current > a {
+            &,
+            &:link,
+            &:visited {
+                > span {
+                    text-decoration: v(none, shortcuts_text_decoration_current);
+                }
+                font-weight: v(inherit, shortcuts_font_weight_current, $shortcutsCurrentWeight);
+                color: v(inherit, shortcuts_color_current, $shortcutsCurrentColor);
+            }
+            &:hover,
+            &:active {
+                color: v(inherit, shortcuts_color_current_hover, $shortcutsCurrentColorHover);
+            }
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            margin: 0;
+            padding: v(15px 0, shortcuts_padding, $shortcutsPadding);
+            gap: v(15px, shortcuts_spacing, $shortcutsItemSpacing);
+        }
+        li {
+            display: inline-block;
+        }
+    }
+    &.has-showcase:not(.suckerfish-on-top):not(.is-scrolled) {
+        .shortcuts-menu,
+        #topbar .shortcuts-menu {
+            a,
+            a:link,
+            a:visited {
+                color: v($mainMenuColor, shortcuts_color_showcase, $shortcutsColorShowcase);
+            }
+            a:hover,
+            a:active {
+                color: v($mainMenuColorHover, shortcuts_color_showcase_hover, $shortcutsColorShowcaseHover);
+            }
+        }
+    }
+    // The shortcuts currently only have an alternate style for when there's a showcase.
+    // we should add the variant for $menuOpenCustomStyleApplied here,
+
+    $menuOpenCustomStyleApplied: v(inherit, topbar_background_menu_open);
+
+    @if $menuOpenCustomStyleApplied != inherit {
+        &.menu-opened,
+        &.menu-opened.has-showcase:not(.suckerfish-on-top):not(.is-scrolled) {
+            #topbar {
+                background-color: v(inherit, topbar_background_menu_open);
+                color: v($mainMenuColor, topbar_color_menu_open, $serviceItemColor);
+                #service-menu,
+                .shortcuts-menu {
+                    a,
+                    button {
+                        color: inherit;
+                        &:hover,
+                        &:active {
+                            color: v($mainMenuColorHover, topbar_color_menu_open_hover, $shortcutsColorHover);
+                        }
+                    }
+                    .cart {
+                        &,
+                        &:link,
+                        &:visited {
+                            background: transparent;
+                        }
+                    }
+                }
+                .hamburger {
+                    color: inherit;
+                    &:hover,
+                    &:active {
+                        color: v($mainMenuColorHover, topbar_color_menu_open_hover, $shortcutsColorHover);
+                    }
+                }
+            }
+        }
+    }
+
+
+    #topbar-menu,
+    #topbar-suckerfish-menu {
+        @media (max-width: $bp_mobile - 1) {
+            display: none;
+        }
+    }
+    &.menu-opened #topbar-menu {
+        @if (v(flex-start, topbar_align_items, $topbarAlignment) != center) {
+            display: none;
+        }
+    }
+    &.is-scrolled #topbar-menu {
+        display: none;
+    }
+
+
+    #service-menu {
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        > * {
+            display: flex;
+            align-items: center;
+            height: v(30px, service_height, $serviceItemHeight);
+            margin: 0;
+            padding: 0;
+        }
+
+        a,
+        a:link,
+        a:visited {
+            margin: v(0 0 0 15px, service_margin, $serviceItemMargin);
+            padding: v(0 5px, service_padding, $serviceItemPadding);
+            line-height: 1;
+            text-decoration: v(none, service_text_decoration, $serviceItemTextdecoration);
+            color: v($mainMenuColor, service_color, $serviceItemColor);
+        }
+        a:hover,
+        a:active {
+            text-decoration: v(none, service_text_decoration_hover, $serviceItemTextdecorationHover);
+            color: v($mainMenuColorHover, service_color_hover, $serviceItemColorHover);
+        }
+        ul {
+            list-style: none;
+            margin: v(0 0 0 15px, service_margin, $serviceItemMargin);
+            padding: v(0 5px, service_padding, $serviceItemPadding);
+            white-space: nowrap;
+
+            li {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+            }
+            a {
+                margin: 0;
+                padding: 0;
+            }
+        }
+        button {
+            margin: v(0 0 0 15px, service_margin, $serviceItemMargin);
+            padding: v(0 5px, service_padding, $serviceItemPadding);
+            border: none;
+            border-radius: 0;
+            line-height: 1;
+            background: none;
+            color: v($mainMenuColor, service_color, $serviceItemColor);
+            -webkit-appearance: none;
+            &:hover,
+            &:active {
+                color: v($mainMenuColorHover, service_color_hover, $serviceItemColorHover);
+            }
+        }
+        svg {
+            width: v(20px, service_icon_size, $serviceIconSize);
+            height: v(20px, service_icon_size, $serviceIconSize);
+            position: relative;
+        }
+
+        .shortcut {
+            @media (max-width: $bp_tablet - 1) {
+                display: none;
+            }
+        }
+
+        .theme-toggle {
+            position: relative;
+
+            .switch {
+                display: inline-block;
+                width: $toggle_width;
+                height: math.div($toggle_width, 2);
+                position: relative;
+                margin-bottom: 0;
+                border: v(none, theme_switch_border);
+                border-radius: v(20px, theme_switch_border_radius);
+            }
+
+            .switch input {
+                display:none;
+            }
+
+            #sun {
+                fill: v($white, theme_icon_color_sun);
+                width: v(math.div($toggle_width, 2), theme_icon_size);
+                height: v(math.div($toggle_width, 2), theme_icon_size);
+                position: absolute;
+                top: 0;
+                right: 0;
+                pointer-events:none;
+                z-index: 5;
+                padding: v(math.div($toggle_width, 10), theme_icon_margin);
+            }
+
+            #moon {
+                fill: v($white, theme_icon_color_moon);
+                width: v(math.div($toggle_width, 2), theme_icon_size);
+                height: v(math.div($toggle_width, 2), theme_icon_size);
+                position: absolute;
+                top: 0;
+                left: 0;
+                pointer-events:none;
+                z-index: 5;
+                padding: v(math.div($toggle_width, 10), theme_icon_margin);
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                border-radius: v(0, theme_toggle_border_radius);
+                background: v($grey4, theme_switch_background);
+
+                &:hover {
+                    background: v(lighten($grey4, 5%), theme_switch_hover_background);
+                }
+
+                &.animate {
+                    transition: all .3s ease-in-out;
+                }
+            }
+
+            .slider:before {
+                content: '';
+                width: math.div($toggle_width, 2);
+                height: math.div($toggle_width, 2);
+                position: absolute;
+                background: v($colorPrime, theme_toggle_active_background);
+
+                &:hover {
+                    background: v(lighten($colorPrime, 5%), theme_switch_active_hover_background);
+                }
+            }
+
+            .slider.animate:before {
+                transition: all .3s ease-in-out;
+            }
+
+            input:focus + .slider {
+                box-shadow: v($defaultBoxShadow, theme_toggle_box_shadow);
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(math.div($toggle_width, 2));
+            }
+        }
+
+        .languages {
+            text-transform: v(uppercase, languages_text_transform, $languagesTransform);
+        }
+
+        .link {
+            padding: v(0 5px, service_padding, $serviceItemPadding);
+            @media (max-width: $bp_mobile - 1) {
+                display: none;
+            }
+        }
+        .avatar {
+            @media (max-width: $bp_wxga - 1) {
+                display: none;
+            }
+        }
+        .cart {
+            &,
+            &:link,
+            &:visited {
+                padding: v(5px, cart_padding, $cartPadding);
+                border-radius: v(6px, cart_border_radius, $cartRadius);
+                background: v($colorSub, cart_background, $cartBackground);
+                color: v($serviceItemColor, cart_color, $cartColor);
+            }
+            &:hover,
+            &:active {
+                background: v(darken($colorSub, 6%), cart_background_hover, $cartBackgroundHover);
+                color: v($serviceItemColorHover, cart_color_hover, $cartColorHover);
+            }
+
+            &::after {
+                content: attr(data-count);
+            }
+            &::after,
+            .tmplugin_basket_badge {
+                display: inline-block;
+                padding-left: .5ex;
+            }
+
+            &[data-count='0'],
+            &.tmplugin_basket_icon_empty {
+                @if ($hide_empty_cart) {
+                    display: none;
+                }
+                padding: v(0 5px, service_padding, $serviceItemPadding);
+
+                &::after {
+                    content: '';
+                }
+                &,
+                &:link,
+                &:visited {
+                    background: transparent;
+                    color: v($mainMenuColor, service_color, $serviceItemColor);
+                }
+                &:hover,
+                &:active {
+                    background: transparent;
+                    color: v($mainMenuColorHover, service_color_hover, $serviceItemColorHover);
+                }
+            }
+        }
+
+        .languages,
+        .icon-label,
+        .link {
+            white-space: nowrap;
+        }
+    }
+    &.has-showcase:not(.suckerfish-on-top):not(.is-scrolled)#{$opened-menu-selector} #service-menu {
+        button,
+        a,
+        a:link,
+        a:visited {
+            color: v(inherit, service_color_showcase, $serviceItemColorShowcase);
+        }
+        button:hover,
+        a:hover,
+        a:active {
+            color: v($serviceItemColorHover, service_color_showcase_hover, $serviceItemColorShowcaseHover);
+        }
+
+        .cart {
+            // normal cart colors repeated here for specificity
+            &,
+            &:link,
+            &:visited {
+                background: v($colorSub, cart_background_showcase, $cartBackground);
+                color: v($serviceItemColor, cart_color_showcase, $cartColor);
+            }
+            &:hover,
+            &:active {
+                background: v(darken($colorSub, 6%), cart_background_showcase_hover, $cartBackgroundHover);
+                color: v($serviceItemColorHover, cart_color_showcase_hover, $cartColorHover);
+            }
+
+            &[data-count='0'],
+            &.tmplugin_basket_icon_empty {
+                &,
+                &:link,
+                &:visited {
+                    background: transparent;
+                    color: v(inherit, service_color_showcase, $serviceItemColorShowcase);
+                }
+                &:hover,
+                &:active {
+                    background: transparent;
+                    color: v($serviceItemColorHover, service_color_showcase_hover, $serviceItemColorShowcaseHover);
+                }
+            }
+        }
+    }
+    &.is-scrolled #service-menu {
+        button,
+        a,
+        a:link,
+        a:visited {
+            &:not(.cart) {
+                color: v($mainMenuColor, service_color_small, $serviceItemColorSmall);
+            }
+        }
+        button:hover,
+        a:hover,
+        a:active {
+            &:not(.cart) {
+                color: v($mainMenuColorHover, service_color_small_hover, $serviceItemColorSmallHover);
+            }
+        }
+
+        .cart {
+            &,
+            &:link,
+            &:visited {
+                background: v($colorSub, cart_background_small, $cartBackground);
+                color: v($serviceItemColor, cart_color_small, $cartColor);
+            }
+            &:hover,
+            &:active {
+                background: v(darken($colorSub, 6%), cart_background_small_hover, $cartBackgroundHover);
+                color: v($serviceItemColorHover, cart_color_small_hover, $cartColorHover);
+            }
+
+            &[data-count='0'],
+            &.tmplugin_basket_icon_empty {
+                &,
+                &:link,
+                &:visited {
+                    background: transparent;
+                    color: v($mainMenuColor, service_color_small, $serviceItemColorSmall);
+                }
+                &:hover,
+                &:active {
+                    background: transparent;
+                    color: v($mainMenuColorHover, service_color_small_hover, $serviceItemColorSmallHover);
+                }
+            }
+        }
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: v(30px, service_height, $serviceItemHeight);
+        position: relative;
+        margin: v(0 0 0 15px, hamburger_margin, $hamburgerMargin);
+        padding: v(0 5px, service_padding, $serviceItemPadding);
+        border: none;
+        border-radius: 0;
+        font-size: $hamburgerSize;
+        background: none;
+        color: v($serviceItemColor, hamburger_color, $hamburgerColor);
+        -webkit-appearance: none;
+
+        @if ($hamburgerPosition == 'left') or ($hamburgerPosition != 'right' and $brandPosition == 'center') {
+            order: -1;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+        @if ($hamburgerPosition == 'right' and $brandPosition == 'center') {
+            justify-content: flex-end;
+        }
+
+        .icon {
+            display: flex;
+            width: $hamburgerSize;
+            height: $hamburgerSize;
+            position: relative;
+        }
+        .bar {
+            display: block;
+            width: $hamburgerSize;
+            height: v(3px, hamburger_bar_height);
+            position: absolute;
+            top: math.div($hamburgerSize, 2) - 2px;
+
+            z-index: 1;
+            border-radius: v(3px, hamburger_border_radius, $hamburgerRadius);
+            background: currentcolor;
+            will-change: transform;
+            transition: transform v(.1s, hamburger_transition_duration) ease-in-out;
+            &:first-child {
+                transform: translateY(math.div($hamburgerSize, 4) + 3px);
+            }
+            &:last-child {
+                transform: translateY(math.div(- $hamburgerSize, 4) - 3px);
+            }
+        }
+        &[aria-expanded='true'] {
+            .bar:first-child {
+                transform: rotate(45deg);
+            }
+            .bar:last-child {
+                transform: rotate(-45deg);
+            }
+            .bar:not(:first-child):not(:last-child) {
+                transform: scale(0);
+            }
+        }
+
+        &:hover {
+            color: v($serviceItemColorHover, hamburger_color_hover, $hamburgerColorHover);
+        }
+        .label {
+            display: inline-block;
+            margin: v(0 1ex 0 0, hamburger_label_margin, $hamburgerLabelMargin);
+            padding: 0;
+            font-size: v(10px, hamburger_label_font_size, $hamburgerLabelSize);
+            line-height: 1;
+            text-transform: v(none, hamburger_label_text_transform, $hamburgerLabelTextransform);
+            color: v(inherit, hamburger_label_color, $hamburgerLabelColor);
+
+            @if (v(hidden, hamburger_label, $hamburgerLabel) == hidden) {
+                width: 1px;
+                height: 1px;
+                position: absolute;
+                margin: -1px;
+                padding: 0;
+                overflow: hidden;
+                clip: rect(0,0,0,0);
+                border: 0;
+            }
+        }
+    }
+    &.has-showcase:not(.suckerfish-on-top):not(.is-scrolled)#{$opened-menu-selector} .hamburger {
+        color: v(inherit, hamburger_color_showcase, $hamburgerColorShowcase);
+        &:hover {
+            color: v($serviceItemColorHover, hamburger_color_showcase_hover, $hamburgerColorShowcaseHover);
+        }
+        .label {
+            color: v(inherit, hamburger_label_color_showcase);
+        }
+    }
+    &.is-scrolled .hamburger {
+        color: v(inherit, hamburger_color_small);
+        &:hover {
+            color: v($serviceItemColorHover, hamburger_color_small_hover);
+        }
+        .label {
+            color: v(inherit, hamburger_label_color_small);
+        }
+    }
+    &.variant-suckerfish .hamburger {
+        display: none;
+        @media (max-width: $bp_wxga - 1) {
+            display: flex;
+        }
+    }
+
+    .foldout-container {
+        width: 100%;
+        max-height: 100dvh;
+        position: absolute;
+        top: 0;
+        border-top: v(none, foldout_border_top, $foldoutBorderTop);
+        border-bottom: v(none, foldout_border_bottom, $foldoutBorderBottom);
+        font-family: v(inherit, foldout_font_family, $foldoutFont);
+        font-weight: v(inherit, foldout_font_weight, $foldoutWeight);
+        text-transform: v(inherit, foldout_text_transform, $foldoutTexttransform);
+        background: v(inherit, foldout_background, $foldoutBackground);
+        color: v(inherit, foldout_color, $foldoutColor);
+        box-shadow: v(none, foldout_box_shadow, $foldoutShadow);
+        overflow: auto;
+        will-change: top, padding;
+        transition: top .15s ease-in-out, opacity .15s ease-in-out, padding .15s ease-in-out;
+
+        @include fontsize(v(inherit, foldout_font_size, $foldoutFontsize));
+
+        &[aria-expanded='false'] {
+            opacity: 0;
+            top: -100%;
+            transition: top .1s ease-in-out, opacity .1s ease-in-out, padding .1s ease-in-out;
+            pointer-events: none;
+
+            &:not(.animating) {
+                visibility: hidden;
+            }
+        }
+
+        > .inner {
+            min-height: 100%;
+            margin: 0 auto;
+            padding: v(0 15px, foldout_padding, $foldoutPadding);
+
+            > .inside {
+                display: flex;
+                justify-content: space-between;
+                height: 100%;
+                padding: v(0, foldout_inner_padding, $foldoutInnerPadding);
+                border-bottom: v(none, foldout_inner_border_bottom, $foldoutInnerBorderBottom);
+
+                > *:not(.user-menu) {
+                    width: 50%;
+                    padding: v(30px 15px, foldout_content_padding, $foldoutContentMargin);
+                    @media (max-width: $bp_mobile - 1) {
+                        width: 100%;
+                        padding: v(15px 0, foldout_content_padding_mobile, $foldoutContentMarginMobile);
+                    }
+                }
+
+                @media (max-width: $bp_mobile - 1) {
+                    display: block;
+                }
+            }
+
+            > .unfolded-inside {
+                height: 100%;
+                padding: v(0, foldout_inner_padding, $foldoutInnerPadding);
+                border-bottom: v(none, foldout_inner_border_bottom, $foldoutInnerBorderBottom);
+
+                > *:not(.user-menu) {
+                    padding: v(30px 15px, foldout_content_padding, $foldoutContentMargin);
+                    @media (max-width: $bp_mobile - 1) {
+                        padding: v(15px 0, foldout_content_padding_mobile, $foldoutContentMarginMobile);
+                    }
+                }
+
+                .main-menu {
+                    display:flex;
+                }
+
+                .unfolded-list {
+                    width: 50%;
+                    flex-shrink: 0;
+                }
+
+                .user-menu {
+                    display: flex;
+                    width: 100%;
+                    margin: 0;
+                    > * {
+                        flex: 1;
+                    }
+                }
+
+                @media (max-width: $bp_mobile - 1) {
+                    display: none;
+                }
+            }
+
+            @if $headerBoxed {
+                @include header_container_width();
+            }
+        }
+
+        nav {
+            font-family: v(inherit, menu_font_family, $mainMenuFont);
+            font-weight: v(inherit, menu_font_weight, $mainMenuWeight);
+            line-height: v(30px, menu_line_height, $mainMenuLineheight);
+            text-transform: v(inherit, menu_text_transform, $mainMenuTexttransform);
+            background: v(inherit, menu_background, $mainMenuBackground);
+            color: v(inherit, menu_color, $mainMenuColor);
+
+            @include fontsize(v(inherit, menu_font_size, $mainMenuFontsize));
+
+            a:not(.btn) {
+                text-decoration: none;
+                color: v(inherit, menu_color, $mainMenuColor);
+                &:hover,
+                &:active {
+                    color: v($color1, menu_color_hover, $mainMenuColorHover);
+                    > span {
+                        text-decoration: v(none, menu_text_decoration_hover, $mainMenuHoverDecoration);
+                    }
+                }
+            }
+            .current > a:not(.btn) {
+                &,
+                &:link,
+                &:visited {
+                    > span {
+                        text-decoration: v(none, menu_text_decoration_current);
+                    }
+                    font-weight: v(inherit, menu_font_weight_current, $mainMenuCurrentWeight);
+                    color: v($color1, menu_color_current, $mainMenuCurrentColor);
+                }
+                &:hover,
+                &:active {
+                    color: v($color1, menu_color_current_hover, $mainMenuCurrentColorHover);
+                }
+            }
+
+            ul {
+                list-style: none;
+                margin: v(0, menu_inner_margin, $mainMenuInnerMargin);
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .unfolded-list {
+                width: 50%;
+                flex-shrink: 0;
+            }
+
+            li {
+                position: relative;
+                margin: 0;
+                padding: 0;
+                padding-left: v(30px, menu_line_padding_left, $mainMenuLinePadding);
+            }
+            .submenu-toggle {
+                > i {
+                    top: v(auto, menu_arrow_top, $mainMenuArrowTopoffset);
+                    left: -$mainMenuLinePadding;
+                    margin-right: -1em;
+                    color: v(currentcolor, menu_arrow_color, $mainMenuArrowColor);
+                }
+                &:hover,
+                &:active {
+                    > i {
+                        color: v(currentcolor, menu_arrow_color_hover, $mainMenuArrowColorHover);
+                    }
+                }
+            }
+            [aria-expanded='true'] > i {
+                transform: rotate(90deg);
+            }
+
+            .submenu-container {
+                position: relative;
+                background: v(inherit, menu_background, $mainMenuBackground);
+                will-change: height;
+                transition: height .14s ease-in-out;
+                overflow: hidden;
+
+                &[aria-expanded='false'] {
+                    height: 0 !important;
+
+                    &:not(.animating) {
+                        visibility: hidden;
+                    }
+                }
+            }
+
+            .submenu {
+                padding: v(0 0 15px 0, submenu_padding, $mainMenuSubPadding);
+                font-family: v(inherit, submenu_font_family, $mainMenuSubFont);
+                font-weight: v(inherit, submenu_font_weight, $mainMenuSubWeight);
+                line-height: v(22px, submenu_line_height, $mainMenuSubLineheight);
+                text-transform: v(inherit, submenu_text_transform, $mainMenuSubTexttransform);
+                background: v(inherit, submenu_background, $mainMenuSubBackground);
+
+                @include fontsize(v($fs_normal, submenu_font_size, $mainMenuSubFontsize));
+
+                .submenu-toggle > i {
+                    top: v(auto, submenu_arrow_top, $mainMenuSubArrowTopoffset);
+                }
+
+                .submenu {
+                    margin-bottom: v(15px, subsubmenu_margin_bottom, $mainMenuSubSubMargin);
+                    padding: v(0, subsubmenu_padding, $mainMenuSubSubPadding);
+
+                    font-family: v(inherit, subsubmenu_font_family, $mainMenuSubSubFont);
+                    font-weight: v(inherit, subsubmenu_font_weight, $mainMenuSubSubWeight);
+                    line-height: v(inherit, subsubmenu_line_height, $mainMenuSubSubLineheight);
+                    text-transform: v(inherit, subsubmenu_text_transform, $mainMenuSubSubTexttransform);
+                    background: v(transparent, subsubmenu_background, $mainMenuSubSubBackground);
+
+                    @include fontsize(v(inherit, subsubmenu_font_size, $mainMenuSubSubFontsize));
+                }
+            }
+
+            &.user-menu {
+                width: 33.3%;
+                margin: v(15px 30px, usermenu_margin);
+                padding: v(30px 15px, usermenu_padding);
+                align-self: v(flex-start, usermenu_align_self);
+                font-family: v($fontNormal, usermenu_font_family);
+                font-weight: v(normal, usermenu_font_weight);
+                line-height: v(1.45, usermenu_line_height);
+                text-transform: v(none, usermenu_text_transform);
+                background: v($colorPageBg, usermenu_background);
+                color: v($colorDefaultText, usermenu_color);
+
+                @include fontsize(v($fs_small, usermenu_secondary_font_size));
+
+                @media (max-width: $bp_tablet - 1) {
+                    width: 50%;
+                }
+                @media (max-width: $bp_mobile - 1) {
+                    width: 100%;
+                    margin: v(0, usermenu_margin_mobile);
+                    padding: v(15px, usermenu_padding_mobile);
+                }
+
+                h2,
+                .orders,
+                .page,
+                .wishlist {
+                    @include fontsize(v($fs_large_subtitle, usermenu_primary_font_size));
+                }
+
+                h2,
+                .user-info,
+                li {
+                    padding-left: 45px;
+                }
+
+                a:not(.btn) {
+                    text-decoration: v(none, usermenu_link_text_decoration);
+                    color: v($colorDefaultText, usermenu_link_color);
+                    &:hover {
+                        text-decoration: v(underline, usermenu_link_text_decoration_hover);
+                        color: v($color1, usermenu_link_color_hover);
+                    }
+                }
+            }
+        }
+
+        .socials {
+            display: flex;
+            margin: v(30px 0 0 0, socials_margin, $mainMenuSocialsMargin);
+            margin-left: 1em;
+            padding-left: v(5px, socials_padding_left);
+            border-top: v(none, socials_border_top, $mainMenuSocialsBorder);
+            a + a {
+                margin-left: 10px;
+            }
+            svg {
+                width: v(20px, socials_size);
+                height: v(20px, socials_size);
+            }
+        }
+    }
+
+    &.unfolded .foldout-container {
+        > .inner > .inside {
+            display: none;
+            @media (max-width: $bp_mobile - 1) {
+                display: block;
+            }
+        }
+    }
+
+    &:not(.unfolded) .foldout-container {
+        > .inner > .unfolded-inside {
+            display: none;
+        }
+    }
+
+    &.suckerfish-small .foldout-container.suckerfish-submenu {
+        width: auto;
+        > .inner > .inside > * {
+            width: 100%;
+        }
+    }
+    &.is-scrolled .foldout-container[aria-expanded='true'] {
+        height: v(auto, foldout_height_open, $foldoutOpenHeight);
+        top: 0;
+        padding-top: $headerHeightSmall;
+    }
+    &:not(.is-scrolled).has-showcase .foldout-container[aria-expanded='true'] {
+        padding-top: $headerHeightShowcase;
+        @media (max-width: $bp_mobile - 1) {
+            padding-top: $headerHeightSmall;
+        }
+    }
+    &:not(.is-scrolled) .foldout-container[aria-expanded='true'] {
+        height: v(auto, foldout_height_open, $foldoutOpenHeight);
+        top: 0;
+        padding-top: $headerHeightSmall;
+        @media (min-width: $bp_mobile) {
+            padding-top: $headerHeight;
+        }
+    }
+
+
+    #mobile-service-menu {
+        display: block;
+        text-align: v(left, service_text_align_mobile);
+        padding-left: v(30px, menu_line_padding_left, $mainMenuLinePadding);
+
+        @media (min-width: $bp_wxga) {
+            display: none;
+        }
+
+        a,
+        a:link,
+        a:visited {
+            display: block;
+            line-height: v(30px, menu_line_height, $mainMenuLineheight);
+            text-decoration: none;
+            color: v(inherit, menu_color, $mainMenuColor);
+        }
+        a:hover,
+        a:active {
+            color: v($color1, menu_color_hover, $mainMenuColorHover);
+            > span {
+                text-decoration: v(none, menu_text_decoration_hover, $mainMenuHoverDecoration);
+            }
+        }
+    }
+
+
+
+    .main-menu {
+        position: relative;
+
+        @if ($hamburgerPosition == 'right') {
+            @if ($brandPosition == 'left') {
+                order: 1;
+            }
+        }
+    }
+
+
+    #topbar-suckerfish-menu,
+    #suckerfish-menu {
+        // suckerfish is only for large displays
+        @media (max-width: $bp_wxga - 1) {
+            display: none;
+        }
+        > .inner ul {
+            justify-content: flex-start;
+            height: v(60px, suckerfish_height, $suckerfishHeight);
+            margin: 0;
+            padding: 0;
+
+            font-family: v(inherit, suckerfish_font_family, $suckerfishFont);
+            font-weight: v(normal, suckerfish_font_weight, $suckerfishWeight);
+            text-transform: v(none, suckerfish_text_transform, $suckerfishTexttransform);
+
+            @include fontsize(v(inherit, suckerfish_font_size, $suckerfishFontsize));
+
+            a,
+            a:link,
+            a:visited {
+                color: v($colorDefaultText, suckerfish_color, $suckerfishColor);
+                &:hover {
+                    color: v($color1, suckerfish_color_hover, $suckerfishColorHover);
+                    > span {
+                        text-decoration: v(none, suckerfish_text_decoration_hover, $suckerfishHoverDecoration);
+                    }
+                }
+            }
+            .current > a {
+                &,
+                &:link,
+                &:visited {
+                    > span {
+                        text-decoration: v(none, suckerfish_text_decoration_current);
+                    }
+                    font-weight: v(inherit, suckerfish_font_weight_current, $suckerfishCurrentWeight);
+                    color: v($color1, suckerfish_color_current, $suckerfishCurrentColor);
+                }
+                &:hover,
+                &:active {
+                    color: v($color1, suckerfish_color_current_hover, $suckerfishCurrentColorHover);
+                }
+            }
+        }
+    }
+    #suckerfish-menu {
+        position: relative;
+        z-index: 1;
+        background: v($colorPageBg, suckerfish_background, $suckerfishBackground);
+
+        > .inner {
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            border-top: v(none, suckerfish_border_top, $suckerfishBorderTop);
+            border-bottom: v(none, suckerfish_border_bottom, $suckerfishBorderBottom);
+            background: inherit;
+            .inside {
+                margin: 0 auto;
+                @include header_container_width();
+            }
+        }
+
+        .shortcuts-menu {
+            padding: v(0 15px, suckerfish_padding, $suckerfishPadding);
+        }
+
+        .foldout-container {
+            max-height: 60vh;
+            z-index: 0;
+            padding-top: 0;
+            &[aria-expanded='true'] {
+                top: v(60px, suckerfish_height, $suckerfishHeight);
+            }
+            &[aria-expanded='false'] {
+                padding-top: 0;
+                &:not(.animating) {
+                    visibility: hidden;
+                }
+            }
+        }
+    }
+    &.is-scrolled #suckerfish-menu {
+        display: none;
+    }
+    &.has-showcase.suckerfish-on-top #suckerfish-menu {
+        z-index: 1;
+    }
+
+
+    /*
+        The searchbox covers the topbar and slides in from above
+    */
+    #search-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $headerHeight;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 11;
+        border-bottom: v(none, topbar_border_bottom, $topbarBorder);
+        background: v($colorPrime, topbar_background, $headerBackground);
+        color: v(inherit, topbar_color, $headerColor);
+        will-change: transform;
+        transition: all .2s ease-in-out;
+        text-align: center;
+
+        &[aria-expanded='false'] {
+            opacity: 0;
+            transform: translateY(-$headerHeight);
+            &:not(.animating) {
+                visibility: hidden;
+            }
+        }
+
+        form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: v(0 15px, topbar_padding, $topbarPadding);
+            border-bottom: v(none, topbar_inner_border_bottom, $topbarInnerBorder);
+
+            @include header_container_width();
+
+            input {
+                width: v(30em, search_width, $searchInputWidth);
+                max-width: 50vw;
+                margin: v(0 15px 0 0, search_margin, $searchInputMargin);
+                padding: v(5px 0, search_padding, $searchInputPadding);
+                border-top: v(none, search_border_top, $headerSearchBorderTop);
+                border-right: v(none, search_border_right, $headerSearchBorderRight);
+                border-bottom: v(1px solid $unavailable, search_border_bottom, $headerSearchBorderBottom);
+                border-left: v(none, search_border_left, $headerSearchBorderLeft);
+
+                border-radius: v(0, search_border_radius, $headerSearchRadius);
+
+                font-family: v(inherit, search_font_family, $headerSearchFontfamily);
+                font-weight: v(normal, search_font_weight, $headerSearchWeight);
+                line-height: 1;
+                background: v(transparent, search_background, $searchInputBackground);
+                color: v(inherit, search_color, $searchInputColor);
+                transition: all .2s ease-in-out;
+                -webkit-appearance: none;
+
+                @include fontsize(v(inherit, search_font_size, $headerSearchFontsize));
+
+                &:focus {
+                    border-top: v(none, search_border_top_focus, $headerSearchBorderTopFocus);
+                    border-right: v(none, search_border_right_focus, $headerSearchBorderRightFocus);
+                    border-bottom: v(1px solid currentcolor, search_border_bottom_focus, $headerSearchBorderBottomFocus);
+                    border-left: v(none, search_border_left_focus, $headerSearchBorderLeftFocus);
+                    outline: none;
+                }
+
+                &::placeholder {
+                    color: v($grey2, search_placeholder_color);
+                }
+            }
+            button {
+                height: v(20px, service_icon_size, $serviceIconSize);
+                margin: v(0 15px 0 0, search_button_margin, $searchButtonMargin);
+                padding: v(0 5px, service_padding, $serviceItemPadding);
+                border: none;
+                background: none;
+                color: v($mainMenuColor, service_color, $serviceItemColor);
+                -webkit-appearance: none;
+                svg {
+                    width: v(20px, service_icon_size, $serviceIconSize);
+                }
+                &:hover {
+                    color: v($mainMenuColorHover, service_color_hover, $serviceItemColorHover);
+                }
+            }
+        }
+    }
+    @media (max-width: $bp_mobile - 1) {
+        #search-box {
+            height: $headerHeightSmall;
+            form {
+                padding: v(0 15px, topbar_padding_small, $topbarPaddingSmall);
+            }
+        }
+    }
+    &.is-scrolled #search-box {
+        height: $headerHeightSmall;
+        form {
+            padding: v(0 15px, topbar_padding_small, $topbarPaddingSmall);
+        }
+    }
+
+
+    .showcase-item {
+        &,
+        &.slick-slide {
+            // overrule slick's display:block
+            display: flex;
+        }
+
+        max-height: 600px;
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        font-family: v($fontNormal, showcase_font_family, $showcaseDescFontfamily);
+        font-weight: v(normal, showcase_font_weight, $showcaseDescWeight);
+        font-style: v(normal, showcase_font_style, $showcaseDescStyle);
+        line-height: v(1, showcase_line_height, $showcaseDescLineheight);
+        text-transform: v(none, showcase_text_transform, $showcaseDescTexttransform);
+        color: v($white, showcase_color, $colorShowcaseDesc);
+        text-align: v(left, showcase_text_align, $showcaseAlignment);
+        overflow: hidden;
+
+        @include fontsize(v($fs_normal, showcase_font_size, $showcaseDescFontsize));
+
+        @media (max-width: $bp_tablet - 1) {
+            flex-direction: column-reverse;
+        }
+
+        &.size-small {
+            max-height: 300px;
+        }
+        &.size-large {
+            max-height: 900px;
+        }
+
+        &:not(.size-boxed) {
+            height: $showcaseHeight;
+            padding: v(30px 0, showcase_padding, $showcasePadding);
+            @media (max-height: 500px) {
+                height: auto;
+            }
+        }
+
+        &:not(.size-small):not(.size-boxed) {
+            min-height: 500px;
+        }
+
+        &.has-video {
+            &:not(.size-small, .size-medium, .size-boxed) {
+                @media (min-height: 501px) and (min-width: 768px) {
+                    height: 56.25vw; // 16:9
+                    max-height: $showcaseHeight;
+                }
+            }
+        }
+
+        @include credits_box();
+
+        .container {
+            position: relative;
+            overflow: hidden;
+            padding: v(0, showcase_container_padding);
+
+            img {
+                width: 100%;
+            }
+
+            // allows absolute elements to respect custom padding applied to container
+            > .overlay-buffer {
+                position: relative;
+            }
+
+            .inner,
+            .gradientOverlay,
+            .headerVideoContainer {
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+            }
+
+            .inner {
+                padding: v(0 15px, showcase_inner_padding, $showcaseInnerPadding);
+            }
+        }
+
+        a.clickLayer ~ .inner {
+            // we want the entire thing to become clickable
+            // so we need to allow clicks to pass through .inner to the click layer
+            pointer-events: none;
+            a {
+                pointer-events: initial;
+            }
+        }
+
+        .imagelayer {
+            will-change: transform;
+            animation-fill-mode: forwards;
+            animation: v(none, showcase_animation, $showcaseAnimation);
+            overflow: hidden;
+
+            img {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+
+            .picture {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        > .inner {
+            width: 100%;
+            align-self: flex-end;
+            position: relative;
+            z-index: 1;
+            margin-top: $headerHeight;
+            margin-right: auto;
+            margin-left: auto;
+            padding: v(0 15px, showcase_inner_padding, $showcaseInnerPadding);
+            overflow: hidden;
+            background: v(none, showcase_inner_background);
+            // Apply transform with no effect to fix ios stacking bug
+            transform: translate3d(0, 0, 0);
+            @include header_container_width();
+            @media (max-width: $bp_tablet - 1) {
+                padding-right: v(30px, showcase_inner_padding_mobile, $showcaseInnerPaddingMobile);
+                padding-left: v(30px, showcase_inner_padding_mobile, $showcaseInnerPaddingMobile);
+            }
+
+            @if (v(left, showcase_layout, $showcaseDescLayout) == 'split') {
+                @media (min-width: $bp_mobile) {
+                    display: flex;
+                    flex-wrap: wrap;
+                    .banner-title {
+                        width: 100%;
+                    }
+                    .banner-desc {
+                        flex: 1;
+                    }
+                    .banner-btn {
+                        align-self: flex-end;
+                        margin: 0 0 0 15px;
+                    }
+                }
+            }
+        }
+
+        .banner-title {
+            max-width: v(100%, showcase_desc_width);
+            margin: v(0, showcase_title_margin, $showcaseTitleMargin);
+            font-family: v($fontTitleContent, showcase_title_font_family, $showcaseTitleFontfamily);
+            font-weight: v(bold, showcase_title_font_weight, $showcaseTitleWeight);
+            font-style: v(normal, showcase_title_font_style, $showcaseTitleStyle);
+            line-height: v(1, showcase_title_line_height, $showcaseTitleLineheight);
+            text-transform: v(none, showcase_title_text_transform, $showcaseTitleTexttransform);
+            color: v($white, showcase_title_text_color, $colorShowcaseTitle);
+
+            span {
+                display: v(block, showcase_title_display);
+                padding: v(0, showcase_title_padding);
+                background: v(transparent, showcase_title_background_color);
+                color: inherit;
+            }
+
+            @include fontsize(v($fs_huge_title, showcase_title_font_size, $showcaseTitleFontsize));
+        }
+        .banner-desc {
+            max-width: v(100%, showcase_desc_width);
+            margin-right: auto;
+            margin-left: auto;
+            p {
+                margin: v(0, showcase_desc_margin, $showcaseDescMargin);
+            }
+            span {
+                display: v(block, showcase_desc_display);
+                padding: v(0, showcase_desc_padding);
+                background: v(transparent, showcase_desc_background_color);
+                color: inherit;
+            }
+        }
+        .banner-btn {
+            width: $showcaseBtnWidth;
+            margin: v(15px 0 0 0, showcase_button_margin, $showcaseBtnMargin);
+            border: v($defaultBtnBorderActive, showcase_button_border, $headerShowcaseBtnBorder);
+            border-radius: $defaultBtnRadius;
+            background: v($colorBgBtnActive, showcase_button_background, $headerShowcaseBtnBg);
+            color: v($colorBtnActiveText, showcase_button_color, $headerShowcaseBtnColor);
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, showcase_button_border_hover, $headerShowcaseBtnBorderHover);
+                background: v($colorBtnActiveHover, showcase_button_background_hover, $headerShowcaseBtnBgHover);
+                color: v($colorBtnActiveTextHover, showcase_button_color_hover, $headerShowcaseBtnColorHover);
+            }
+        }
+
+        .headerVideoContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+
+            > * {
+                flex: 1;
+            }
+        }
+
+        .showcaseplayer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            opacity: 0;
+            background: #000;
+            transition: opacity .5s ease-in-out;
+            pointer-events: none;
+            &.playing {
+                opacity: 1;
+            }
+        }
+
+        &.size-image-left,
+        &.size-image-right {
+            display: flex;
+            padding: 0;
+            background: v($white, showcase_split_background);
+
+            &.size-image-right {
+                flex-direction: row-reverse;
+            }
+
+            .imagelayer {
+                &--object-fit {
+                    picture {
+                        display: block;
+                        aspect-ratio: 1/1;
+                    }
+                }
+            }
+
+            @media (max-width: $bp_tablet - 1) {
+                display: block;
+                height: auto !important;
+                min-height: 0 !important;
+                max-height: none;
+
+                .imagelayer {
+                    height: v(250px, showcase_split_mobile_image_height);
+                    height: auto;
+                    aspect-ratio: 16/9;
+                }
+            }
+
+            @media (max-width: $bp_mobile - 1) {
+                .imagelayer {
+                    aspect-ratio: 7/3;
+                }
+            }
+
+            > * {
+                flex: 1;
+                position: relative;
+            }
+
+            .clickLayer {
+                pointer-events: initial;
+            }
+
+            .inner {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: v(space-between, showcase_split_justify_content);
+                height: 100%;
+                padding: v(30px, showcase_split_inner_padding);
+
+                @media (max-width: $bp_tablet - 1) {
+                    max-width: 100%;
+                }
+                @media (min-width: $bp_tablet) {
+                    max-width: calc(970px / 2);
+                }
+                @media (min-width: $bp_wxga) {
+                    max-width: calc(1170px / 2);
+                }
+
+                .banner-title {
+                    font-family: v(null, split_showcase_title_font_family);
+                    font-weight: v(null, split_showcase_title_weight);
+                    @include fontsize(v(null, split_showcase_title_font_size));
+                    line-height: v(null, split_showcase_title_lineheight);
+                    text-transform: v(null, split_showcase_title_text_transform);
+                    color: v(null, split_showcase_title_text_color);
+                }
+
+                .banner-desc {
+                    margin: 0;
+                    font-family: v(null, split_showcase_description_font_family);
+                    font-weight: v(null, split_showcase_description_weight);
+                    @include fontsize(v(null, split_showcase_description_font_size));
+                    line-height: v(null, split_showcase_description_lineheight);
+                    text-transform: v(null, split_showcase_description_text_transform);
+                    color: v(null, split_showcase_description_text_color);
+                }
+
+                .banner-btn {
+                    white-space: initial;
+                }
+            }
+            &.alignment-center .inner {
+                align-items: stretch;
+            }
+            &.alignment-right .inner {
+                align-items: flex-end;
+            }
+        }
+    }
+
+    .video-control {
+        position: absolute;
+        bottom: v(15px, video_pause_offset_bottom);
+        z-index: 1;
+        padding: v(6px 8px, video_pause_padding);
+        border: none;
+        background-color: v(transparent, video_pause_background);
+        color: v($white, video_pause_color);
+        -webkit-appearance: none;
+
+        &:hover {
+            background-color: v(transparent, video_pause_background_hover);
+            color: v(darken($white, 10%), video_pause_color_hover);
+        }
+
+        i {
+            pointer-events: none;
+        }
+
+        @if $videoPausePosition == 'right' {
+            right: v(30px, video_pause_offset_side_mobile);
+            @media (min-width: $bp_tablet) {
+                right: v(60px, video_pause_offset_side);
+            }
+        }
+        @else {
+            left: v(30px, video_pause_offset_side_mobile);
+            @media (min-width: $bp_tablet) {
+                left: v(60px, video_pause_offset_side);
+            }
+        }
+    }
+
+    &.variant-suckerfish:not(.suckerfish-on-top) #showcase:not(.layout-boxed) .showcase-item {
+        // we want the main menu to still fit in the viewport
+        height: calc(#{$showcaseHeight} - #{$suckerfishHeight});
+    }
+
+    // A showcase spreads out behind the header, so we use negative margin-top to move it up
+    #showcase {
+        @if not $transparent_topbar {
+            margin-top: 0; // right below the top bar
+        }
+        @else {
+            margin-top: -$headerHeight; // shift it up underneath the top bar
+        }
+
+        &.slider-root {
+            .slider-nav {
+                right: 30px;
+                left: 30px;
+            }
+        }
+
+        &:not(.layout-boxed) {
+            @if not $transparent_topbar {
+                margin-top: 0; // right below the top bar
+            }
+            @else {
+                margin-top: -$headerHeightShowcase; // shift it up underneath the top bar
+                @media (max-width: $bp_mobile - 1) {
+                    margin-top: -$headerHeightSmall;
+                }
+            }
+        }
+    }
+
+    &.has-showcase.suckerfish-on-top #showcase:not(.layout-boxed) {
+        margin-top: 0;
+    }
+
+    /*
+        event box sticks an event info and a call2action button below the header
+    */
+    #header-event-box {
+        @keyframes header-event-slideIn {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        position: fixed;
+        top: $headerHeightSmall;
+        right: 0;
+        left: 0;
+        z-index: 1;
+
+        padding: v(15px 0, eventbar_padding, $eventHeaderPadding);
+        border-top: v(none, eventbar_border_top);
+        border-bottom: v(none, eventbar_border_bottom, $eventHeaderBorder);
+        background: v($colorPrimeLight, eventbar_background, $eventHeaderBackground);
+        color: v(inherit, eventbar_color, $eventHeaderTitleColor);
+        will-change: transform, opacity;
+        animation: header-event-slideIn .2s ease-in-out;
+
+        .inner {
+            @include header_container_width();
+            margin: 0 auto;
+            padding: v(0 15px, eventbar_inner_padding, $eventHeaderInnerPadding);
+
+            .inside {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: v(0, eventbar_inner_inside_padding, $eventHeaderInnerPaddingInside);
+                border-bottom: v(none, eventbar_inner_inside_border_bottom, $eventHeaderInnerBorder);
+            }
+        }
+        .description {
+            margin-right: v(30px, eventbar_spacing, $eventHeaderInnerSpacing);
+            .date {
+                margin: v(0 0 10px 0, eventbar_date_margin);
+                font-family: v($fontNormal, eventbar_date_font-family);
+                font-weight: v(normal, eventbar_date_font-weight);
+                font-style: v(normal, eventbar_date_font_style);
+                line-height: v(1, eventbar_date_line-height);
+                text-transform: v(none, eventbar_date_text-transform);
+                color: v(inherit, eventbar_date_color);
+
+                @include fontsize(v($fs_small, eventbar_date_font_size));
+
+                @media (max-width: $bp_tiny - 1) {
+                    display: none;
+                }
+            }
+            .title {
+                margin: v(0, eventbar_title_margin, $eventHeaderTitleMargin);
+                font-family: v($fontTitleContent, eventbar_title_font_family, $eventHeaderTitleFontfamily);
+                font-weight: v(bold, eventbar_title_font_weight, $eventHeaderTitleWeight);
+                line-height: v(1, eventbar_title_line_height, $eventHeaderTitleLineHeight);
+                text-transform: v(none, eventbar_title_text_transform, $eventHeaderTitleTexttransform);
+
+                @include fontsize(v($fs_huge_title, eventbar_title_font_size, $eventHeaderTitleFontsize));
+
+                @media (max-width: $bp_tiny - 1) {
+                    @include fontsize(v($fs_huge_subtitle, eventbar_title_font_size_mobile, $eventHeaderTitleFontsizeMobile));
+                }
+            }
+            .subtitle {
+                margin: v(0, eventbar_subtitle_margin, $eventHeaderSubtitleMargin);
+                font-family: v($fontTitleContent, eventbar_subtitle_font_family, $eventHeaderSubtitleFontfamily);
+                font-weight: v(bold, eventbar_subtitle_font_weight, $eventHeaderSubtitleWeight);
+                line-height: v(1, eventbar_subtitle_line_height, $eventHeaderSubtitleLineHeight);
+                text-transform: v(none, eventbar_subtitle_text_transform, $eventHeaderSubtitleTexttransform);
+                color: v(inherit, eventbar_subtitle_color, $eventHeaderSubtitleColor);
+
+                @include fontsize(v($fs_huge_subtitle, eventbar_subtitle_font_size, $eventHeaderSubtitleFontsize));
+                @media (max-width: $bp_tiny - 1) {
+                    font-weight: v(normal, eventbar_subtitle_font_weight_mobile, $eventHeaderSubtitleWeightMobile);
+                    @include fontsize(v($fs_normal, eventbar_subtitle_font_size_mobile, $eventHeaderSubtitleFontsizeMobile));
+                }
+            }
+        }
+        form {
+            margin: 0;
+            padding: 0;
+        }
+        .btn {
+            padding: v($defaultBtnPadding, eventbar_button_padding, $eventHeaderButtonPadding);
+            border: v($defaultBtnBorderActive, eventbar_button_border, $eventHeaderButtonBorder);
+            border-radius: v($defaultBtnRadius, eventbar_button_border_radius, $eventHeaderButtonRadius);
+
+            font-family: $defaultBtnFontfamily;
+            font-weight: v($defaultBtnWeight, eventbar_button_font_weight, $eventHeaderButtonWeight);
+
+            line-height: 1;
+            text-transform: v($defaultBtnTexttransform, eventbar_button_text_transform, $eventHeaderButtonTransform);
+            background: v($colorBgBtnActive, eventbar_button_background, $eventHeaderButtonBackground);
+            color: v($colorBtnActiveText, eventbar_button_color, $eventHeaderButtonColor);
+
+            @include fontsize(v($defaultBtnFontsize, eventbar_button_font_size, $eventHeaderButtonFontsize));
+
+            @media (max-width: $bp_tiny - 1) {
+                min-width: 0;
+            }
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, eventbar_button_border_hover, $eventHeaderButtonBorderHover);
+                background: v($colorBtnActiveHover, eventbar_button_background_hover, $eventHeaderButtonBackgroundHover);
+                color: v($colorBtnActiveTextHover, eventbar_button_color_hover, $eventHeaderButtonColorHover);
+            }
+        }
+        .status-info {
+            // non-bookable event status info
+            text-transform: v(inherit, eventbar_status_text_transform);
+            color: v(inherit, eventbar_status_color);
+        }
+    }
+    &.menu-opened #header-event-box,
+    #header-event-box.hidden {
+        display: none;
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+
+    .mobile-inner-menu {
+        display: none;
+        @media (max-width: $bp_mobile - 1) {
+            display: block;
+        }
+    }
+
+    &.variant-shortcuts-unified {
+        #topbar {
+            .brand {
+                position: relative;
+                top: unset;
+                left: unset;
+
+                @if (v(true, logo_suckerfish_float) and $brandPosition != 'center') {
+                    @media (min-width: $bp_wxga) {
+                        position: absolute;
+                        top: v(auto, logo_top_suckerfish, $suckerfishLogoTop);
+                        left: v(20px, logo_left_suckerfish, $suckerfishLogoLeft);
+                    }
+
+                    @media (min-width: $bp_wxga) and (max-width: ($bp_wxga + $headerHeight * v(2, logo_suckerfish_ratio, $suckerfishLogoRatio))) {
+                        @if (v(false, logo_suckerfish_always, $suckerfishLogoAlways)) {
+                            position: static;
+                            margin-right: v(calc($defaultSpacing * 2), logo_suckerfish_margin_right);
+                        }
+                        @if (v(false, logo_suckerfish_always, $suckerfishLogoAlways) == false) {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .menus {
+                flex-direction: row;
+                align-items: center;
+            }
+        }
+
+        #topbar-suckerfish-menu {
+            display: block;
+            width: 100%;
+            @include dont-wrap;
+
+            @media (max-width: $bp_wxga) {
+                ul {
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+
+    &.variant-shortcuts-unified,
+    &.variant-shortcuts-unified-alt {
+        #topbar .inside {
+            gap: v(calc($defaultSpacing * 2), logo_suckerfish_margin_right);
+
+            .brand {
+                order: 0;
+
+                @media (max-width: $bp_mobile) {
+                    order: -1;
+                }
+            }
+        }
+    }
+}

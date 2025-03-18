@@ -1,0 +1,526 @@
+@use 'sass:math';
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$info_header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $info_header;
+
+// one or more hero animations, see __defaultBaseValues.scss
+// e.g.: $heroAnimationSaturate, $heroAnimationTwist
+// or a predefined key-frames animation with custom timing
+// e.g.: 2s ease-out hero-twist
+$anim: v(none, animation, $pageTitleAnimation);
+
+.infoHeaderBoxedImage,
+.infoHeaderFlatImage,
+.infoHeaderWrapper {
+    position: relative;
+    overflow: hidden;
+    .container {
+        position: relative;
+
+        @media (max-width: $bp_mobile) {
+            width: 100%;
+        }
+    }
+    img {
+        width: 100%;
+        will-change: transform;
+        animation-fill-mode: forwards;
+        animation: $anim;
+    }
+    @include credits_box();
+
+    .imageLayer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: transparent no-repeat center / cover;
+
+        will-change: transform;
+        animation-fill-mode: forwards;
+        animation: $anim;
+    }
+
+    &[data-animations*='zoom'] {
+        img,
+        .imageLayer {
+            animation: $heroAnimationZoom;
+        }
+    }
+    &[data-animations*='twist'] {
+        img,
+        .imageLayer {
+            animation: $heroAnimationTwist;
+        }
+    }
+    &[data-animations*='saturate'] {
+        img,
+        .imageLayer {
+            animation: $heroAnimationSaturate;
+        }
+    }
+    &[data-animations*='desaturate'] {
+        img,
+        .imageLayer {
+            animation: $heroAnimationDesaturate;
+        }
+    }
+    &[data-animations*='slide'] {
+        img,
+        .imageLayer {
+            animation: $heroAnimationSlide;
+        }
+    }
+    &[data-animations*='fade-in'] {
+        img,
+        .imageLayer {
+            animation: $heroAnimationFadeIn;
+        }
+    }
+
+    .headerVideoContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+
+        > * {
+            flex: 1;
+        }
+
+        .video-control {
+            position: absolute;
+            bottom: v(15px, video_pause_offset_bottom);
+            z-index: 1;
+            padding: v(6px 8px, video_pause_padding);
+            border: none;
+            background-color: v(transparent, video_pause_background);
+            color: v($white, video_pause_color);
+            -webkit-appearance: none;
+
+            &:hover {
+                background-color: v(transparent, video_pause_background_hover);
+                color: v(darken($white, 10%), video_pause_color_hover);
+            }
+
+            i {
+                pointer-events: none;
+            }
+
+            @if $videoPausePosition == 'right' {
+                right: v(30px, video_pause_offset_side_mobile);
+                @media (min-width: $bp_tablet) {
+                    right: v(60px, video_pause_offset_side);
+                }
+            }
+            @else {
+                left: v(30px, video_pause_offset_side_mobile);
+                @media (min-width: $bp_tablet) {
+                    left: v(60px, video_pause_offset_side);
+                }
+            }
+        }
+    }
+
+    .showcaseplayer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        opacity: 0;
+        background: #000;
+        transition: opacity .5s ease-in-out;
+        pointer-events: none;
+        &.playing {
+            opacity: 1;
+        }
+    }
+}
+
+.infoHeaderFlatImage {
+    height: v(540px, height, $pageTitleHeight);
+    position: relative;
+    overflow: hidden;
+}
+
+.infoHeaderWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: relative;
+    background: transparent no-repeat center / cover;
+
+    &:not(.variant-image-left):not(.variant-image-right) {
+        @include inner_width('.infoHeaderContent');
+    }
+
+    h1 {
+        margin: v(15px 0, heading_margin, $infoDetailH1Margin);
+        font-family: v($fontTitleTemplate, heading_font_family, $infoDetailH1Fontfamily);
+        font-weight: v(bold, heading_font_weight, $infoDetailH1Weight);
+        line-height: v(1, heading_line_height, $infoDetailH1LineHeight);
+        text-transform: v(none, heading_text_transform, $infoDetailH1Texttransform);
+        color: v($colorDefaultText, heading_color, $colorInfoDetailTeaserH1);
+
+        @include fontsize(v($basicH1Fontsize, heading_font_size, $infoDetailH1Fontsize));
+
+        + .richtext {
+            margin-top: v(40px, heading_margin_top, $infoDetailTeaserMargin);
+        }
+    }
+
+    .richtext {
+        font-family: v($fontNormal, teaser_font_family, $infoDetailTeaserFontfamily);
+        font-weight: v(normal, teaser_font_weight, $infoDetailTeaserWeight);
+        line-height: v(1.2, teaser_line_height, $infoDetailTeaserLineHeight);
+        text-transform: v(none, teaser_text_transform, $infoDetailTeaserTexttransform);
+        color: v($colorDefaultText, teaser_color, $colorInfoDetailTeaserText);
+
+        @include fontsize(v($basicH3Fontsize, teaser_font_size, $infoDetailTeaserFontsize));
+
+        .function-detail p {
+            margin-bottom: 0;
+        }
+    }
+
+    .gradientOverlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: v($gradientOverlay, overlay, $pageTitleOverlay);
+        pointer-events: none;
+    }
+
+    &.type-theme {
+        .richtext {
+            margin: v(0, teaser_margin_theme, $themeDetailH2Margin);
+            font-family: v($fontTitleTemplate, teaser_font_family_theme, $themeDetailH2Fontfamily);
+            font-weight: v(bold, teaser_font_weight_theme, $themeDetailH2Weight);
+            line-height: v(1, teaser_line_height_theme, $themeDetailH2LineHeight);
+            text-transform: v(none, teaser_text_transform_theme, $themeDetailH2Texttransform);
+            color: v($black, teaser_color_theme, $colorThemePageTitleH2);
+
+            @include fontsize(v($basicH3Fontsize, teaser_font_size_theme, $themeDetailH2Fontsize));
+        }
+
+        .partOf {
+            margin: v(0, partof_margin, $themePartOfMargin);
+            a {
+                display: inline-block;
+                padding: v($defaultBtnPadding, partof_padding, $themePartOfPadding);
+                border: v($defaultBtnBorder, partof_border, $themePartOfBorder);
+                border-radius: v($defaultBtnRadius, partof_border_radius, $themePartOfRadius);
+                font-family: v($fontNormal, partof_font_family, $themePartOfFontfamily);
+                font-weight: v(normal, partof_font_weight, $themePartOfWeight);
+                line-height: v(normal, partof_line_height, $themePartOfLineHeight);
+                text-decoration: v(none, partof_text_decoration);
+                text-transform: v(none, partof_text_transform, $themePartOfTexttransform);
+                white-space: nowrap;
+                background: v($black, partof_background, $colorBgThemePartOf);
+                color: v($white, partof_color, $colorBgThemePartOfText);
+
+                @include fontsize(v($defaultBtnFontsize, partof_font_size, $themePartOfFontsize));
+
+                &:hover {
+                    border: v(none, partof_border_hover, $themePartOfBorderHover);
+                    text-decoration: v(none, partof_text_decoration_hover);
+                    background: v($white, partof_background_hover, $colorBgThemePartOfHover);
+                    color: v($colorPrime, partof_color_hover, $colorBgThemePartOfTextHover);
+                }
+            }
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            float: right;
+            margin: v(15px 0 0 0, meta_margin, $detailHeaderBtnMargin);
+
+            @media (max-width: $bp_mobile) {
+                display: none;
+            }
+
+            > * + * {
+                margin-left: 15px;
+            }
+
+            .btn {
+                width: auto;
+                border: v($defaultBtnBorderActive, button_border, $detailHeaderBtnBorder);
+                border-radius: $defaultBtnRadius;
+                background: v($colorBgBtnActive, button_background, $colorBgThemeBtn);
+                color: v($colorBtnActiveText, button_color, $colorThemeBtnText);
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_hover, $detailHeaderBtnBorderHover);
+                    background: v($colorBtnActiveHover, button_background_hover, $colorBgThemeBtnHover);
+                    color: v($colorBtnActiveTextHover, button_color_hover, $colorThemeBtnTextHover);
+                }
+            }
+
+            .tickets {
+                margin-bottom: 0;
+            }
+
+            .favourite button {
+                color: v($white, heart_color, $colorFavouriteAlt);
+                &:hover {
+                    color: v($color12, heart_color_hover, $colorFavouriteAltHover);
+                }
+            }
+        }
+    }
+
+    &.bg:not(.variant-flat) {
+        min-height: v(540px, height, $pageTitleHeight);
+
+        @media (max-width: 600px) {
+            min-height: v(320px, height_mobile, $pageTitleHeightMobile);
+        }
+
+        h1 {
+            color: v($white, heading_color_overlay, $colorInfoHeaderTitle);
+        }
+        .richtext {
+            color: v($white, teaser_color_overlay, $colorInfoHeaderText);
+        }
+        .container {
+            padding: v(50px 15px 30px 15px, container_padding, $pageTitleContentContainerMargin);
+        }
+    }
+
+    &.bg.boxed > .container {
+        justify-self: stretch;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+
+        .imageLayer {
+            position: absolute;
+            top: 0;
+            right: 15px;
+            bottom: 0;
+            left: 15px;
+            z-index: 0;
+            background: transparent no-repeat center / cover;
+
+            ~ * {
+                z-index: 1;
+            }
+        }
+        .credits {
+            right: 15px;
+        }
+        h1,
+        .richtext {
+            padding-left: 15px;
+        }
+    }
+
+    &.variant-fiftyfifty {
+        flex-direction: row;
+        height: v(540px, height, $pageTitleHeight);
+
+        @media (max-width: $bp_mobile) {
+            flex-direction: column-reverse;
+            height: auto;
+            .infoHeaderFiftyImage {
+                padding-bottom: math.div(900, 1920) * 100%;
+            }
+        }
+
+        > * {
+            flex: 1;
+        }
+        .infoHeaderFiftyImage {
+            background: transparent no-repeat center / cover;
+        }
+        .infoHeaderFiftyTitle {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: v(50px 15px 30px 15px, container_padding, $pageTitleContentContainerMargin);
+            text-align: center;
+        }
+        .infoHeaderContent .inner {
+            display: flex;
+            flex-direction: column;
+        }
+        .meta {
+            display: block;
+            order: 1;
+        }
+    }
+
+    &.variant-image-left,
+    &.variant-image-right {
+        > .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            height: v(460px, sidebyside_height);
+            position: relative;
+
+            @media (max-width: $bp_mobile) {
+                display: block;
+                height: unset;
+            }
+
+            > * {
+                flex: 1;
+                &:first-child {
+                    flex: 2;
+                }
+            }
+        }
+
+        &.variant-image-right > .container {
+            flex-direction: row-reverse;
+        }
+
+        h1 {
+            @include fontsize(v($basicH2Fontsize, sidebyside_heading_font_size));
+        }
+
+        .infoHeaderImage {
+            width: 100%;
+            position: relative;
+            background: transparent no-repeat center / cover;
+
+            @media (max-width: $bp_mobile) {
+                height: math.div(v(460px, sidebyside_height), 2);
+            }
+        }
+
+        .infoHeaderTitle,
+        .infoHeaderTitle > div,
+        .infoHeaderTitle > div > div {
+            height: 100%;
+        }
+
+        .infoHeaderTitle {
+            @media (min-width: $bp_mobile + 1) {
+                padding-left: v(15px, sidebyside_container_spacing);
+            }
+            @media (max-width: $bp_mobile) {
+                padding-top: v(15px, sidebyside_container_spacing);
+            }
+
+            .inner {
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                margin: 0;
+                padding: v(0 15px, sidebyside_container_padding);
+                border-left: v(none, sidebyside_container_border);
+                text-align: v(left, sidebyside_text_align);
+
+                .meta {
+                    display: block;
+                    order: 1;
+                    margin-top: auto;
+                }
+            }
+        }
+
+        &.variant-image-right .infoHeaderTitle {
+            padding-right: v(15px, sidebyside_container_spacing);
+            padding-left: 0;
+            .inner {
+                border-right: v(none, sidebyside_container_border);
+                border-left: none;
+            }
+        }
+    }
+}
+
+.story-info {
+    padding: v(20px 15px, story_partof_padding);
+    background: v(v($grey5, partof_background), story_partof_background);
+    color: v(v($colorDefaultText, partof_color), story_partof_color);
+
+    .inner {
+        display: flex;
+        font-family: v(v($fontNormal, partof_font_family), story_partof_font_family);
+        font-weight: v(v(normal, partof_font_weight), story_partof_font_weight);
+        line-height: v(v(normal, partof_line_height), story_partof_line_height);
+        text-transform: v(v(none, partof_text_transform), story_partof_text_transform);
+        gap: 5px 15px;
+
+        @include fontsize(v(v($baseFontsize, partof_font_size), story_partof_font_size));
+
+        @media (max-width: $bp_mobile) {
+            flex-direction: column;
+        }
+
+        .stories > *,
+        .date > *,
+        .collection:not(:empty) {
+            display: inline-flex;
+            align-items: center;
+            height: v(32px, story_icon_size);
+            margin: v(0, story_margin);
+        }
+
+        .stories:not(:empty) {
+            display: flex;
+            flex-wrap: wrap;
+            @media (max-width: $bp_mobile) {
+                order: 2;
+            }
+        }
+
+        .story {
+            img {
+                width: v(32px, story_icon_size);
+                height: v(32px, story_icon_size);
+                margin-right: 10px;
+            }
+        }
+
+        .date {
+            white-space: nowrap;
+        }
+
+        .collection:not(:empty) {
+            margin-left: auto;
+            text-align: right;
+
+            @media (max-width: $bp_mobile) {
+                text-align: initial;
+                margin-left: 0;
+            }
+
+            a {
+                font-weight: v(v(bold, partof_link_font_weight), story_partof_link_font_weight);
+                font-style: v(v(normal, partof_link_font_style), story_partof_link_font_style);
+                text-decoration: v(v(underline, partof_link_text_decoration), story_partof_link_text_decoration);
+                text-transform: v(v(none, partof_link_text_transform), story_partof_link_text_transform);
+                color: v(v($defaultLink, partof_link_color), story_partof_link_color);
+
+                &:hover {
+                    text-decoration: v(v(underline, partof_link_text_decoration_hover), story_partof_link_text_decoration_hover);
+                    color: v(v($defaultLinkHover, partof_link_color_hover), story_partof_link_color_hover);
+                }
+            }
+        }
+    }
+}

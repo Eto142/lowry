@@ -1,0 +1,53 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$favourite: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $favourite;
+
+.favourite {
+    @include fontsize(v($fs_small_title, font_size));
+
+    a,
+    button {
+        margin: 0;
+        padding: 0 2px;
+        border: 0;
+        background: none;
+        color: v($black, color, $colorFavourite);
+
+        &:hover {
+            color: v($color12, color_hover, $colorFavouriteHover);
+        }
+
+        @include fontsize(v($fs_small_title, font_size));
+    }
+
+    .linkGotoWishList {
+        color: v($black, color, $colorFavouriteHover);
+        &:hover {
+            color: v($color12, color_hover, $colorFavourite);
+        }
+    }
+
+    i {
+        will-change: transform;
+    }
+    .pending i {
+        @keyframes pending_hearts {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(.6);
+            }
+        }
+
+        animation-name: pending_hearts;
+        animation-duration: 600ms;
+        animation-timing-function: linear;
+    }
+}

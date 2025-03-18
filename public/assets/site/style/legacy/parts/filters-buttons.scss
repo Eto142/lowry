@@ -1,0 +1,104 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$filter_buttons: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $filter_buttons;
+
+.filter-buttons {
+    form {
+        margin: 0;
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        gap: v(8px, spacing);
+
+        li {
+            list-style: none;
+            display: inline-block;
+
+            .btn {
+                display: flex;
+                min-width: unset;
+                position: relative;
+                margin: 0;
+                padding: v($defaultBtnPadding, button_padding);
+                border: v($defaultBtnBorderDefault, button_border);
+                border-radius: v(0, button_border_radius);
+                font-family: v($fontNormal, button_font_family);
+                font-weight: v(bold, button_font_weight);
+                text-transform: v(capitalize, button_text_transform);
+                background: v($colorBgBtnDefault, button_background);
+                color: v($colorBtnDefaultText, button_text_color);
+                box-shadow: v($defaultBtnShadowDefault, button_box_shadow);
+                cursor: pointer;
+
+                @include fontsize(v($fs_small_title, button_font_size));
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_hover);
+                    background: v($colorBtnActiveHover, button_background_hover);
+                    color: v($colorBtnActiveTextHover, button_color_hover);
+                    box-shadow: v($defaultBtnShadowActiveHover, button_box_shadow_hover);
+                }
+
+                &:focus-within {
+                    outline: 2px solid transparentize($colorBgSelection, .5);
+                    outline-offset: 0;
+                }
+
+                input[type='checkbox'] {
+                    width: 0;
+                    height: 0;
+                    position: absolute;
+                    opacity: 0;
+                }
+
+                .remove {
+                    display: none;
+                    transform: scale(0);
+                    will-change: transform;
+                    transition: transform 0.2s ease-out;
+
+                    .peppered-icon {
+                        display: block;
+                        width: 16px;
+                        height: 16px;
+                        align-self: center;
+                        margin-left: 10px;
+                    }
+                }
+
+                &:has(input:checked) {
+                    border: v($defaultBtnBorderActiveHover, button_active_border);
+                    background: v($colorBtnActiveHover, button_active_background);
+                    color: v($colorBtnActiveTextHover, button_active_color);
+                    box-shadow: v($defaultBtnShadowActiveHover, button_active_box_shadow);
+
+                    .remove {
+                        display: flex;
+                        transform: scale(1);
+                    }
+                }
+            }
+
+            .show-more-btn {
+                border: v($defaultBtnBorderDefault, show_more_border);
+                background: v($colorBgBtnDefault, show_more_background);
+                color: v($colorBtnDefaultText, show_more_text_color);
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, show_more_border_hover);
+                    background: v($colorBtnActiveHover, show_more_background_hover);
+                    color: v($colorBtnActiveTextHover, show_more_color_hover);
+                }
+            }
+        }
+    }
+}

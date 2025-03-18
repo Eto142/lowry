@@ -1,0 +1,35 @@
+/**
+ * .picture viewport sets aspect ratio
+ * for containing box. 32/15 is the default
+ * for images 1920X900 - override elsewhere
+ * where required
+ *
+ * The object-fit and aspect ratio model is used to replace inlined background images
+ * if you would like the image to maintain its intrinsic size, use the picture--no-aspect
+ * modifier.
+ */
+.picture {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: var(--picture-aspect-ratio, 32/15);
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+    }
+
+    &--no-aspect {
+        display: unset;
+        aspect-ratio: unset;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+
+        &-portrait {
+            max-width: auto;
+            max-height: 100%;
+        }
+    }
+}

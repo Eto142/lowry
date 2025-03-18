@@ -1,0 +1,216 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$product: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $product;
+
+.productWrapper {
+    @include inner_width();
+}
+
+.productCard {
+    position: relative;
+    border: v(none, border, $productCardBorder);
+    border-radius: v($defaultCardRadius, border_radius, $productCardRadius);
+    background: v($white, background, $productCardBackground);
+    box-shadow: v($defaultBoxShadow, box_shadow, $productCardShadow);
+
+    .desc-wrapper {
+        display: flex;
+        padding: 15px 20px;
+    }
+    img {
+        margin: 0 30px 0 0;
+    }
+    h2 {
+        margin: v(0 0 5px 0, title_margin, $productTitleMargin);
+        font-family: v($fontTitleContent, title_font_family, $productTitleFontfamily);
+        font-weight: v(bold, title_font_weight, $productTitleWeight);
+        line-height: v(normal, title_line_height, $productTitleLineheight);
+        text-transform: v(none, title_text_transform, $productTitleTextTransform);
+        color: v(inherit, title_color, $productTitleTextColor);
+
+        @include fontsize(v($fs_small_title, title_font_size, $productTitleFontsize));
+    }
+    p {
+        margin: v(0, subtitle_margin, $productSubtitleMargin);
+        font-family: v($fontNormal, subtitle_font_family, $productSubtitleFontfamily);
+        font-weight: v(normal, subtitle_font_weight, $productSubtitleWeight);
+        line-height: v(normal, subtitle_line_height, $productSubtitleLineheight);
+        text-transform: v(none, subtitle_text_transform, $productSubtitleTextTransform);
+        color: v(inherit, subtitle_color, $productSubtitleColor);
+
+        @include fontsize(v($fs_small, subtitle_font_size, $productSubtitleFontsize));
+    }
+    form {
+        margin: 0;
+    }
+
+    .product-option {
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-end;
+
+        > label:not(.screenreader) {
+            all: revert;
+            flex: 1;
+        }
+
+        select {
+            margin-left: v(15px, select_margin_left, $productOptionSelectMargin);
+        }
+        + .product-option {
+            margin-top: v(5px, option_spacing, $productOptionSpacing);
+        }
+    }
+
+    .input-prices {
+        width: 100%;
+        margin: 0;
+        padding: v(10px 15px 20px 15px, prices_padding);
+        border: v(none, prices_border);
+        border-radius: v(3px, prices_border_radius);
+        background: v(rgba(0,0,0,.1), prices_background);
+        text-align: left;
+
+        label {
+            margin: v(0 0 30px 0, prices_label_margin);
+            color: v($colorDefaultText, prices_color);
+        }
+        input::placeholder {
+            color: v($colorDefaultText, prices_color);
+        }
+    }
+
+    .price-buttons {
+        display: flex;
+        justify-content: flex-start;
+        flex-flow: row wrap;
+        margin-bottom: -5px;
+        button {
+            min-width: v(4em, price_button_width);
+            margin: 0 15px 5px 0;
+        }
+    }
+    .additional-note + .price-buttons {
+        flex: 2;
+    }
+
+    .price-range {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        padding: v(10px, price_range_padding);
+
+        .range-input-placeholder {
+            flex: 1;
+            margin: 0 1em;
+            border: v(none, price_range_border);
+            border-radius: v(3px, price_range_border_radius);
+            background: v($color3, price_range_background);
+            box-shadow: none;
+
+            .noUi-connect {
+                border: v(none, price_range_border_selected);
+                background: v($grey3, price_range_background_selected);
+            }
+            &.noUi-horizontal {
+                height: 10px;
+
+                .noUi-tooltip {
+                    margin-bottom: 5px;
+                    padding: v(5px 10px, price_range_tooltip_padding);
+                    color: v($color3, price_range_tooltip_color);
+                }
+
+                .noUi-pips-horizontal {
+                    height: 0;
+                    position: absolute;
+                    top: -50%;
+                    padding: 0;
+                }
+
+                .noUi-marker,
+                .noUi-marker-large {
+                    width: v(3px, price_range_marker_thickness);
+                    height: v(20px, price_range_marker_height);
+                    border-radius: 3px;
+                    background: v($color3, price_range_marker_color);
+                }
+
+                .noUi-handle {
+                    width: 28px;
+                    height: 28px;
+                    top: -12px;
+                    border: v(none, price_range_button_border);
+                    border-radius: 100%;
+                    background: v($white, price_range_button_background);
+                    box-shadow: v($defaultBoxShadow, price_range_button_box_shadow);
+                    cursor: grab;
+                    &::after,
+                    &::before {
+                        display: none;
+                    }
+                    &:active {
+                        cursor: grabbing;
+                    }
+                }
+            }
+        }
+
+        input[type='number'] {
+            -webkit-appearance: none;
+            max-width: 3em;
+            margin: 0;
+            padding: 0;
+            border: none;
+            background: none;
+            &:last-of-type {
+                text-align: right;
+            }
+        }
+    }
+
+    fieldset,
+    .footer {
+        margin: 0;
+        padding: v(10px 20px, footer_padding, $productFooterPadding);
+        text-align: right;
+    }
+    .footer {
+        display: flex;
+        border-top: v(1px solid $grey3, footer_border_top, $productFooterBorder);
+        background: v(transparent, footer_background, $productFooterBackground);
+
+
+        .btn {
+            display: inline-block;
+            width: auto;
+        }
+
+        input[type='checkbox'] {
+            @include checkbox_toggle();
+        }
+
+        .additional-note {
+            flex:  1;
+            text-align: left;
+
+            font-family: v($fontNormal, footer_font_family);
+            font-weight: v(normal, footer_font_weight);
+            line-height: v(normal, footer_line_height);
+            text-transform: v(none, footer_text_transform);
+
+            @include fontsize(v($fs_small, footer_font_size));
+
+            label {
+                margin: 0;
+                font-weight: inherit;
+            }
+        }
+    }
+}

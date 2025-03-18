@@ -1,0 +1,204 @@
+@use 'sass:list';
+
+iframe { border: none !important; }
+
+@if $isBasicLayout == false {
+    dl,
+    dt,
+    dd,
+    ol,
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+    }
+
+    hr {
+        margin: $hrMargin;
+        padding: 0;
+        border: none;
+        border-top: $hrLine
+    }
+
+    ::selection,
+    ::-moz-selection,
+    ::-webkit-selection {
+        background: $colorBgSelection;
+    }
+
+    a:focus,
+    .btn:focus,
+    *:focus {
+        outline: 2px solid transparentize($colorBgSelection, .5);
+        outline-offset: 0;
+
+        @at-root [data-navigation-mode='mouse'] & {
+            outline: none;
+        }
+    }
+
+    [data-video-url] {
+        color: $colorVideoPlayerHighlights;
+        iframe {
+            display: block;
+            width: 100%;
+        }
+        &.container {
+            padding: $videoContainerPadding;
+        }
+    }
+
+    .form-control {
+        border-radius: $formControlRadius;
+    }
+    form .validation-warning {
+        display: none;
+        color: $colorMsgError;
+    }
+    .form-control.invalid,
+    input.invalid {
+        outline: 1px solid $colorMsgError;
+        + .validation-warning {
+            display: block;
+        }
+    }
+
+    a {
+        text-decoration: $defaultLinkDecoration;
+        color: $defaultLink;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: $defaultLinkDecorationHover;
+            color: $defaultLinkHover;
+        }
+
+        img {
+            border: none;
+        }
+    }
+
+    iframe {
+        border: none !important;
+    }
+
+    .gradientOverlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $gradientOverlay;
+        pointer-events: none;
+    }
+
+    p,
+    pre,
+    ul,
+    ol,
+    dl,
+    dd,
+    blockquote,
+    address,
+    table,
+    fieldset,
+    form {
+        margin-bottom: var(--var-default-margins, 30px);
+    }
+    
+    fieldset {
+        padding: 0;
+        border: none;
+    }
+
+    #wrapper {
+        width: 100%;
+        position: relative;
+        z-index: 0;
+        margin: 0;
+        background: $colorPageBg;
+
+        .popover {
+            padding: 0;
+            border: 0;
+            border-radius: $defaultCardRadius;
+            background: $white;
+
+            .arrow:after {
+                border-bottom-color: $white;
+            }
+        }
+    }
+
+    .popover {
+        box-shadow: $defaultBoxShadowDark;
+    }
+
+    .nopadding { padding: 0 !important; }
+
+    .inline-block {
+        display: inline-block !important;
+        float: none !important;
+    }
+
+    // check if letterSpacingList has items. If it does, apply letter spacing to them.
+    @if (list.length($letterSpacingList) > 0) {
+        @include letter_spacing($letterSpacingList);
+    }
+
+    /* ----------------------------------------------------------------
+        Richtext
+    -----------------------------------------------------------------*/
+
+    .richtext {
+        p {
+            margin: $richtextPMargin;
+        }
+
+        ul,
+        ol {
+            margin: $richtextListMargin;
+            ul,
+            ol {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        }
+
+        p + ul,
+        p + ol {
+            margin-top: $richtextListSpacing;
+        }
+
+        iframe,
+        table {
+            max-width: 100%;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a:not(.btn) {
+            text-decoration: $richtextLinkDecoration;
+
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: $richtextLinkDecorationHover;
+            }
+        }
+    }
+}
+
+.status-info {
+    .peppered-icon {
+        display: none;
+    }
+
+    .label {
+        // reset all crap bootstrap styles
+        all: unset;
+    }
+}

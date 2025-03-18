@@ -1,0 +1,29 @@
+@mixin cards_grid() {
+    display: flex;
+    flex-wrap: wrap;
+
+    > * {
+        width: 360px;
+        margin: 0 5px 15px 5px;
+    }
+    
+    @supports (display: grid) {
+        display: grid;
+        grid-column-gap: $defaultCardGridColumnSpacing;
+        grid-row-gap: $defaultCardGridRowSpacing;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        > * {
+            width: auto;
+            margin: 0;
+        }
+
+        @media (max-width: $bp_tablet - 1) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
