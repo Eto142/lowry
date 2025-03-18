@@ -1,0 +1,314 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$suggestions: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $suggestions;
+
+.suggestionWrapper {
+    &.variant-boxed .inner {
+        @include container_width();
+    }
+
+    // Fade out slider
+    &.fadeout {
+        @media (min-width: $bp_mobile + 1) {
+            .slick-list {
+                -webkit-mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+                mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+            }
+        }
+    }
+
+    .slick-track,
+    .slick-slide {
+        display: flex;
+    }
+    .slider:not(.slick-initialized) {
+        visibility: hidden;
+    }
+
+    .slider-root {
+        section {
+            height: auto;
+            margin: v(20px 10px, slide_margin);
+        }
+    }
+
+    .slider-nav {
+        button {
+            color: v($grey2, nav_color);
+
+            &:hover {
+                color: v($black, nav_color_hover);
+            }
+        }
+    }
+
+    #suggestionHeader {
+        @include container_width();
+
+        h2 {
+            margin-bottom: v(0, heading_margin_bottom, $sugHeaderMarginBottom);
+            padding: v(0 0 30px 0, heading_padding, $sugHeaderPadding);
+            font-family: v($fontAlt1, heading_font_family, $sugHeaderFontfamily);
+            font-weight: v(bold, heading_font_weight, $sugHeaderWeight);
+            line-height: v(normal, heading_line_height, $sugHeaderLineheight);
+            text-transform: v(none, heading_text_transform, $sugHeaderTextTransform);
+            color: v($colorDefaultText, heading_color, $colorSugHeader);
+            text-align: v(left, heading_text_align, $sugHeaderTextAlign);
+
+            @include fontsize(v($basicH1Fontsize, heading_font_size));
+        }
+    }
+
+    #suggestions {
+        .suggestionCard {
+            display: flex;
+            flex-direction: column;
+            border: v(none, card_border, $sugCardBorder);
+            border-radius: v($defaultCardRadius, card_border_radius);
+
+            background: v($white, card_background, $colorBgSuggestionCard);
+            color: v($black, card_color, $colorSuggestionCard);
+            box-shadow: v($defaultBoxShadow, card_box_shadow);
+
+            ul li{
+                list-style: none;
+            }
+
+            @each $animation in v([], animations, $featNewsAnimations) {
+                @include card_animation($animation, '.thumb img', '.inner');
+            }
+
+            @at-root .suggestionWrapper #suggestions[data-animations*='shadow'] .suggestionCard {
+                @include card_animation('shadow', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='glow'] .suggestionCard {
+                @include card_animation('glow', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='zoom'] .suggestionCard {
+                @include card_animation('zoom', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='twist'] .suggestionCard {
+                @include card_animation('twist', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='saturate'] .suggestionCard {
+                @include card_animation('saturate', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='desaturate'] .suggestionCard {
+                @include card_animation('desaturate', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='slide'] .suggestionCard {
+                @include card_animation('slide', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='shift'] .suggestionCard {
+                @include card_animation('shift', '.thumb img', '.inner');
+            }
+            @at-root .suggestionWrapper #suggestions[data-animations*='skew'] .suggestionCard {
+                @include card_animation('skew', '.thumb img', '.inner');
+            }
+
+            .thumb {
+                display: block;
+                position: relative;
+                border-radius: v($defaultCardRadius, card_border_radius) v($defaultCardRadius, card_border_radius) 0 0;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    padding: v(0, image_padding);
+                    border-radius: v(0, image_border_radius);
+                }
+            }
+
+            .desc {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                position: relative;
+                padding: v(15px, desc_padding, $sugCardDescPadding);
+                font-family: v($showDetailDesc1Fontfamily, desc_font_family, $suggestionFontfamily);
+                font-weight: v(normal, desc_font_weight, $suggestionWeight);
+                line-height: v(1, desc_line_height, $suggestionLineHeight);
+                text-transform: v($showDetailDesc1Texttransform, desc_text_transform, $suggestionTexttransform);
+                flex-grow: 1;
+
+                @include fontsize(v($fs_small, desc_font_size, $showDetailDesc1Fontsize));
+
+                p:not(.subtitle) {
+                    margin: 0;
+                }
+
+                .top {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+
+                    h3.image-middle {
+                        display: block;
+                        display: -webkit-box;
+                        height: 4em;
+                        line-height: 1.3em;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+
+            .supertitle {
+                order: -1;
+                display: block;
+                align-self: v(flex-start, supertitle_align_self);
+                margin: v(0 0 5px 0, supertitle_margin);
+                padding: v(0, supertitle_padding);
+                font-family: v($fontNormal, supertitle_font_family, $cardSupertitleFontfamily);
+                font-weight: v(normal, supertitle_font_weight, $cardSupertitleWeight);
+                line-height: v(1.3, supertitle_line_height, $cardSupertitleLineheight);
+                text-transform: v(uppercase, supertitle_text_transform, $cardSupertitleTexttransform);
+                background: v(transparent, supertitle_background, $colorBgListItemSuperTitle);
+                color: v($color1, supertitle_color, $colorSupertitle);
+
+                @include fontsize(v($fs_tiny, supertitle_font_size));
+            }
+
+            h3 {
+                margin: 0;
+                margin-bottom: v(5px, title_margin_bottom, $suggestionH1MarginBottom);
+                font-family: v($fontTitleTemplate, title_font_family, $cardH1Fontfamily);
+                font-weight: v(bold, title_font_weight, $cardH1Weight);
+                line-height: v(normal, title_line_height, $cardH1Lineheight);
+                text-decoration: v(none, title_text_decoration);
+                text-transform: v(none, title_text_transform, $cardH1Texttransform);
+                color: v(inherit, title_color, $colorSuggestionCardTitle);
+
+                @include fontsize(v($fs_medium_title, title_font_size, $cardH1Fontsize));
+
+                a {
+                    display: block;
+                    text-decoration: inherit;
+                    color: inherit;
+                }
+
+                &:hover {
+                    text-decoration: v(none, title_text_decoration_hover);
+                    color: v($black, title_color_hover);
+                }
+            }
+
+            .subtitle {
+                margin: 0;
+                margin-bottom: v(15px, subtitle_margin_bottom, $suggestionH2MarginBottom);
+                font-family: v($fontNormal, subtitle_font_family, $cardH2FontFamily);
+                font-weight: v(normal, subtitle_font_weight, $cardH2Weight);
+                line-height: v(normal, subtitle_line_height, $cardH2Lineheight);
+                text-transform: v(none, subtitle_text_transform, $cardH2Texttransform);
+                color: v($black, subtitle_color, $colorSuggestionCardSubTitle);
+
+                @include fontsize(v($fs_small_title, subtitle_font_size, $cardH2Fontsize));
+            }
+
+            .tagline {
+                margin: v(10px 0 15px 0, tagline_margin);
+                font-family: v(inherit, tagline_font_family);
+                font-weight: v(inherit, tagline_font_weight);
+                font-style: v(normal, tagline_font_style);
+                line-height: v(inherit, tagline_line_height);
+                text-transform: v(inherit, tagline_text_transform);
+                color: v(inherit, tagline_color);
+
+                @include fontsize(v(inherit, tagline_font_size));
+
+                p {
+                    margin: 0;
+                }
+            }
+
+            .date {
+                order: -2;
+                margin-bottom: v(10px, date_margin_bottom, $sugCardDateMargin);
+                font-family: v($fontNormal, date_font-family, $cardDateFontfamily);
+                font-weight: v(normal, date_font-weight, $cardDateFontWeight);
+                font-style: v(normal, date_font_style);
+                line-height: v(1, date_line-height, $cardDateFontheight);
+                text-transform: v(none, date_text-transform, $cardDateFontTextTransform);
+                color: v($grey1, date_color, $colorSuggestionCardDate);
+
+                @include fontsize(v($fs_small, date_font_size, $cardDateFontsize));
+            }
+
+            .bottom {
+                margin: v(15px 0 0 0, button_margin, $suggestionCardButtonMargin);
+                text-align: v(left, button_alignment, $featuredSlidesButtonAlignment);
+            }
+
+            .btn.btn-active {
+                border: v($defaultBtnBorderActive, button_border);
+                background: v($colorBgBtnActive, button_background);
+                color: v($colorBtnActiveText, button_color);
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_hover);
+                    background: v($colorBtnActiveHover, button_background_hover);
+                    color: v($colorBtnActiveTextHover, button_color_hover);
+                }
+            }
+
+            &.default {
+                flex-direction: unset;
+                width: auto;
+                min-height: 360px;
+                position: relative;
+
+                .thumb {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                }
+
+                img {
+                    height: 100%;
+                    object-fit: cover;
+                    object-position: center;
+                }
+
+                .desc {
+                    align-self: end;
+                    pointer-events: none;
+                    position: relative;
+                    z-index: 1;
+                    color: v($white, non_flat_color);
+                }
+
+                .bottom {
+                    text-align: v(left, button_align);
+                }
+
+                .btn {
+                    pointer-events: initial;
+                }
+
+                .supertitle {
+                    color: v(inherit, non_flat_supertitle_color);
+                }
+                h3 {
+                    color: v(inherit, non_flat_title_color);
+                    pointer-events: initial;
+                    &:hover {
+                        color: v(inherit, non_flat_title_color_hover);
+                    }
+                }
+                .subtitle {
+                    color: v(inherit, non_flat_subtitle_color);
+                }
+                .date {
+                    color: v(inherit, non_flat_date_color);
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+@if $isBasicLayout == false {
+    h1 {
+        margin: $basicH1FontMargin;
+        font-family: $fontNormalBold;
+        font-weight: $basicH1Fontweight;
+        line-height: $basicH1Lineheight;
+        text-transform: $basicH1Texttransform;
+        @include fontsize($basicH1Fontsize);
+    }
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: $basicH2FontMargin;
+        font-family: $fontNormalBold;
+    }
+
+    h5,
+    h6 {
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-weight: $basicH2Fontweight;
+        line-height: $basicH2Lineheight;
+        text-transform: $basicH2Texttransform;
+        @include fontsize($basicH2Fontsize);
+    }
+
+    h3 {
+        font-weight: $basicH3Fontweight;
+        line-height: $basicH3Lineheight;
+        text-transform: $basicH3Texttransform;
+        @include fontsize($basicH3Fontsize);
+    }
+
+    h4 {
+        font-weight: $basicH4Fontweight;
+        line-height: $basicH4Lineheight;
+        @include fontsize($basicH4Fontsize);
+    }
+
+    h5 {
+        font-weight: $basicH5Fontweight;
+        line-height: $basicH5Lineheight;
+        @include fontsize($basicH5Fontsize);
+    }
+
+    h6 {
+        font-weight: $basicH6Fontweight;
+        line-height: $basicH6Lineheight;
+        @include fontsize($basicH6Fontsize);
+    }
+
+    h1,
+    h2,
+    h3,
+    .title {
+        -webkit-hyphens: $titleHyphenation;
+        hyphens: $titleHyphenation;
+    }
+}

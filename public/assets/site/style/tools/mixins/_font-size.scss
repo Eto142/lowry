@@ -1,0 +1,13 @@
+@use 'sass:math';
+
+@mixin fontsize($value) {
+    // convert pixel values to a rem value so we can scale it down on smaller screens
+    @if (type-of($value) == 'number' and math.unit($value) == 'px' and type-of($baseFontsize) == 'number') {
+        $cleanValue: math.div(strip-unit($value), strip-unit($baseFontsize));
+        font-size: $cleanValue * 1rem;
+    }
+    // otherwise use ad-verbatim, supporting var(--custom-props), inherit and em/rem values
+    @else {
+        font-size: $value;
+    }
+}

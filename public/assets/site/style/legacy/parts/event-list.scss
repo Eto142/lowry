@@ -1,0 +1,1792 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$event_list: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $event_list;
+
+
+@mixin mobile {
+    @at-root .listItems.variant-mobile-ish & {
+        @content;
+    }
+    @media (max-width: $bp_mobile - 1) {
+        @content;
+    }
+}
+
+@mixin not_mobile {
+    @media (min-width: $bp_mobile) {
+        @at-root .listItems:not(.variant-mobile-ish) & {
+            @content;
+        }
+    }
+}
+
+@mixin video_button() {
+    .video-play-button {
+        all: unset;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        cursor: pointer;
+
+        > .peppered-icon {
+            width: v(72px, video_button_size, $listItemVideoButtonsize);
+            height: v(72px, video_button_size, $listItemVideoButtonsize);
+            border: none;
+            font-size: v(72px, video_button_size, $listItemVideoButtonsize);
+            background: none;
+            color: v($colorVideoPlayerHighlights, video_button_color);
+        }
+    }
+}
+
+@mixin image {
+    .thumb {
+        display: block;
+        position: relative;
+        overflow: hidden;
+
+        .image,
+        iframe {
+            display: block;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        &.video-loaded {
+            aspect-ratio: 16/9;
+            background: v(#000, video_background) !important;
+            iframe {
+                background: v(#000, video_background);
+            }
+        }
+
+        @include video_button();
+    }
+}
+
+@mixin info_link() {
+    padding: v(0, info_link_padding);
+    text-decoration: v($defaultLinkDecoration, info_link_text_decoration);
+    color: v($defaultLink, info_link_color);
+    @include fontsize(v($fs_small, info_link_font_size));
+
+    &:hover {
+        text-decoration: v($defaultLinkDecoration, info_link_text_decoration_hover);
+        color: v($defaultLinkHover, info_link_color_hover);
+    }
+
+    &.single {
+        padding: v(10px 0, info_link_single_padding);
+    }
+}
+
+// /* ----------------------------------------------------------------
+//     Genres
+// -----------------------------------------------------------------*/
+
+.showlist-genre-intro {
+    .container-inner {
+        padding: v(50px 0, genre_intro_padding);
+        text-align: v(center, genre_intro_text_align);
+        background: v($colorPageBg, genre_intro_background);
+        color: v($colorDefaultText, genre_intro_color);
+    }
+
+    .container &.container {
+        width: auto;
+    }
+
+    @include inner_width();
+
+    h2 {
+        margin: v($basicH2FontMargin, genre_intro_heading_margin);
+        font-family: v($fontNormal, genre_intro_heading_font_family);
+        font-weight: v(bold, genre_intro_heading_font_weight);
+        line-height: v(normal, genre_intro_heading_line_height);
+        text-transform: v(none, genre_intro_heading_text_transform);
+        color: v($grey1, genre_intro_heading_color);
+
+        &:first-child:last-child {
+            margin: v(0, genre_intro_onlyheading_margin);
+        }
+
+        @include fontsize(v($basicH2Fontsize, genre_intro_heading_font_size));
+    }
+    p {
+        font-family: v(inherit, genre_intro_desc_font_family);
+        font-weight: v(normal, genre_intro_desc_font_weight);
+        line-height: v(inherit, genre_intro_desc_line_height);
+        text-transform: v(none, genre_intro_desc_text_transform);
+
+        &:last-child {
+            margin: v(0, genre_intro_lastdesc_margin);
+        }
+
+        @include fontsize(v(inherit, genre_intro_desc_font_size));
+    }
+}
+
+/* ----------------------------------------------------------------
+    List and generics
+-----------------------------------------------------------------*/
+
+.listItems {
+    margin-top: 30px;
+
+    > * + * {
+        margin-top: v(30px, list_spacing, $listItemMarginBottom);
+    }
+
+    form {
+        margin-bottom: 0;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    > li {
+        list-style: none;
+
+        &.separator {
+            margin: 0;
+            text-align: v(left, separator_text_align, $listSeparatorAlignment);
+            grid-column-start: 1;
+            grid-column-end: 4;
+            @media (max-width: $bp_tablet - 1) {
+                grid-column-end: 3;
+            }
+            @media (max-width: $bp_mobile - 1) {
+                grid-column-end: 2;
+            }
+            h4 {
+                margin: v(60px 0 30px 0, separator_margin, $listSeparatorMargin);
+                font-family: v($fontNormalBold, separator_font_family, $listSeparatorFontfamily);
+                font-weight: v(bold, separator_font_weight, $listSeparatorWeight);
+                line-height: v(1, separator_line_height, $listSeparatorLineheight);
+                text-transform: v(none, separator_text_transform, $listSeparatorTextTransform);
+                color: v($grey2, separator_color, $listSeparatorColor);
+
+                @include fontsize(v($basicH3Fontsize, separator_font_size, $listSeparatorFontsize));
+            }
+        }
+
+        .btn {
+            display: block;
+            width: v(100%, button_width, $listItemMultipleBtnWidth);
+            min-width: 0;
+            padding: v($defaultBtnPadding, button_padding, $listItemMultipleBtnPadding);
+            border: v($defaultBtnBorder, button_border, $listItemMultipleBorder);
+            border-radius: v($defaultBtnRadius, button_border_radius, $listItemMultipleRadius);
+            background: v($colorBgBtnActive, button_background, $colorBgMultipleListItemsBtn);
+            color: v($colorBtnActiveText, button_color, $colorMultipleListItemsBtnText);
+            box-shadow: v($defaultBtnShadowActive, button_box_shadow, $listItemMultipleShadow);
+            overflow: hidden;
+            text-align: v(center, button_text_align, $listItemMultipleBtnAlignment);
+
+            .fa {
+                margin: v(0 0 0 10px, button_icon_margin, $listItemMultipleBtnIconMargin);
+                font-size: v(inherit, button_icon_size, $listItemMultipleBtnIconSize);
+                transition: transform .2s ease-in-out;
+            }
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover, $listItemMultipleBorderHover);
+                background: v($colorBtnActiveHover, button_background_hover, $colorBgMultipleListItemsBtnHover);
+                color: v($colorBtnActiveTextHover, button_color_hover, $colorMultipleListItemsBtnTextHover);
+                box-shadow: v($defaultBtnShadowActiveHover, button_box_shadow_hover, $listItemMultipleShadowHover);
+            }
+            &:active {
+                box-shadow: v($defaultBtnShadowActiveActive, button_box_shadow_active, $listItemMultipleShadowActive);
+            }
+            &[aria-expanded='true']:not(.btn-default) {
+                border: v($defaultBtnBorderActive, button_border_expanded);
+                background: v($colorBgBtnActive, button_background_expanded);
+                color: v($colorBtnActiveText, button_color_expanded);
+                box-shadow: v($defaultBtnShadowActive, button_box_shadow_expanded);
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, button_border_expanded_hover);
+                    background: v($colorBtnActiveHover, button_background_expanded_hover);
+                    color: v($colorBtnActiveTextHover, button_color_expanded_hover);
+                    box-shadow: v($defaultBtnShadowActiveHover, button_box_shadow_expanded_hover);
+                }
+                .fa {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .status-info {
+            display: block;
+            width: 100%;
+            padding: v($defaultBtnPadding, status_padding, $listItemStatusPadding);
+            font-family: v(inherit, status_font_family, $listItemStatusFontfamily);
+            font-weight: v(normal, status_font_weight, $listItemStatusFontweight);
+            line-height: v(1.2, status_line_height, $listItemStatusLineheight);
+            text-transform: v(none, status_text_transform, $listItemStatusTexttransform);
+            text-align: v(center, status_text_align, $listItemStatusTextalign);
+            color: v(inherit, status_color, $listItemStatusColor);
+
+            @include fontsize(v($fs_tiny, status_font_size, $listItemStatusFontsize));
+
+            &:link {
+                text-decoration: v(none, status_link_text_decoration, $listItemStatusLinkDecoration);
+                background: v(none, status_background);
+                color: v(inherit, status_link_color, $listItemStatusLinkColor);
+                &:hover {
+                    text-decoration: v($defaultLinkDecorationHover, status_link_text_decoration_hover, $listItemStatusLinkDecorationHover);
+                    background: v(none, status_background_hover);
+                    color: v($defaultLinkHover, status_link_color_hover, $listItemStatusLinkColorHover);
+                }
+            }
+
+            .fa {
+                transition: transform .2s ease-in-out;
+            }
+
+            &[aria-expanded='true'] {
+                .fa {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .actions {
+            text-align: right;
+            padding: v(0 15px 10px 0, actions_padding, $orderListButtonsPadding);
+
+            form {
+                all: unset;
+                display: inline-block;
+            }
+            .form-group {
+                all: unset;
+            }
+            button {
+                display: inline-flex;
+                flex-direction: row-reverse;
+                align-items: v(center, actions_align_items, $orderListRemoveAlignment);
+                text-align: right;
+                width: auto;
+                height: auto;
+                margin: 0;
+                padding: v(2px 5px, actions_padding, $orderListRemovePadding);
+                border: none;
+                font-size: v(12px, actions_font_size, $orderListRemoveSize);
+                background: v($white, actions_background, $colorBgRemoveItem);
+                color: v($black, actions_color, $colorOrderRemoveItem);
+                box-shadow: none;
+
+                &:hover {
+                    background: v($white, actions_background_hover, $colorBgRemoveItemHover);
+                    color: v($color1, actions_color_hover, $colorOrderRemoveItemHover);
+                }
+                span {
+                    margin-right: 1ex;
+                }
+                i {
+                    width: 16px;
+                    text-align: center;
+                }
+            }
+        }
+
+        @include image();
+    }
+
+    &.variant-mobile-ish {
+        @include cards_grid();
+    }
+
+    @media (max-width: $bp_mobile) {
+        .subshows.collapse.in {
+            display: none;
+        }
+    }
+}
+
+
+.gotoButtonContainer {
+    text-align: v(right, goto_text_align, $listGotoBtnAlignment);
+    .btn {
+        padding: v($defaultBtnPadding, goto_padding, $listGotoBtnPadding);
+        border: v($defaultBtnBorderActive, goto_border, $listGotoBtnBorder);
+        font-family: v($defaultBtnFontfamily, goto_font_family, $listGotoBtnFont);
+        font-weight: v($defaultBtnWeight, goto_font_weight, $listGotoBtnFontWeight);
+        line-height: v($defaultBtnLineHeight, goto_line_height, $listGotoBtnLineHeight);
+        text-transform: v($defaultBtnTexttransform, goto_text_transform, $listGotoBtnTransform);
+
+        background: v($colorBgBtnActive, goto_background, $listGotoBtnBackground);
+        color: v($colorBtnActiveText, goto_color, $listGotoBtnColor);
+
+        @include fontsize(v($defaultBtnFontsize, goto_font_size, $listGotoBtnFontsize));
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, goto_border_hover, $listGotoBtnBorderHover);
+            background: v($colorBtnActiveHover, goto_background_hover, $listGotoBtnBackgroundHover);
+            color: v($colorBtnActiveTextHover, goto_color_hover, $listGotoBtnColorHover);
+        }
+    }
+}
+
+
+/* ----------------------------------------------------------------
+    Regular event lists
+-----------------------------------------------------------------*/
+.listItemWrapper {
+    @media (min-width: $bp_mobile) {
+        display: flex;
+    }
+    @at-root .listItems.variant-mobile-ish & {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    position: relative;
+    z-index: 1;
+    border: v(none, card_border);
+    border-radius: v($defaultCardRadius, card_border_radius);
+    background: v($white, card_background, $colorBgListItems);
+    box-shadow: v($defaultBoxShadow, card_box_shadow);
+    transition: box-shadow .2s ease;
+    overflow: hidden;
+
+    .expand-sub,
+    .subshows,
+    .subshows.collapse.in {
+        @include mobile {
+            display: none !important;
+        }
+    }
+
+    .thumb {
+        display: block;
+        flex-shrink: 0;
+        @media (min-width: $bp_mobile) {
+            width: math.div(3, 12) * 100%;
+            &.xl {
+                width: math.div(4, 12) * 100%;
+            }
+        }
+
+        @include mobile {
+            padding-bottom: math.div(390, 690) * 100%; // maintain actual image aspect ratio
+        }
+
+        @at-root .listItems.variant-mobile-ish & {
+            width: 100%;
+        }
+    }
+
+    @each $animation in v([], card_animations, $listItemAnimations) {
+        @include card_animation($animation, '.thumb:not(.video-loaded) .image', '.desc');
+    }
+
+    @at-root .listItems[data-animations*='shadow'] .listItemWrapper {
+        @include card_animation('shadow', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='glow'] .listItemWrapper {
+        @include card_animation('glow', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='zoom'] .listItemWrapper {
+        @include card_animation('zoom', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='twist'] .listItemWrapper {
+        @include card_animation('twist', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='saturate'] .listItemWrapper {
+        @include card_animation('saturate', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='desaturate'] .listItemWrapper {
+        @include card_animation('desaturate', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='slide'] .listItemWrapper {
+        @include card_animation('slide', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='shift'] .listItemWrapper {
+        @include card_animation('shift', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+    @at-root .listItems[data-animations*='skew'] .listItemWrapper {
+        @include card_animation('skew', '.thumb:not(.video-loaded) .image', '.desc');
+    }
+
+    .emptyList & {
+        display: block;
+        position: relative;
+        padding-bottom: 30px;
+        text-align: center;
+        line-height: v($baseLineheight, empty_line_height, $emptyListLineheight);
+        background: inherit;
+        box-shadow: none;
+
+        @include fontsize(v(inherit, empty_font_size, $emptyListFontsize));
+
+        .peppered-icon {
+            position: relative;
+            margin: 0 auto 20px auto;
+            color: v($unavailable, empty_color);
+            svg {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    }
+
+    .inner {
+        flex-grow: 1;
+        min-height: v(200px, card_height, $listItemHeight);
+        align-self: flex-end;
+        z-index: 1;
+        padding: v(0, card_padding, $listItemInnerPadding);
+        background: v($white, card_background, $colorBgListItems);
+        color: v(inherit, card_color);
+
+        @include not_mobile {
+            display: flex;
+        }
+
+        @at-root .variant-compact & {
+            min-height: v(150px, card_height_compact, $listItemCompactHeight);
+        }
+        @at-root .type-theme & {
+            min-height: v(150px, card_height_compact, $listItemCompactHeight);
+        }
+        @at-root .variant-mobile-ish & {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @include mobile {
+            min-height: 0;
+            padding: v(0, card_padding_mobile, $listItemInnerPaddingMobile);
+            align-self: stretch;
+        }
+    }
+
+    .descMetaContainer {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        border-top: v(none, desc_border_top, $listItemMultiBorderTop);
+        border-right: v(none, desc_border_right, $listItemMultiBorderRight);
+        border-bottom: v(none, desc_border_bottom, $listItemMultiBorderBottom);
+        border-left: v(none, desc_border_left, $listItemMultiBorderLeft);
+
+        .desc {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+
+            &,
+            &:hover {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+
+        .supertitle {
+            order: -1;
+            display: block;
+            align-self: v(flex-start, supertitle_align_self);
+            margin: v(0, supertitle_margin, $listItemSuperTitleMargin);
+            padding: v(0, supertitle_padding, $listItemSuperTitlePadding);
+            font-family: v($fontNormal, supertitle_font_family, $cardSupertitleFontfamily);
+            font-weight: v(normal, supertitle_font_weight, $cardSupertitleWeight);
+            line-height: v(1.3, supertitle_line_height, $cardSupertitleLineheight);
+            text-transform: v(uppercase, supertitle_text_transform, $cardSupertitleTexttransform);
+            background: v(transparent, supertitle_background, $colorBgListItemSuperTitle);
+            color: v($color1, supertitle_color, $colorSupertitle);
+
+            @include fontsize(v($fs_small, supertitle_font_size, $cardSupertitleFontsize));
+        }
+
+        .title {
+            margin: 0;
+            margin-bottom: v(0, title_margin_bottom, $listItemTitleMarginBottom);
+            font-family: v($fontTitleContent, title_font_family, $listItemTitleFontfamily);
+            font-weight: v(bold, title_font_weight, $listItemTitleWeight);
+            line-height: v(normal, title_line_height, $listItemTitleLineheight);
+            text-decoration: v(none, title_text_decoration);
+            text-transform: v(none, title_text_transform, $listItemTitleTextTransform);
+            color: v(inherit, title_color, $colorListItemTitle);
+
+            @include fontsize(v($fs_small_title, title_font_size, $listItemTitleFontsize));
+        }
+        a:hover .title {
+            text-decoration: v(underline, title_text_decoration_hover, $listItemTitleHoverDecoration);
+            color: v(inherit, title_color_hover, $colorListItemTitleHover);
+        }
+
+        .subtitle {
+            margin: v(0, subtitle_margin, $listItemSubtitleMargin);
+            font-family: v($fontNormal, subtitle_font_family, $listItemSubtitleFontfamily);
+            font-weight: v(normal, subtitle_font_weight, $listItemSubtitleWeight);
+            line-height: v(normal, subtitle_line_height, $listItemSubtitleLineheight);
+            text-transform: v(none, subtitle_text_transform, $listItemSubtitleTextTransform);
+            color: v($colorDefaultText, subtitle_color, $colorlistItemSubtitle);
+
+            @include fontsize(v($fs_small, subtitle_font_size, $listItemSubtitleFontsize));
+        }
+
+        .partOfTheme,
+        .tagline {
+            margin: v(10px 0 0 0, tagline_margin, $listItemTaglineMargin);
+            font-family: v($fontNormal, tagline_font_family, $listItemTaglineFontfamily);
+            font-weight: v(normal, tagline_font_weight, $listItemTaglineWeight);
+            line-height: v(1, tagline_line_height, $listItemTaglineLineheight);
+            text-transform: v(none, tagline_text_transform, $listItemTaglineTextTransform);
+            color: v(inherit, tagline_color, $colorlistItemTagline);
+
+            @include fontsize(v($fs_normal, tagline_font_size, $listItemTaglineFontsize));
+        }
+    }
+
+    .meta {
+        justify-content: space-between;
+        border-top: v(1px solid, meta_border_top, $listMetaBorderTop);
+        line-height: v(50px, meta_line_height, $listItemMetaHeightBP5);
+        background: v(transparent, meta_background, $listItemMetaBackground);
+
+        @include fontsize(v($fs_small, meta_font_size, $listMetaFontsize));
+
+        @include mobile {
+            line-height: v(41px, meta_line_height_mobile, $listItemMetaHeightBP4);
+        }
+
+        @include not_mobile {
+            display: flex;
+        }
+
+        .meta-group {
+            display: flex;
+            &:first-child {
+                flex-grow: 1;
+            }
+            &:not(:first-child) {
+                flex-shrink: 0;
+            }
+            > :first-child {
+                flex-grow: 1;
+            }
+
+            .genres li:nth-of-type(1n+4) {
+                display: none;
+            }
+        }
+
+        .price {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: v(50px, meta_line_height, $listItemMetaHeightBP5);
+            font-family: v(inherit, price_font_family, $cardPriceFontFamily);
+            font-weight: v(inherit, price_font_weight, $cardPriceFontWeight);
+            line-height: 1;
+            text-transform: v(none, price_text_transform, $cardPriceTexttransform);
+
+            @include fontsize(v(inherit, price_font_size, $cardPriceFontsize));
+
+            > * {
+                text-align: center;
+            }
+
+            button {
+                display: inline;
+                margin: 0;
+                padding: 0;
+                border: none;
+                font-size: inherit;
+                line-height: inherit;
+                background: transparent;
+                color: v(inherit, price_color);
+            }
+        }
+
+        .price,
+        .stars,
+        .favourite,
+        .kijkwijzer {
+            flex-shrink: 0;
+            @include not_mobile {
+                padding: v(0 20px, meta_item_padding, $listItemMetaItemPadding);
+                text-align: right;
+                border-left: v(1px solid $grey3, meta_item_border, $listMetaBorder $colorMetaBorder);
+            }
+        }
+        .kijkwijzer {
+            flex-grow: 0;
+            display: flex;
+            align-items: center;
+        }
+        .favourite,
+        .price {
+            flex-grow: 0;
+        }
+
+        .meta-group.remove {
+            display: flex;
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin: v(0 15px 15px 0, remove_margin, $listMetaRemoveBtnMargin);
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                text-align: left;
+                width: auto;
+                height: auto;
+                margin: 0;
+                padding: 0;
+                border: none;
+                font-weight: normal;
+                font-size: v(12px, remove_font_size, $orderListRemoveSize);
+
+                background: v(transparent, remove_background, $colorBgRemoveItem);
+                color: v($colorDefaultText, remove_color, $colorOrderRemoveItem);
+                box-shadow: none;
+
+                &:hover {
+                    background: v(transparent, remove_background_hover, $colorBgRemoveItemHover);
+                    color: v($color1, remove_color_hover, $colorOrderRemoveItemHover);
+                }
+                span {
+                    margin-left: 1ex;
+                }
+                i {
+                    width: 16px;
+                    margin: 0;
+                    text-align: center;
+                }
+            }
+        }
+
+        // variant with the buttons in the meta bar
+        .meta-group.button {
+            flex-grow: 0;
+            flex-shrink: 0;
+            margin: v(8px 0 8px 15px, meta_button_margin, $listMetaBtnMargin);
+            @include mobile {
+                margin-left: 0;
+            }
+            .btn {
+                @include mobile {
+                    width: 100%;
+                }
+
+                border: v($defaultBtnBorderActive, meta_button_border, $listMetaBtnBorder);
+                background: v($colorBgBtnActive, meta_button_background, $listMetaBtnBackground);
+                color: v($colorBtnActiveText, meta_button_color, $listMetaBtnColor);
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, meta_button_border_hover, $listMetaBtnBorderHover);
+                    background: v($colorBtnActiveHover, meta_button_background_hover, $listMetaBtnBackgroundHover);
+                    color: v($colorBtnActiveTextHover, meta_button_color_hover, $listMetaBtnColorHover);
+                }
+            }
+        }
+    }
+
+    .dateTimeContainer {
+        flex-shrink: 0;
+        position: relative;
+        border-top: v(none, datetime_border_top, $listItemDateBorderTop);
+        border-bottom: v(none, datetime_border_bottom, $listItemDateBorderBottom);
+        background: v($colorComplementary, datetime_background, $colorBgMultipleListItems);
+        color: v($white, datetime_color, $colorMultipleListItemsText);
+
+        @media (min-width: $bp_mobile) {
+            width: math.div(2, 9) * 100%;
+        }
+        @media (min-width: $bp_mobile) and (max-width: 1199px) {
+            width: math.div(2.4, 9) * 100%;
+        }
+        @media (min-width: $bp_mobile) and (max-width: $bp_tablet - 1) {
+            width: math.div(3, 9) * 100%;
+        }
+
+        @include not_mobile {
+            border-right: v(none, datetime_border_right, $listItemDateBorderRight);
+            border-left: v(none, datetime_border_left, $listItemDateBorderLeft);
+        }
+
+        @at-root .listItems.variant-mobile-ish & {
+            width: 100%;
+        }
+
+        .dateTimeInner {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            position: relative;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+
+    .datetime {
+        text-align: v(left, datetime_text_align, $listItemDateTimeAlign);
+        margin: v(0, datetime_inner_margin, $listDateTimeInnerMargin);
+        padding: v(0, datetime_inner_padding, $listDateTimeInnerPadding);
+        background: v(transparent, datetime_inner_background, $listItemDateTimeBackground);
+        color: v(inherit, datetime_inner_color, $listItemDateTimeColor);
+
+        .orderItem & {
+            background: v(transparent, datetime_inner_background_order, $orderItemDateTimeBackground);
+            color: v(inherit, datetime_inner_color_order, $orderItemDateTimeColor);
+        }
+
+        @include mobile {
+            display: none;
+        }
+
+        span {
+            display: inline-block;
+        }
+
+        .date {
+            font-family: v($fontNormal, date_font_family, $cardMultiDateFontfamily);
+            font-weight: v(normal, date_font_weight, $cardMultiDateWeight);
+            line-height: v(1, date_line_height, $cardMultiDateLineHeight);
+            text-transform: v(none, date_text_transform, $cardMultiDateTexttransform);
+
+            @include fontsize(v($fs_large, date_font_size, $cardMultiDateFontsize));
+
+            .separator {
+                padding: v(0 1ex, date_separator_padding, $showDetailSeparatorPadding);
+                line-height: 1;
+
+                + .time::before {
+                    // leave out the pseudo-element seperator since we have a real one now
+                    display: none;
+                }
+            }
+
+            &.format-split {
+                display: inline-flex;
+                text-align: v(center, date_split_text_align, $cardMultiDateSplitAlignment);
+                > * {
+                    // for IE10, float won't catch if the flexbox works
+                    float: left;
+                }
+                .separator {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+
+        .time {
+            margin: v(0, time_margin, $listItemTimeMargin);
+            font-family: v($fontNormal, time_font_family, $listItemTimeFontfamily);
+            font-weight: v(normal, time_font_weight, $listItemTimeWeight);
+            line-height: v(normal, time_line_height, $listItemTimeLineheight);
+            text-transform: v(none, time_text_transform, $listItemTimeTextTransform);
+            color: v(inherit, time_color, $colorListItemTime);
+
+            @include fontsize(v($fs_small, time_font_size, $listItemTimeFontsize));
+
+            .orderItem & {
+                color: v(inherit, time_color_order, $orderItemTimeColor);
+            }
+
+            &::before {
+                // a seperator between date and time according to design
+                content: v('-', date_separator, $listItemDateTimeSeparator);
+                display: block;
+                speak: none;
+                font-family: v($fontNormal, date_font_family, $cardMultiDateFontfamily);
+                font-weight: v(normal, date_font_weight, $cardMultiDateWeight);
+                line-height: v(1, date_line_height, $cardMultiDateLineHeight);
+                text-transform: v(none, date_text_transform, $cardMultiDateTexttransform);
+
+                @include fontsize(v($fs_large, date_font_size, $cardMultiDateFontsize));
+            }
+        }
+    }
+
+    .top-date {
+        order: -2;
+        display: none;
+        align-self: v(flex-start, supertitle_align_self);
+        margin: v(0 0 5px 0, topdate_margin, $listItemMobileDateMargin);
+        padding: v(0, topdate_padding, $listItemMobileDatePadding);
+        font-family: v($fontNormal, topdate_font_family, $cardListMobileDateFontfamily);
+        font-weight: v(normal, topdate_font_weight, $cardListMobileDateWeight);
+        line-height: v(normal, topdate_line_height, $cardListMobileDateLineheight);
+        text-transform: v(uppercase, topdate_text_transform, $cardListMobileDateTexttransform);
+        color: v($black, topdate_color, $colorListMobileDate);
+
+        @include fontsize(v($fs_small, topdate_font_size, $cardListMobileDateFontsize));
+
+        @at-root li.topdate & {
+            display: block;
+        }
+        @include mobile {
+            display: block;
+        }
+
+        div {
+            display: inline-block;
+        }
+    }
+
+    .dateBox {
+        order: -1;
+        flex-shrink: 0;
+        width: math.div(2, 12) * 100%;
+        margin: v(0, compact_date_margin, $listCompactDateTimeInnerMargin);
+        padding: v(20px 30px 10px 15px, compact_date_padding, $listCompactDateTimeInnerPadding);
+        border-top: v(none, compact_date_border_top, $listItemMultiBorderTop);
+        border-bottom: v(none, compact_date_border_bottom, $listItemMultiBorderBottom);
+        border-left: v(none, compact_date_border_left, $listItemMultiBorderLeft);
+        background: v(transparent, compact_date_background, $listCompactDateTimeBackground);
+
+        .datetime {
+            text-align: v(left, compact_date_text_align, $listCompactDateTimeAlign);
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            display: none;
+        }
+
+        + .descMetaContainer {
+            border-left: none;
+        }
+        .orderItem & {
+            align-self: stretch;
+            width: math.div(3, 12) * 100%;
+        }
+    }
+
+    a.mobile-button {
+        display: none;
+        @include mobile {
+            display: block;
+        }
+    }
+
+    .dateLabel {
+        padding: v(10px 0 0 0, date_label_padding);
+        font-family: v($fontNormal, date_label_font_family);
+        font-weight: v(normal, date_label_font_weight);
+        line-height: v(1, date_label_line_height);
+        text-transform: v(v(none, date_text_transform, $cardMultiDateTexttransform), date_label_text_transform);
+        color: v(inherit, date_label_color);
+        text-align: v(center, date_label_text_align);
+
+        @include fontsize(v($fs_small, date_label_font_size));
+    }
+
+    // extended card
+    @media (min-width: $bp_mobile) {
+        @at-root .eventCard.extended .listItemWrapper {
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+
+            .inner {
+                border-top-left-radius: $defaultCardRadius;
+            }
+
+            .thumb {
+                min-height: v(540px, card_height_extended, $listItemHeightExtended);
+                position: static;
+                .image,
+                iframe {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+.listItemWrapper.with-info-link {
+    .descMetaContainer {
+        position: relative;
+
+        .tagline > .info-link {
+            margin-left: 1ex;
+        }
+
+        .info-link {
+            @include info_link();
+        }
+
+        .wishlist {
+            display: block;
+            position: absolute;
+            right: 0;
+            padding: v(20px 30px 10px 30px, wishlist_padding);
+
+            @include not_mobile {
+                display: none;
+            }
+        }
+    }
+
+    .meta {
+        display: flex;
+        align-items: center;
+
+        .wishlist {
+            display: none;
+            @include not_mobile {
+                display: block;
+                position: unset;
+                padding: 0;
+            }
+        }
+    }
+}
+
+.variant-mobile-ish {
+    .tagline > .info-link {
+        margin-left: 1ex;
+    }
+
+    .info-link {
+        @include info_link();
+    }
+}
+
+.eventCard {
+    .desc {
+        padding: v(20px 30px 10px 30px, desc_padding, $listItemDescPadding);
+
+        @media (max-width: $bp_mobile - 1) {
+            padding: v(v(20px 30px 10px 30px, desc_padding, $listItemDescPadding), desc_padding_mobile);
+        }
+    }
+
+    .meta {
+        padding: v(0 15px 0 30px, meta_padding, $listItemMetaPadding);
+
+        @media (max-width: $bp_mobile - 1) {
+            padding: v(0 30px 15px 30px, meta_padding_mobile, $listItemMetaPaddingBP4);
+        }
+
+        .genres {
+            padding: 10px 0;
+        }
+    }
+
+    .dateTimeInner {
+        padding: v(30px 20px 10px 20px, datetime_padding, $listDateTimePadding);
+
+        @media (max-width: $bp_mobile - 1) {
+            padding: v(15px, datetime_padding_mobile, $listItemBtnContainerPaddingMobile);
+        }
+    }
+
+    &.variant-mobile-ish {
+        .desc {
+            padding: v(v(20px 30px 10px 30px, desc_padding, $listItemDescPadding), desc_padding_mobile);
+        }
+
+        .meta {
+            padding: v(0 30px 15px 30px, meta_padding_mobile, $listItemMetaPaddingBP4);
+        }
+
+        .dateTimeInner {
+            padding: v(15px, datetime_padding_mobile, $listItemBtnContainerPaddingMobile);
+        }
+    }
+
+    &--topgenre {
+        .desc {
+            padding: v(0 30px 10px 30px, desc_padding, $listItemDescPadding);
+        }
+    }
+}
+
+/* ----------------------------------------------------------------
+    Brochure
+-----------------------------------------------------------------*/
+$brochure_spacing: v(15px, brochure_grid_spacing, $brochureGridSpacing);
+
+.container.wide {
+    width: 100%;
+    padding: 0 15px;
+
+    .listItems.variant-brochure {
+        @media (min-width: $bp_720p) {
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: auto;
+        }
+        @media (min-width: $bp_fullhd) {
+            grid-template-columns: repeat(5, 1fr);
+            grid-auto-rows: auto;
+        }
+    }
+}
+.listItems.variant-brochure {
+    display: grid;
+    grid-column-gap: $brochure_spacing;
+    grid-row-gap: $brochure_spacing;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+    grid-auto-flow: dense;
+
+    > * + * {
+        margin-top: 0;
+    }
+
+    @media (max-width: $bp_tablet - 1) {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: calc(50vw - #{$brochure_spacing});
+    }
+    @media (max-width: 600px) {
+        display: block;
+        > * {
+            height: calc(100vw - 2 * #{$brochure_spacing});
+        }
+        > * + * {
+            margin-top: $brochure_spacing;
+        }
+    }
+
+    .brochureCard {
+        background: v($white, card_background, $colorBgListItems);
+
+        .main,
+        .meta-group:not(.buttons) .btn.btn-active,
+        .close-button,
+        .next-button,
+        .prev-button {
+            display: none;
+        }
+        .thumb {
+            overflow: hidden;
+        }
+
+        .poster {
+            display: none;
+        }
+
+        @each $animation in v([], brochure_animations, $brochureItemAnimations) {
+            @include card_animation($animation, '.thumb:not(.video-loaded) .image');
+        }
+
+        @at-root .listItems[data-animations*='shadow'] .brochureCard {
+            @include card_animation('shadow', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='glow'] .brochureCard {
+            @include card_animation('glow', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='zoom'] .brochureCard {
+            @include card_animation('zoom', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='twist'] .brochureCard {
+            @include card_animation('twist', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='saturate'] .brochureCard {
+            @include card_animation('saturate', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='desaturate'] .brochureCard {
+            @include card_animation('desaturate', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='slide'] .brochureCard {
+            @include card_animation('slide', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='shift'] .brochureCard {
+            @include card_animation('shift', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+        @at-root .listItems[data-animations*='skew'] .brochureCard {
+            @include card_animation('skew', '.thumb:not(.video-loaded) .image', '.desc');
+        }
+    }
+}
+
+.listItems.variant-brochure,
+.brochure-modal-root .modal-inner {
+    [data-video-url] {
+        color: v($colorVideoPlayerHighlights, video_button_color);
+
+        .image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        @include video_button();
+    }
+
+    > .brochureCard {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 1;
+        border: v(none, brochure_border);
+        border-radius: v($defaultCardRadius, brochure_border_radius);
+        box-shadow: v($defaultBoxShadow, brochure_box_shadow);
+
+        &.has-popover {
+            z-index: 2;
+        }
+
+        &.extended {
+            grid-column-end: span 2;
+            grid-row-end: span 2;
+        }
+
+        &.mini {
+            height: 50%;
+            overflow: visible; // allow event list popover to extend outside this box
+            .thumb,
+            .dateBox,
+            .tagline {
+                display: none;
+            }
+        }
+
+        .picture {
+            &__image {
+                object-position: center center;
+            }
+        }
+
+        .thumb {
+            position: relative;
+            z-index: 1;
+            flex: 0 1 auto;
+
+            .image {
+                position: static;
+            }
+
+            &,
+            & > * {
+                border-radius: inherit;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            &.video-loaded ~ {
+                .dateBox {
+                    opacity: 0;
+                }
+            }
+            iframe {
+                // the video embed element
+                width: 100%;
+                height: auto;
+                aspect-ratio: 16 / 9;
+            }
+
+            .video-play-button {
+                position: absolute;
+            }
+        }
+
+        .dateBox {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            margin: v(15px 0 0 15px, brochure_datebox_margin, $brochureDateMargin);
+            padding: v(.5em, brochure_datebox_padding, $brochureDatePadding);
+            border-radius: v(inherit, brochure_datebox_border_radius, $brochureDateRadius);
+            font-family: v(inherit, brochure_datebox_font_family);
+            line-height: v(1.2, brochure_datebox_line_height, $brochureDateLineheight);
+            background: v($colorBgListItems, brochure_datebox_background, $brochureDateBackground);
+            color: v(inherit, brochure_datebox_color, $brochureDateColor);
+            pointer-events: none;
+            transition: opacity .2s ease-in-out;
+
+            @include fontsize(v($fs_small, brochure_datebox_font_size, $brochureDateFontsize));
+        }
+        .datetime {
+            margin: v(0, brochure_datetime_margin, $brochureSmallDateMargin);
+            color: v($colorDefaultText, brochure_datetime_color, $brochureSmallDateColor);
+            @include fontsize(v($fs_small, brochure_datetime_font_size, $brochureSmallDateFontsize));
+        }
+
+        .desc {
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+            min-height: v(20%, brochure_desc_height);
+            padding: v(15px, brochure_desc_margin, $brochureDescMargin);
+            &:link,
+            &:link:hover {
+                text-decoration: none;
+                color: inherit;
+            }
+        }
+
+        .supertitle {
+            order: -1;
+            display: block;
+            align-self: v(flex-start, supertitle_align_self);
+            margin: v(0 0 5px 0, brochure_supertitle_margin, $brochureSupertitleMargin);
+            padding: v(0, brochure_supertitle_padding, $brochureSupertitlePadding);
+            font-family: v($fontNormal, brochure_supertitle_font_family, $brochureSupertitleFontfamily);
+            font-weight: v(normal, brochure_supertitle_font_weight, $brochureSupertitleFontweight);
+            line-height: v(1, brochure_supertitle_line_height, $brochureSupertitleLineheight);
+            text-transform: v(uppercase, brochure_supertitle_text_transform, $brochureSupertitleTexttransform);
+            background: v(transparent, brochure_supertitle_background, $brochureSupertitleBackground);
+            color: v($color1, brochure_supertitle_color, $brochureSupertitleColor);
+
+            @include fontsize(v($fs_tiny, brochure_supertitle_font_size, $brochureSupertitleFontsize));
+        }
+
+        .title {
+            margin: v(0 0 5px 0, brochure_title_margin, $brochureTitleMargin);
+            font-family: v($fontTitleContent, brochure_title_font_family, $brochureTitleFontfamily);
+            font-weight: v(bold, brochure_title_font_weight, $brochureTitleWeight);
+            line-height: v(1.2, brochure_title_line_height, $brochureTitleLineheight);
+            text-decoration: v(none, brochure_title_text_decoration);
+            text-transform: v(none, brochure_title_text_transform, $brochureTitleTextTransform);
+            color: v($colorDefaultText, brochure_title_color, $brochureTitleColor);
+
+            @include fontsize(v($fs_small_title, brochure_title_font_size, $brochureTitleFontsize));
+        }
+        .desc:link:hover .title {
+            text-decoration: v(none, brochure_title_text_decoration_hover, $brochureTitleDecorationHover);
+            color: v($colorDefaultText, brochure_title_color_hover, $brochureTitleColorHover);
+        }
+
+        .subtitle {
+            margin: v(0, brochure_subtitle_margin, $brochureSubtitleMargin);
+            font-family: v($fontNormal, brochure_subtitle_font_family, $brochureSubtitleFontfamily);
+            font-weight: v(normal, brochure_subtitle_font_weight, $brochureSubtitleFontweight);
+            line-height: v(normal, brochure_subtitle_line_height, $brochureSubtitleLineheight);
+            text-transform: v(none, brochure_subtitle_text_transform, $brochureSubtitleTexttransform);
+            color: v($colorDefaultText, brochure_subtitle_color, $brochureSubtitleColor);
+
+            @include fontsize(v($fs_small, brochure_subtitle_font_size, $brochureSubtitleFontsize));
+        }
+
+        .tagline {
+            max-width: v(unset, brochure_tagline_max_width);
+            margin: v(5px 0 0 0, brochure_tagline_margin);
+            color: v($colorDefaultText, brochure_tagline_color);
+
+            @include fontsize(v($fs_small, brochure_tagline_font_size));
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .meta {
+            display: flex;
+            flex: 1;
+            align-items: flex-end;
+            padding: v(0 0 15px 0, brochure_meta_padding, $brochureMetaPadding);
+            > * {
+                display: flex;
+                align-items: center;
+                &:first-child {
+                    flex: 1;
+                    padding: v(0 0 0 15px, brochure_meta_padding_first, $brochureMetaFirstPadding);
+                }
+                &:last-child {
+                    padding: v(0 15px, brochure_meta_padding_last, $brochureMetaLastPadding);
+                }
+            }
+        }
+
+        .meta-group.buttons {
+            .date {
+                display: none;
+            }
+            > * + * {
+                margin-left: 10px;
+            }
+        }
+
+
+        form {
+            margin: 0;
+        }
+
+        .status-info,
+        .btn-unavailable {
+            // brochure only cares about currently available events
+            // and provides no means for details about unavailability
+            display: none !important;
+        }
+
+        .events .btn,
+        .buttons .btn,
+        .buttons button,
+        .buttons [aria-controls] {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: v(32px, brochure_button_size, $brochureEventButtonSize);
+            min-width: 0;
+            height: v(32px, brochure_button_size, $brochureEventButtonSize);
+            position: relative;
+            padding: v(4px, brochure_button_padding, $brochureEventButtonPadding);
+            border: none;
+            border-radius: v(100%, brochure_button_border_radius, $brochureEventButtonRadius);
+            background: v(darken($colorPageBg, 9%), brochure_button_background, $brochureEventButtonBackground);
+            color: v($grey1, brochure_button_color, $brochureEventButtonColor);
+
+            .peppered-icon {
+                display: inline-flex;
+            }
+
+            .label,
+            .property {
+                @include screenreader_only();
+            }
+
+            &:hover {
+                background: v(darken($colorPageBg, 9%), brochure_button_background_hover, $brochureEventButtonBackgroundHover);
+                color: v($colorDefaultText, brochure_button_color_hover, $brochureEventButtonColorHover);
+            }
+
+            &.event-in-cart {
+                background: v($grey3, brochure_button_background_selected, $brochureEventActiveButtonBackground);
+                color: v($colorPrime, brochure_button_color_selected, $brochureEventActiveButtonColor);
+                &:hover {
+                    background: v($grey3, brochure_button_background_selected_hover, $brochureEventActiveButtonBackgroundHover);
+                    color: v($colorPrime, brochure_button_color_selected_hover, $brochureEventActiveButtonColorHover);
+                }
+            }
+        }
+
+
+        .events {
+            margin: v(30px, brochure_events_margin, $brochureEventsMargin);
+
+            @include fontsize(v($fs_small, brochure_events_font_size, $brochureEventsFontsize));
+
+            @media (min-width: 600px) {
+                margin-top: 0;
+            }
+
+            > .btn,
+            > button {
+                width: 100%;
+                min-width: 0;
+            }
+
+            button.expand {
+                width: 100%;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                padding: 5px;
+                border: none;
+                background: transparent;
+                color: v($grey1, brochure_expand_color, $brochureEventExpandButtonColor);
+                &:hover {
+                    color: v($colorDefaultText, brochure_expand_color_hover, $brochureEventExpandButtonColorHover);
+                }
+                @include fontsize(v($fs_tiny, brochure_expand_font_size, $brochureEventExpandButtonSize));
+            }
+
+            ul {
+                list-style: none;
+            }
+            li {
+                display: flex;
+                align-items: center;
+                margin: 0;
+                padding: v(10px 15px, brochure_event_padding, $brochureEventPadding);
+                border-radius: v($defaultCardRadius, brochure_event_border_radius, $brochureEventRadius);
+                background: v(darken($colorPageBg, 3%), brochure_event_background, $brochureEventBackground);
+
+                + li {
+                    margin-top: v(5px, brochure_event_spacing, $brochureEventSpacing);
+                }
+
+                > :first-child {
+                    flex: 1;
+                    margin-right: 20px;
+                }
+                > * + * {
+                    margin-left: 10px;
+                }
+
+                &.extra {
+                    display: none;
+                }
+            }
+            .location,
+            .status {
+                margin: v(5px 0 0 0, brochure_status_margin, $brochureLocationMargin);
+                @include fontsize(v($fs_tiny, brochure_status_font_size, $brochureLocationFontsize));
+            }
+            .venue {
+                margin: v(5px 0 0 0, brochure_venue_margin, $brochureVenueMargin);
+                @include fontsize(v($fs_tiny, brochure_venue_font_size, $brochureVenueFontsize));
+            }
+            .location + .venue {
+                margin-top: 0;
+            }
+            .fa-map-marker {
+                display: none;
+            }
+        }
+
+        .event-list-popover {
+            width: 100%;
+            max-height: 60vh;
+            position: absolute;
+            overflow: auto;
+            top: 100%;
+            right: 0;
+            z-index: 2;
+            border-radius: v($defaultCardRadius, brochure_popover_border_radius, $brochureEventsPopoverRadius);
+            background: v($colorPageBg, brochure_popover_background, $brochureEventsPopoverBackground);
+            box-shadow: v(inherit, brochure_popover_box_shadow, $brochureEventsPopoverShadow);
+
+            &::before { // pointer nubbin
+                content: '';
+                display: block;
+                position: absolute;
+                top: -6px;
+                right: 26px;
+                border-top: none;
+                border-right: 6px solid transparent;
+                border-bottom: 6px solid v($colorPageBg, brochure_popover_background, $brochureEventsPopoverBackground);
+                border-left: 6px solid transparent;
+            }
+            &.heart::before {
+                right: 66px;
+            }
+
+            &:not([aria-expanded='true']) {
+                display: none;
+            }
+
+            .events {
+                max-height: inherit;
+                margin: 0;
+                padding: v(20px, brochure_popover_padding, $brochureEventsPopoverPadding);
+                overflow: auto;
+            }
+
+            &.heart form.tickets,
+            &.heart .cart {
+                display: none;
+            }
+            &.cart .favourite {
+                display: none;
+            }
+        }
+        &.extended .event-list-popover {
+            width: 50%;
+        }
+    }
+}
+
+$brochude_modal_width: v(740px, brochure_modal_width, $brochureModalWidth);
+
+.brochure-modal-root {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    z-index: 1000;
+    padding: v(0 45px, brochure_modal_padding, $brochureModalPadding);
+    background: rgba(0,0,0,.2);
+
+    @media (max-width: 900px) {
+        padding: v(0 20px, brochure_modal_padding_small, $brochureModalPaddingSmall);
+        background: v($colorPageBg, brochure_modal_background);
+    }
+
+    .modal-inner {
+        list-style: none;
+        max-width: $brochude_modal_width;
+        position: relative;
+        z-index: 1;
+        margin: 0 auto;
+        padding: 30px 0;
+        border-radius: v($defaultCardRadius, brochure_modal_border_radius);
+        will-change: transform, opacity;
+        transition: .3s ease-in-out;
+
+        &:not(.visible) {
+            opacity: 0;
+            transform: scale(0);
+
+            &.to-right {
+                transform: translateX(-100vw);
+            }
+            &.to-left {
+                transform: translateX(100vw);
+            }
+        }
+
+        > .brochureCard {
+            display: block;
+            position: relative;
+            z-index: 0;
+            background: v($colorPageBg, brochure_modal_background);
+
+            @media (max-width: 900px) {
+                box-shadow: none;
+            }
+
+            .thumb {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .poster-overlay {
+                width: 60%;
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 4;
+                padding-bottom: 56.25%;
+                background: v(linear-gradient(to right, transparent, rgba(00,00,00,0.5)), poster_overlay_gradient);
+                pointer-events: none;
+            }
+
+            .poster {
+                display: block;
+                max-width: v(235px, poster_max_width);
+                margin: auto;
+                padding: v(0 0 20px 0, poster_padding);
+
+                &.floating {
+                    position: absolute;
+                    right: 30px;
+                    text-align: center;
+                    z-index: 5;
+                    transform: translateY(-100%);
+                }
+            }
+
+            .tagline {
+                display: none;
+            }
+
+            &.mini {
+                height: auto;
+                .thumb,
+                .dateBox,
+                .tagline {
+                    display: block;
+                }
+                .desc .datetime {
+                    display: none;
+                }
+            }
+
+            .main {
+                @media (min-width: 600px) {
+                    display: flex;
+                }
+                > * {
+                    flex: 2;
+                    &:first-child {
+                        flex: 3;
+                    }
+                }
+            }
+
+            .desc {
+                display: flex;
+                flex-direction: column;
+                margin: v(20px 30px 30px 30px, brochure_modal_desc_margin, $brochureModalDescMargin);
+                padding: 0;
+
+                &.wrapped {
+                    padding-right: v(235px, poster_max_width) + 30px;
+                }
+            }
+
+            .supertitle {
+                order: -1;
+                align-self: v(flex-start, supertitle_align_self);
+                margin: v(0 0 5px 0, brochure_modal_supertitle_margin, $brochureModalSupertitleMargin);
+                @include fontsize(v($fs_small, brochure_modal_supertitle_font_size, $brochureModalSupertitleFontsize));
+            }
+            .title {
+                margin: v(0 0 5px 0, brochure_modal_title_margin, $brochureModalTitleMargin);
+                @include fontsize(v($basicH2Fontsize, brochure_modal_title_font_size, $brochureModalTitleFontsize));
+            }
+            .subtitle {
+                margin: v(0, brochure_modal_subtitle_margin, $brochureModalSubtitleMargin);
+                @include fontsize(v($basicH4Fontsize, brochure_modal_subtitle_font_size, $brochureModalSubtitleFontsize));
+            }
+
+            .richtext {
+                margin: v(0 30px, brochure_modal_description_margin, $brochureDescriptionMargin);
+                font-family: v(inherit, brochure_modal_description_font_family, $brochureDescriptionFontfamily);
+                font-weight: v(normal, brochure_modal_description_font_weight, $brochureDescriptionFontweight);
+                line-height: v(1.4, brochure_modal_description_line_height, $brochureDescriptionLineheight);
+                text-transform: v(none, brochure_modal_description_text_transform, $brochureDescriptionTexttransform);
+                color: v(inherit, brochure_modal_description_color, $brochureDescriptionColor);
+
+                @include fontsize(v(inherit, brochure_modal_description_font_size, $brochureDescriptionFontsize));
+
+                h3 {
+                    @include fontsize(v($basicH3Fontsize, brochure_modal_heading_font_size, $brochureDescriptionTitleFontsize));
+                }
+                + .richtext {
+                    margin-top: v(30px, brochure_modal_description_spacing, $brochureDescriptionSpacing);
+                }
+            }
+            .teaser {
+                margin: v(0 30px, brochure_modal_teaser_margin, $brochureTeaserMargin);
+                font-family: v(inherit, brochure_modal_teaser_font_family, $brochureTeaserFontfamily);
+                font-weight: v(bold, brochure_modal_teaser_font_weight, $brochureTeaserFontweight);
+                line-height: v(1.4, brochure_modal_teaser_line_height, $brochureTeaserLineheight);
+                text-transform: v(none, brochure_modal_teaser_text_transform, $brochureTeaserTexttransform);
+                color: v(inherit, brochure_modal_teaser_color, $brochureTeaserColor);
+
+                @include fontsize(v(inherit, brochure_modal_teaser_font_size, $brochureTeaserFontsize));
+            }
+
+            .video {
+                margin: v(15px 30px, brochure_modal_video_margin, $brochureVideoMargin);
+            }
+
+            .meta {
+                padding: v(0 30px 20px 30px, brochure_modal_meta_padding, $brochureModalMetaPadding);
+                > * {
+                    &:first-child {
+                        padding: v(0, brochure_modal_meta_padding_first, $brochureModalMetaFirstPadding);
+                    }
+                    &:last-child {
+                        padding: v(0, brochure_modal_meta_padding_last, $brochureModalMetaLastPadding);
+                    }
+                }
+
+                .btn-active {
+                    display: inline-block;
+                    margin-left: 15px;
+                }
+            }
+
+            .meta-group.buttons {
+                display: none;
+            }
+        }
+    }
+
+    $brochure_nav_width: v(50px, brochure_nav_width, $brochureNavWidth);
+    $brochure_nav_height: v(50px, brochure_nav_height, $brochureNavHeight);
+
+    button.prev-button,
+    button.next-button,
+    button.close-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $brochure_nav_width;
+        height: $brochure_nav_height;
+        position: fixed;
+        top: v(30px, brochure_nav_top, $brochureNavOffsetTop);
+        right: 0;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+        border: v(none, brochure_nav_border, $brochureNavBorder);
+        border-radius: v(100%, brochure_nav_border_radius, $brochureNavRadius);
+        background: v(#FFF, brochure_nav_background, $brochureNavBackground);
+        color: v(#000, brochure_nav_color, $brochureNavColor);
+        opacity: v(.8, brochure_nav_opacity, $brochureNavOpacity);
+        cursor: pointer;
+        will-change: opacity;
+        transition: v($defaultBtnTransitionLeave, brochure_nav_transition_leave);
+        &:hover {
+            transition: v($defaultBtnTransitionEnter, brochure_nav_transition_enter);
+            opacity: v(1, brochure_nav_opacity_hover, $brochureNavOpacityHover);
+        }
+
+        &::before { // enlarge clickable area
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            bottom: -10px;
+            left: -10px;
+            background: transparent;
+        }
+
+        > * {
+            pointer-events: none;
+        }
+    }
+    button.close-button {
+        position: absolute;
+        top: math.div($brochure_nav_height, -2);
+        right: math.div($brochure_nav_width, -2);
+    }
+    button.prev-button,
+    button.next-button {
+        right: 50%;
+        margin-top: math.div($brochure_nav_height, -2);
+        margin-right: -1 * ($brochure_nav_width + math.div($brochude_modal_width, 2));
+
+        .fa-lg {
+            display: none;
+        }
+
+        @media (min-width: 901px) {
+            width: $brochure_nav_width;
+            height: 200px;
+            top: 360px;
+            font-size: 50px;
+            background: transparent;
+            color: v(#FFF, brochure_nav_color_light, $brochureNavColorLight);
+
+            .fa-lg {
+                display: block;
+            }
+            :not(.fa-lg) {
+                display: none;
+            }
+        }
+    }
+    button.prev-button {
+        right: auto;
+        left: 50%;
+        margin-right: 0;
+        margin-left: -1 * ($brochure_nav_width + math.div($brochude_modal_width, 2));
+    }
+    @media (max-width: 900px) {
+        button.next-button,
+        button.prev-button {
+            top: 50vh;
+        }
+        button.next-button {
+            margin-right: calc(-50vw + 5px);
+        }
+        button.prev-button {
+            margin-left: calc(-50vw + 5px);
+        }
+    }
+}

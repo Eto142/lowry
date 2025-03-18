@@ -1,0 +1,62 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// e.g. for the age range in the courses filter
+
+// all values should be in a map called:
+$number_slider: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $number_slider;
+
+
+$height: v(6px, slider_height, $numberSliderHeight);
+$handle: v(36px, handle_height, $numberSliderHandleHeight);
+
+.noUi-target {
+    height: $height;
+    margin-bottom: math.div($handle, 2);
+    border: v(none, border, $numberSliderBorder);
+    border-radius: v($defaultBtnRadius, border_radius, $numberSliderRadius);
+    background: v($grey3, background, $numberSliderBackground);
+    box-shadow: none;
+
+    .noUi-tooltip {
+        bottom: 100%;
+        z-index: -1;
+        padding: 0;
+        border: none;
+        background: v($colorPageBg, tooltip_background, $numberSliderTooltipBackground);
+        color: v($colorDefaultText, tooltip_color, $numberSliderTooltipColor);
+    }
+
+    .noUi-connect {
+        background: v($grey2, selected_background, $numberSliderRangeBackground);
+    }
+
+    .noUi-handle {
+        width: $handle;
+        height: $handle;
+        top: math.div($height, -2);
+        left: math.div($handle, -2);
+        border: v(none, handle_border, $numberSliderHandleBorder);
+        border-radius: v(100%, handle_border_radius, $numberSliderHandleRadius);
+        background: v($colorPrime, handle_background, $numberSliderHandleBackground);
+        box-shadow: v($iconOverlayShadow, handle_box_shadow, $numberSliderHandleShadow);
+
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        @at-root {
+            html:not([dir='rtl']) .noUi-horizontal .noUi-handle {
+                right: math.div($handle, -2);
+                left: auto;
+            }
+        }
+    }
+}

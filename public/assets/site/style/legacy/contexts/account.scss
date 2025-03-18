@@ -1,0 +1,669 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$account: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $account;
+
+
+.mt #content .mtLoginformWrapper,
+.order #content #paymentForm,
+.order #content .discountWrapper,
+.mtEditformWrapper,
+.formWrapper,
+form[name='cancellation'] {
+    hr {
+        border-color: v($grey3, hr_border_color);
+    }
+
+    h1,
+    h2 {
+        margin-bottom: v(0, heading_margin_bottom, $formTitleMarginBottom);
+        font-family: v($fontTitleTemplate, heading_font_family, $formTitleFontfamily);
+        font-weight: v(bold, heading_font_weight, $formTitleWeight);
+        line-height: v(normal, heading_line_height, $formTitleLineHeight);
+        text-transform: v(none, heading_text_transform, $formTitleTexttransform);
+
+        @include fontsize(v($fs_large_title, heading_font_size, $formTitleFontsize));
+    }
+    h2 {
+        padding-top: 30px;
+        border-top: 1px solid $colorMtH2Border;
+    }
+
+    fieldset:not(.radio) {
+        margin: v(0 0 30px 0, fieldset_margin);
+    }
+
+    legend {
+        margin-top: 30px;
+        font-family: v($fontTitleTemplate, legend_font_family, $formLegendFontfamily);
+        font-weight: v(bold, legend_font_weight, $formLegendWeight);
+        line-height: v(normal, legend_line_height, $formLegendLineHeight);
+        text-transform: v(none, legend_text_transform, $formLegendTexttransform);
+        color: v($grey1, legend_color, $colorFormLegend);
+
+        @include fontsize(v($fs_small_title, legend_font_size, $formLegendFontsize));
+    }
+
+    label {
+        margin: v(0 0 5px 0, label_margin, $formLabelMargin);
+        font-family: v($fontNormal, label_font_family, $formLabelFontfamily);
+        font-weight: v(normal, label_font_weight, $formLabelWeight);
+        line-height: v(1.31, label_line_height, $formLabelLineHeight);
+        text-transform: v(none, label_text_transform, $formLabelTexttransform);
+        color: inherit;
+
+        @include fontsize(v($fs_normal, label_font_size, $formLabelFontsize));
+
+        .desc {
+            margin: v(0 0 5px 0, label_desc_margin, $formLabelDescMargin);
+        }
+    }
+
+    label.required::after { // symfony puts a class on labels for required fields
+        content: '*';
+    }
+
+    .form-group {
+        clear: both;
+    }
+    .double-group {
+        display: flex;
+        align-items: baseline;
+        > * {
+            flex: 1;
+        }
+        > *:not(.hidden) + * {
+            margin-left: 15px;
+        }
+        &.surname :last-child {
+            flex: 2;
+        }
+
+        [name='huisnummer'] {
+            display: inline-block;
+            width: 50%;
+        }
+        [name='toevoeging'] {
+            display: inline-block;
+            width: calc(50% - 15px);
+            margin-left: 15px;
+        }
+    }
+
+    .form-control {
+        height: auto;
+        padding: 10px 15px;
+        border: v(1px solid $grey1, input_border);
+        border-radius: $defaultFormRadius;
+        font-family: v($fontNormal, input_font_family, $formInputFontfamily);
+        font-weight: v(normal, input_font_weight, $formInputWeight);
+        font-style: v(italic, input_font_style, $formInputFontstyle);
+        line-height: v(normal, input_line_height, $formInputLineHeight) !important; // important because Bootstrap sucks
+        text-transform: v(none, input_text_transform, $formInputTexttransform);
+        color: v($black, input_color, $colorMtFormInput);
+        box-shadow: none;
+
+        @include fontsize(v($fs_normal, input_font_size, $formInputFontsize));
+
+        &.checked-invalid {
+            border-color: $colorMsgError;
+            background: mix($colorMsgError, #FFF, 10%);
+        }
+    }
+
+    .ts-wrapper {
+        &.form-control {
+            padding: 0;
+        }
+        .ts-control {
+            height: auto;
+            padding: 10px 15px;
+            border: none;
+            background: transparent;
+            color: v($black, input_color, $colorMtFormInput);
+            @include fontsize(v($fs_normal, input_font_size, $formInputFontsize));
+        }
+    }
+
+    p.account-info,
+    div.account-info {
+        margin: 5px 0 15px 2rem;
+        @include fontsize(v($fs_tiny, account_info_font_size, $accountInlineInfoSize));
+
+        label {
+            padding: 0;
+            font-size: inherit;
+        }
+
+        i {
+            margin-left: .5ex;
+        }
+    }
+    .checkbox,
+    .radio {
+        label {
+            padding-right: 2em;
+            + label {
+                margin-left: 30px;
+            }
+        }
+
+        // symfony generated form
+        input[type='radio'] {
+            margin-left: 0;
+        }
+
+        // old activation flow
+        label > input[type='radio'] {
+            margin-left: -1.5em;
+        }
+    }
+
+    #sendoptions .radio + .radio {
+        margin-top: 10px;
+    }
+
+    .btn:not(.btn-order) {
+        width: auto;
+        margin-bottom: 20px;
+        padding-right: 20px;
+        padding-left: 20px;
+        border: v($defaultBtnBorderActive, button_border, $accountBtnBorder);
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, button_border, $accountBtnBorderHover);
+        }
+    }
+
+    .btn-wrapper {
+        text-align: right;
+    }
+
+    @keyframes message-slide-in {
+        0% {
+            opacity: 0;
+            margin-top: -1em;
+        }
+        50% {
+            opacity: 0;
+            margin-top: -.5em;
+        }
+        100% {
+            opacity: 1;
+            margin-top: 0;
+        }
+    }
+
+    .validationMsg {
+        display: none;
+        padding-top: 5px;
+        text-align: right;
+        font-family: v($fontNormal, formerror_font_family, $customFormErrorFontfamily);
+        font-weight: v(normal, formerror_font_weight, $customFormErrorWeight);
+        font-style: v(normal, formerror_font_style, $customFormErrorStyle);
+        line-height: v(1, formerror_line_height, $customFormErrorLineHeight);
+        text-transform: v(none, formerror_text_transform, $customFormErrorTexttransform);
+        color: $colorMsgError;
+        animation: message-slide-in .2s ease-in-out;
+
+        @include fontsize(v($fs_small, formerror_font_size, $customFormErrorFontsize));
+    }
+    fieldset.checked-invalid > .validationMsg,
+    .checked-invalid ~ .validationMsg {
+        display: block;
+    }
+}
+
+.formWrapper h2 {
+    margin: v(60px 0 0 0, form_heading_margin, $customFormHeaderMargin);
+    padding: v(0 0 30px 0, form_heading_padding, $customFormHeaderPadding);
+    border-top: v(none, form_heading_border_top, $customFormBorderTop);
+    font-family: v($fontNormalBold, form_heading_font_family, $customFormHeaderFontfamily);
+    font-weight: v(bold, form_heading_font_weight, $customFormHeaderWeight);
+    line-height: v(normal, form_heading_line_height, $customFormHeaderLineHeight);
+    text-transform: v(none, form_heading_text_transform, $customFormHeaderTexttransform);
+
+    @include fontsize(v($fs_large_title, form_heading_font_size, $customFormHeaderFontsize));
+}
+
+
+/* ----------------------------------------------------------------
+    Edit form
+-----------------------------------------------------------------*/
+
+.mtEditformWrapper {
+    .container {
+        padding: v(60px 15px, edit_container_padding);
+    }
+
+    .container form > .form {
+        @media (min-width: $bp_mobile + 1) {
+            display: flex;
+            > * {
+                flex: 1;
+            }
+            > * + * {
+                margin-left: 60px;
+            }
+        }
+    }
+
+    .mandatory-fields-error {
+        display: inline-block;
+
+        @media (min-width: $bp_mobile + 1) {
+            max-width: calc(50% - 30px);
+        }
+
+        p {
+            display: block;
+            margin: 0 0 15px 0;
+        }
+        ul {
+            list-style: none;
+            margin: 0;
+            color: $colorMsgError;
+        }
+        li {
+            display: inline;
+            &:not(:last-child)::after {
+                content: ',\0020';
+            }
+        }
+    }
+
+    h2,
+    legend {
+        margin-bottom: 30px;
+        padding-top: 30px;
+        border-top: 1px solid $colorMtH2Border;
+        font-family: v($fontTitleTemplate, heading_font_family, $formTitleFontfamily);
+        font-weight: v(bold, heading_font_weight, $formTitleWeight);
+        line-height: v(normal, heading_line_height, $formTitleLineHeight);
+        text-transform: v(none, heading_text_transform, $formTitleTexttransform);
+
+        @include fontsize(v($fs_large_title, heading_font_size, $formTitleFontsize));
+    }
+
+    #passwordForm legend {
+        margin-bottom: 30px;
+        padding-top: 30px;
+        border-top: 1px solid $colorMtH2Border;
+        font-family: v($fontTitleTemplate, heading_font_family, $formTitleFontfamily);
+        font-weight: v(bold, heading_font_weight, $formTitleWeight);
+        line-height: v(normal, heading_line_height, $formTitleLineHeight);
+        text-transform: v(none, heading_text_transform, $formTitleTexttransform);
+
+        @include fontsize(v($fs_large_title, heading_font_size, $formTitleFontsize));
+    }
+
+    [for='details_birthdate'] + input {
+        width: 50%;
+    }
+
+    .mandatoryExp {
+        margin-bottom: 30px;
+        ul {
+            list-style: none;
+            color: $colorMsgError;
+        }
+    }
+}
+
+@keyframes submit-bar-slide-in {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes submit-bar-slide-out {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+}
+#submit-bar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding-top: v(15px, submit_bar_padding_top);
+    padding-bottom: v(15px, submit_bar_padding_bottom);
+    background: v($colorPageBg, submit_bar_background);
+    color: v($colorDefaultText, submit_bar_color);
+    box-shadow: v($defaultBoxShadow, submit_bar_box_shadow);
+    animation: .3s submit-bar-slide-in ease-in-out;
+    &.out {
+        display: block;
+        pointer-events: none;
+        animation: .3s submit-bar-slide-out ease-in-out;
+        animation-fill-mode: forwards;
+    }
+}
+
+form fieldset.optin {
+    &.unavailable {
+        opacity: 0.3;
+    }
+
+    fieldset {
+        margin-left: 30px!important;
+    }
+}
+
+
+/* ----------------------------------------------------------------
+    Order history / my agenda
+-----------------------------------------------------------------*/
+
+.heading {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    > * {
+        margin-bottom: 15px;
+    }
+
+    &-with-button {
+        @media (min-width: $bp_tiny) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            h1 {
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
+.mtWishlistFooter {
+    text-align: right;
+}
+
+/* ----------------------------------------------------------------
+    Light Login and general exceptions
+-----------------------------------------------------------------*/
+
+
+.light-login-flow,
+.account-pages,
+.exceptionWrapper {
+    background: v($colorPageBg, container_background);
+    color: v($colorDefaultText, container_color);
+
+    &.listWrapper {
+        background: v($colorPageBg, tickets_background);
+    }
+
+    .container {
+        @include inner_width('> .inner');
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    &.wide .container {
+        @include container_width();
+    }
+
+    button,
+    .btn {
+        margin: v(15px 0 0 0, button_margin, $loginButtonMargin);
+        padding: $defaultBtnPadding;
+        border: $defaultBtnBorderActive;
+        border-radius: $defaultBtnRadius;
+        font-family: $defaultBtnFontfamily;
+        font-weight: $defaultBtnWeight;
+        line-height: $defaultBtnLineHeight;
+        text-decoration: none;
+        text-transform: $defaultBtnTexttransform;
+        text-align: center;
+        background: $colorBgBtnActive;
+        color: $colorBtnActiveText;
+        box-shadow: $defaultBtnShadowActive;
+        cursor: pointer;
+        transition: $defaultBtnTransitionLeave;
+
+        @include fontsize($defaultBtnFontsize);
+
+        &:hover {
+            border: $defaultBtnBorderActiveHover;
+            background: $colorBtnActiveHover;
+            color: $colorBtnActiveTextHover;
+            box-shadow: $defaultBtnShadowActiveHover;
+            transition: $defaultBtnTransitionEnter;
+        }
+        &:active {
+            box-shadow: $defaultBtnShadowActiveActive;
+        }
+
+        &.btn-default {
+            border: $defaultBtnBorderDefault;
+            background: $colorBgBtnDefault;
+            color: $colorBtnDefaultText;
+            box-shadow: $defaultBtnShadowDefault;
+            &:hover {
+                border: $defaultBtnBorderActiveHover;
+                background: $colorBtnActiveHover;
+                color: $colorBtnActiveTextHover;
+                box-shadow: $defaultBtnShadowActive;
+            }
+            &:active {
+                box-shadow: $defaultBtnShadowActiveActive;
+            }
+        }
+
+        &:disabled {
+            border: $defaultBtnBorderDisabled !important;
+            background: $colorBgBtnDisabled !important;
+            color: $colorBtnDisabledText !important;
+            cursor: default;
+            opacity: 1; // bootstrap wants to make disabled buttons transparent...
+        }
+        &#login_save:disabled {
+            display: none;
+        }
+    }
+
+    p > .btn {
+        margin-top: 0;
+    }
+    .btn + .btn {
+        margin-left: 15px;
+    }
+
+    label {
+        margin: v(0 0 5px 0, label_margin, $formLabelMargin);
+        font-family: v($fontNormal, label_font_family, $formLabelFontfamily);
+        font-weight: v(normal, label_font_weight, $formLabelWeight);
+        line-height: v(1.31, label_line_height, $formLabelLineHeight);
+        text-transform: v(none, label_text_transform, $formLabelTexttransform);
+
+        @include fontsize(v($fs_normal, label_font_size, $formLabelFontsize));
+
+        .desc {
+            margin: v(0 0 5px 0, label_desc_margin, $formLabelDescMargin);
+        }
+    }
+
+    input:not([type='checkbox']):not([type='radio']) {
+        display: block;
+        width: 100%;
+        max-width: math.div($loginContainerWidth, 2);
+        height: v(34px, input_height, $loginFieldHeight);
+        margin: v(0 0 15px 0, input_margin, $loginFieldMargin);
+        padding: v(0 6px, input_padding, $loginFieldPadding);
+        border: v(1px solid $grey1, input_border);
+        border-radius: $defaultFormRadius;
+        font-family: v($fontNormal, input_font_family, $formInputFontfamily);
+        font-weight: v(normal, input_font_weight, $formInputWeight);
+        font-style: v(italic, input_font_style, $formInputFontstyle);
+        line-height: v(34px, input_line_height, $loginFieldHeight) !important; // important because Bootstrap sucks
+        text-transform: v(none, input_text_transform, $formInputTexttransform);
+        color: v($black, input_color, $colorMtFormInput);
+        box-shadow: none;
+
+        @include fontsize(v($fs_normal, input_font_size, $formInputFontsize));
+    }
+
+    #passwordForm legend {
+        @include screenreader_only();
+    }
+
+    label[for='change_email_code_code'],
+    label[for='magic_code_form_code'] {
+        @include screenreader_only();
+    }
+    #change_email_code_code,
+    #magic_code_form_code {
+        text-align: center;
+        letter-spacing: 1em;
+    }
+
+    form[name='login'] {
+        margin-top: 60px;
+
+        label[for='login_email'],
+        input#login_email {
+            @include screenreader_only();
+        }
+    }
+
+    .user-home {
+        h1 {
+            margin: v(0 0 10px 0, home_title_margin, $accountHomeH1Margin);
+            @include fontsize(v($basicH1Fontsize, home_title_font_size, $accountHomeH1Fontsize));
+        }
+
+        h2 {
+            margin: v(0 0 10px 0, home_heading_margin, $accountHomeH2Margin);
+            @include fontsize(v($basicH3Fontsize, home_heading_font_size, $accountHomeH2Fontsize));
+        }
+
+        ul {
+            list-style: none;
+            &.client_types li + li {
+                margin-top: v(10px, home_clienttypes_spacing);
+            }
+        }
+
+        .timeslot {
+            display: inline-flex;
+            align-items: center;
+            margin: v(0, timeslot_margin);
+            padding: v(10px, timeslot_padding);
+            border-radius: v(none, timeslot_border_radius);
+            line-height: 1;
+            background: v($colorPrime, timeslot_background);
+            color: v($white, timeslot_color);
+
+            @include fontsize(v($fs_normal, timeslot_font_size));
+
+            @media (max-width: $bp_tiny) {
+                display: flex;
+            }
+
+            .icon {
+                margin: v(0 10px 0 0, timeslot_icon_margin);
+                font-size: v(18px, timeslot_icon_font_size);
+            }
+        }
+
+        span.help {
+            display: block;
+            padding-top: 5px;
+        }
+    }
+}
+
+
+@keyframes timerbar-fill {
+    0% {
+        left: 0;
+    }
+    100% {
+        left: 100%;
+    }
+}
+button#magic_link_form_save {
+    position: relative;
+}
+button .timer-bar {
+    display: block;
+    height: v(6px, timer_height);
+    position: absolute;
+    right: v(0, timer_margin_sides);
+    bottom: v(-15px, timer_margin_bottom);
+    left: v(0, timer_margin_sides);
+    z-index: 1;
+    border: v(1px solid $colorBgBtnActive, timer_border);
+    border-radius: inherit;
+    background: v($colorBgBtnActive, timer_background);
+    overflow: hidden;
+    &::after {
+        content: '';
+        height: 100%;
+        position: absolute;
+        right: 0;
+        left: 0;
+        border: 1px solid transparent;
+        border-radius: inherit;
+        background: v(rgba(255,255,255,0.66), timer_foreground);
+        will-change: left;
+        animation: timerbar-fill 20s linear forwards;
+    }
+}
+
+form[name='cancellation'] {
+    .option {
+        display: flex;
+        align-items: flex-start;
+        margin-top: 10px;
+
+        input[type='radio'] {
+            margin: 6px 0 0;
+        }
+
+        > label {
+            margin: 0 0 0 10px;
+        }
+    }
+
+    .iban-form {
+        max-width: 50%;
+        margin: 15px 0;
+        #cancellation_iban {
+            max-width: unset;
+            margin: 10px 0 5px 0;
+        }
+    }
+}
+
+.context-ticketlist {
+    .listItemWrapper {
+        .meta {
+            .meta-group {
+                padding: v(30px 20px 10px 20px, datetime_padding, $listDateTimePadding);
+                .btn-cancellation {
+                    width: auto;
+                    flex-grow: 0;
+                    margin-top: 0;
+                    margin-left: auto;
+                }
+            }
+        }
+    }
+}

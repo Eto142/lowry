@@ -1,0 +1,30 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$teaser: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $teaser;
+
+
+.teaserWrapper .richtext,
+.richtext p.teaser {
+    margin: 0;
+    font-family: v($fontNormal, font_family, $showDetailTeaserFontfamily);
+    font-weight: v(bold, font_weight, $showDetailTeaserWeight);
+    line-height: v(1.5, line_height, $showDetailTeaserLineHeight);
+    text-transform: v(none, text_transform, $showDetailTeaserTexttransform);
+    color: v(inherit, color, $colorShowDetailTeaser);
+
+    @include fontsize(v($fs_large, font_size, $showDetailTeaserFontsize));
+
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.teaserWrapper {
+    @include inner_width('.richtext');
+}

@@ -1,0 +1,30 @@
+@use 'sass:map';
+
+/*
+    Value getter
+    returns a (custom) value from a component-specific map
+    backwards compatible with old variables
+    the $v_map variable is picked up out the context to prevent having to
+    pass to every single call
+
+    e.g. a map would look like this
+        $abandonedcart: (
+            padding: 30px,
+            margin: 0
+        )
+    pass that map to $v_map...
+        $v_map: $abandonedcart;
+        v(0, padding)
+    ... would then return 30px.
+
+    https://sass-lang.com/documentation/modules/map
+*/
+@function v($default, $key, $old: null) {
+    @if (map.get($v_map, $key) != null) {
+        @return map.get($v_map, $key);
+    }
+    @if ($old != null) {
+        @return $old;
+    }
+    @return $default;
+}

@@ -1,0 +1,87 @@
+@use 'sass:math';
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$waitinglist: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $waitinglist;
+
+.modal:not(.glightbox).modal--waitlist {
+    .modal-content {
+        max-height: v(80vh, waitinglist_modal_max-height);
+    }
+}
+
+.waitinglist {
+    &-add {
+        &__date {
+            margin: 0;
+        }
+        &__title {
+            font-weight: bold;
+            font-size: v($fs_small_title, waitinglist_title_size);
+        }
+        &__form-section {
+            padding: v(math.div($defaultSpacing, 1.5), waitinglist_section_padding_mobile);
+            background-color: v($grey4, waitinglist_section_bg);
+
+            @media (min-width: $bp_mobile) {
+                padding: v($defaultSpacing, waitinglist_section_padding);
+            }
+
+            .form-group {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: 0;
+
+                label {
+                    margin: 0;
+                }
+
+                .form-control {
+                    max-width: 60px;
+                    @media (min-width: $bp_mobile) {
+                        max-width: 75px;
+                    }
+                }
+            }
+        }
+        &__price-tier {
+            @include fontsize(v($fs_small, waitinglist_section_font_size));
+
+            + * {
+                padding-top: v($defaultSpacing, waitinglist_section_padding);
+            }
+
+            p {
+                margin: 0;
+                font-weight: bold;
+            }
+
+            > :not(p) + * {
+                padding-top: v(math.div($defaultSpacing, 1.5), waitinglist_section_spacing);
+            }
+
+            .form-group {
+                label {
+                    margin: 0;
+                    font-weight: normal;
+                }
+                .price {
+                    margin-right: $defaultSpacing;
+                    margin-left: auto;
+                }
+            }
+        }
+
+        &__submit {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+    }
+}

@@ -1,0 +1,138 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$theme_event_list: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $theme_event_list;
+
+
+.listWrapper.theme {
+    .title-row {
+        margin-bottom: v(30px, heading_margin_bottom, $themeDetailListH2MarginBottom);
+
+        @media (min-width: $bp_mobile) {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        h2 {
+            margin: 0;
+            font-family: v($fontNormal, heading_font_family, $themeDetailListH2Fontfamily);
+            font-weight: v(normal, heading_font_weight, $themeDetailListH2Weight);
+            line-height: v(normal, heading_line_height, $themeDetailListH2LineHeight);
+            text-transform: v(none, heading_text_transform, $themeDetailListH2Texttransform);
+            flex: 1;
+
+            @include fontsize(v($fs_medium_title, heading_font_size, $themeDetailListH2Fontsize));
+
+            @media (max-width: $bp_mobile - 1) {
+                margin-bottom: v(15px, heading_margin_bottom_mobile, $themeDetailListH2MarginBottom);
+            }
+        }
+    }
+
+    @at-root .container.pinned {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: v(80px, pinned_header_height);
+        position: fixed;
+        top: $headerHeightSmall - 1; // remove 1px gap
+        right: 0;
+        z-index: 3;
+        margin: 0;
+        padding: 0;
+        background: v($colorPageBg, pinned_header_background);
+        color: v(inherit, pinned_header_color);
+        box-shadow: v($defaultBoxShadow, pinned_header_shadow);
+        will-change: transform, opacity;
+        animation: header-slideIn .2s ease-in-out;
+        overflow: auto;
+
+        .title-row {
+            @include container_width();
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: v(0 15px, pinned_header_padding);
+            flex: 1;
+
+            h2 {
+                margin: 0;
+                font-family: v($fontNormal, pinned_header_title_font_family, $themeDetailListH2Fontfamily);
+                font-weight: v(normal, pinned_header_title_font_weight, $themeDetailListH2Weight);
+                line-height: v(normal, pinned_header_title_line_height, $themeDetailListH2LineHeight);
+                text-transform: v(none, pinned_header_title_text_transform, $themeDetailListH2Texttransform);
+
+                @include fontsize(v($fs_medium_title, pinned_header_title_font_size, $themeDetailListH2Fontsize));
+            }
+
+            .btn {
+                padding: v($defaultBtnPadding, pinned_header_button_padding);
+                border: v($defaultBtnBorderActive, pinned_header_button_border);
+                border-radius: v($defaultBtnRadius, pinned_header_button_border_radius);
+
+                font-family: $defaultBtnFontfamily;
+                font-weight: v($defaultBtnWeight, pinned_header_button_font_weight);
+
+                line-height: 1;
+                text-transform: v($defaultBtnTexttransform, pinned_header_button_text_transform);
+                background: v($colorBgBtnActive, pinned_header_button_background);
+                color: v($colorBtnActiveText, pinned_header_button_color);
+
+                @include fontsize(v($defaultBtnFontsize, pinned_header_button_font_size));
+
+                @media (max-width: $bp_tiny - 1) {
+                    min-width: 0;
+                }
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, pinned_header_button_border_hover);
+                    background: v($colorBtnActiveHover, pinned_header_button_background_hover);
+                    color: v($colorBtnActiveTextHover, pinned_header_button_color_hover);
+                }
+            }
+        }
+    }
+
+    @at-root header.has-anchormenu {
+        ~ .listWrapper.theme .pinned-row {
+            top: $headerHeightSmall + $anchorsHeight - 1;
+        }
+    }
+
+    .hdrMeta {
+        display: flex;
+        align-items: center;
+
+        > * + * {
+            margin-left: 15px;
+        }
+
+        form {
+            margin-bottom: 0;
+        }
+        .btn {
+            width: auto;
+            min-width: v(170px, button_min_width, $detailThemeShowlistBtnWidth);
+            float: right;
+            border: v($defaultBtnBorderActive, button_border, $detailThemeShowlistBtnBorder);
+            border-radius: v($defaultBtnRadius, button_border_radius, $detailThemeShowlistBtnRadius);
+            background: v($colorBgBtnActive, button_background, $detailThemeShowlistBtnBackground);
+            color: v($colorBtnActiveText, button_color, $detailThemeShowlistBtnColor);
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover, $detailThemeShowlistBtnBorderHover);
+                background: v($colorBtnActiveHover, button_background_hover, $detailThemeShowlistBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, button_color_hover, $detailThemeShowlistBtnColorHover);
+            }
+        }
+    }
+
+    .listItems {
+        margin-top: 0;
+    }
+}

@@ -1,0 +1,700 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$event_header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $event_header;
+
+/* ----------------------------------------------------------------
+    Header: Show (default)
+-----------------------------------------------------------------*/
+
+@mixin event-details() {
+    .desc {
+        display: flex;
+        flex-direction: column;
+        font-family: v($fontTitleContent, desc_font_family, $showDetailSubtitleFontfamily);
+        font-weight: v(bold, desc_font_weight, $showDetailSubtitleWeight);
+        line-height: v(22px, desc_line_height, $showDetailSubtitleLineHeight);
+        text-transform: v(none, desc_text_transform, $showDetailSubtitleTexttransform);
+        color: v(inherit, desc_color, $colorShowDetailSubtitle);
+
+        @include fontsize(v($fs_huge_subtitle, desc_font_size, $showDetailSubtitleFontsize));
+    }
+
+    .supertitle {
+        order: -1;
+        display: block;
+        align-self: v(flex-start, supertitle_align_self);
+        margin: v(15px 0 5px 0, supertitle_margin, $showDetailSupertitleMargin);
+        padding: v(0, supertitle_padding, $showDetailSupertitlePadding);
+        font-family: v($fontNormal, supertitle_font_family, $showDetailSupertitleFontfamily);
+        font-weight: v(normal, supertitle_font_weight, $showDetailSupertitleWeight);
+        line-height: v(1.3, supertitle_line_height, $showDetailSupertitleLineHeight);
+        text-transform: v(uppercase, supertitle_text_transform, $showDetailSupertitleTexttransform);
+        background: v(transparent, supertitle_background, $colorBgShowDetailSupertitle);
+        color: v($color1, supertitle_color, $colorShowDetailSupertitle);
+
+        @include fontsize(v($fs_small, supertitle_font_size, $showDetailSupertitleFontsize));
+    }
+
+    h1 {
+        margin: v(30px 0 10px 0, title_margin, $showDetailH1Margin);
+        font-family: v($fontTitleContent, title_font_family, $showDetailH1Fontfamily);
+        font-weight: v(bold, title_font_weight, $showDetailH1Weight);
+        line-height: v(normal, title_line_height, $showDetailH1LineHeight);
+        text-transform: v(none, title_text_transform, $showDetailH1Texttransform);
+        color: v(inherit, title_color, $colorShowDetailH1);
+
+        @include fontsize(v($fs_huge_title, title_font_size, $showDetailH1Fontsize));
+
+        &.with-supertitle {
+            margin-top: 0;
+        }
+    }
+
+    .tagline {
+        margin: v(10px 0 0 0, tagline_margin, $showDetailTaglineMargin);
+        font-family: v(inherit, tagline_font_family, $showDetailTaglineFontfamily);
+        font-weight: v(inherit, tagline_font_weight, $showDetailTaglineWeight);
+        line-height: v(inherit, tagline_line_height, $showDetailTaglineLineHeight);
+        text-transform: v(none, tagline_text_transform, $showDetailTaglineTexttransform);
+        color: v(inherit, tagline_color, $colorShowDetailTagline);
+
+        @include fontsize(v($baseFontsize, tagline_font_size, $showDetailTaglineFontsize));
+    }
+
+    .credits {
+        margin: v(10px 0 0 0, credits_margin, $showHeaderCreditsMargin);
+        font-family: v(inherit, credits_font_family, $showHeaderCreditsFontfamily);
+        font-weight: v(inherit, credits_font_weight, $showHeaderCreditsWeight);
+        line-height: v(inherit, credits_line_height, $showHeaderCreditsLineHeight);
+        text-transform: v(inherit, credits_text_transform, $showHeaderCreditsTexttransform);
+        color: v(inherit, credits_color, $colorShowHeaderCredits);
+
+        @include fontsize(v(inherit, credits_font_family, $showHeaderCreditsFontsize));
+    }
+
+    .location {
+        margin: v(10px 0 0 0, location_margin, $showDetailLocationMargin);
+        font-family: v($fontNormalBold, location_font_family, $showDetailLocationFontfamily);
+        font-weight: v(bold, location_font_weight, $showDetailLocationWeight);
+        line-height: v(1.4, location_line_height, $showDetailLocationLineheight);
+        text-transform: v(none, location_text_transform, $showDetailLocationTextTransform);
+        color: v(inherit, location_color, $showDetailLocationColor);
+
+        @include fontsize(v($fs_small, location_font_size, $showDetailLocationFontsize));
+    }
+
+    .venue {
+        margin: v(10px 0 0 0, venue_margin, $showDetailVenueMargin);
+        font-family: v($fontNormal, venue_font_family, $showDetailVenueFontfamily);
+        font-weight: v(normal, venue_font_weight, $showDetailVenueWeight);
+        line-height: v(1.4, venue_line_height, $showDetailVenueLineheight);
+        text-transform: v(none, venue_text_transform, $showDetailVenueTextTransform);
+        color: v(inherit, venue_color, $showDetailVenueColor);
+
+        @include fontsize(v($fs_small, venue_font_size, $showDetailVenueFontsize));
+    }
+
+    .location + .venue {
+        margin-top: 0;
+    }
+}
+
+@mixin button-and-status() {
+    .btn,
+    .status-info {
+        display: inline-block;
+        width: v(auto, button_width, $detailDateTimeBtnWidth);
+        margin: v(45px 0 0 0, button_margin, $detailDateTimeBtnMargin);
+        padding: v($defaultBtnPadding, button_padding, $detailDateTimeBtnPadding);
+        text-align: center;
+
+        .fa {
+            transition: transform .2s ease-in-out;
+        }
+
+        &[aria-expanded='true'] {
+            .fa {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .btn {
+        border: v($defaultBtnBorderActive, button_border, $detailDateTimeBtnBorder);
+        border-radius: v($defaultBtnRadius, button_border_radius, $detailDateTimeBtnRadius);
+        background: v($colorBgBtnActive, button_background, $colorBgShowDetailHeaderBtn);
+        color: v($colorBtnActiveText, button_color, $colorShowDetailHeaderBtnText);
+        box-shadow: v($defaultBtnShadowActive, button_box_shadow, $detailDateTimeBtnShadow);
+
+        @include fontsize(v($defaultBtnFontsize, button_font_size, $showHeaderBtnDetailFontsize));
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, button_border_hover, $detailDateTimeBtnBorderHover);
+            background: v($colorBtnActiveHover, button_background_hover, $colorBgShowDetailHeaderBtnHover);
+            color: v($colorBtnActiveTextHover, button_color_hover, $colorShowDetailHeaderBtnTextHover);
+            box-shadow: v($defaultBtnShadowActiveHover, button_box_shadow_hover, $detailDateTimeBtnShadowHover);
+        }
+        &:active {
+            box-shadow: v($defaultBtnShadowActiveActive, button_box_shadow_active, $detailDateTimeBtnShadowActive);
+        }
+
+        &[aria-expanded='true'] {
+            border: v($defaultBtnBorderActive, button_border_expanded, $detailDateTimeBtnBorderExp);
+            background: v($colorBtnActiveHover, button_background_expanded, $colorBgShowDetailHeaderBtnExpanded);
+            color: v($colorBtnActiveTextHover, button_color_expanded, $colorBgShowDetailHeaderBtnExpandedText);
+            box-shadow: v($defaultBtnShadowActive, button_box_shadow_expanded, $detailDateTimeBtnShadowExpanded);
+        }
+    }
+
+    .status-info {
+        font-family: v(inherit, status_font_family, $showHeaderStatusFontfamily);
+        font-weight: v(normal, status_font_weight, $showHeaderStatusFontweight);
+        line-height: v(1.2, status_line_height, $showHeaderStatusLineheight);
+        text-transform: v(none, status_text_transform, $showHeaderStatusTexttransform);
+        text-align: v(center, status_text_align, $showHeaderStatusTextalign);
+        color: v(inherit, status_color, $showHeaderStatusColor);
+
+        @include fontsize(v(inherit, status_font_size, $showHeaderStatusFontsize));
+
+        &:link {
+            text-decoration: v(none, status_link_text_decoration, $showHeaderStatusLinkDecoration);
+            color: v(inherit, status_link_color, $showHeaderStatusLinkColor);
+            &:hover {
+                text-decoration: v($defaultLinkDecorationHover, status_link_text_decoration_hover, $showHeaderStatusLinkDecorationHover);
+                color: v($defaultLinkHover, status_link_color_hover, $showHeaderStatusLinkColorHover);
+            }
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            color: v(inherit, status_color_mobile, $showHeaderStatusColorMobile);
+            &:link {
+                color: v(inherit, status_link_color_mobile, $showHeaderStatusMobileLinkColor);
+                &:hover {
+                    color: v($defaultLinkHover, status_link_color_mobile_hover, $showHeaderStatusMobileLinkColorHover);
+                }
+            }
+        }
+    }
+}
+
+.detail.course,
+.detail.show {
+
+    .headerVideoContainer {
+        background: v(#000, video_background, $showDetailVideoBackground);
+    }
+
+    .headerImgContainer { // boxed
+        padding: v(0 15px, image_padding);
+        background: v($grey3, image_background, $colorBgDetailShowContent);
+
+        .container {
+            position: relative;
+            > img {
+                width: 100%;
+            }
+            .credits {
+                margin-right: 15px;
+                margin-left: 15px;
+            }
+        }
+        @include credits_box();
+
+        // video embed placeholder
+        .placeholder {
+            background: transparent no-repeat center / cover;
+        }
+        &:not(.video-started) .placeholder {
+            padding-bottom: 56.25%;
+        }
+
+        + .showHeaderWrapper .container {
+            margin-top: 0;
+        }
+    }
+
+    .headerImgContainer,
+    #showHeaderImage {
+        $video_button_size: v(72px, video_button_size, $showDetailVideoButtonsize);
+        .video-play-button {
+            all: unset;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: $video_button_size;
+            height: $video_button_size;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: math.div($video_button_size, -2) + $showHeaderWrapperMarginBottom;
+            margin-left: math.div($video_button_size, -2);
+            border: none;
+            font-size: $video_button_size;
+            background: none;
+            color: v($colorVideoPlayerHighlights, video_button_color);
+            cursor: pointer;
+            text-shadow: v($iconOverlayShadow, video_button_shadow);
+        }
+        &.video-started {
+            .video-play-button {
+                display: none;
+            }
+        }
+    }
+
+    .page-title { // regular full width
+        height: v(540px, height, $showHeaderHeight);
+        position: relative;
+        overflow: hidden;
+
+        @include credits_box();
+
+        .imageLayer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: transparent no-repeat center / cover;
+
+            will-change: transform;
+            animation-fill-mode: forwards;
+            animation: v(none, animation, $showHeaderAnimation);
+
+            .gradientOverlay {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: v(transparent, overlay, $showHeaderOverlay);
+                pointer-events: none;
+            }
+        }
+
+        &[data-animations*='zoom'] .imageLayer {
+            animation: $heroAnimationZoom;
+        }
+        &[data-animations*='twist'] .imageLayer {
+            animation: $heroAnimationTwist;
+        }
+        &[data-animations*='saturate'] .imageLayer {
+            animation: $heroAnimationSaturate;
+        }
+        &[data-animations*='desaturate'] .imageLayer {
+            animation: $heroAnimationDesaturate;
+        }
+        &[data-animations*='slide'] .imageLayer {
+            animation: $heroAnimationSlide;
+        }
+        &[data-animations*='fade-in'] .imageLayer {
+            animation: $heroAnimationFadeIn;
+        }
+
+        @if ($showHeaderWrapperMarginBottom < 0) {
+            .credits {
+                top: 0;
+                bottom: auto;
+            }
+        }
+
+        @media (max-width: 600px) {
+            height: v(320px, height_mobile, $showHeaderHeightMobile);
+        }
+    }
+
+    #showHeaderImage {
+        transition: all .2s ease-in-out;
+        [data-video-url] {
+            padding-top: 0;
+            padding-bottom: 0;
+            color: v($colorVideoPlayerHighlights, video_button_color);
+            transition: opacity .2s ease-in-out;
+        }
+
+        &.video-started {
+            height: auto;
+            background: v(#000, video_background, $showDetailVideoBackground) !important;
+            .container[data-video-url] {
+                opacity: 1;
+            }
+            + .showHeaderWrapper .container {
+                margin-top: 0;
+            }
+            .imageLayer {
+                display: none;
+            }
+        }
+
+        &.variant-showcase {
+            // the reason for the showcase variant is to have a transparent header,
+            // and shift the hero up underneath the header
+            margin-top: -$headerHeight;
+            @media (max-width: $bp_mobile - 1) {
+                margin-top: -$headerHeightSmall;
+            }
+
+            // normal outer container padding
+            padding: 0 15px;
+
+            .inner {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-end;
+                width: 100%;
+                position: absolute;
+                inset: 0;
+                padding: v(30px 15px, showcase_padding);
+                text-align: center;
+                color: $white;
+            }
+
+            .date {
+                text-transform: v(uppercase, date_text_transform);
+                color: v($white, date_color);
+                font: {
+                    weight: v(700, date_font_weight);
+                    size: v(var(--fs-small), date_font_size);
+                }
+            }
+
+            .subtitle {
+                text-transform: v(uppercase, subtitle_text_transform);
+                color: v($white, subtitle_color);
+                font: {
+                    weight: v(700, subtitle_font_weight);
+                    size: v(var(--fs-small), subtitle_font_size);
+                }
+            }
+
+            @include inner_width();
+            @include event-details();
+            @include button-and-status();
+
+            .supertitle {
+                align-self: v(center, supertitle_align_self);
+            }
+        }
+    }
+
+    .load-more-panel {
+        @include button-and-status();
+        .btn {
+            margin-top: 0;
+        }
+    }
+}
+
+.showHeaderWrapper {
+    .container {
+        margin-top: v(-40px, info_margin_top, $showHeaderWrapperMarginBottom);
+        transition: .2s margin-top .2s ease-in-out;
+        @at-root .headerVideoContainer + & {
+            margin-top: 0;
+        }
+    }
+
+    .showHeader {
+        @include event-details();
+        @include button-and-status();
+
+        min-height: v(285px, card_height, $showHeaderDescHeight);
+        position: relative;
+        z-index: 3;
+        border-bottom: v(none, card_border_bottom, $showHeaderBorder);
+        border-top-left-radius: v($defaultCardRadius, card_border_radius_top_left, $showHeaderDescRadiusTop);
+        border-top-right-radius: v($defaultCardRadius, card_border_radius_top_right, $showHeaderDescRadiusRight);
+        border-bottom-right-radius: v($defaultCardRadius, card_border_radius_bottom_right, $showHeaderDescRadiusBottom);
+        border-bottom-left-radius: v($defaultCardRadius, card_border_radius_bottom_left, $showHeaderDescRadiusLeft);
+        background: v($white, card_background, $colorBgShowHeader);
+        box-shadow: v($defaultBoxShadow, card_box_shadow, $showHeaderDescShadow);
+
+        @media (min-width: $bp_mobile) {
+            display: flex;
+            > * {
+                flex-grow: 1;
+                &:last-child:not(:first-child) {
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    width: math.div(3, 12) * 100%;
+                }
+            }
+        }
+    }
+
+    form {
+        width: 100%;
+        margin: 0;
+    }
+
+    .descWrapper {
+        padding: v(30px 45px, desc_padding, $showDetailDescPaddding);
+    }
+
+    .genres {
+        flex-grow: 1;
+
+        &:not(:last-child) ul {
+            margin: 0 0 -5px 0;
+        }
+
+        ul {
+            li {
+                list-style: none;
+                display: inline-block;
+                margin-right: v(15px, genre_spacing, $showDetailGenreSpacing);
+                margin-bottom: 5px;
+            }
+        }
+
+        a {
+            display: block;
+            padding: v(0, genre_padding, $showDetailGenrePadding);
+            border: v(none, genre_border);
+            border-radius: v(0, genre_border_radius, $showDetailGenreRadius);
+            font-family: v($fontNormal, genre_font_family, $showDetailGenreFontFamily);
+            font-weight: v(none, genre_font_weight, $showDetailGenreWeight);
+            line-height: v(1, genre_line_height, $showDetailGenreLineHeight);
+            text-decoration: v(none, genre_text_decoration);
+            text-transform: v(uppercase, genre_text_transform, $showDetailGenreTextTransform);
+            background: v(transparent, genre_background, $showDetailGenreBackground);
+            color: v(inherit, genre_color, $colorShowDetailGenre);
+
+            &:hover {
+                border: v(none, genre_border_hover);
+                text-decoration: v(none, genre_text_decoration_hover);
+                background: v(transparent, genre_background_hover, $showDetailGenreBackgroundHover);
+                color: v($color4, genre_color_hover, $colorShowDetailGenreHover);
+            }
+
+            @include fontsize(v($fs_small, genre_font_size, $showDetailGenreFontSize));
+        }
+    }
+    .desc > .genres {
+        // genres are on top of the description instead of in the meta element
+        order: -1;
+    }
+
+    .pricePopoverBtn {
+        margin: 0;
+        padding: 0;
+        border: none;
+        font-family: v($fontNormal, popover_font_family, $showDetailPriceBtnFontfamily);
+        font-weight: v(normal, popover_font_weight, $showDetailPriceBtnWeight);
+        text-transform: v(none, popover_text_transform, $showDetailPriceBtnTexttransform);
+        white-space: nowrap;
+        background: v(none, popover_background, $showDetailPriceBtnBackground);
+        color: v(inherit, popover_color, $showDetailPriceBtnColor);
+
+        @include fontsize(v($fs_normal, popover_font_size, $showDetailPriceBtnFontsize));
+
+        &:hover {
+            background: v(none, popover_background_hover, $showDetailPriceBtnBackgroundHover);
+            color: v($color1, popover_color_hover, $showDetailPriceBtnColorHover);
+        }
+    }
+
+    .price {
+        display: flex;
+        > * + * {
+            margin-left: 15px;
+        }
+        @media (max-width: $bp_mobile - 1) {
+            justify-content: space-between;
+        }
+    }
+
+    .dateContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: v(center, datetime_align_items, $showDetailDateTimeAlign);
+        justify-content: v(center, datetime_justify_content, $showDetailDateTimeJustify);
+        position: relative;
+        padding: v(30px, datetime_padding, $showDetailDateTimePadding);
+        border-top: v(none, datetime_border_top, $showDetailDateTimeBorderTop);
+        border-right: v(none, datetime_border_right, $showDetailDateTimeBorderRight);
+        border-bottom: v(none, datetime_border_bottom, $showDetailDateTimeBorderBottom);
+        border-left: v(none, datetime_border_left, $showDetailDateTimeBorderLeft);
+        border-top-left-radius: 0;
+        border-top-right-radius: v($defaultCardRadius, card_border_radius_top_right, $showHeaderDescRadiusRight);
+        border-bottom-right-radius: v($defaultCardRadius, card_border_radius_bottom_right, $showHeaderDescRadiusBottom);
+        border-bottom-left-radius: 0;
+        background: v($color12, datetime_background, $colorBgShowDetailDate);
+        color: v($white, datetime_color, $colorShowDetailDate);
+        text-align: v(center, datetime_text_align, $showDetailDateAlignment);
+
+        @media (max-width: $bp_mobile - 1) {
+            display: none;
+        }
+
+        .dateLabel {
+            margin: v(10px 0 0 0, date_label_margin, $showDetailDateLabelMargin);
+            text-transform: v(none, date_label_text_transform, $showDetailDateLabelTexttransform);
+        }
+
+        .date {
+            padding: 0;
+            font-family: v($fontNormal, date_font_family, $showDetailDateFontfamily);
+            font-weight: v(bold, date_font_weight, $showDetailDateWeight);
+            line-height: v(1, date_line_height, $showDetailDateLineHeight);
+            text-transform: v(none, date_text_transform, $showDetailDateTexttransform);
+            color: v($white, date_color, $colorShowDetailDate);
+
+            @include fontsize(v($fs_huge_title, date_font_size, $showDetailDateFontsize));
+
+            > div {
+                margin: 0 auto;
+            }
+
+            > span + span {
+                &::before {
+                    content: ', ';
+                }
+            }
+
+            .separator {
+                display: block;
+                padding: v(0 1ex, date_separator_padding, $showDetailSeparatorPadding);
+                line-height: 1;
+
+                + .time::before {
+                    // leave out the pseudo-element seperator since we have a real one now
+                    display: none;
+                }
+            }
+
+            &.format-split {
+                display: inline-flex;
+                text-align: v(center, date_split_text_align, $cardMultiDateSplitAlignment);
+                > * {
+                    // for IE10, float won't catch if the flexbox works
+                    float: left;
+                }
+            }
+        }
+
+        .time {
+            margin: v(15px 0 0 0, time_margin, $showDetailTimeMargin);
+            font-family: v($showDetailDateFontfamily, time_font_family, $showDetailTimeFontfamily);
+            font-weight: v($showDetailDateWeight, time_font_weight, $showDetailTimeWeight);
+            line-height: 1;
+            text-transform: v($showDetailDateTexttransform, time_text_transform, $showDetailTimeTexttransform);
+            color: v(inherit, time_color, $colorShowDetailTime);
+
+            @include fontsize(v($fs_large, time_font_size, $showDetailTimeSize));
+        }
+
+        .intermission {
+            margin: v(5px 0 0 0, time_margin);
+            font-family: v($fontNormal, time_font_family);
+            font-weight: v(normal, time_font_weight);
+            line-height: v(normal, time_line_height);
+            text-transform: v(none, time_text_transform);
+            color: v(inherit, time_color);
+
+            @include fontsize(v($fs_normal, time_font_size, $cardMultiTimeFontsize));
+        }
+
+        dl.intermission {
+            @include event_times_dl();
+        }
+    }
+
+    .meta {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        margin: v(30px 0 0 0, meta_margin, $showDetailMetaMargin);
+        color: v(inherit, meta_color, $showDetailMetaColor);
+
+        @media (max-width: $bp_tiny - 1) {
+            flex-direction: column;
+            > * {
+                width: 100%;
+                + * {
+                    margin-top: v(15px, meta_spacing_mobile, $showDetailMetaSpacingMobile);
+                }
+            }
+        }
+        @media (min-width: $bp_tiny) {
+            > *:not(:first-child) {
+                margin-left: v(30px, meta_spacing, $showDetailMetaSpacing);
+            }
+        }
+
+        .stars {
+            white-space: nowrap;
+        }
+
+        .favourite a,
+        .favourite button {
+            color: v(inherit, heart_color, $showDetailMetaHeartColor);
+            &:hover {
+                color: v($color1, heart_color_hover, $showDetailMetaHeartColorHover);
+            }
+        }
+    }
+    .meta .buttonContainer {
+        @media (max-width: $bp_tiny - 1) {
+            margin: v(15px 0 0 0, button_margin_mobile, $showDetailButtonMarginMobile);
+            .btn {
+                width: 100%;
+            }
+        }
+        @media (max-width: $bp_tiny - 1) {
+            text-align: center;
+        }
+        @media (min-width: $bp_tiny) {
+            align-self: flex-end;
+        }
+        @media (min-width: $bp_mobile) {
+            display: none;
+        }
+
+        .status-info,
+        .btn {
+            margin: 0;
+        }
+    }
+    &.date-nodate .meta .buttonContainer,
+    &.date-topdate .meta .buttonContainer {
+        display: block;
+    }
+
+    .top-date {
+        order: -2;
+        @media (min-width: $bp_mobile) {
+            display: none;
+        }
+        margin: v(30px 0 0 0, topdate_margin, $showDetailTopDateMargin);
+        padding: v(0, topdate_padding, $showDetailTopDatePadding);
+        font-family: v(inherit, topdate_font_family, $showDetailTopDateFontfamily);
+        font-weight: v(inherit, topdate_font_weight, $showDetailTopDateWeight);
+        line-height: v(1, topdate_line_height, $showDetailTopDateLineheight);
+        text-transform: v(none, topdate_text_transform, $showDetailTopDateTexttransform);
+        color: v(inherit, topdate_color, $showDetailTopDateColor);
+
+        @include fontsize(v($baseFontsize, topdate_font_size, $showDetailTopDateFontsize));
+
+        div {
+            display: inline-block;
+        }
+    }
+
+    &.date-topdate .top-date {
+        @media (min-width: $bp_mobile) {
+            display: block;
+        }
+    }
+
+    &.variant-flat { margin-top: 0; }
+}

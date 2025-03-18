@@ -1,0 +1,159 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$quote: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $quote;
+
+$size: v(26px, font_size, $showDetailQuoteFontsize);
+$footer_color: v($color9, footer_color, $colorQuoteAuthor);
+
+.quoteWrapper {
+    @include inner_width();
+
+    // reset some bootstrap styles
+    blockquote {
+        margin: 0 auto;
+        padding: 0;
+        border: none;
+        font-size: inherit;
+
+        footer {
+            &::before {
+                content: '';
+            }
+        }
+    }
+
+    text-align: v(left, text_align);
+
+    &:not(.variant-2) {
+
+        blockquote {
+            padding: 0 calc(#{$size} + 10px);
+        }
+
+        p {
+            position: relative;
+            margin: 0;
+            font-family: v($fontNormal, font_family, $showDetailQuoteFontfamily);
+            font-weight: v(normal, font_weight, $showDetailQuoteWeight);
+            font-style: v(normal, font_style, $showDetailQuoteNormalStyle);
+            line-height: v(normal, line_height, $showDetailQuoteLineHeight);
+            text-transform: v(none, text_transform, $showDetailQuoteTexttransform);
+            color: v(inherit, color, $colorQuoteText);
+            quotes: '''''''';
+
+            @include fontsize(v(var(--fs-title-large), title_font_size, $showDetailQuoteFontsize));
+
+            &::before,
+            &::after {
+                content: v('"', quote_before, $quoteBefore);
+                position: absolute;
+                top: $size;
+                left: calc(#{$size} * -1 - 10px);
+                line-height: 0.1em;
+                color: v($color1,  quote_color, $colorQuoteQuotation);
+
+                @include fontsize(v(66px, quote_font_size));
+            }
+            &::after {
+                content: v('"',  quote_after, $quoteAfter);
+                top: auto;
+                right:calc(#{$size} * -1 - 10px);
+                bottom: 0;
+                left: auto;
+            }
+
+            @media (max-width: $bp_mobile - 1) {
+                &:before { top: calc(#{$size} - 10px); }
+                &:after  { top: auto; }
+            }
+
+            @media (max-width: $bp_tiny - 1) {
+                &:before { top: calc(#{$size} - 15px); }
+                &:after  { top: auto; }
+            }
+        }
+
+        footer {
+            position: relative;
+            margin-top: v(30px, footer_margin_top, $quoteFooterMargin);
+            padding-top: v(20px, footer_padding_top, $quoteFooterPadding);
+            font-family: v($fontNormal, footer_font_family, $showDetailQuoteAuthorFontFamily);
+            font-weight: v(normal, footer_font_weight, $showDetailQuoteAuthorWeight);
+            font-style: v(normal, footer_font_style, $showDetailQuoteAuthorStyle);
+            line-height: v(normal, footer_line_height, $showDetailQuoteAuthorLineHeight);
+            text-align: center;
+            text-transform: v(none, footer_text_transform, $showDetailQuoteAuthorTexttransform);
+            color: $footer_color;
+            overflow: hidden;
+
+            > svg {
+                width: 1400px;
+                height: 20px;
+                position: absolute;
+                top: 0;
+                left: -700px;
+                margin-left: 50%;
+            }
+
+            @if (v(true, footer_arrow, $quoteArrow) == false) {
+                > svg {
+                    display: none;
+                }
+            }
+
+            path {
+                stroke: v($footer_color, footer_arrow_stroke);
+                stroke-width: v(2px, footer_arrow_stroke_width);
+            }
+
+            @include fontsize(v($fs_small, footer_font_size, $showDetailQuoteAuthorFontsize));
+        }
+    }
+
+
+    &.variant-2 {
+        blockquote {
+            margin: v(30px, variant_margin, $quoteContainerMargin);
+            border-top: v(1px solid $colorQuoteAuthor, variant_border_top, $quoteLine);
+            border-bottom: v(1px solid $colorQuoteAuthor, variant_border_bottom, $quoteLine);
+        }
+
+        p {
+            margin: v(30px 30px 0 30px, variant_margin, $quoteMargin);
+            font-family: v($fontNormal, font_family, $showDetailQuoteFontfamily);
+            font-weight: v(normal, font_weight, $showDetailQuoteWeight);
+            font-style: v(italic, variant_font_style, $showDetailQuoteStyle);
+            line-height: v(normal, line_height, $showDetailQuoteLineHeight);
+            text-transform: v(none, text_transform, $showDetailQuoteTexttransform);
+            color: v(inherit, color, $colorQuoteText);
+
+            &::before {
+                content: v('"', quote_before, $quoteBefore);
+            }
+            &::after {
+                content: v('"', quote_after, $quoteAfter);
+            }
+
+            @include fontsize($size);
+        }
+
+        footer {
+            margin: v(30px, variant_footer_margin, $quoteAuthorMargin);
+            font-family: v($fontNormal, variant_footer_font_family, $showDetailQuoteAuthorFontFamily);
+            font-weight: v(normal, variant_footer_font_weight, $showDetailQuoteAuthorWeight);
+            line-height: v(normal, variant_footer_line_height, $showDetailQuoteAuthorLineHeight);
+            text-transform: v(none, variant_footer_text_transform, $showDetailQuoteAuthorTexttransform);
+            color: v($color9, variant_footer_color, $colorQuoteAuthor);
+
+            @include fontsize(v($fs_small, variant_footer_font_size, $showDetailQuoteAuthorFontsize));
+        }
+    }
+}
+
+

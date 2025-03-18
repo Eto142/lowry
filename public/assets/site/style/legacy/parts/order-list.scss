@@ -1,0 +1,58 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$order_list: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order_list;
+
+.orderListWrapper {
+    padding: v(30px 0 60px 0, padding, $orderListWrapperPadding);
+    background: v($colorPageBg, background);
+    color: v($colorDefaultText, color);
+
+    &.mtEditformWrapper {
+        padding-bottom: 0;
+    }
+
+    .listItemWrapper {
+        position: relative;
+    }
+
+    .orderItem {
+        height: auto;
+        max-height: none;
+
+        .dateTime {
+            min-width: 112px;
+            float: left;
+            padding-top: 25px;
+            padding-right: 0;
+            padding-left: 30px;
+
+            .date {
+                line-height: v(20px, date_line_height, $compactDateFontsize);
+                @include fontsize(v($fs_small_title, date_font_size, $compactDateFontsize));
+            }
+            .time {
+                @include fontsize(v($fs_normal, time_font_size, $compactTimeFontsize));
+            }
+        }
+
+        .desc {
+            max-width: 475px;
+            height: auto;
+            min-height: 100px;
+            max-height: none;
+            float: left;
+            padding-bottom: 15px;
+        }
+
+        .pullout {
+            position: relative;
+            z-index: 1;
+        }
+    }
+}

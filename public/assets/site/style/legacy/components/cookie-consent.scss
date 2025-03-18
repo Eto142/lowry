@@ -1,0 +1,230 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$cookie_consent: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $cookie_consent;
+
+
+
+// generic cookie option forms
+.cookieConsentForm {
+    color: v(inherit, color, $cookieConsentColor);
+    @include fontsize(v($fs_small, font_size));
+    @include container_width();
+    @include inner_width();
+
+    p {
+        margin: v($richtextPMargin, line_margin, $cookieConsentLineMargin);
+
+        &:last-child {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: v($defaultLinkDecoration, link_text_decoration, $cookieConsentLinkDecoration);
+            color: v($defaultLink, link_color, $cookieConsentLinkColor);
+            &:hover {
+                text-decoration: v($defaultLinkDecorationHover, link_text_decoration, $cookieConsentLinkDecorationHover);
+                color: v($defaultLinkHover, link_color, $cookieConsentLinkColorHover);
+            }
+        }
+    }
+
+    fieldset.buttons ul {
+        list-style: none;
+        display: flex;
+        justify-content: flex-end;
+        margin: 0 0 0 auto;
+        padding: 0;
+
+        li {
+            position: relative;
+            margin: 0;
+            padding: v(0 0 0 2em, option_padding, $cookieConsentOptionPadding);
+        }
+
+        /* Mobile styles */
+        @media (max-width: 600px) {
+            display: block;
+
+            li {
+                text-align: center;
+                padding-right: 0;
+                padding-left: 0;
+                + li {
+                    margin-top: 15px;
+                }
+            }
+        }
+    }
+
+    form {
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    fieldset {
+        margin: 0;
+        padding: 0;
+        text-align: right;
+    }
+
+    h2 {
+        margin: v(0 0 30px 0, title_margin, $cookieConsentTitleMargin);
+        font-weight: v($basicH1Fontweight, title_font_weight, $cookieConsentTitleFontweight);
+        line-height: 1;
+        text-transform: v($basicH1Texttransform, title_text_transform, $cookieConsentTitleTexttransform);
+        color: inherit;
+
+        @include fontsize(v($basicH1Fontsize, title_font_size, $cookieConsentTitleFontsize));
+    }
+
+    h3 {
+        margin: v(0, heading_margin);
+        font-weight: v($basicH4Fontweight, heading_font_weight);
+        text-transform: v(none, heading_text_transform);
+        color: inherit;
+
+        @include fontsize(v($basicH4Fontsize, heading_font_size));
+    }
+
+    label {
+        font-weight: normal;
+    }
+
+    input[type='radio'] {
+        position: absolute;
+        left: .5ex;
+    }
+
+    .content {
+        margin: v(0, content_margin, $cookieConsentContentMargin);
+        overflow: auto;
+        p {
+            margin: v($richtextPMargin, line_margin, $cookieConsentLineMargin);
+        }
+        + fieldset:not(.inline) {
+            margin-top: 15px;
+        }
+    }
+
+    .more-link {
+        font-weight: v(bold, morelink_font_weight, $cookieConsentMorelinkWeight);
+        text-decoration: v(none, morelink_text_decoration, $cookieConsentMorelinkDecoration);
+        color: v(inherit, morelink_color, $cookieConsentMorelinkColor);
+        &:hover {
+            text-decoration: v(underline, morelink_text_decoration, $cookieConsentMorelinkDecorationHover);
+            color: v(inherit, morelink_color, $cookieConsentMorelinkColorHover);
+        }
+    }
+
+    .btn {
+        @media (max-width: 600px) {
+            width: 100%;
+        }
+
+        &-reject,
+        &-accept-limited {
+            border: v($defaultBtnBorderDefault, button_border);
+            background: v($colorBgBtnDefault, button_background);
+            color: v($colorBtnDefaultText, button_color);
+    
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, button_border_hover);
+                background: v($colorBtnActiveHover, button_background_hover);
+                color: v($colorBtnActiveTextHover, button_color_hover);
+            }
+        }
+
+        &-accept-all {
+            border: v($defaultBtnBorderActive, accept_all_button_border);
+            background: v($colorBgBtnActive, accept_all_button_background);
+            color: v($colorBtnActiveText, accept_all_button_color);
+    
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, accept_all_button_border_hover);
+                background: v($colorBtnActiveHover, accept_all_button_background_hover);
+                color: v($colorBtnActiveTextHover, accept_all_button_color_hover);
+            }
+        }
+    }
+
+    .more {
+        display: none;
+    }
+    &.show-more {
+        .more-link {
+            display: none;
+        }
+        .more {
+            display: block;
+        }
+    }
+
+    .cookieConsentOptions {
+        display: none;
+    }
+
+
+    .spinner-wrapper {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        background: v(transparentize($grey5, .3), spinner_background, $cookieConsentSpinnerBackground);
+        color: v($grey1, spinner_color, $cookieConsentSpinnerColor);
+    }
+    &.waiting .spinner-wrapper {
+        display: flex;
+    }
+}
+
+// inline content placeholder mode
+.cookieConsentPlaceholder {
+    width: 100%;
+    padding: 60px 30px;
+    background: v($grey5, background, $cookieConsentBackground);
+
+    > .cookieConsentForm {
+        max-width: none;
+        padding: 0;
+    }
+
+    form {
+        padding: 0;
+    }
+}
+
+// fixed banner mode
+.cookieConsentBanner {
+    max-height: 100%;
+    position: fixed;
+    overflow: auto;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+    border: v(none, border, $cookieConsentBannerBorder);
+    background: v($grey5, background, $cookieConsentBackground);
+    box-shadow: v($defaultBoxShadow, box_shadow, $cookieConsentBannerShadow);
+
+    .inner {
+        display: flex;
+        flex-direction: column;
+        max-height: 100vh;
+        padding: v(60px 15px, padding, $cookieConsentBannerPadding);
+
+        @media (max-width: 600px) {
+            padding: v(30px 15px, padding_mobile);
+        }
+    }
+}

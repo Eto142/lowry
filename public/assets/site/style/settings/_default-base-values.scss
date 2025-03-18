@@ -1,0 +1,378 @@
+@use 'sass:math';
+
+$isBasicLayout: false !default;
+$release_number: 209;
+
+/* ----------------------------------------------------------------
+    Font sizes
+-----------------------------------------------------------------*/
+
+// base sizes
+$fs_tiny: 12px;
+$fs_small: 14px;
+$fs_normal: 16px;
+$fs_large: 24px;
+
+// typical title + subtitle + body combinations
+$fs_small_title: 20px;
+// small
+// tiny
+
+$fs_medium_title: 26px;
+// normal
+// small
+
+$fs_large_title: 30px;
+$fs_large_subtitle: 18px;
+// normal
+
+$fs_huge_title: 40px;
+$fs_huge_subtitle: 22px;
+// normal
+
+// for compatibility: most part implementations still use these base/basic values:
+$baseFontsize: $fs_normal;
+$baseFontsizeMobile: $fs_small; // scale fonts down on mobile
+$baseLineheight: math.div(20, 14);
+
+$basicH1Fontsize: $fs_huge_title;
+$basicH2Fontsize: $fs_large_title;
+$basicH3Fontsize: $fs_large;
+$basicH4Fontsize: $fs_large_subtitle;
+$basicH5Fontsize: $fs_normal;
+$basicH6Fontsize: $fs_normal;
+
+// for backwards compatible enable to use the previous set of defaults for some font-sizes
+$legacy_default_fontsizes: false;
+
+
+/* ----------------------------------------------------------------
+    Font Families
+-----------------------------------------------------------------*/
+
+$system_stack: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, helvetica, arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
+$fontNormal: $system_stack !default;
+$fontNormalBold: $system_stack;
+$fontAlt1: $system_stack;
+$fontTitleTemplate: $system_stack;
+$fontTitleContent: $system_stack;
+
+
+/* ----------------------------------------------------------------
+    Other Typography
+-----------------------------------------------------------------*/
+
+$basicH1FontMargin: 30px 0;
+$basicH2FontMargin: 0 0 30px 0;
+
+$richtextPMargin: 0 0 1.67em 0;
+$richtextListMargin: 1.67em 0 1.67em 1.67em;
+$richtextListSpacing: -.67em;
+
+$defaultHyphenation: manual;
+$titleHyphenation: auto;
+
+$basicH1Texttransform: none;
+$basicH2Texttransform: none;
+$basicH3Texttransform: none;
+
+$basicH1Fontweight: bold;
+$basicH2Fontweight: bold;
+$basicH3Fontweight: bold;
+$basicH4Fontweight: bold;
+$basicH5Fontweight: bold;
+$basicH6Fontweight: bold;
+
+$basicH1Lineheight: 1.1;
+$basicH2Lineheight: 1.1;
+$basicH3Lineheight: 1.1;
+$basicH4Lineheight: 1.1;
+$basicH5Lineheight: 1.1;
+$basicH6Lineheight: 1.1;
+
+/* ----------------------------------------------------------------
+	Colors (don't forget the part BGs in the CMS)
+-----------------------------------------------------------------*/
+
+// No one knows why there are a gazillion colors, it's pretty crazy.
+
+/* ----------------------------------------------------------------
+    Colors
+-----------------------------------------------------------------*/
+$colorPrime: #3469CB;          // color 1, primary accent color
+$colorPrimeLight: #7697D4;     // color 2, only in v2 header as the background behind the sticky anchors menu
+$colorPrimeDark: #2A364B;      // color 3, secondary accent color
+$colorHighlight: #3B76E4;      // color 12, hovers in soon
+$colorHighlight2: #F3A52A;     // color 10
+$colorComplementary: #1A242F;  // color 9, reactions background
+$colorComplementary2: #1A242F; // color 11
+$colorSub: #FF5600;            // cart background, soon reveal
+
+$grey1: #333;     // subtle text that should be readable
+$grey2: #999;     // placeholders that are almost unreadable, some background
+$grey3: #DDD;     // some very light borders and accents
+$grey4: #EEE;     // $unavailable button background
+$grey5: #FAFAFA;  // color 8, anchor menu background in v1 header, background of featured slides
+$grey6: #666;     // color 6
+$grey7: #F0F0F0;  // color 7
+$grey8: #787878;  // color 4
+
+$color1: $colorPrime;            // used a lot
+$color2: $colorPrimeLight;       // link hovers
+$color3: $colorPrimeDark;        // used a lot
+$color4: $grey8;                 // unavailable button text
+$color5: $grey3;                 // border in the order process
+$color6: $grey6;                 // booked ticket info (sub_events)
+$color8: $grey5;                 // footer link hover color
+$color9: $colorComplementary;    // used a lot
+$color10: $colorHighlight2;      // footer link, price popover text
+$color11: $colorComplementary2;  // footer background
+$color12: $colorHighlight;       // used A LOT
+
+$black: #000;
+$white: #FFF;
+$colorPageBg: #FFF;
+$colorDefaultText: #000;
+
+$unavailable: $grey4;
+
+$hrLine: 1px solid $grey2;
+$hrMargin: 15px 0;
+
+$colorMsgNotice: #7ED321;
+$colorMsgWarning: #F6A623;
+$colorMsgError: #FF426D;
+
+$defaultLink: $color1;
+$defaultLinkHover: $color2;
+$defaultLinkDecoration: none;
+$defaultLinkDecorationHover: none;
+$richtextLinkDecoration: none;
+$richtextLinkDecorationHover: underline;
+
+$colorVideoPlayerHighlights: $colorPrime;
+$colorVideoPlayTriangle: transparent;
+$videoContainerPadding: 0 15px;
+
+$colorBgSelection: $color1;
+
+/* ----------------------------------------------------------------
+	Shadows
+-----------------------------------------------------------------*/
+
+// https://css3gen.com/box-shadow/
+$defaultBoxShadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+$defaultBoxShadowDark: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+$defaultBoxShadowSticky: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+$defaultBoxShadowMenu: 0 13px 42px 11px rgba(0, 0, 0, 0.15);
+
+$iconOverlayShadow: 0 0 4px rgba(0, 0, 0, 0.5);
+
+$gradientOverlay: linear-gradient(to top, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.3) 30%,rgba(0,0,0,0) 100%);
+
+
+/* ----------------------------------------------------------------
+	Cards
+-----------------------------------------------------------------*/
+
+$defaultCardRadius: 5px;
+
+$defaultCardGridColumnSpacing: 15px;
+$defaultCardGridRowSpacing: 15px;
+
+
+/* ----------------------------------------------------------------
+	Media Credits
+-----------------------------------------------------------------*/
+
+$mediaCreditsColor: $white;
+$mediaCreditsBackground: rgba(0,0,0,.33);
+$mediaCreditsFontfamily: inherit;
+$mediaCreditsLineHeight: 1;
+$mediaCreditsWeight: normal;
+$mediaCreditsTexttransform: none;
+$mediaCreditsFontsize: 12px;
+$mediaCreditsMargin: 0;
+$mediaCreditsPadding: 4px 5px;
+
+
+/* ----------------------------------------------------------------
+	Buttons
+-----------------------------------------------------------------*/
+
+$defaultBtnTransitionEnter: all .1s ease-in-out;
+$defaultBtnTransitionLeave: all .2s ease-in-out;
+
+$defaultBtnShadowDefault: none;
+$defaultBtnShadowActive: none;
+$defaultBtnShadowActiveHover: none;
+$defaultBtnShadowActiveActive: none;
+$defaultBtnShadowDisabled: none;
+$defaultBtnShadowUnavailable: none;
+
+$defaultBtnRadius: 16px;
+$defaultBtnWidth: 9em;
+$defaultBtnPadding: 7px 12px;
+$defaultBtnBorder: none;
+$defaultBtnBorderHover: none;
+
+$defaultBtnFontfamily: $fontNormal;
+$defaultBtnFontsize: 14px;
+$defaultBtnLineHeight: normal;
+$defaultBtnWeight: normal;
+$defaultBtnTexttransform: none;
+
+$defaultBtnBorderDefault: none;
+$defaultBtnBorderDefaultHover: none;
+$colorBgBtnDefault: transparent;
+$colorBtnDefaultText: inherit;
+
+$defaultBtnBorderActive: none;
+$defaultBtnBorderActiveHover: none;
+$colorBgBtnActive: $black;
+$colorBtnActiveHover: $color1;
+$colorBtnActiveText: $white;
+$colorBtnActiveTextHover: $white;
+
+$defaultBtnBorderUnavailable: none;
+$colorBgBtnUnavailable: $unavailable;
+$colorBtnUnavailableText: $color4;
+$defaultBtnShadowUnavailable: none;
+
+$defaultBtnBorderDisabled: none;
+$colorBgBtnDisabled: $color8;
+$colorBtnDisabledText: $color4;
+
+
+
+/* ----------------------------------------------------------------
+	Card Animations
+-----------------------------------------------------------------*/
+
+$cardAnimationShadowHover: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+$cardAnimationShadowActive: none;
+$cardAnimationShadowIn: .3s ease-in-out;
+$cardAnimationShadowOn: .1s ease-in-out;
+$cardAnimationShadowOut: .8s ease-in-out;
+
+$cardAnimationGlowHover: 0 0 20px 0 adjust-color($colorPrimeLight, $alpha: -0.7);
+$cardAnimationGlowActive: none;
+$cardAnimationGlowIn: .3s ease-in-out;
+$cardAnimationGlowOn: .1s ease-in-out;
+$cardAnimationGlowOut: .8s ease-in-out;
+
+$cardAnimationZoomHover: scale(1.1);
+$cardAnimationZoomActive: scale(1.2);
+$cardAnimationZoomIn: .3s ease-in-out;
+$cardAnimationZoomOn: .1s ease-in-out;
+$cardAnimationZoomOut: .8s ease-in-out;
+
+$cardAnimationTwistHover: scale(1.2) rotate(3deg);
+$cardAnimationTwistActive: scale(1.3) rotate(6deg);
+$cardAnimationTwistIn: .3s ease-in-out;
+$cardAnimationTwistOn: .1s ease-in-out;
+$cardAnimationTwistOut: .8s ease-in-out;
+
+$cardAnimationSaturateHover: none;
+$cardAnimationSaturateActive: none;
+$cardAnimationSaturateIn: .3s ease-in-out;
+$cardAnimationSaturateOn: .1s ease-in-out;
+$cardAnimationSaturateOut: .8s ease-in-out;
+
+$cardAnimationDesaturateHover: grayscale(100%);
+$cardAnimationDesaturateActive: grayscale(100%);
+$cardAnimationDesaturateIn: .3s ease-in-out;
+$cardAnimationDesaturateOn: .1s ease-in-out;
+$cardAnimationDesaturateOut: .8s ease-in-out;
+
+$cardAnimationSlideHover: translateY(-10px);
+$cardAnimationSlideActive: none;
+$cardAnimationSlideIn: .3s ease-in-out;
+$cardAnimationSlideOn: .1s ease-in-out;
+$cardAnimationSlideOut: .8s ease-in-out;
+
+$cardAnimationSkewOrigin: top center;
+$cardAnimationSkewHover: rotate(1deg);
+$cardAnimationSkewActive: perspective(360px) translateZ(-30px);
+$cardAnimationSkewIn: .3s ease-in-out;
+$cardAnimationSkewOn: .1s ease-in-out;
+$cardAnimationSkewOut: .8s ease-in-out;
+
+$cardAnimationShiftHover: translateY(-10px);
+$cardAnimationShiftActive: none;
+$cardAnimationShiftIn: .3s ease-in-out;
+$cardAnimationShiftOn: .1s ease-in-out;
+$cardAnimationShiftOut: .8s ease-in-out;
+
+$heroAnimationZoom: 2s ease-out hero-zoom;
+$heroAnimationTwist: 2s ease-out hero-twist;
+$heroAnimationSlide: 2s ease-out hero-slide;
+$heroAnimationFadeIn: 2s ease-out hero-fade-in;
+$heroAnimationSaturate: 2s ease-out hero-saturate;
+$heroAnimationDesaturate: 2s ease-out hero-desaturate;
+
+/* ----------------------------------------------------------------
+	Radius
+-----------------------------------------------------------------*/
+
+$defaultFormRadius: 25px;
+$formControlRadius: 0;
+
+/* ----------------------------------------------------------------
+	Ordertimer
+-----------------------------------------------------------------*/
+
+$orderTimerHeight: 40px;
+$orderTimerAlignment: center;
+
+/* ----------------------------------------------------------------
+	Header dimensions
+-----------------------------------------------------------------*/
+
+$headerHeightShowcase: 90px;
+$headerHeight: 90px;
+$headerHeightSmall: 60px;
+$headerOrderHeight: 90px;
+
+$logoHeight: 100px;
+
+/* ----------------------------------------------------------------
+	Breakpoints
+-----------------------------------------------------------------*/
+
+$bp_4k: 4096px;
+$bp_uhd: 3840px;
+$bp_retina: 2880px;
+$bp_fullhd: 1920px;
+$bp_720p: 1366px;
+$bp_wxga: 1200px;
+$bp_tablet: 992px;
+$bp_mobile: 768px;
+$bp_tiny: 480px;
+
+// make these available in a map for convenient access
+$breakpoints: (
+    '4k': $bp_4k,
+    'uhd': $bp_uhd,
+    'retina': $bp_retina,
+    'fullhd': $bp_fullhd,
+    '720p': $bp_720p,
+    'wxga': $bp_wxga,
+    'tablet': $bp_tablet,
+    'mobile': $bp_mobile,
+    'tiny': $bp_tiny
+);
+
+/* ----------------------------------------------------------------
+	Spacing units
+-----------------------------------------------------------------*/
+
+$defaultSpacing: 10px;
+
+/* ----------------------------------------------------------------
+	Letter Spacing
+-----------------------------------------------------------------*/
+
+$letterSpacing: 0.05rem !default;
+$letterSpacingList: () !default;

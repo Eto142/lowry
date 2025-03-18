@@ -1,0 +1,30 @@
+html {
+    font-size: $baseFontsize;
+
+    @media (max-width: $bp_mobile) {
+        font-size: $baseFontsizeMobile;
+    }
+}
+
+body {
+    font-family: $fontNormal;
+    font-size: inherit;
+    line-height: $baseLineheight;
+    -webkit-hyphens: $defaultHyphenation;
+    hyphens: $defaultHyphenation;
+    color: $colorDefaultText;
+
+    &.menu-opened {
+        @media (max-width: $bp_mobile - 1) {
+            overflow: hidden;
+
+            @supports (max-height: 100dvh) {
+                max-height: 100dvh;
+            }
+
+            @supports not (max-height: 100dvh) {
+                max-height: 100vh;
+            }
+        }
+    }
+}

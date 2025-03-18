@@ -1,0 +1,123 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$slidernav: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $slidernav;
+$default_arrow_color: $grey2;
+$default_arrow_size: 50px;
+
+$arrow_size: v($default_arrow_size, arrow_background_width);
+$scrollbar_offset: 20px; // make sure the scrollbar still fits in the viewport
+$outer_breakpoint: $arrow_size * 2 + $bp_wxga + $scrollbar_offset;
+
+@mixin nav-buttons {
+    display: flex;
+    padding: 30px 10px;
+    border: 0;
+    font-size: $default_arrow_size;
+    background: none;
+    color: v($default_arrow_color, color);
+    transition: color .2s ease-in-out;
+    overflow: hidden;
+    pointer-events: initial;
+
+    &:hover {
+        color: v($black, color_hover);
+        transition: .2s color;
+    }
+
+    i {
+        margin: auto;
+        font-size: v($default_arrow_size, arrow_size);
+        color: v($white, arrow_icon_color);
+        &:hover {
+            color: v($white, arrow_icon_color_hover);
+        }
+    }
+
+    &.with-bg {
+        width: $arrow_size;
+        height: $arrow_size;
+        z-index: 1;
+        padding: v(0, arrow_padding);
+        border-radius: v(50%, arrow_border_radius);
+        background: v($colorPrime, arrow_background);
+
+        &:hover {
+            background: v(darken($colorPrime, 8%), arrow_background_hover);
+        }
+
+        i {
+            margin: auto;
+            font-size: v(22px, arrow_size);
+            color: v($white, arrow_icon_color);
+            &:hover {
+                color: v($white, arrow_icon_color_hover);
+            }
+        }
+
+        @media screen and (min-width: $bp_mobile + 1) {
+            &.prevBtn {
+                margin-left: -10px;
+            }
+            &.nextBtn {
+                margin-right: -10px;
+            }
+        }
+    }
+}
+
+.slider-root {
+    position: relative;
+
+    .slider-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        margin-left: 0;
+        pointer-events: none;
+
+        .slick-arrow {
+            position: absolute;
+            &.prevBtn {
+                left: 0;
+            }
+            &.nextBtn {
+                right: 0;
+            }
+        }
+
+        button {
+            @include nav-buttons;
+
+            &.slick-disabled {
+                opacity: .2;
+            }
+
+            &.with-bg {
+                &.slick-disabled {
+                    opacity: 1;
+                    background: v($colorBgBtnDisabled, arrow_background_disabled);
+                    cursor: default;
+                }
+            }
+        }
+    }
+}
+
+// retain common button styles on review slider
+#reviews {
+    button {
+        @include nav-buttons;
+    }
+}

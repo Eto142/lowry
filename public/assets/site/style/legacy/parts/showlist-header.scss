@@ -1,0 +1,72 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+
+// all values should be in a map called:
+$showlist_header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $showlist_header;
+
+
+
+.headerShowWrapper {
+    .inner {
+        border-bottom: v(none, border_bottom, $filterHeaderBorderBottom);
+    }
+
+    h1 {
+        margin-bottom: 5px;
+        font-family: v($fontNormal, font_family, $listHeaderTitleFontfamily);
+        font-weight: v(bold, font_weight, $listHeaderTitleWeight);
+        line-height: v(normal, line_height, $listHeaderTitleLineheight);
+        text-transform: v(none, text_transform, $listHeaderTitleTexttransform);
+        color: v($grey1, color, $colorListHeaderTitle);
+
+        @include fontsize(v($basicH1Fontsize, font_size, $listHeaderTitleFontsize));
+    }
+
+    .desc {
+        font-family: v($fontNormal, desc_font_family, $listHeaderDescFontfamily);
+        font-weight: v(normal, desc_font_weight, $listHeaderDescWeight);
+        line-height: v(1.25, desc_line_height, $listHeaderDescLineheight);
+        text-transform: v(none, desc_text_transform, $listHeaderDescTexttransform);
+        color: v($grey1, desc_color, $colorListHeaderDesc);
+
+        @include fontsize(v($fs_normal, desc_font_size, $listHeaderDescFontsize));
+    }
+
+    .shortcutMenu {
+        float: right;
+        margin-bottom: 0;
+        padding: v(30px 15px, shortcuts_padding, $shortcutMenuPadding);
+        text-align: right;
+
+        li {
+            list-style: none;
+            display: inline-block;
+            font-family: v($fontNormal, shortcuts_font_family, $shortcutFontfamily);
+            font-weight: v(bold, shortcuts_font_weight, $shortcutWeight);
+            line-height: v(normal, shortcuts_line_height, $shortcutLineheight);
+            text-transform: v(none, shortcuts_text_transform, $shortcutTexttransform);
+            color: v(inherit, shortcuts_color, $colorShortcut);
+
+            @include fontsize(v($fs_small_title, shortcuts_font_size, $shortcutFontsize));
+
+            + li {
+                margin-left: v(30px, shortcuts_spacing, $shortcutLinkSpacing);
+            }
+
+            a {
+                text-decoration: v(none, shortcuts_text_decoration, $shortcutLinkTextdecoration);
+                color: v(inherit, shortcuts_color, $colorShortcut);
+
+                &:hover {
+                    text-decoration: v(underline, shortcuts_text_decoration_hover, $shortcutLinkTextdecorationHover);
+                    color: v($color1, shortcuts_color_hover, $colorShortcutHover);
+                }
+            }
+        }
+    }
+}

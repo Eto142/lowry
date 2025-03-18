@@ -1,0 +1,70 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$column_grids: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $column_grids;
+
+@mixin item_border() {
+    position: relative;
+    &::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: calc(v(30px, gap) / -2);
+        border-left: v(none, item_border_left);
+    }
+}
+
+.richtext ul.cols-grid-2,
+.richtext ul.cols-grid-3 {
+    list-style: none !important;
+    display: grid;
+    margin: 0;
+    padding: 0;
+    column-gap: v(30px, column_gap);
+    row-gap: v(30px, row_gap);
+
+    > * :first-child:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.richtext ul.cols-grid-2 {
+    grid-template-columns: 1fr 1fr;
+
+    @media (max-width: $bp_mobile) {
+        grid-template-columns: 1fr;
+        .btn {
+            width: 100%;
+        }
+    }
+
+    @media (min-width: $bp_mobile + 1) {
+        > *:nth-child(even) {
+            @include item_border();
+        }
+    }
+}
+
+.richtext ul.cols-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @media (max-width: $bp_tablet) {
+        grid-template-columns: 1fr;
+        .btn {
+            width: 100%;
+        }
+    }
+
+    @media (min-width: $bp_tablet + 1) {
+        > *:not(:nth-child(3n + 1)) {
+            @include item_border();
+        }
+    }
+}

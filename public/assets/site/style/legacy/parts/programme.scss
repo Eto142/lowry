@@ -1,0 +1,50 @@
+@use 'sass:map';
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$programme: ();
+// previously the map was called:
+$contentspart: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// the old contentspart map might be used, so for backwards compatibility:
+$programme: map.merge($programme, $contentspart);
+// and pass it to the v() function via the $v_map variable
+$v_map: $programme;
+
+.programmeWrapper {
+    @include inner_width();
+
+    .inner {
+        padding: v(0, inner_padding, $showDetailContentsTitleDescPadding);
+        border: v(none, inner_border, $showDetailContentsTitleDescBorderLeft);
+        border-radius: v(0, inner_border_radius);
+        background: v(transparent, inner_background, $colorBgDetailContentsTitleDesc);
+    }
+
+    h2 {
+        margin: v(0 0 30px 0, title_margin, $showDetailContentsH2margin);
+        font-family: v($fontTitleTemplate, title_font_family, $showDetailContentsH2Fontfamily);
+        font-weight: v(bold, title_font_weight, $showDetailContentsH2Weight);
+        line-height: v(normal, title_line_height, $showDetailContentsH2LineHeight);
+        text-transform: v(none, title_text_transform, $showDetailContentsH2Texttransform);
+        color: v($white, title_color, $colorContentsH2);
+
+        @include fontsize(v($basicH2Fontsize, title_font_size, $showDetailContentsH2Fontsize));
+    }
+
+    .richtext {
+        font-family: v($fontNormal, desc_font_family, $showDetailContentsFontfamily);
+        font-weight: v(normal, desc_font_weight, $showDetailContentsWeight);
+        line-height: v(1.67, desc_line_height, $showDetailContentsLineHeight);
+        text-transform: v(none, desc_text_transform, $showDetailContentsTexttransform);
+        color: v($white, desc_color, $colorContentsText);
+
+        @include fontsize(v($basicH4Fontsize, desc_font_size, $showDetailContentsFontsize));
+
+        ul {
+            margin: v(10px 0 10px 30px, list_margin, $showDetailContentsUlMargin);
+        }
+    }
+}

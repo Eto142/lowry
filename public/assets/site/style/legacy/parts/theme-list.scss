@@ -1,0 +1,283 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$theme_list: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $theme_list;
+
+
+.themeListWrapper {
+
+    @mixin largeThumb() {
+        .imageLayer,
+        .thumb img {
+            display: none;
+            &.large {
+                display: block;
+            }
+        }
+    }
+    @mixin smallThumb() {
+        .imageLayer,
+        .thumb img {
+            display: block;
+            &.large {
+                display: none;
+            }
+        }
+    }
+    @mixin fiftyfifty() {
+        display: flex;
+        min-height: 0;
+        .thumb img {
+            display: block;
+            &.large {
+                display: none;
+            }
+        }
+        > * {
+            width: 50%;
+            &.thumb {
+                order: 1;
+            }
+            &.desc {
+                @if (v('center', fiftyfifty_alignment, $themeFiftyFiftyAlignment) == 'center') {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                }
+            }
+        }
+    }
+
+    h2 {
+        margin-bottom: v(0, header_margin_bottom, $sugHeaderMarginBottom);
+        padding: v(0 0 20px 0, header_padding, $themeListH2Padding);
+        font-family: v($fontAlt1, header_font_family, $sugHeaderFontfamily);
+        font-weight: v(bold, header_font_weight, $sugHeaderWeight);
+        line-height: v(normal, header_line_height, $sugHeaderLineheight);
+        text-transform: v(none, header_text_transform, $sugHeaderTextTransform);
+        color: v($black, header_color, $sugHeaderColor);
+        text-align: v(left, header_text_align, $sugHeaderTextAlign);
+
+        @include fontsize(v($basicH1Fontsize, header_font_size));
+    }
+
+    .imageLayer,
+    .gradientOverlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border-radius: inherit;
+        background: transparent no-repeat center / cover;
+    }
+    .gradientOverlay {
+        background: v($gradientOverlay, card_overlay, $themeCardGradientOverlay);
+        pointer-events: none;
+    }
+    .imageLayer.large {
+        display: none;
+    }
+
+    .thumb {
+        display: block;
+        position: relative;
+        img {
+            width: 100%;
+            &.large {
+                display: none;
+            }
+        }
+    }
+
+    .grid-root {
+        display: flex;
+        flex-wrap: wrap;
+        > * {
+            width: 360px;
+            margin: 0 5px 15px 5px;
+        }
+        &.compact {
+            > * {
+                width: 210px;
+            }
+        }
+        @supports (display: grid) {
+            display: grid;
+            grid-column-gap: v(30px, card_spacing, $themeCardSpacing);
+            grid-row-gap: v(30px, card_spacing, $themeCardSpacing);
+            grid-template-columns: 1fr 1fr 1fr;
+
+            > * {
+                width: auto;
+                margin: 0;
+            }
+
+            @media (max-width: $bp_tablet - 1) {
+                grid-template-columns: 1fr 1fr;
+            }
+            @media (max-width: $bp_mobile - 1) {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+
+    &:not(.size-small) {
+        .grid-root {
+            @supports (display: grid) {
+                > *:nth-child(4n) {
+                    grid-column-end: span 3;
+                    @include largeThumb();
+                }
+
+                &[data-item-count='5'] {
+                    > *:last-child {
+                        grid-column-end: span 3;
+                        @include largeThumb();
+                    }
+                }
+
+                @media (max-width: $bp_tablet - 1) {
+                    > *:nth-child(4n),
+                    &[data-item-count='5'] > *:last-child {
+                        grid-column-end: auto;
+                        @include smallThumb();
+                    }
+                    > *:nth-child(3n) {
+                        grid-column-end: span 2;
+                        @include largeThumb();
+                    }
+                }
+
+                @media (max-width: $bp_mobile - 1) {
+                    // small screen, all full width, which is actually pretty wide
+                    > *:nth-child(odd),
+                    > *:nth-child(even),
+                    &[data-item-count='5'] > *:last-child {
+                        grid-column-end: auto;
+                        @include largeThumb();
+                    }
+                }
+
+                @media (max-width: $bp_tiny - 1) {
+                    // smaller, images now closer to square
+                    > *:nth-child(odd),
+                    > *:nth-child(even),
+                    &[data-item-count='5'] > *:last-child {
+                        grid-column-end: auto;
+                        @include smallThumb();
+                    }
+                }
+            }
+        }
+    }
+
+    &.variant-flat.size-fiftyfifty {
+        .grid-root {
+            @supports (display: grid) {
+                @media (min-width: $bp_tablet) {
+                    > *:nth-child(4n) {
+                        @include fiftyfifty();
+                    }
+                }
+                @media (min-width: $bp_mobile) and (max-width: $bp_tablet - 1) {
+                    > *:nth-child(3n) {
+                        @include fiftyfifty();
+                    }
+                }
+            }
+        }
+        .grid-root[data-item-count='1'],
+        .grid-root[data-item-count='2'] {
+            > * {
+                @include fiftyfifty();
+            }
+        }
+    }
+
+    .grid-root[data-item-count='1'],
+    .grid-root[data-item-count='2'] {
+        display: block;
+        > * {
+            @include largeThumb();
+            + * {
+                margin-top: v(30px, card_spacing, $themeCardSpacing);
+            }
+        }
+    }
+
+    &:not(.variant-flat) .themeCard {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    .themeCard {
+        min-height: v(360px, card_min_height, $themeCardCompactHeight);
+        position: relative;
+        border-radius: v($defaultCardRadius, card_border_radius);
+        background: v($colorPageBg, card_background, $themeCardBackground);
+        color: v($white, card_color, $colorH2Theme);
+        box-shadow: $defaultBoxShadow;
+        transition: box-shadow .2s ease;
+        overflow: hidden;
+
+        @media (max-width: $bp_wxga - 1) {
+            min-height: v(293px, card_min_height_mobile, $themeCardCompactHeightBP5);
+        }
+
+        &:hover {
+            color: v($white, card_color_hover, $colorH2ThemeHover);
+            &,
+            a {
+                text-decoration: none;
+            }
+            .desc h3 {
+                text-decoration: v($defaultLinkDecorationHover, title_text_decoration_hover, $themeCardDecorationHover);
+            }
+        }
+
+        .desc {
+            position: relative;
+            padding: v(30px, card_padding, $themeCardPadding);
+            text-align: v(left, card_text_align, $themeItemTextAlign);
+            &,
+            a {
+                color: inherit;
+            }
+        }
+
+        h3 {
+            margin: v(0, title_margin, $themeTitleMargin);
+            font-family: v($fontNormal, title_font_family, $themeH2Fontfamily);
+            font-weight: v(bold, title_font_weight, $themeH2Fontweight);
+            line-height: v(1.15, title_line_height, $themeH2LineHeight);
+            text-decoration: v($defaultLinkDecoration, title_text_decoration);
+            text-transform: v(none, title_text_transform, $themeH2TextTransform);
+
+
+            @include fontsize(v($fs_huge_title, title_font_size, $themeH2Fontsize));
+        }
+        p {
+            margin: v(10px 0 0 0, desc_margin, $themePMargin);
+            font-family: v($fontNormal, desc_font_family, $themePFontfamily);
+            font-weight: v(normal, desc_font_weight, $themePFontweight);
+            line-height: v(normal, desc_line_height, $themePLineHeight);
+            text-decoration: v($defaultLinkDecoration, desc_text_decoration);
+            text-transform: v(none, desc_text_transform, $themePTextTransform);
+
+            @include fontsize(v($fs_small, desc_font_size, $themePFontsize));
+        }
+
+        @each $animation in v([], card_animations, $themeCardAnimations) {
+            @include card_animation($animation, '.imageLayer', '.desc');
+        }
+    }
+}

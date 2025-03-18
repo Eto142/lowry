@@ -1,0 +1,135 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$news_item: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $news_item;
+
+
+.newsItemCard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: v(none, border, $featNewsCardBorder);
+    border-radius: $defaultCardRadius;
+    background: v($white, background, $colorBgFeatNewsCard);
+    color: v(inherit, color, $featNewsCardColor);
+    box-shadow: $defaultBoxShadow;
+    transition: box-shadow .2s ease;
+    overflow: hidden;
+
+    @include fontsize(v($fs_small, font_size, $featNewsFontsize));
+
+    .thumb {
+        overflow: hidden;
+        img {
+            width: 100%;
+        }
+    }
+
+    @each $animation in v([], animations, $featNewsAnimations) {
+        @include card_animation($animation, '.thumb img', '.desc');
+    }
+
+    @at-root .featuredNewsItems[data-animations*='shadow'] .newsItemCard {
+        @include card_animation('shadow', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='glow'] .newsItemCard {
+        @include card_animation('glow', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='zoom'] .newsItemCard {
+        @include card_animation('zoom', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='twist'] .newsItemCard {
+        @include card_animation('twist', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='saturate'] .newsItemCard {
+        @include card_animation('saturate', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='desaturate'] .newsItemCard {
+        @include card_animation('desaturate', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='slide'] .newsItemCard {
+        @include card_animation('slide', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='shift'] .newsItemCard {
+        @include card_animation('shift', '.thumb img', '.desc');
+    }
+    @at-root .featuredNewsItems[data-animations*='skew'] .newsItemCard {
+        @include card_animation('skew', '.thumb img', '.desc');
+    }
+
+    .supertitle {
+        margin: v(30px 30px 15px 30px, supertitle_margin, $featNewsSuperTitleMargin);
+        font-family: v($fontNormal, supertitle_font_family, $featNewsSuperTitleFontfamily);
+        font-weight: v(normal, supertitle_font_weight, $featNewsSuperTitleWeight);
+        line-height: v(normal, supertitle_line_height, $featNewsSuperTitleLineheight);
+        text-transform: v(uppercase, supertitle_text_transform, $featNewsSuperTitleTextTransform);
+        background: v($white, supertitle_background, $colorBgFeatNewsSuperTitle);
+        color: v($grey1, supertitle_color, $colorFeatNewsSuperTitle);
+
+        @include fontsize(v($fs_small, supertitle_font_size, $featNewsSuperTitleFontsize));
+    }
+
+    .desc {
+        margin: v(0 30px 15px 30px, desc_margin, $featNewsCardDescPadding);
+        flex-grow: 1;
+
+        h3 {
+            margin-top: v(0, title_margin_top, $featNewsH1MarginTop);
+            margin-bottom: v(15px, title_margin_bottom, $featNewsH1MarginBottom);
+            font-family: v($fontAlt1, title_font_family, $featNewsH1Fontfamily);
+            font-weight: v(bold, title_font_weight, $featNewsH1Weight);
+            line-height: v(normal, title_line_height, $featNewsH1Lineheight);
+            text-transform: v(none, title_text_transform, $featNewsH1Texttransform);
+            color: v(inherit, title_color, $featNewsH1Color);
+
+            @include fontsize(v($fs_large, title_font_size, $featNewsH1Fontsize));
+
+            a { color: inherit; }
+
+            &:hover {
+                color: v(inherit, title_color_hover, $featNewsH1ColorHover);
+            }
+        }
+
+        .richtext {
+            font-family: v(inherit, teaser_font_family, $featNewsTeaserFontfamily);
+            font-weight: v(normal, teaser_font_weight, $featNewsTeaserWeight);
+            line-height: v(normal, teaser_line_height, $featNewsTeaserLineheight);
+            text-transform: v(none, teaser_text_transform, $featNewsTeaserTexttransform);
+
+            @include fontsize(v(inherit, teaser_font_size, $featNewsTeaserFontsize));
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .btn.btn-clean {
+        display: flex;
+        margin: v(15px 30px 30px 30px, button_margin, $featNewsCardButtonMargin);
+        font-family: v($defaultBtnFontfamily, button_font_family, $featNewsCardButtonFontfamily);
+        font-weight: v($defaultBtnWeight, button_font_weight, $featNewsCardButtonWeight);
+        line-height: 20px;
+        text-transform: v($defaultBtnTexttransform, button_text_transform, $featNewsCardButtonTexttransform);
+        color: v($colorPrime, button_color, $colorBgFeatNewsCardBtn);
+
+        @include fontsize(v($defaultBtnFontsize, button_font_size, $featNewsCardButtonFontsize));
+
+        &:hover {
+            color: v($black, button_color_hover, $colorBgFeatNewsCardBtnHover);
+        }
+    }
+
+    .btn.btn-active {
+        display: v(none, button_display);
+        margin: v(15px 30px 30px 30px, button_margin, $featNewsCardButtonMargin);
+        align-self: v(flex-end, button_align_self);
+    }
+}

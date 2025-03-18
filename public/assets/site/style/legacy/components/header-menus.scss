@@ -1,0 +1,242 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$header_menus: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $header_menus;
+
+$menu_bg: v($white, background, $userMenuBackground);
+
+#user-popup,
+#language-popup {
+    position: fixed;
+    top: $headerHeight;
+    right: 0;
+    z-index: 99999; // mostly this high to win over v1 sticky header
+    margin-top: 6px;
+    margin-right: -60px;
+    padding: v(0 5px 5px 5px, padding, $userMenuPopupPadding);
+    background: $menu_bg;
+    box-shadow: v($defaultBoxShadow, box_shadow, $userMenuShadow);
+    will-change: opacity;
+    animation: fade-in .2s ease-in-out;
+
+    &::before { // pointer nubbin
+        content: '';
+        display: block;
+        position: absolute;
+        top: -6px;
+        right: 63px;
+        border-top: none;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid $menu_bg;
+        border-left: 6px solid transparent;
+    }
+
+    &[aria-expanded='false'] {
+        display: none;
+        opacity: 0;
+    }
+    .is-scrolled & {
+        top: $headerHeightSmall;
+    }
+    .has-timer & {
+        top: $headerHeight + $orderTimerHeight;
+    }
+    .has-timer.is-scrolled & {
+        top: $headerHeightSmall + $orderTimerHeight;
+    }
+    #order-header & {
+        top: $headerOrderHeight;
+    }
+}
+
+#language-popup {
+    margin-right: -15px;
+    padding: v(10px, languagemenu_padding, $languageMenuPopupPadding);
+
+    font-family: v($fontNormal, font_family, $mtMenuLinkFontfamily);
+    font-weight: v(normal, font_weight, $mtMenuLinkWeight);
+    font-size: v(14px, font_size, $mtMenuLinkFontsize);
+    text-transform: v(uppercase, text_transform, $languageMenuTransform);
+
+    background: v($menu_bg, languagemenu_background, $languageMenuBackground);
+    color: v($black, color, $colorPopoverMtContent);
+    box-shadow: v($userMenuShadow, box_shadow, $languageMenuShadow);
+
+    &::before {
+        border-bottom-color: v($menu_bg, border_bottom_color, $languageMenuBackground);
+        right: 50%;
+        margin-right: -6px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    a {
+        text-decoration: v(none, link_text_decoration, $userMenuLinkDecoration);
+        color: v($black, link_color, $colorPopoverMtContent);
+        &:hover {
+            text-decoration: v(underline, link_text_decoration_hover, $userMenuLinkDecorationHover);
+            color: v($color1, link_color_hover, $colorPopoverMtContentHover);
+        }
+    }
+}
+
+
+// v1 bootstrap popover wrapper
+#wrapper .popover {
+    max-width: 50vw;
+    .arrow:after {
+        border-bottom-color: $menu_bg!important;
+    }
+    .popover-content {
+        background: $menu_bg;
+    }
+}
+
+
+header nav.user-menu {
+    padding: v(15px, padding, $userMenuPadding);
+    font-family: v($fontNormal, font_family, $mtMenuLinkFontfamily);
+    font-weight: v(normal, font_weight, $mtMenuLinkWeight);
+    font-size: v(14px, font_size, $mtMenuLinkFontsize);
+    line-height: v(1.45, line_height, $mtMenuLinkLineheight);
+    text-transform: v(none, text_transform, $mtMenuLinkTexttransform);
+    background: $menu_bg;
+    color: v($black, color, $colorPopoverMtContent);
+
+    a:not(.btn) {
+        text-decoration: v(none, link_text_decoration, $userMenuLinkDecoration);
+        color: v($black, link_color, $colorPopoverMtContent);
+        &:hover {
+            text-decoration: v(underline, link_text_decoration_hover, $userMenuLinkDecorationHover);
+            color: v($color1, link_color_hover, $colorPopoverMtContentHover);
+        }
+    }
+
+    p {
+        margin: v(0 0 15px 0, line_margin, $userMenuLineMargin);
+        padding: 0;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .client-type {
+        color: v($black, color, $colorPopoverMtContent);
+        img {
+            max-height: 50px;
+        }
+        a {
+            color: v($color1, heading_color, $userMenuHeaderColor);
+            &:hover,
+            &:active {
+                color: v($color1, heading_color_hover, $colorPopoverMtContentHover);
+            }
+        }
+    }
+
+    h2,
+    .user-info,
+    li {
+        position: relative;
+        padding-left: 45px;
+        background: inherit;
+
+        .peppered-icon,
+        .icon {
+            position: absolute;
+            top: 0;
+            left: 1px; // add 1px for round shape icons corner to not to get it cut
+            font-size: v(18px, primary_font_size, $userMenuPrimaryFontsize);
+            line-height: v(30px, primary_line_height, $userMenuPrimaryLineheight);
+        }
+        .peppered-icon {
+            top: math.div(v(30px, primary_line_height, $userMenuPrimaryLineheight) - 20px, 2);
+        }
+    }
+    h2,
+    .orders,
+    .page,
+    .wishlist {
+        display: block;
+        margin: v(0 0 15px 0, primary_margin, $userMenuPrimaryMargin);
+        font-family: v($fontNormalBold, primary_font_family, $userMenuPrimaryFont);
+        font-weight: v(bold, primary_font_weight, $userMenuPrimaryWeight);
+        font-size: v(18px, primary_font_size, $userMenuPrimaryFontsize);
+        line-height: v(30px, primary_line_height, $userMenuPrimaryLineheight);
+        text-transform: v(none, primary_text_transform, $userMenuPrimaryTexttransform);
+    }
+    .wishlist [data-wishlist-count='0'] {
+        display: none;
+    }
+    .orders,
+    .page,
+    .wishlist {
+        .peppered-icon,
+        i {
+            color: v(inherit, icon_color, $userMenuIconColor);
+        }
+    }
+    li.pages + li:not(.pages) {
+        margin-top: 15px;
+    }
+    h2 {
+        margin: v(0, heading_margin, $userMenuHeaderMargin);
+        &,
+        a {
+            color: v($color1, heading_color, $userMenuHeaderColor);
+        }
+        a:hover,
+        a:active {
+            text-decoration: v(underline, link_text_decoration_hover, $userMenuLinkDecorationHover);
+            color: v($color1, link_color_hover, $colorPopoverMtContentHover);
+        }
+    }
+    .btn {
+        margin: v(0 0 15px 0, button_margin);
+    }
+
+    .user-info {
+        margin: v(0 0 15px 0, heading_sub_margin, $userMenuHeaderSubinfoMargin);
+        color: v($color1, heading_sub_color, $userMenuHeaderColor);
+        word-wrap: break-word;
+    }
+
+    .timeslot {
+        margin: v(0 0 1em -5px, timeslot_margin, $userMenuTimeslotMargin);
+        padding-right: v(5px, timeslot_padding_right, $userMenuTimeslotPadding);
+        line-height: v(30px, timeslot_line_height, $userMenuPrimaryLineheight);
+        text-indent: v(5px, timeslot_text_indent, $userMenuTimeslotPadding);
+        background: v($colorPrime, timeslot_background, $userMenuTimeslotBackground);
+        color: v($white, timeslot_color, $userMenuTimeslotColor);
+    }
+
+    .balance {
+        margin: v(0 0 1em -5px, balance_margin, $userMenuBalanceMargin);
+        padding-right: v(5px, balance_padding_right, $userMenuBalancePadding);
+        line-height: v(30px, balance_line_height, $userMenuPrimaryLineheight);
+        text-indent: v(5px, balance_text_indent, $userMenuBalancePadding);
+        background: v($colorPrime, balance_background, $userMenuBalanceBackground);
+        color: v($white, balance_color, $userMenuBalanceColor);
+        .peppered-icon {
+            left: v(5px, balance_left, $userMenuBalancePadding);
+        }
+    }
+
+    .secondary {
+        margin-top: 15px;
+    }
+}

@@ -1,0 +1,390 @@
+@use 'sass:math';
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$filters_sidebar: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $filters_sidebar;
+
+.sidebar-agenda {
+    display: grid;
+    grid-template-columns: v(1fr 4fr, sidebar_agenda_layout_columns);
+    gap: v(10px, sidebar_agenda_layout_gap);
+
+    @media (max-width: $bp_wxga) {
+        display: block;
+    }
+
+    &:before {
+        display: none;
+    }
+
+    input::placeholder {
+        color: v($colorDefaultText, date_placeholder_color) !important;
+    }
+
+    .custom-links {
+        width: 100%;
+        position: relative;
+
+        p {
+            margin: v($richtextPMargin, line_margin);
+            &:last-child {
+                margin: 0;
+            }
+
+            a {
+                text-decoration: v($defaultLinkDecoration, link_text_decoration);
+                color: v($defaultLink, link_color);
+                &:hover {
+                    text-decoration: v($defaultLinkDecorationHover, link_text_decoration);
+                    color: v($defaultLinkHover, link_color);
+                }
+            }
+        }
+
+        .peppered-icon {
+            position: absolute;
+            right: 0;
+        }
+    }
+
+    .sidebar-click-overlay {
+        display: none;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 3;
+        background: rgba(0,0,0,0);
+        cursor: pointer;
+        transition: transform 0.3s ease-in;
+
+        &.open {
+            display: block;
+            background: v(rgba(0,0,0,0.4), overlay_color_mobile);
+
+            @media (min-width: $bp_wxga) {
+                display: none;
+            }
+        }
+    }
+
+    .mobile-filters {
+        display: none;
+        position: relative;
+        padding: v(20px 0 0 0, mobile_buttons_padding);
+
+        .dateRange,
+        .dateRangeSingle {
+            // effectively hide the inputs, but leave them in the flow for position of the popup
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 60px;
+            right: 30px;
+            bottom: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            visibility: hidden;
+            overflow: hidden;
+        }
+
+        > * {
+            flex: 1;
+            margin: 0 5px 5px 0;
+        }
+
+        .other-filters,
+        .sidebar-date-filter {
+            display: flex;
+            align-items: center;
+            justify-content: v(center, mobile_button_justify_content);
+            width: 100%;
+            min-width: 0;
+            padding: v($defaultBtnPadding, mobile_button_padding);
+            border: v($defaultBtnBorderDefault, mobile_button_border);
+            border-radius: v($defaultBtnRadius, mobile_button_border_radius);
+            font-family: v(inherit, mobile_button_font_family);
+            font-weight: v(normal, mobile_button_font_weight);
+            font-size: v($defaultBtnFontsize, mobile_button_font_size);
+            line-height: v($defaultBtnLineHeight, mobile_button_line_height);
+            text-transform: v(none, mobile_button_text_transform);
+            background: v($colorBgBtnDefault, mobile_button_background);
+            color: v($colorBtnDefaultText, mobile_button_color);
+            box-shadow: v($defaultBtnShadowDefault, mobile_button_box_shadow);
+
+            + .btn {
+                margin: 0 0 5px 5px;
+            }
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, mobile_button_border_hover);
+                background: v($colorBtnActiveHover, mobile_button_background_hover);
+                color: v($colorBtnActiveTextHover, mobile_button_color_hover);
+                box-shadow: v($defaultBtnShadowActiveHover, mobile_button_box_shadow_hover);
+            }
+        }
+
+        @media (max-width: $bp_wxga) {
+            display: flex;
+        }
+    }
+
+    .filter-sidebar {
+        min-width: v(310px, sidebar_min_width);
+        max-width: v(100%, sidebar_max_width);
+        height: v(100vh, sidebar_height);
+        position: sticky;
+        top: 0;
+        left: 0;
+        align-self: start;
+        background: v(transparent, sidebar_background);
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+        transition: top .2s ease-in-out;
+
+        i {
+            font-size: v($basicH4Fontsize, icon_size);
+        }
+
+        @at-root header.is-scrolled + main .sidebar-agenda .filter-sidebar {
+            top: $headerHeightSmall;
+        }
+
+        &::-webkit-scrollbar-track{
+            background: v($grey4, sidebar_scrollbar_track_background);
+            -webkit-box-shadow: none;
+        }
+
+        &::-webkit-scrollbar {
+            width: v(5px, sidebar_scrollbar_width);
+            position: absolute;
+            background: v($grey4, sidebar_scrollbar_background);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: v(5px, sidebar_scrollbar_thumb_border_radius);
+            background: v($grey2, sidebar_scrollbar_thumb_background);
+        }
+
+        .filterBox.sidebar,
+        .filterBox.sidebar form {
+            background: transparent;
+        }
+
+        .sidebar-filters {
+            margin: v(0, sidebar_filters_margin);
+            padding: v(15px 15px 15px 0, sidebar_filters_padding);
+            font-family: v(inherit, sidebar_filters_font_family);
+            font-weight: v(normal, sidebar_filters_font_weight);
+            font-size: v($defaultBtnFontsize, sidebar_filters_font_size);
+            line-height: v($defaultBtnLineHeight, sidebar_filters_line_height);
+            text-transform: v(none, sidebar_filters_text_transform);
+            background: transparent;
+            color: v($colorBtnDefaultText, sidebar_filters_color);
+
+            > * {
+                padding: v(15px 0, sidebar_filter_padding);
+                border-top: v(1px solid $grey3, sidebar_filter_border_bottom);
+
+                &:first-child {
+                    border-top: none;
+                }
+            }
+
+            @media (max-width: $bp_wxga) {
+                margin: 0;
+            }
+
+            fieldset {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: $bp_wxga) {
+            width: 50vw;
+            position: fixed;
+            z-index: 999;
+            padding: v(30px, sidebar_filters_padding_mobile);
+            border-right: 1px solid $grey3;
+            background: v($white, sidebar_mobile_background);
+            box-shadow: v($defaultBoxShadow, sidebar_filters_shadow_mobile);
+            transform: translateX(-110%);
+            transition: transform 0.3s ease-in;
+
+            &.open {
+                top: $headerHeightSmall;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: $bp_mobile - 1) {
+            width: 70vw;
+        }
+        @media (max-width: $bp_tiny - 1) {
+            width: 80vw;
+        }
+    }
+
+    .sidebar-date-filter {
+        .input-daterange {
+            display: flex;
+            position: relative;
+
+            .dateRange,
+            .dateRangeSingle {
+                width: 100%;
+                padding: 0;
+                border: none;
+                background: v(transparent, sidebar_filters_daterange_background);
+                cursor: pointer;
+            }
+
+            @media (max-width: 600px) {
+                .dateRange {
+                    display: none;
+                }
+                .dateRangeSingle {
+                    display: block;
+                }
+            }
+            @media (min-width: 601px) {
+                .dateRange {
+                    display: block;
+                }
+                .dateRangeSingle {
+                    display: none;
+                }
+            }
+
+            .fa-calendar {
+                position: absolute;
+                right: 0;
+                pointer-events: none;
+            }
+        }
+
+        @media (max-width: $bp_wxga) {
+            display: none;
+        }
+    }
+
+    .sidebar-tags-toggle {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .select {
+        .select-anchor {
+            padding: 0;
+            background: transparent;
+        }
+        .option-wrapper {
+            background: transparent;
+        }
+        .select-label.placeholder {
+            color: v($colorDefaultText, select_placeholder_color);
+        }
+        .select-dropdown {
+            position: relative;
+            background: transparent;
+            box-shadow: none;
+
+            .select-options {
+                overflow-y: hidden;
+                box-shadow: none;
+
+                button {
+                    margin-bottom: v(5px, tag_bottom_gap);
+                }
+            }
+        }
+
+        .dropdown-footer {
+            border: none;
+        }
+
+        .select-anchor[aria-expanded='true'] .fa {
+            transform: none;
+        }
+
+        .select-options {
+            padding: 20px 0;
+        }
+
+        .icon-wrapper {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            margin-left: auto;
+
+            span {
+                margin: 0;
+            }
+
+            .peppered-icon {
+                position: absolute;
+                transition: transform .2s ease;
+
+                &:first-child {
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+
+        .select-anchor[aria-expanded='true'] .icon-wrapper {
+            .peppered-icon {
+                transform: rotate(180deg);
+                &:first-child {
+                    transform: rotate(0deg);
+                }
+            }
+        }
+
+        div[id='tags'] .select-options {
+            pointer-events: auto;
+        }
+    }
+
+    button.close-button {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        padding: 10px;
+        border: none;
+        background: v(#FFF, close_button_background);
+        color: v(#000, close_button_color, $brochureNavColor);
+        opacity: v(.8, close_button_opacity, $brochureNavOpacity);
+        cursor: pointer;
+        will-change: opacity;
+        transition: v($defaultBtnTransitionLeave, close_button_transition_leave);
+        &:hover {
+            transition: v($defaultBtnTransitionEnter, close_button_transition_enter);
+            opacity: v(1, close_button_opacity_hover);
+        }
+
+        &::before { // enlarge clickable area
+            content: '';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            bottom: -10px;
+            left: -10px;
+            background: transparent;
+        }
+
+        > * {
+            pointer-events: none;
+        }
+
+        @media (max-width: $bp_wxga) {
+            display: flex;
+        }
+    }
+}

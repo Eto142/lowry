@@ -1,0 +1,67 @@
+@use 'sass:math';
+
+.peppered-icon {
+    display: inline-flex;
+    align-items: center;
+
+    .icon-label {
+        margin-left: 1ex;
+        line-height: 1;
+    }
+    svg {
+        display: block;
+        path {
+            fill: currentcolor;
+        }
+    }
+
+    &.icon-play {
+        filter: drop-shadow($iconOverlayShadow);
+        svg {
+            width: 1em;
+            height: 1em;
+            .triangle {
+                fill: $colorVideoPlayTriangle;
+            }
+            .circle {
+                fill-rule: evenodd;
+            }
+        }
+    }
+}
+
+
+$hamburgerSize: 20px;
+$hamburgerRadius: 3px;
+
+.close-cross {
+    position: relative;
+
+    .icon {
+        display: block;
+        width: $hamburgerSize;
+        height: $hamburgerSize;
+        position: relative;
+    }
+    .bar {
+        display: block;
+        width: $hamburgerSize;
+        height: 3px;
+        position: absolute;
+        top: math.div($hamburgerSize, 2) - 2px;
+
+        z-index: 1;
+        border-radius: $hamburgerRadius;
+        background: currentcolor;
+    }
+
+    .bar:first-child {
+        transform: rotate(45deg);
+    }
+    .bar:last-child {
+        transform: rotate(-45deg);
+    }
+    .bar:not(:first-child):not(:last-child) {
+        transform: scale(0);
+    }
+}

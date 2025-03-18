@@ -1,0 +1,100 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$discount: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $discount;
+
+.discountPageWrapper {
+
+    @include inner_width();
+
+    form {
+        margin: 0;
+        .msg {
+            margin: 30px 0;
+            padding: 0;
+        }
+    }
+
+    label {
+        display: block;
+        margin: v(0 0 5px 0, label_margin, $discountFormLabelMargin);
+        font-family: v($fontNormal, label_font_family, $discountFormLabelFontfamily);
+        font-weight: v(normal, label_font_weight, $discountFormLabelWeight);
+        line-height: v(1.31, label_line_height, $discountFormLabelLineHeight);
+        text-transform: v(none, label_text_transform, $discountFormLabelTexttransform);
+
+        @include fontsize(v($fs_normal, label_font_size, $discountFormLabelFontsize));
+
+        .desc {
+            margin: v(0 0 5px 0, label_desc_margin, $discountFormLabelDescMargin);
+        }
+    }
+
+    input:not([type='checkbox']):not([type='radio']),
+    textarea {
+        display: block;
+        width: 100%;
+        max-width: 30em;
+        height: v(34px, input_height, $discountFieldHeight);
+        margin: v(0 0 15px 0, input_margin, $discountFieldMargin);
+        padding: v(0 6px, input_padding, $discountFieldPadding);
+        border: 1px solid $colorMtBorderForm;
+        border-radius: $defaultFormRadius;
+        font-family: v($fontNormal, input_font_family, $discountFieldFontfamily);
+        font-weight: v(normal, input_font_weight, $discountFieldFontweight);
+        font-style: v(italic, input_font_style, $discountFieldFontstyle);
+        line-height: v(34px, input_line_height, $discountFieldHeight) !important; // important because Bootstrap sucks
+        text-transform: v(none, input_text_transform, $discountFieldTexttransform);
+        color: $colorMtFormInput;
+        box-shadow: none;
+
+        @include fontsize(v($fs_normal, input_font_size, $discountFieldFontsize));
+    }
+    textarea {
+        height: v(34px, input_height, $discountFieldHeight) * 2;
+    }
+
+    button {
+        width: auto;
+        margin: v($loginButtonMargin, button_margin, $discountButtonMargin);
+        padding: v($defaultBtnPadding, button_padding, $discountButtonPadding);
+        border: v($defaultBtnBorderActive, button_border, $discountButtonBorder);
+        border-radius: v($defaultBtnRadius, button_border_radius, $discountButtonRadius);
+        font-family: v($defaultBtnFontfamily, button_font_family, $discountButtonFontfamily);
+        font-weight: v($defaultBtnWeight, button_font_weight, $discountButtonFontweight);
+        line-height: v($defaultBtnLineHeight, button_line_height, $discountButtonLineheight);
+        text-decoration: none;
+        text-transform: v($defaultBtnTexttransform, button_text_transform, $discountButtonTexttransform);
+        text-align: center;
+        background: v($colorBgBtnActive, button_background, $discountButtonBackground);
+        color: v($colorBtnActiveText, button_color, $discountButtonColor);
+        cursor: pointer;
+        transition: v($defaultBtnTransitionLeave, button_transition, $discountButtonTransitionLeave);
+
+        @include fontsize(v($defaultBtnFontsize, button_font_size, $discountButtonFontsize));
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, button_border_hover, $discountButtonBorderHover);
+            background: v($colorBtnActiveHover, button_background_hover, $discountButtonBackgroundHover);
+            color: v($colorBtnActiveTextHover, button_color_hover, $discountButtonColorHover);
+            transition: v($defaultBtnTransitionEnter, button_transition_hover, $discountButtonTransitionEnter);
+        }
+
+        &:disabled {
+            border: v($defaultBtnBorderDisabled, button_border_disabled, $discountButtonBorderDisabled) !important;
+            background: v($colorBgBtnDisabled, button_background_disabled, $discountButtonBackgroundDisabled) !important;
+            color: v($colorBtnDisabledText, button_color_disabled, $discountButtonColorDisabled) !important;
+            cursor: default;
+            opacity: 1; // bootstrap wants to make disabled buttons transparent...
+        }
+    }
+
+    p > button {
+        margin-top: 0;
+    }
+}

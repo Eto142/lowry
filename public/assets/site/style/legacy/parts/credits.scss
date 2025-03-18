@@ -1,0 +1,39 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$credits: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $credits;
+
+.creditsWrapper {
+    @include inner_width();
+
+    .inner {
+        padding: v(0, padding, $showDetailCreditsTitleDescPadding);
+        border: v(none, border, $showDetailCreditsTitleDescBorderLeft);
+        background: v(transparent, background, $colorBgDetailCreditsTitleDesc);
+    }
+
+    h2 {
+        font-family: v($fontTitleTemplate, heading_font_family, $showDetailCreditsH2Fontfamily);
+        font-weight: v(bold, heading_font_weight, $showDetailCreditsH2Weight);
+        line-height: v(normal, heading_line_height, $showDetailCreditsH2LineHeight);
+        text-transform: v(none, heading_text_transform, $showDetailCreditsH2Texttransform);
+        color: v($white, heading_color, $colorCreditsH2);
+
+        @include fontsize(v($fs_large_title, heading_font_size, $showDetailCreditsH2Fontsize));
+    }
+
+    .richtext {
+        font-family: v($fontNormal, desc_font_family, $showDetailCreditsFontfamily);
+        font-weight: v(normal, desc_font_weight, $showDetailCreditsWeight);
+        line-height: v(1.67, desc_line_height, $showDetailCreditsLineHeight);
+        text-transform: v(none, desc_text_transform, $showDetailCreditsTexttransform);
+        color: v($white, desc_color, $colorCreditsText);
+
+        @include fontsize(v($fs_large_subtitle, desc_font_size, $showDetailCreditsFontsize));
+    }
+}

@@ -1,0 +1,3 @@
+.screenreader {
+    @include screenreader_only();
+}

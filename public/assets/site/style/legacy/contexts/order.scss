@@ -1,0 +1,332 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+
+// all values should be in a map called:
+$order: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order;
+
+/* ----------------------------------------------------------------
+    Theme order list
+-----------------------------------------------------------------*/
+
+.listItems .inSeries {
+    margin: 0 -15px;
+    padding: 15px;
+    background: v($grey2, series_background, $colorOrderSeriesBg);
+
+    + .inSeries {
+        padding-top: 0;
+    }
+
+    &.themeItemListHeader {
+        margin-top: 45px;
+        @media (min-width: $bp_mobile) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        h2 {
+            flex: 1;
+            margin: 0;
+            color: v(inherit, series_color);
+        }
+        .btn {
+            width: auto;
+        }
+    }
+}
+
+body.order {
+    .feedbackList {
+        list-style: none;
+        position: relative;
+        margin: 0 30px 40px 30px;
+        padding: 30px;
+        border-radius: v($defaultCardRadius, feedback_border_radius);
+        background: v($colorPageBg, feedback_background);
+        color: v($colorDefaultText, feedback_color);
+
+        @media (max-width: $bp_mobile - 1) {
+            margin-right: 0;
+            margin-left: 0;
+            padding: 0;
+        }
+
+        &.errors {
+            margin-bottom: -48px;
+            background: v($white, upsell_error_background, $orderUpsellErrorBackground);
+            color: v(inherit, upsell_error_color, $orderUpsellErrorColor);
+            filter: drop-shadow(v(0 0 10px rgba(0, 0, 0, 0.1), upsell_error_shadow, $orderUpsellErrorShadow));
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                right: 30px;
+                bottom: -$orderUpsellErrorPointersize;
+                border-top: v(16px, upsell_error_pointer, $orderUpsellErrorPointersize) solid $orderUpsellErrorBackground;
+                border-right: v(16px, upsell_error_pointer, $orderUpsellErrorPointersize) solid transparent;
+                border-bottom: none;
+                border-left: v(16px, upsell_error_pointer, $orderUpsellErrorPointersize) solid transparent;
+            }
+
+            @media (max-width: $bp_mobile - 1) {
+                padding: 15px;
+            }
+        }
+
+        > * {
+            position: relative;
+            margin: 0;
+            padding: 0 0 0 30px;
+            color: v(inherit, upsell_color, $orderUpsellColor);
+
+            + * {
+                margin-top: 30px;
+            }
+
+            .fa {
+                position: absolute;
+                left: -5px;
+                font-size: 20px;
+            }
+            &.warning .fa {
+                color: inherit;
+            }
+            h4 {
+                margin: v(0 0 5px , upsell_heading_margin, $orderUpsellTitleMargin);
+                font-family: v($fontNormal, upsell_heading_font_family, $orderUpsellTitleFontfamily);
+                font-weight: v($basicH4Fontweight, upsell_heading_font_weight, $orderUpsellTitleWeight);
+                line-height: v(1, upsell_heading_line_height, $orderUpsellTitleLineheight);
+                text-transform: v($basicH3Texttransform, upsell_heading_text_transform, $orderUpsellTitleTexttransform);
+
+                @include fontsize(v($basicH4Fontsize, upsell_heading_font_size, $orderUpsellTitleFontsize));
+            }
+            > p {
+                display: block;
+                margin: 0;
+                font-family: v($fontNormal, upsell_desc_font_family, $orderUpsellFontfamily);
+                font-weight: v(normal, upsell_desc_font_weight, $orderUpsellWeight);
+                line-height: v(inherit, upsell_desc_line_height, $orderUpsellLineheight);
+                text-transform: v(none, upsell_desc_text_transform, $orderUpsellTexttransform);
+
+                @include fontsize(v(inherit, upsell_desc_font_size, $orderUpsellFontsize));
+            }
+
+            ul {
+                list-style: disc;
+            }
+
+            &.error input[type='checkbox'] {
+                @include checkbox_toggle();
+            }
+
+            &.error > div.checkbox label {
+                display: flex;
+                align-items: baseline;
+
+                input[type='checkbox'] {
+                    flex-shrink: 0;
+                }
+            }
+        }
+
+        > .msg:not(.combo) + .combo {
+            padding-top: 30px;
+            &::before {
+                content: '';
+                display: block;
+                position: relative;
+                top: -30px;
+                border-top: v(1px solid $grey3, combo_msg_border_top);
+            }
+        }
+    }
+
+    form.is-submitted {
+        pointer-events: none;
+        opacity: .8;
+    }
+}
+
+
+/* ----------------------------------------------------------------
+    Cineville/Podiumpas
+-----------------------------------------------------------------*/
+
+#membership-codes,
+.membership-codes {
+    margin: 15px 0 0 0;
+    h4 {
+        margin: 0 0 5px 0;
+    }
+    label {
+        margin-right: 15px;
+    }
+    input {
+        min-width: 200px;
+    }
+}
+
+/* ----------------------------------------------------------------
+    Extras
+-----------------------------------------------------------------*/
+
+.tickets-extras,
+#ticketsForm-extras {
+    .extrasImage {
+        height: 77px;
+        float: left;
+        margin: 0 30px 15px 0;
+    }
+    table {
+        clear: both;
+        margin-top: 30px;
+    }
+    > div + div {
+        margin-top: 30px;
+    }
+
+    h4,
+    .richtext {
+        padding-right: 15px;
+        line-height: normal;
+    }
+
+    h4 {
+        margin: v(0 0 5px , extras_heading_margin, $orderExtrasTitleMargin);
+        font-family: v($fontNormal, extras_heading_font_family, $orderExtrasTitleFontfamily);
+        font-weight: v($basicH4Fontweight, extras_heading_font_weight, $orderExtrasTitleWeight);
+        line-height: v(1, extras_heading_line_height, $orderExtrasTitleLineheight);
+        text-transform: v($basicH3Texttransform, extras_heading_text_transform, $orderExtrasTitleTexttransform);
+
+        @include fontsize(v($basicH4Fontsize, extras_heading_font_size, $orderExtrasTitleFontsize));
+    }
+    p {
+        display: block;
+        margin: 0;
+        font-family: v($fontNormal, extras_desc_font_family, $orderExtrasFontfamily);
+        font-weight: v(normal, extras_desc_font_weight, $orderExtrasWeight);
+        line-height: v(inherit, extras_desc_line_height, $orderExtrasLineheight);
+        text-transform: v(none, extras_desc_text_transform, $orderExtrasTexttransform);
+
+        @include fontsize(v(inherit, extras_desc_, $orderExtrasFontsize));
+    }
+}
+
+
+.listItems li.extras-toggle {
+    margin-top: 15px;
+    text-align: center;
+    p.subtitle {
+        margin-bottom: 10px;
+    }
+    button {
+        display: inline-flex;
+        width: auto;
+        margin: 0;
+        svg {
+            margin-left: 10px;
+        }
+    }
+}
+.listItems li[id^='event-extras'][aria-expanded='false'] {
+    display: none;
+}
+
+
+/* ----------------------------------------------------------------
+    Payment
+-----------------------------------------------------------------*/
+
+.orderListWrapper .pulloutContent .footer {
+    @media (min-width: 601px) {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .cost-message p {
+            margin: 0;
+        }
+    }
+
+    .cost-message {
+        @include fontsize(v($fs_tiny, cost_font_size));
+    }
+}
+
+fieldset#sendoptions { margin-bottom: 20px; }
+
+.order #content #paymentForm input[type='tel'] {
+    max-width: 20em;
+    + .validationMsg {
+        text-align: left;
+    }
+}
+
+
+/* ----------------------------------------------------------------
+    Attendace form
+-----------------------------------------------------------------*/
+
+.attendanceWrapper {
+    max-width: 720px;
+    margin: 60px auto;
+
+    h3 + p {
+        margin: 0 0 45px 0;
+    }
+
+    p {
+        margin: 0 0 15px 0;
+    }
+
+    fieldset {
+        margin: 0;
+        + p {
+            margin-top: 30px;
+        }
+        + fieldset {
+            margin-top: 5px;
+        }
+        .inner {
+            display: flex;
+            > * {
+                flex: 1;
+            }
+            > * + * {
+                margin-left: 30px;
+            }
+        }
+    }
+    label {
+        font-weight: normal;
+        font-size: .9em;
+        color: $grey1;
+    }
+    button {
+        margin-top: 30px;
+    }
+}
+
+/* ----------------------------------------------------------------
+    Confirmation
+-----------------------------------------------------------------*/
+
+.confirmationWrapper {
+    .container {
+        @include inner_width();
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+    .btn {
+        width: auto;
+        + .btn {
+            margin-left: 30px;
+        }
+    }
+}

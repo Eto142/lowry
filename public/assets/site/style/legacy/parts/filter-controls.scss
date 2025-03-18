@@ -1,0 +1,188 @@
+@use 'sass:math';
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$filter_controls: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $filter_controls;
+
+.filter-controls {
+    display: flex;
+    padding: v(15px, padding);
+    line-height: v(normal, line_height);
+
+    @include fontsize(v($fs_tiny, font_size));
+
+    &:empty {
+        display: none;
+    }
+
+    > :first-child {
+        flex: 1;
+    }
+
+    svg {
+        width: v(16px, icon_size);
+        height: v(16px, icon_size);
+    }
+}
+
+.filter-resets {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+
+    button {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        max-width: v(240px, button_max_width);
+        position: relative;
+        margin: v(2px 5px 2px 0, button_margin);
+        padding: v(6px 30px 6px 15px, button_padding);
+        border: v(1px solid mix($unavailable, $colorDefaultText), button_border);
+        border-radius: v($defaultBtnRadius, button_border_radius);
+        font-family: v($defaultBtnFontfamily, button_font_family);
+        font-weight: v($defaultBtnWeight, button_font_weight);
+        font-size: v(inherit, button_icon_size);
+        line-height: inherit;
+        text-transform: v($defaultBtnTexttransform, button_text_transform);
+        background: v(transparent, button_background);
+        color: v($black, button_color);
+        transition: $defaultBtnTransitionLeave;
+
+        > span:first-child {
+            flex: 1;
+            display: block;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .peppered-icon {
+            position: absolute;
+            right: 6px;
+            margin: v(0, button_icon_margin);
+            color: v(mix($unavailable, $colorDefaultText), button_icon_color);
+            transition: inherit;
+        }
+
+        &:hover,
+        &:active {
+            border: v(1px solid currentcolor, button_border_hover);
+            background: v(transparent, button_background_hover);
+            color: v($defaultLinkHover, button_color_hover);
+            transition: $defaultBtnTransitionEnter;
+            .peppered-icon {
+                color: v(currentcolor, button_icon_color_hover);
+            }
+        }
+    }
+    button.removeAll {
+        margin-left: 15px;
+        padding-right: 0;
+        padding-left: 0;
+        font-weight: v(normal, remove_all_font_weight);
+        text-transform: v(none, remove_all_text_transform);
+        background: transparent;
+        color: v(mix($unavailable, $colorDefaultText), remove_all_color);
+        border-color: transparent;
+
+        &:hover,
+        &:active{
+            color: v($colorDefaultText, remove_all_color_hover);
+        }
+    }
+}
+
+
+form[name='layout-options-form'] {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: $bp_mobile - 1) {
+        display: none;
+    }
+
+    .select-wrapper {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        margin: 0 0 0 15px;
+        .peppered-icon {
+            position: absolute;
+            right: 4px;
+            pointer-events: none;
+            margin-top: 1px;
+        }
+        select {
+            margin: 0;
+            padding: 0 20px 0 0;
+            border: none;
+            font-family: inherit;
+            font-weight: normal;
+            font-size: inherit;
+            background: none;
+            color: v($colorDefaultText, control_color);
+            -webkit-appearance: none;
+            appearance: none;
+            cursor: pointer;
+
+            option {
+                color: initial;
+            }
+        }
+    }
+
+    button.list-mode-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 30px;
+        height: 30px;
+        margin: v(0 5px 0 0, control_margin);
+        padding: 0;
+        border: none;
+        font-size: inherit;
+        line-height: 1;
+        background: none;
+        color: v(mix($unavailable, $colorDefaultText), control_color);
+        cursor: pointer;
+        appearance: none;
+        text-align: center;
+        transition: $defaultBtnTransitionLeave;
+        &:hover {
+            transition: $defaultBtnTransitionEnter;
+        }
+        &:hover,
+        &:active,
+        &:disabled {
+            color: v($colorDefaultText, control_color_active);
+        }
+        &:disabled {
+            cursor: default;
+        }
+
+        &[name='list_type'] {
+            margin-left: 6px;
+            color: v($colorDefaultText, control_color_active);
+            &[value='events'] {
+                color: v(mix($unavailable, $colorDefaultText), control_color);
+            }
+        }
+        > span:not(.peppered-icon) {
+            display: block;
+            padding: 0 2ex 0 .5ex;
+        }
+    }
+}

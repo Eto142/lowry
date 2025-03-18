@@ -1,0 +1,98 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$pagination: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $pagination;
+
+.simple-paging {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: v(30px 0, margin, $paginationMargin);
+
+    @if ($simplePagingCentered != true) {
+        justify-content: space-between;
+        .spacer {
+            flex: 1;
+        }
+    }
+
+    select {
+        -webkit-appearance: none;
+        margin: 0;
+        padding: 0 20px 0 0;
+        border: none;
+        font-family: v($fontNormal, select_font_family, $simplePagingSelectFontfamily);
+        font-weight: v(normal, select_font_weight, $simplePagingSelectWeight);
+        background: none;
+        color: v(inherit, select_color, $simplePagingSelectColor);
+        cursor: pointer;
+
+        &:hover {
+            color: v(inherit, select_color_hover, $simplePagingSelectColorHover);
+        }
+
+        @include fontsize(v(inherit, select_font_size, $simplePagingSelectFontsize));
+
+        option {
+            color: initial;
+        }
+    }
+
+    .select-wrapper {
+        display: inline-flex;
+        align-items: center;
+        position: relative;
+        .peppered-icon {
+            position: absolute;
+            right: 4px;
+            pointer-events: none;
+            margin-top: 1px;
+        }
+    }
+
+    span {
+        margin: 0;
+        padding: 0;
+        font-family: v($fontNormal, label_font_family, $simplePagingLabelFontfamily);
+        font-weight: v(normal, label_font_weight, $simplePagingLabelWeight);
+        text-transform: v(none, label_text_transform, $simplePagingLabelTexttransform);
+        color: v(inherit, label_color, $simplePagingLabelColor);
+
+        @include fontsize(v(inherit, label_font_size, $simplePagingLabelFontsize));
+    }
+
+    form {
+        margin: v(0 30px, select_margin, $simplePagingSelectMargin);
+    }
+
+    @media (max-width: $bp_tiny) {
+        .btn.prev {
+            display: none;
+        }
+    }
+
+    .btn.btn-default {
+        min-width: v($defaultBtnWidth, button_min_width, $simplePagingBtnWidth);
+        margin: 0;
+        padding: v($defaultBtnPadding, button_padding, $simplePagingBtnPadding);
+        border: v($defaultBtnBorder, button_border, $simplePagingBtnBorder);
+        border-radius: v($defaultBtnRadius, button_border_radius, $simplePagingBtnRadius);
+        font-family: v($defaultBtnFontfamily, button_font_family, $simplePagingBtnFontfamily);
+        font-weight: v($defaultBtnWeight, button_font_weight, $simplePagingBtnFontweight);
+        line-height: v($defaultBtnLineHeight, button_line_height, $simplePagingBtnLineHeight);
+        text-transform: v($defaultBtnTexttransform, button_text_transform, $simplePagingBtnTexttransform);
+        background: v($colorBgBtnDefault, button_background, $simplePagingBtnBackground);
+        color: v($colorBtnDefaultText, button_color, $simplePagingBtnColor);
+
+        &:hover {
+            border: v($defaultBtnBorderActiveHover, button_border_hover, $simplePagingBtnBorderHover);
+            background: v($colorBtnActiveHover, button_background_hover, $simplePagingBtnBackgroundHover);
+            color: v($colorBtnActiveTextHover, button_color_hover, $simplePagingBtnColorHover);
+        }
+    }
+}

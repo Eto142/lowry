@@ -1,0 +1,50 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$featured_news: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $featured_news;
+
+.featuredNewsWrapper {
+
+    .container {
+        padding: v(0 15px, padding, $featNewsPadding);
+
+        .inner {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            @media (min-width: $bp_mobile) {
+                display: flex;
+                align-items: center;
+                justify-content: v(space-between, justify_content, $featNewsHeaderJustify);
+            }
+            .btn {
+                width: auto;
+                min-width: 170px;
+            }
+        }
+    }
+
+    .featuredNewsHeader {
+        margin-bottom: v(30px, header_margin_bottom, $featNewsHeaderMarginBottom);
+    }
+
+    h2 {
+        margin: v(0, heading_margin, $featNewsHeaderTitleMarginBottom);
+        font-family: v($fontAlt1, heading_font_family, $featNewsHeaderFontfamily);
+        font-weight: v(bold, heading_font_weight, $featNewsHeaderWeight);
+        line-height: v(normal, heading_line_height, $featNewsHeaderLineheight);
+        text-transform: v(none, heading_text_transform, $featNewsHeaderTextTransform);
+        color: v($grey1, heading_color, $colorFeatNewsHeader);
+
+        @include fontsize(v($basicH1Fontsize, heading_font_size, $featNewsHeaderFontsize));
+    }
+
+    .featuredNewsItems {
+        @include cards_grid();
+    }
+}

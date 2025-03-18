@@ -1,0 +1,266 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$description: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $description;
+
+.desc1Wrapper {
+    .container {
+        @media (min-width: $bp_wxga) {
+            display: flex;
+        }
+    }
+
+    @include inner_width('.desc1');
+
+    @media (min-width: $bp_wxga) {
+        // correct size and spacing when sidenote and desc side by side
+        &.has-meta-info .desc1 {
+            flex: 1;
+            margin: 0;
+            padding-right: 30px;
+            + .metaWrapper {
+                padding-left: 30px;
+            }
+        }
+        &.has-meta-info:not(.align-left) .desc1 {
+            padding-right: 0;
+            padding-left: 30px;
+            + .metaWrapper {
+                padding-right: 30px;
+                padding-left: 0;
+            }
+        }
+    }
+
+    &:not(.align-left) .container {
+        flex-direction: row-reverse;
+    }
+
+    @media (max-width: $bp_wxga - 1) {
+        &--side-note-above:not(.align-left),
+        &--side-note-above {
+            .container {
+                display: flex;
+                flex-direction: column-reverse;
+
+                .metaWrapper {
+                    margin-top: 0;
+                    margin-bottom: v(30px, meta_spacing);
+                }
+            }
+        }
+    }
+
+    .desc1 {
+        margin-right: auto;
+
+        p,
+        .richtext {
+            margin: $richtextPMargin;
+            font-family: v($fontNormal, font_family, $showDetailDesc1Fontfamily);
+            line-height: v(1.67, line_height, $showDetailDesc1LineHeight);
+            text-transform: v(none, text_transform, $showDetailDesc1Texttransform);
+            color: v(inherit, color);
+
+            @include fontsize(v($fs_large_subtitle, font_size, $showDetailDesc1Fontsize));
+        }
+    }
+
+    .metaWrapper {
+        width: calc(v(33.3333%, meta_width) - 30px);
+        > .inner {
+            padding: v(0, meta_padding);
+            border: v(none, meta_border);
+            border-radius: v($defaultCardRadius, meta_border_radius);
+            background: v(transparent, meta_background);
+            color: v(inherit, meta_color);
+
+            > * + * {
+                margin-top: v(30px, meta_spacing);
+            }
+        }
+
+        @media (max-width: $bp_wxga - 1) {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        img.poster {
+            width: 100%;
+            max-width: 320px;
+            padding: v(0, poster_padding);
+        }
+
+        .tags {
+            display: block;
+            margin-bottom: 0;
+            padding: v(0, tags_padding);
+            background: v(none, tags_background, $colorDetailMetaTagsBg);
+
+            li {
+                list-style: none;
+                display: inline-block;
+                margin-right: 5px;
+
+                a {
+                    display: block;
+                    margin-right: v(5px, tag_margin_right, $showDetailTagsMarginRight);
+                    margin-bottom: v(5px, tag_margin_bottom, $showDetailTagsMarginBottom);
+                    padding: v(4px 15px, tag_padding, $showDetailTagsPadding);
+                    border: v(none, tag_border);
+                    border-radius: v(2px, tag_border_radius, $showDetailTagsRadius);
+
+                    font-family: v($fontNormal, tag_font_family, $showDetailTagsFontfamily);
+                    font-weight: v(normal, tag_font_weight, $showDetailTagsWeight);
+                    line-height: v(normal, tag_line_height, $showDetailTagsLineHeight);
+                    text-decoration: v(none, tag_text_decoration);
+                    text-transform: v(none, tag_text_transform, $showDetailTagsTexttransform);
+
+                    background: v($black, tag_background, $colorBgShowDetailTags);
+                    color: v($white, tag_color, $colorShowDetailTagsText);
+
+                    @include fontsize(v($fs_tiny, tag_font_size, $showDetailTagsFontsize));
+
+                    &:hover {
+                        border: v(none, tag_border_hover);
+                        text-decoration: v(none, tag_text_decoration_hover);
+                        background: v($color1, tag_background_hover, $colorBgShowDetailTagsHover);
+                        color: v($white, tag_color_hover, $colorShowDetailTagsTextHover);
+                    }
+                }
+            }
+        }
+
+        .extraInfo {
+            padding: v(0 , info_padding);
+
+            font-family: v($fontNormal, info_font_family, $showDetailExtraInfoFontfamily);
+            font-weight: v(normal, info_font_weight, $showDetailExtraInfoWeight);
+            line-height: v(normal, info_line_height, $showDetailExtraInfoLineHeight);
+            text-transform: v(none, info_text_transform, $showDetailExtraInfoTexttransform);
+
+            background: v(none, info_background, $colorDetailMetaExtraBg);
+            color: v($grey1, info_color, $colorShowDetailExtraInfo);
+
+            @include fontsize(v($fs_small, info_font_size, $showDetailExtraInfoFontsize));
+
+            p {
+                margin-bottom: v(0, info_margin_bottom, $showDetailExtraInfoMarginBottom);
+            }
+
+            ul li {
+                margin-left: 1em;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        .infoList {
+            padding: v(0, movie_meta_padding);
+
+            font-family: v($fontNormal, movie_meta_font_family, $showDetailMetaMovieFontfamily);
+            font-weight: v(normal, movie_meta_font_weight, $showDetailMetaMovieWeight);
+            line-height: v(normal, movie_meta_line_height, $showDetailMetaMovieLineHeight);
+            text-transform: v(none, movie_meta_text_transform, $showDetailMetaMovieTexttransform);
+
+            background: v(none, movie_meta_background, $colorDetailMetaMovieBg);
+            color: v(inherit, movie_meta_color, $colorShowDetailMetaMovie);
+
+            @include fontsize(v($fs_small, movie_meta_font_size, $showDetailMetaMovieFontsize));
+
+            dl,
+            dd,
+            dt {
+                margin: 0;
+                padding: 0;
+            }
+
+            dt {
+                font-family: v($fontNormalBold, movie_meta_title_font_family, $showDetailMetaMovieTitleFontfamily);
+                font-weight: v(bold, movie_meta_title_font_weight, $showDetailMetaMovieTitleWeight);
+                line-height: v(normal, movie_meta_title_line_height, $showDetailMetaMovieTitleLineHeight);
+                text-transform: v(none, movie_meta_title_text_transform, $showDetailMetaMovieTitleTexttransform);
+
+                @include fontsize(v($fs_small, movie_meta_title_font_size, $showDetailMetaMovieTitleFontsize));
+
+                &.hidden {
+                    display: none;
+                }
+            }
+
+            dd + dt {
+                margin-top: v(15px, movie_meta_line_spacing, $showDetailMetaMovieLineMargin);
+            }
+
+            .kijkwijzer {
+                margin-top: 10px;
+            }
+        }
+
+        .partof {
+            padding: v(0, partof_padding);
+
+            font-family: v($fontNormal, partof_font_family, $showDetailPartofLblFontfamily);
+            font-weight: v(normal, partof_font_weight, $showDetailPartofLblWeight);
+            line-height: v(normal, partof_line_height, $showDetailPartofLblLineHeight);
+            text-transform: v(none, partof_text_transform, $showDetailPartofLblTexttransform);
+
+            background: v(none, partof_background, $colorDetailMetaPartofBg);
+            color: v($color12, partof_color, $colorShowDetailPartof);
+
+            @include fontsize(v($fs_small, partof_font_size, $showDetailPartofLblFontsize));
+
+            ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                li {
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+                margin-top: v(.5em, partof_spacing);
+                font-family: v($fontNormal, partof_link_font_family, $showDetailPartofFontfamily);
+                font-weight: v(bold, partof_link_font_weight, $showDetailPartofWeight);
+                line-height: v(1, partof_link_line_height);
+                text-transform: v(none, partof_link_text_transform, $showDetailPartofTexttransform);
+
+                color: v($color12, partof_link_color, $colorShowDetailPartofPart);
+
+                @include fontsize(v($fs_small, partof_link_font_size));
+
+                > .peppered-icon {
+                    margin-right: 1ex;
+                }
+
+                &:hover {
+                    color: v($black, partof_link_color_hover, $colorShowDetailPartofPartHover);
+                }
+            }
+        }
+
+        .castMember {
+            position: relative;
+            @include credits_box();
+            img {
+                max-width: 100%;
+            }
+        }
+
+        & > :first-child { margin-top: 0; }
+    }
+
+
+}

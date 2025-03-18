@@ -1,0 +1,774 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$sub_events: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $sub_events;
+
+@mixin subshow_button() {
+    display: inline-block;
+    width: auto;
+    min-width: v(128px, button_min_width, $subShowBtnWidth);
+    padding: v($defaultBtnPadding, button_padding, $subShowBtnPadding);
+    border: v($defaultBtnBorderActive, button_border, $subShowBtnBorder);
+    border-radius: $defaultBtnRadius;
+    font-family: $defaultBtnFontfamily;
+    font-weight: $defaultBtnWeight;
+    line-height: $defaultBtnLineHeight;
+    text-decoration: none;
+    text-transform: $defaultBtnTexttransform;
+    background: v($colorBgBtnActive, button_background, $subShowBtnBackground);
+    color: v($colorBtnActiveText, button_color, $subShowBtnColor);
+    overflow: hidden;
+    text-align: v(center, button_text_align, $subShowBtnAlignment);
+    vertical-align: middle;
+
+    @include fontsize($defaultBtnFontsize);
+
+    @media (max-width: $bp_mobile - 1) {
+        display: block;
+        width: 100%;
+    }
+
+    .fa {
+        margin: v(0 0 0 1px, button_icon_margin, $subShowBtnIconMargin);
+        font-size: v(inherit, button_icon_font_size, $subShowBtnIconSize);
+    }
+
+    &:hover {
+        border: v($defaultBtnBorderActiveHover, button_border_hover, $subShowBtnBorderHover);
+        background: v($colorBtnActiveHover, button_background_hover, $subShowBtnBackgroundHover);
+        color: v($colorBtnActiveTextHover, button_color_hover, $subShowBtnColorHover);
+    }
+
+    .property {
+        margin-left: .5ex;
+    }
+}
+
+@mixin subshow_item() {
+    margin: v(0 0 3px 0, item_margin, $listItemPulloutMargin);
+    padding: v(30px, item_padding, $listItemPulloutPadding);
+    border-top: v(none, item_border_top, $listItemBorderTop);
+    border-right: v(none, item_border_right, $listItemBorderRight);
+    border-bottom: v(none, item_border_bottom, $listItemBorderBottom);
+    border-left: v(none, item_border_left, $listItemBorderLeft);
+    line-height: v(1, item_line_height, $subShowLineHeight);
+    background: v($white, item_background, $colorBgOrderPulloutContent);
+    color: v(inherit, item_color, $colorOrderPulloutContent);
+}
+
+.subshows {
+    clear: both;
+    background: v(inherit, background, $colorBgListWrapper);
+    overflow: hidden;
+
+    @media (min-width: 601px) {
+        padding: v(0 30px, padding, $listPulloutPadding);
+    }
+    @media (max-width: 600px) {
+        padding: v(0, padding_mobile);
+    }
+
+    ul {
+        margin: 0;
+        box-shadow: $defaultBoxShadow;
+    }
+
+    [data-only-own-locations='true'] {
+        .subshow.in-other-location {
+            display: none;
+        }
+    }
+    .location-group-toggle-wrapper label {
+        margin: 0;
+        padding: 0;
+        font-weight: v(normal, location_toggle_font_weight, $subShowLocationToggleFontweight);
+        @include fontsize(v($fs_tiny, location_toggle_font_size, $subShowLocationToggleFontsize));
+
+        input {
+            margin: 0 1ex 0 0;
+        }
+    }
+
+    .subshow.row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .subshow {
+        list-style: none;
+        @include subshow_item();
+
+        &[aria-expanded='false'] {
+            display: none;
+        }
+
+        @media (min-width: $bp_mobile) {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            > * + * {
+                margin-left: v(30px, item_spacing, $subShowElementSpacing);
+            }
+        }
+        @media (min-width: $bp_mobile) and (max-width: $bp_tablet - 1) {
+            align-items: flex-end;
+        }
+        &:first-child {
+            border-radius: v(0, item_border_radius_first) v(0, item_border_radius_first) 0 0;
+        }
+        &:last-child {
+            margin-bottom: v(10px, item_margin_bottom, $listItemPulloutLastMarginBottom);
+            border-radius: 0 0 v($defaultCardRadius, item_border_radius, $listItemPulloutLastRadius) v($defaultCardRadius, item_border_radius, $listItemPulloutLastRadius);
+        }
+
+        .btnAddWishList {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: v($defaultBtnPadding, button_padding, $subShowBtnPadding);
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .dateTime {
+            display: block;
+            @media (min-width: $bp_tablet) {
+                min-width: 1110px * math.div(2, 12); // two-twelfths of the width of the sub show
+            }
+            padding: 0;
+            background: none;
+            color: inherit;
+
+            .date {
+                width: auto;
+                margin: v(0, date_margin, $cardMultiPulloutDateMargin);
+                padding: v(0, date_padding, $cardMultiDatePadding);
+                font-family: v($fontNormal, date_font_family, $cardMultiPulloutDateFontfamily);
+                font-weight: v(normal, date_font_weight, $cardMultiPulloutDateWeight);
+                text-transform: v(none, date_text_transform, $cardMultiPulloutDateTexttransform);
+                color: v(inherit, date_color, $colorcardMultiDate);
+                white-space: nowrap;
+
+                @include fontsize(v($fs_large, date_font_size, $cardMultiPulloutDateFontsize));
+
+                > * {
+                    display: inline;
+                }
+            }
+            .time,
+            .intermission {
+                margin: v(5px 0 0 0, time_margin, $subShowDetailTimeMargin);
+                font-family: v($fontNormal, time_font_family, $cardMultiTimeFontfamily);
+                font-weight: v(normal, time_font_weight, $cardMultiTimeWeight);
+                line-height: v(normal, time_line_height, $cardMultiTimeLineHeight);
+                text-transform: v(none, time_text_transform, $cardMultiTimeTexttransform);
+                color: v(inherit, time_color, $colorcardMultiTime);
+
+                @include fontsize(v($fs_normal, time_font_size, $cardMultiTimeFontsize));
+            }
+            dl.intermission {
+                @include event_times_dl();
+            }
+
+            @media (max-width: $bp_tablet - 1) {
+                + div {
+                    margin-top: 15px;
+                }
+            }
+        }
+
+        .box {
+            flex-grow: 1;
+            @media (min-width: $bp_tablet) {
+                display: flex;
+                > * + * {
+                    margin-left: v(30px, item_spacing, $subShowElementSpacing);
+                }
+            }
+
+            @media (max-width: $bp_tablet - 1) {
+                + div {
+                    margin-top: 15px;
+                }
+            }
+        }
+
+        .buttonBox {
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        .priceBox {
+            display: flex;
+            align-items: center;
+            .favourite {
+                display: inline-block;
+                margin-right: v(30px, item_spacing, $subShowElementSpacing);
+            }
+            @media (max-width: $bp_mobile - 1) {
+                justify-content: space-between;
+            }
+        }
+
+        .btn {
+            @include subshow_button();
+        }
+
+        .status-info {
+            display: block;
+            width: v(128px, status_width, $subShowStatusWidth);
+            padding: v($defaultBtnPadding, status_padding, $subShowStatusPadding);
+            font-family: v(inherit, status_font_family, $subShowStatusFontfamily);
+            font-weight: v(normal, status_font_weight, $subShowStatusFontweight);
+            line-height: v(1.2, status_line_height, $subShowStatusLineheight);
+            text-transform: v(none, status_text_transform, $subShowStatusTexttransform);
+            text-align: v(center, status_text_align, $subShowStatusTextalign);
+            color: v(inherit, status_color, $subShowStatusColor);
+
+            @media (max-width: $bp_mobile - 1) {
+                width: 100%;
+            }
+
+            @include fontsize(v($fs_small, status_font_size, $subShowStatusFontsize));
+
+            &:link {
+                text-decoration: v(none, status_link_text_decoration, $subShowStatusLinkDecoration);
+                color: v(inherit, status_link_color, $subShowStatusLinkColor);
+                &:hover {
+                    text-decoration: v($defaultLinkDecorationHover, status_link_text_decoration_hover, $subShowStatusLinkDecorationHover);
+                    color: v($defaultLinkHover, status_link_color_hover, $subShowStatusLinkColorHover);
+                }
+            }
+        }
+
+        .pricePopoverBtn {
+            padding: v($defaultBtnPadding, button_padding, $subShowBtnPadding);
+            padding-right: 0;
+            padding-left: 0;
+            border: none;
+            font-family: v($fontNormal, price_font_family, $cardSubshowPriceBtnFontfamily);
+            font-weight: v(normal, price_font_weight, $cardSubshowPriceBtnWeight);
+            text-transform: v(none, price_text_transform, $cardSubshowPriceBtnTexttransform);
+            white-space: nowrap;
+            background: v(transparent, price_background, $colorBgSubshowPrice);
+            color: v(inherit, price_color, $colorSubshowPrice);
+
+            @include fontsize(v($fs_normal, price_font_size, $cardSubshowPriceBtnFontsize));
+
+            &:hover {
+                color: v($color1, price_color_hover, $colorSubshowPriceHover);
+            }
+        }
+
+        .error {
+            .fa { margin-right: 5px; }
+        }
+
+        .supertitle {
+            display: v(inline-block, supertitle_display, $subeventSuperTitleDisplay);
+            margin: v(0, supertitle_margin, $subeventSuperTitleMargin);
+            padding: v(0, supertitle_padding, $subeventSuperTitlePadding);
+            font-family: v($fontNormal, supertitle_font_family, $subeventSupertitleFontfamily);
+            font-weight: v(normal, supertitle_font_weight, $subeventSupertitleWeight);
+            line-height: v(1.3, supertitle_line_height, $subeventSupertitleLineheight);
+            text-transform: v(uppercase, supertitle_text_transform, $subeventSupertitleTexttransform);
+            background: v(none, supertitle_background, $subeventSupertitleBackground);
+            color: v($color1, supertitle_color, $subeventSuperTitleColor);
+
+            @include fontsize(v($fs_small, supertitle_font_size, $subeventSupertitleFontsize));
+        }
+    }
+
+    .subshow.cost-message {
+        font-family: v($fontNormal, cost_font_family, $subeventInfoFontfamily);
+        font-weight: v(normal, cost_font_weight, $subeventInfoWeight);
+        line-height: v(normal, cost_line_height, $subeventInfoLineheight);
+        text-transform: v(none, cost_text_transform, $subeventInfoTextTransform);
+        color: v(inherit, cost_color, $subeventInfoColor);
+
+        @include fontsize(v(inherit, cost_font_size));
+
+        > * {
+            margin: 0;
+        }
+
+        a {
+            text-decoration: v($defaultLinkDecoration, cost_link_text_decoration, $subeventInfoLinkDecoration);
+            color: v($defaultLink, cost_link_color, $subeventInfoLinkColor);
+            &:hover {
+                text-decoration: v($defaultLinkDecorationHover, cost_link_text_decoration_hover, $subeventInfoLinkDecorationHover);
+                color: v($defaultLinkHover, cost_link_color_hover, $subeventInfoLinkColorHover);
+            }
+        }
+    }
+}
+
+.subshows .load-more-panel,
+.listItems > li .subshows .load-more-panel {
+    @include subshow_item();
+
+    @include from('tablet') {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    .btn.btn-default {
+        @include subshow_button();
+        display: block;
+        width: 100%;
+
+        @include from('tablet') {
+            display: inline-block;
+            width: auto;
+        }
+    }
+}
+
+.subshows .subshow.movie {
+    display: flex;
+    justify-content: flex-start;
+    padding: v(30px 0 20px 0, movies_padding, $movieSubshowContainerPadding);
+
+    > * {
+        margin: v(0 15px 0 15px, movies_margin, $movieSubshowColumnMargin);
+        @media (min-width: $bp_mobile) {
+            &:first-child {
+                width: math.div(2, 12) * 100%;
+            }
+        }
+    }
+
+    .subshow-column > * {
+        display: inline-block;
+    }
+
+    form {
+        margin-bottom: 0;
+    }
+
+    .btn,
+    .status-info {
+        @include subshow_button();
+
+        width: auto;
+        min-width: v(80px, movie_button_min_width, $movieSubshowBtnMinWidth);
+        margin: v(0 15px 10px 0, movie_button_margin, $movieSubshowBtnMargin);
+
+        span.property {
+            display: inline-block;
+            position: relative;
+            top: v(0, movie_button_top, $movieSubshowBtnPropertyTop);
+            margin: v(0 0 0 1ex, movie_button_margin, $movieSubshowBtnPropertyMargin);
+            padding: v(0, movie_button_padding, $cardSubshowMovieBtnPropertyPadding);
+            font-family: v($fontNormal, movie_button_font_family, $cardSubshowMovieBtnPropertyFontfamily);
+            font-weight: v(normal, movie_button_font_weight, $cardSubshowMovieBtnPropertyWeight);
+            text-transform: v(uppercase, movie_button_text_transform, $cardSubshowMovieBtnPropertyTexttransform);
+            background: v(transparent, movie_button_background, $cardSubshowMovieBtnPropertyBackground);
+            color: v(inherit, movie_button_color, $cardSubshowMovieBtnPropertyColor);
+
+            @include fontsize(v($fs_tiny, movie_button_font_size, $cardSubshowMovieBtnPropertyFontsize));
+        }
+    }
+    .btn.btn-unavailable,
+    .status-info {
+        border: $defaultBtnBorderUnavailable !important;
+        background: $colorBgBtnUnavailable !important;
+        color: $colorBtnUnavailableText !important;
+    }
+}
+
+// in the order process
+.pullout {
+    @media (min-width: 601px) {
+        padding: v(0 30px, padding, $listPulloutPadding);
+    }
+
+    .msg {
+        margin-top: 0;
+    }
+
+    .firstPriceIndicator {
+        display: inline-block;
+        width: auto;
+        min-height: 20px;
+        max-height: 20px;
+        position: relative;
+        margin-right: 15px;
+        padding: v(1px 12px 2px 8px, bestprice_padding $orderBASLabelPadding);
+        font-family: v($fontNormal, bestprice_font_family, $orderBASPriceIndicatorFontfamily);
+        font-weight: v(normal, bestprice_font_weight, $orderBASPriceIndicatorWeight);
+        line-height: v(normal, bestprice_line_height, $orderBASPriceIndicatorLineHeight);
+        text-transform: v(none, bestprice_text_transform, $orderBASPriceIndicatorTexttransform);
+        background: v($colorPrime, bestprice_background, $colorPriceIndicatorBg);
+        color: v($white, bestprice_color, $colorPriceIndicator);
+        white-space: nowrap;
+
+        @include fontsize(v($fs_small, bestprice_font_size, $orderBASPriceIndicatorFontsize));
+
+        @media (max-width: $bp_tiny) {
+            display: none;
+        }
+
+        &::after {
+            content: '';
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            margin-top: -10px;
+            border: 10px solid transparent;
+            border-left-color: v($colorPrime, bestprice_border_left_color, $colorPriceIndicatorBg);
+            pointer-events: none;
+        }
+    }
+
+    .pulloutContent {
+        height: auto;
+        margin-bottom: 15px;
+        padding: v(30px, order_padding, $orderItemPulloutPadding);
+        border-radius: 0 0 $defaultCardRadius $defaultCardRadius;
+        background: v($white, order_background, $colorBgOrderPulloutContent);
+        color: v(inherit, order_color, $colorOrderPulloutContent);
+        box-shadow: $defaultBoxShadow;
+
+        .btn {
+            display: inline-block;
+            width: auto;
+            margin-left: 20px;
+            flex-shrink: 0;
+
+            border: v($defaultBtnBorderActive, order_button_border_active, $orderButtonActiveBorder);
+            background: v($colorBgBtnActive, order_button_background_active, $orderButtonActiveBackground);
+            color: v($colorBtnActiveText, order_button_color_active, $orderButtonActiveColor);
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, order_button_border_active_hover, $orderButtonActiveBorderHover);
+                background: v($colorBtnActiveHover, order_button_background_active_hover, $orderButtonActiveBackgroundHover);
+                color: v($colorBtnActiveTextHover, order_button_color_active_hover, $orderButtonActiveColorHover);
+            }
+
+            &.btn-default {
+                border: v($defaultBtnBorderDefault, order_button_border, $orderButtonBorder);
+                background: v($colorBgBtnDefault, order_button_background, $orderButtonBackground);
+                color: v($colorBtnDefaultText, order_button_color, $orderButtonColor);
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, order_button_border_hover, $orderButtonBorderHover);
+                    background: v($colorBtnActiveHover, order_button_background_hover, $orderButtonBackgroundHover);
+                    color: v($colorBtnActiveTextHover, order_button_color_hover, $orderButtonColorHover);
+                }
+            }
+
+            &.btn-default[name='rebook'] {
+                border: v($defaultBtnBorderDefault, rebook_button_border, $orderButtonRebookBorder);
+                background: v($colorBgBtnDefault, rebook_button_background, $orderButtonRebookBackground);
+                color: v($colorBtnDefaultText, rebook_button_color, $orderButtonRebookColor);
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, rebook_button_border_hover, $orderButtonRebookBorderHover);
+                    background: v($colorBtnActiveHover, rebook_button_background_hover, $orderButtonRebookBackgroundHover);
+                    color: v($colorBtnActiveTextHover, rebook_button_color_hover, $orderButtonRebookColorHover);
+                }
+            }
+        }
+
+        .footer {
+            text-align: right;
+            @media (max-width: 600px) {
+                .btn {
+                    width: 100%;
+                    min-width: 0;
+                    margin: 0;
+                    + .btn {
+                        margin-top: 15px;
+                    }
+                }
+            }
+        }
+
+        .tickets-wrapper {
+            .tickets {
+                display: flex;
+                justify-content: space-between;
+                font-weight: bold;
+                + .seats {
+                    margin-top: .67em;
+                }
+            }
+            + .tickets-wrapper {
+                margin-top: 15px;
+                padding-top: 15px;
+                border-top: 1px solid v($grey3, ranks_border, $colorRankGroupingBorder);
+            }
+        }
+
+        &.booked {
+            .tickets-wrapper {
+                position: relative;
+                padding-left: 30px;
+                .fa {
+                    position: absolute;
+                    left: 0;
+                    margin-top: 3px;
+                }
+            }
+        }
+
+        .price {
+            font-family: v($fontNormal, ticket_price_font_family, $ticketPriceFontfamily);
+            font-weight: v(normal, ticket_price_font_weight, $ticketPriceWeight);
+            text-transform: v(none, ticket_price_text_transform, $ticketPriceTexttransform);
+
+            @include fontsize(v($fs_normal, ticket_price_font_size, $ticketPriceFontsize));
+        }
+
+        .amount {
+            flex-shrink: 0;
+            text-align: right;
+            font-family: v($fontNormal, ticket_amount_font_family, $ticketAmountFontfamily);
+            font-weight: v(normal, ticket_amount_font_weight, $ticketAmountWeight);
+            text-transform: v(none, ticket_amount_text_transform, $ticketAmountTexttransform);
+
+            @include fontsize(v($fs_normal, ticket_amount_font_size, $ticketAmountFontsize));
+
+            select {
+                min-width: 3em;
+            }
+        }
+
+        .tickets-wrapper + .footer,
+        fieldset + .footer {
+            margin-top: 30px;
+        }
+
+        form {
+            margin: 0;
+
+            input,
+            select {
+                color: v($colorDefaultText, input_color, $colorTicketFormInput);
+            }
+
+            label {
+                display: inline;
+                margin: 0;
+                font-weight: inherit;
+            }
+
+            fieldset {
+                margin: 0;
+            }
+
+            .ticket-options,
+            #ticketsForm-extras {
+                margin-top: 30px;
+                padding-top: 30px;
+                border-top: 1px solid v($grey3, ranks_border, $colorRankGroupingBorder);
+            }
+
+            .ticket-options,
+            #ticketsForm-extras,
+            .tickets-extras {
+
+                .ticketLbl {
+                    text-align: right;
+                }
+
+                .checkbox {
+                    margin: 0;
+                    padding: 0;
+                    // text-align: left;
+                    label {
+                        margin: 0;
+                        padding: 0;
+                        font-family: v($fontNormal, option_font_family, $ticketOptionFontfamily);
+                        font-weight: v(normal, option_font_weight, $ticketOptionWeight);
+                        line-height: v(normal, option_line_height, $ticketOptionLineHeight);
+                        text-transform: v(none, option_text_transform, $ticketOptionTexttransform);
+
+                        @include fontsize(v($fs_normal, option_font_size, $ticketOptionFontsize));
+
+                        input[type='checkbox'] {
+                            position: static;
+                            margin: 0 1ex 0 0;
+                            line-height: inherit;
+                        }
+                    }
+                }
+            }
+
+            table {
+                width: 100%;
+                margin-bottom: 0;
+
+                td {
+                    padding-bottom: 15px;
+                    line-height: v(normal, ticket_price_line_height, $ticketPriceLineHeight);
+                    vertical-align: top;
+                    &:not(:last-child) {
+                        padding-right: 15px;
+                        @media (max-width: $bp_mobile - 1) {
+                            padding-right: 10px;
+                        }
+                    }
+                }
+                tr:last-child td {
+                    padding-bottom: 0;
+                }
+
+                .price-row + .rank-title {
+                    border-top: 1px solid v($grey3, ranks_border, $colorRankGroupingBorder);
+                    > * {
+                        padding-top: 15px;
+                    }
+                }
+
+                @media (max-width: $bp_mobile - 1) {
+                    .price-row td.rank {
+                        display: none;
+                    }
+                }
+
+                @media (min-width: $bp_mobile) {
+                    .rank-title {
+                        display: none;
+                    }
+                    .rank-title:not(:first-child) + .price-row {
+                        border-top: 1px solid v($grey3, ranks_border, $colorRankGroupingBorder);
+                        > * {
+                            padding-top: 15px;
+                        }
+                    }
+                }
+
+                tr.disabled .ticketLbl label,
+                tr.disabled .price {
+                    text-decoration: v(line-through, ticket_price_text_decoration_disabled, $ticketLblDisabledDecoration);
+                    color: v($unavailable, ticket_price_color_disabled, $ticketLblDisabledColor);
+                }
+
+                td.rank,
+                td.ticketLbl label {
+                    font-family: v($fontNormal, label_font_family, $ticketLblFontfamily);
+                    font-weight: v(normal, label_font_weight, $ticketLblWeight);
+                    line-height: v(normal, label_line_height, $ticketLblLineHeight);
+                    text-transform: v(none, label_text_transform, $ticketLblTexttransform);
+
+                    @include fontsize(v($baseFontsize, label_font_size, $ticketLblFontsize));
+                }
+                td.ticketLbl {
+                    width: 100%;
+                }
+
+                td.rank {
+                    font-weight: bold;
+                    white-space: nowrap;
+                }
+
+                .img {
+                    width: 25%;
+                    text-align: left;
+                    img {
+                        width: 223px;
+                        max-width: 223px;
+                        margin-top: -30px;
+                        margin-left: -75px;
+                    }
+                }
+
+                td.soldout,
+                .price {
+                    font-family: v($fontNormal, ticket_price_font_family, $ticketPriceFontfamily);
+                    font-weight: v(normal, ticket_price_font_weight, $ticketPriceWeight);
+                    text-transform: v(none, ticket_price_text_transform, $ticketPriceTexttransform);
+                    white-space: nowrap;
+                    text-align: right;
+
+                    @include fontsize(v($baseFontsize, ticket_price_font_size, $ticketPriceFontsize));
+                }
+
+                .price {
+                    position: relative;
+                    padding-left: 30px;
+                    .fa {
+                        position: absolute;
+                        left: 0;
+                    }
+                }
+
+                td.soldout {
+                    text-align: right;
+                }
+
+                .combo-list {
+                    list-style: none;
+                    display: block;
+                    position: relative;
+                    margin: 0;
+                    padding: 2px 0 0 0;
+                    font-style: v(italic,  ticket_price_combo_font_style);
+                    color: v($grey1, ticket_price_combo_color);
+
+                    @include fontsize(v($fs_small, ticket_price_combo_font_size));
+
+                    > * {
+                        display: flex;
+                        align-items: flex-start;
+
+                        i {
+                            margin-top: 2px;
+                            margin-right: 10px;
+                        }
+                        p {
+                            margin: 0;
+                        }
+                    }
+                }
+
+                .descExtra {
+                    margin: 0;
+                    padding-bottom: 30px;
+
+                    h3 {
+                        margin-bottom: 0;
+                        font-family: v($fontNormal, crosssell_font_family, $ticketExtraTitleFontfamily);
+                        font-weight: v(bold, crosssell_font_weight, $ticketExtraTitleWeight);
+                        line-height: v(0.89, crosssell_line_height, $ticketExtraTitleLineHeight);
+                        text-transform: v(none, crosssell_text_transform, $ticketExtraTitleTexttransform);
+
+                        @include fontsize(v($fs_large_subtitle, crosssell_font_size, $ticketExtraTitleFontsize));
+                    }
+
+                    .desc {
+                        height: auto;
+                        max-height: none;
+                        margin: 5px 0 20px 0;
+                        font-family: v($fontNormal, crosssell_desc_font_family, $ticketExtraDescFontfamily);
+                        font-weight: v(normal, crosssell_desc_font_weight, $ticketExtraDescWeight);
+                        line-height: v(1.14, crosssell_desc_line_height, $ticketExtraDescLineHeight);
+                        text-transform: v(none, crosssell_desc_text_transform, $ticketExtraDescTexttransform);
+
+                        @include fontsize(v($fs_small, crosssell_desc_font_size, $ticketExtraDescFontsize));
+
+                        a {
+                            float: none;
+                            margin: 0;
+                            line-height: v(1.14, crosssell_desc_line_height, $ticketExtraDescLineHeight);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

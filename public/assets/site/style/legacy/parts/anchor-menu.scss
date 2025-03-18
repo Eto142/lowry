@@ -1,0 +1,132 @@
+@use 'sass:math';
+
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$header: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $header;
+
+$anchorsHeight: v(45px, anchors_height, $anchorsHeight);
+
+/*
+    page anchor navigation sticks to the bottom of the header
+*/
+.anchor-menu {
+    height: v(45px, anchors_height, $anchorsHeight);
+    position: relative;
+    font-family: v($fontNormal, anchors_font_family, $anchorsFont);
+    font-weight: v(normal, anchors_font_weight, $anchorsFontweight);
+    line-height: v(45px, anchors_line_height, $anchorsHeight);
+    text-transform: v(inherit, anchors_text_transform, $anchorsTexttransform);
+    background: v($colorPrimeLight, anchors_background, $anchorsBackground);
+    color: v(inherit, anchors_color, $anchorsColor);
+
+    @include fontsize(v(inherit, anchors_font_size, $anchorsFontsize));
+
+    .inner {
+        margin: 0 auto;
+        padding: 0 15px;
+        @include header_container_width();
+    }
+
+    .anchor-nav {
+        list-style: none;
+        white-space: nowrap;
+    }
+
+    li {
+        display: inline-block;
+        + li {
+            margin-left: 30px;
+        }
+    }
+    a {
+        display: block;
+        margin: 0;
+        padding: v(0, anchor_padding, $anchorPadding);
+        border: none;
+        background: transparent;
+        color: inherit;
+        box-shadow: none;
+        &:hover,
+        &:active {
+            text-decoration: v(none, anchor_text_decoration_hover, $anchorsHoverDecoration);
+            color: v($color1, anchor_color_hover, $anchorsColorHover);
+        }
+    }
+    
+    .active { // highlight the current anchor
+        font-family: v($fontNormalBold, anchor_font_family_current, $anchorActiveFont);
+        font-weight: v(bold, anchor_font_weight_current, $anchorActiveWeight);
+        text-decoration: v(none, anchor_text_decoration_current, $anchorActiveDecoration);
+        color: v(inherit, anchor_color_current, $anchorActiveColor);
+    }
+
+
+    /**
+     * modifier when ther isn't enough horizontal space
+     */
+    &--dropdown {
+        height: 45px;
+        position: relative;
+        margin: 0 auto;
+        line-height: 45px;
+
+        > .container {
+            margin-bottom: 0;
+            @media (min-width: $bp_mobile) {
+                padding-left: 0;
+            }
+        }
+
+        .inner {
+            width: 100%;
+            max-width: unset;
+            background-color: v(inherit, anchors_background, $anchorsBackground);
+            transition: height .2s ease-in-out;
+            overflow: hidden;
+        }
+        
+        .anchor-nav {
+            @include container-width();
+            padding-right: 10px;
+            padding-left: 10px;
+            color: v(inherit, anchors_color, $anchorsColor);
+
+            li {
+                display: block;
+                margin-left: 0;
+            }
+        }
+
+        button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: 0;
+            outline: 0;
+            background: none;
+
+            i { 
+                transition: transform .2 ease-in-out;
+            }
+        }
+
+
+        &.is-open {
+            button i {
+                transform: rotate(180deg);
+            }
+        }
+    }
+}
+
+.menu-opened #anchor-menu {
+    display: none;
+}
+
+

@@ -1,0 +1,399 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$cart: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $cart;
+
+$back_button: v(false, continue_shopping, $cartContinueshopping);
+$position: v('right', position, $cartPosition); // or 'center'
+
+#cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2000;
+
+    .cart-body {
+        transition: opacity .2s ease-in-out;
+    }
+    &.busy .cart-body {
+        opacity: .66;
+    }
+
+    .messageList,
+    .comboList,
+    .itemList {
+        list-style: none;
+        margin: 0 15px 30px 15px;
+        &.itemList {
+            margin-bottom: 15px;
+        }
+
+        &:empty {
+            margin: 0;
+        }
+
+        li:not(.cartItemCard) {
+            position: relative;
+            margin: 0 0 15px 0;
+            padding: 0;
+            padding-left: 30px;
+            font-family: v($fontNormal, item_font_family, $cartItemCardAddedFontfamily);
+            font-weight: v(normal, item_font_weight, $cartItemCardAddedWeight);
+            font-size: v(14px, item_font_size, $cartItemCardAddedFontsize);
+            line-height: v(20px, item_line_height);
+            text-transform: v(none, item_text_transform, $cartItemCardAddedTexttransform);
+            color: v($black, item_color, $colorCartItemCardAdded);
+
+            h3 {
+                margin: v(0, upsell_heading_margin, $cartItemCardUpsellTitleMargin);
+                font-family: v($fontNormal, upsell_heading_font_family, $cartItemCardUpsellTitleFontfamily);
+                font-weight: v(bold, upsell_heading_font_weight, $cartItemCardUpsellTitleWeight);
+
+                font-size: v(16px, upsell_heading_font_size, $cartItemCardUpsellTitleFontsize);
+                line-height: v(1, upsell_heading_line_height, $cartItemCardUpsellTitleLineheight);
+                text-transform: v(none, upsell_heading_text_transform, $cartItemCardUpsellTitleTexttransform);
+            }
+
+            p {
+                margin: 0;
+            }
+
+            a {
+                color: v($color1, item_link_color, $colorCartItemCardLink);
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .cartItemCard {
+        margin: 0 0 15px 0;
+    }
+
+    .upsellMsg {
+        font-family: v($fontNormal, upsell_font_family, $cartItemCardUpsellFontfamily);
+        font-weight: v(normal, upsell_font_weight, $cartItemCardUpsellWeight);
+
+        font-size: v(14px, upsell_font_size, $cartItemCardUpsellFontsize);
+        line-height: v(1.15, upsell_line_height, $cartItemCardUpsellLineheight);
+        text-transform: v(none, upsell_text_transform, $cartItemCardUpsellTexttransform);
+    }
+
+    .upsellDescription {
+        position: relative;
+        color: v(inherit, upsell_desc_color, $cartItemCardUpsellDescColor);
+
+        p {
+            margin: v(0, upsell_desc_margin, $cartItemCardUpsellDescMargin);
+            font-family: v($fontNormal, upsell_desc_font_family, $cartItemCardUpsellDescFontfamily);
+            font-weight: v(normal, upsell_desc_font_weight, $cartItemCardUpsellDescWeight);
+
+            font-size: v(12px, upsell_desc_font_size, $cartItemCardUpsellDescFontsize);
+            line-height: v(1.17, upsell_desc_line_height, $cartItemCardUpsellDescLineheight);
+            text-transform: v(none, upsell_desc_text_transform, $cartItemCardUpsellDescTexttransform);
+        }
+    }
+
+    #cart-inner {
+        width: 400px;
+        max-width: 100%;
+        height: 100%;
+        position: fixed;
+        right: 0;
+        margin: auto;
+        background: v($colorPageBg, background);
+        color: v($colorDefaultText, color);
+        box-shadow: $defaultBoxShadow;
+        transform: translateX(100%);
+        will-change: transform;
+
+        @if ($position == 'right') {
+            transition: transform .2s ease-out;
+        }
+
+        @if ($position == 'center') {
+            display: none;
+            width: 480px;
+            height: calc(100% - 60px);
+            top: 30px;
+            right: calc(50% - 240px);
+            border-radius: v($defaultCardRadius, border_radius, $cartRadius);
+            overflow: hidden;
+            transform: scale(0);
+            animation: .2s ease-in-out forwards modal-slide-in;
+            animation-delay: .15s;
+            @media (max-width: 540px) {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                right: 0;
+            }
+        }
+
+
+        .cart-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0;
+            border: 0;
+            border-radius: 0;
+            overflow-y: auto;
+            background: v($colorPageBg, background);
+            color: v($colorDefaultText, color);
+        }
+
+        .cart-header {
+            display: flex;
+            align-items: baseline;
+            margin: 0;
+            padding: 20px 30px 20px 15px;
+            border-bottom: v(1px solid $grey7, header_border_bottom, $cartHeaderBorder);
+            background: v($colorPageBg, header_background, $cartHeaderBg);
+            color: v($colorDefaultText, header_color);
+
+            .icon-cart {
+                margin: 0 10px 0 15px;
+            }
+
+            .close-button {
+                all: unset;
+                appearance: none;
+                cursor: pointer;
+                margin: 0;
+                color: v($grey2, x_color);
+                transition: $defaultBtnTransitionLeave;
+                &:hover {
+                    color: v($colorDefaultText, x_color_hover);
+                    transition: $defaultBtnTransitionEnter;
+                }
+            }
+
+            #cart-title {
+                flex: 1;
+                position: relative;
+                margin: 0;
+                font-family: v($fontTitleTemplate, header_font_family, $cartHeaderFontfamily);
+                font-weight: v(bold, header_font_weight, $cartHeaderWeight);
+                line-height: 1;
+                text-transform: v(none, header_text_transform, $cartHeaderTexttransform);
+
+                @include fontsize(v($fs_small_title, header_font_size, $cartHeaderFontsize));
+            }
+
+            .badge {
+                display: inline-block;
+                min-width: 1em;
+                height: 1em;
+                box-sizing: content-box;
+                position: absolute;
+                top: 15px;
+                left: 40px;
+                z-index: 1;
+                padding: v(2px, counter_padding, $cartBadgePadding);
+                border-radius: 1em;
+                font-weight: normal;
+                font-size: v(12px, counter_font_size, $cartBadgeFontsize);
+                text-align: center;
+                line-height: 1;
+                white-space: nowrap;
+                background: v($color12, counter_background, $colorCartHeaderBadgeBg);
+                color: v($white, counter_color, $colorCartHeaderBadge);
+            }
+        }
+
+        .cart-body {
+            padding: 15px 15px 30px 15px;
+            flex: 1;
+            overflow: auto;
+
+            @keyframes emptycart-fadein {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            .empty {
+                margin: 60px 15px;
+                text-align: center;
+                animation: emptycart-fadein .15s ease-in-out;
+
+                img {
+                    margin-bottom: 15px;
+                }
+                p {
+                    font-family: v($fontNormal, empty_font_family, $cartItemCardEmptyFontfamily);
+                    font-weight: v(normal, empty_font_weight, $cartItemCardEmptyWeight);
+
+                    font-size: v(14px, empty_font_size, $cartItemCardEmptyFontsize);
+                    line-height: v(normal, empty_line_height, $cartItemCardEmptyLineheight);
+                    text-transform: v(none, empty_text_transform, $cartItemEmptyMetaTexttransform);
+                    color: v($grey1, empty_color, $colorCartItemCardEmpty);
+                }
+            }
+        }
+
+        .cart-footer {
+            order: 1;
+            padding: v(15px, footer_padding, $cartFooterPadding);
+            border-top: v(1px solid $grey1, footer_border_top, $cartFooterBorder);
+            background: v($color12, footer_background, $colorCartFooterBg);
+            text-align: center;
+
+            .btn {
+                max-width: 100%;
+                padding: $defaultBtnPadding;
+                border-radius: $defaultBtnRadius;
+                overflow: hidden;
+                @include fontsize($defaultBtnFontsize);
+
+                &.btn-active {
+                    border: v($defaultBtnBorderActive, button_border, $cartOrderBtnBorder);
+                    background: v($colorBgBtnActive, button_background, $cartOrderBtnBackground);
+                    color: v($colorBtnActiveText, button_color, $cartOrderBtnColor);
+                    &:hover {
+                        border: v($defaultBtnBorderActiveHover, button_border_hover, $cartOrderBtnBorderHover);
+                        background: v($colorBtnActiveHover, button_background_hover, $cartOrderBtnBackgroundHover);
+                        color: v($colorBtnActiveTextHover, button_color_hover, $cartOrderBtnColorHover);
+                    }
+                }
+                &.btn-clean {
+                    display: none;
+
+                    @if ($back_button) {
+                        display: inline-block;
+                    }
+
+                    border: v(none, back_button_border, $cartContinueshoppingBtnBorder);
+                    text-align: v(left, back_button_text_align, $cartContinueshoppingBtnAlign);
+                    background: v(transparent, back_button_background, $cartContinueshoppingBtnBackground);
+                    color: v(inherit, back_button_color, $cartContinueshoppingBtnColor);
+                    &:hover {
+                        border: v(none, back_button_border_hover, $cartContinueshoppingBtnBorderHover);
+                        background: v(transparent, back_button_background_hover, $cartContinueshoppingBtnBackgroundHover);
+                        color: v(inherit, back_button_color_hover, $cartContinueshoppingBtnColorHover);
+                    }
+                }
+
+                @if ($back_button) {
+                    + .btn {
+                        margin-left: 10px
+                    }
+                }
+            }
+        }
+    }
+
+    &[aria-expanded='false'] {
+        pointer-events: none;
+        &:not(.animating) {
+            visibility: hidden;
+        }
+    }
+    &[aria-expanded='true'] {
+        background: v(rgba(0,0,0,.2), backdrop_background, $cartBackdrop);
+        #cart-inner {
+            display: block;
+            transition-delay: .15s;
+            @if ($position == 'right') {
+                transform: translateX(0);
+            }
+        }
+    }
+}
+
+// cart item card style can be used in other contexts
+.cartItemCard {
+    min-height: 100px;
+    position: relative;
+    padding: 15px 20px 15px 140px;
+    border-radius: $defaultCardRadius;
+    font-size: v(14px, item_font_size, $cartItemCardMetaFontsize);
+    background: v($white, item_background, $colorCartItemCard);
+    box-shadow: v($defaultBoxShadow, item_box_shadow, $cartShadow);
+    transition: box-shadow .2s ease-in-out;
+
+    &.new {
+        box-shadow: v(0 0 10px 0 rgba(0, 0, 0, 0.4), item_box_shadow, $cartItemCardGlow);
+    }
+
+    @media (max-width: 325px) {
+        padding-left: 20px;
+    }
+
+    .remove {
+        width: 25px;
+        height: 25px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding-top: 5px;
+        padding-right: 10px;
+        text-align: right;
+
+        color: v($defaultLink, item_remove_color, $colorCartItemRemoveSubshow);
+        &:hover {
+            color: v($defaultLinkHover, item_remove_color, $colorCartItemRemoveSubshowHover);
+        }
+    }
+
+    .thumb {
+        width: 120px;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: $defaultCardRadius 0 0 $defaultCardRadius;
+        background: v($grey3, item_thumb_background, $cartItemCardThumbBackground) no-repeat center / cover;
+
+        @media (max-width: 325px) {
+            display: none;
+        }
+    }
+
+    h2 {
+        margin: 0;
+        font-family: v($fontTitleContent, item_heading_font_family, $cartItemCardTitleFontfamily);
+        font-weight: v(bold, item_heading_font_weight, $cartItemCardTitleWeight);
+
+        font-size: v(16px, item_heading_font_size, $cartItemCardTitleFontsize);
+        line-height: v(normal, item_heading_line_height, $cartItemCardTitleLineheight);
+        text-transform: v(none, item_heading_text_transform, $cartItemCardTitleTexttransform);
+        color: v($black, item_heading_color, $colorCartItemCardTitle);
+    }
+
+    .meta {
+        float: none;
+        font-family: v($fontNormal, item_meta_font_family, $cartItemCardMetaFontfamily);
+        font-weight: v(normal, item_meta_font_weight, $cartItemCardMetaWeight);
+        line-height: v(1.17, item_meta_line_height, $cartItemCardMetaLineheight);
+        text-transform: v(none, item_meta_text_transform, $cartItemCardMetaTexttransform);
+        color: v($color9, item_meta_color, $colorCartItemCardMeta);
+    }
+
+    .datetime .date {
+        > * {
+            display: inline;
+        }
+    }
+
+    > a,
+    > a:hover {
+        text-decoration: none;
+    }
+    > a:focus h2 {
+        text-decoration: underline;
+    }
+}

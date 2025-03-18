@@ -1,0 +1,88 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$accordion: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $accordion;
+
+
+@mixin summary() {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: v(10px 0, summary_padding);
+    border: v(none, summary_border);
+    font-family: v($fontTitleTemplate, summary_font_family);
+    font-weight: v(bold, summary_font_weight);
+    line-height: v(1, summary_line_height);
+    text-transform: v(none, summary_text_transform);
+    background: v(transparent, summary_background);
+    color: v(inherit, summary_color);
+    cursor: pointer;
+
+    &:hover,
+    &:active {
+        background: v(transparent, summary_background_hover);
+        color: v($defaultLinkHover, summary_color_hover);
+    }
+
+    @if (v('after', icon_position) == 'before') {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    @include fontsize(v($basicH2Fontsize, summary_font_size));
+
+    .peppered-icon {
+        transform: rotate(90deg);
+        will-change: transform;
+        transition: transform v(.25s ease-in-out, transition);
+        fill: v(currentcolor, icon_fill);
+
+        @if (v('after', icon_position) == 'before') {
+            transform: rotate(-90deg);
+        }
+
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
+
+.collapsed-heading summary {
+    @include inner_width();
+
+    .inner {
+        @include summary();
+    }
+}
+
+.richtext details.mce-accordion {
+    position: relative;
+    margin: v(0, margin);
+
+    summary {
+        @include summary();
+    }
+}
+
+.richtext details.mce-accordion,
+.collapsed-heading details {
+    &[open] summary .peppered-icon {
+        transform: rotate(0deg);
+    }
+
+    p:last-child {
+        // margin extending outside the details can't be animated
+        margin-bottom: 0;
+    }
+}
+summary::-webkit-details-marker {
+    display: none; //https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary
+}

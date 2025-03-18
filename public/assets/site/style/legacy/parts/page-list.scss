@@ -1,0 +1,352 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$page_list: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $page_list;
+
+$pageListPointerSize: v(30px, filter_pointer_size, $pageListFilterPointerSize);
+$filterButtonSize: v(46px, filter_button_size);
+
+.pageListFilterWrapper {
+    position: relative;
+    border-bottom: $pageListPointerSize solid transparent;
+    background: v($colorPrime, filter_background, $pageListFilterBackground);
+    color: v($white, filter_color, $pageListFilterColor);
+
+    > .container {
+        max-width: 100%;
+        margin-bottom: -$pageListPointerSize;
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        height: $pageListPointerSize;
+        position: absolute;
+        right: 0;
+        bottom: -$pageListPointerSize;
+        left: 0;
+        z-index: 0;
+        background: v($colorPageBg, background, $pageListBackground);
+    }
+
+    // hide pseudo arrow when nav is collapsed
+    &.anchor-menu--dropdown::after,
+    &.anchor-menu--dropdown .current a::after {
+        display: none;
+    }
+
+    ul {
+        list-style: none;
+        display: flex;
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+        border-bottom: $pageListPointerSize solid transparent;
+        white-space: nowrap;
+    }
+
+    a,
+    a:link,
+    a:visited,
+    select {
+        display: block;
+        position: relative;
+        padding: v(30px, filter_padding, $pageListFilterPadding);
+        font-family: v($fontNormal, filter_font_family);
+        font-weight: v(normal, filter_font_weight);
+        line-height: 1;
+        text-align: center;
+        text-decoration: none;
+        text-transform: v($basicH3Texttransform, filter_text_transform, $pageListFilterTransform);
+        background: inherit;
+        color: inherit;
+
+        @include fontsize(v($basicH3Fontsize, filter_font_size, $pageListFilterFontsize));
+    }
+
+    a:hover,
+    a:active {
+        text-decoration: none;
+        color: v($grey3, filter_color_hover, $pageListFilterColorHover);
+    }
+
+    .current a::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -$pageListPointerSize;
+        border-top: $pageListPointerSize solid v($colorPrime, filter_background, $pageListFilterBackground);
+        border-right: $pageListPointerSize solid transparent;
+        border-bottom: none;
+        border-left: $pageListPointerSize solid transparent;
+    }
+
+    &.has-select {
+        // remove the silly pointer thing
+        border-bottom: none;
+        > .container {
+            margin-bottom: 0;
+        }
+        &::after,
+        .current a::after {
+            display: none;
+        }
+    }
+
+    &.anchor-menu--dropdown {
+        padding: 0;
+        border-bottom: none;
+        > .container {
+            margin-bottom: 0;
+            @media (min-width: $bp_mobile) {
+                padding-left: 0;
+            }
+        }
+        .container.inner {
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            padding-left: 10px;
+            background: v($colorPrime, filter_background, $pageListFilterBackground);
+            color: v($white, filter_color, $pageListFilterColor);
+            overflow: hidden;
+        }
+        .anchor-nav {
+            @include container-width();
+            display: block;
+            padding-right: 10px;
+            padding-left: 10px;
+            li {
+                border-bottom: 0;
+            }
+            a {
+                display: block;
+                margin: 0;
+                padding: 0;
+                border: none;
+                line-height: 45px;
+                background: transparent;
+                color: v(v($white, filter_color), filter_dropdown_color);
+                text-align: left;
+            }
+        }
+    }
+}
+
+.tagFiltersWrapper {
+    .inner {
+        padding: v(0 15px, tags_inner_padding);
+        @include container_width();
+    }
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-items: v(start, tags_justify_items);
+        margin: v(0, tags_margin);
+        padding: v(15px 0, tags_padding);
+
+        li {
+            list-style: none;
+            display: flex;
+            margin: v(0 8px 8px 0, tag_spacing);
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: v(4em, tag_min_width);
+                height: $filterButtonSize;
+                position: relative;
+                padding: v(0 10px, tag_padding);
+                border: v($defaultBtnBorderDefault, tag_border);
+                border-radius: v(0, tag_border_radius);
+                font-family: v($fontNormal, tag_font_family);
+                font-weight: v(bold, tag_font_weight);
+                line-height: v(1, tag_line_height);
+                text-decoration: v(none, tag_text_decoration);
+                text-transform: v(capitalize, tag_text_transform);
+                background: v($colorBgBtnDefault, tag_background);
+                color: v($colorBtnDefaultText, tag_text_color);
+                box-shadow: v($defaultBtnShadowDefault, tag_box_shadow);
+                text-align: v(center, tag_text_align);
+
+                cursor: pointer;
+
+                @include fontsize(v($fs_small_title, tag_font_size));
+
+                &:hover {
+                    border: v($defaultBtnBorderActiveHover, tag_hover_border);
+                    background: v($colorBtnActiveHover, tag_hover_background);
+                    color: v($colorBtnActiveTextHover, tag_hover_color);
+                    box-shadow: v($defaultBtnShadowActiveHover, tag_hover_box_shadow);
+                }
+            }
+
+            .remove {
+                display: none;
+                width: 0;
+                height: 0;
+                position: absolute;
+                top: 0;
+                right: - $filterButtonSize - v(3px, tag_remove_spacing);
+                padding: v(5px, tag_padding);
+                border: v($defaultBtnBorderActiveHover, tag_active_border);
+                background: v($colorBtnActiveHover, tag_active_background);
+                color: v($colorBtnActiveTextHover, tag_active_color);
+                box-shadow: v($defaultBtnShadowActiveHover, tag_active_box_shadow);
+                cursor: pointer;
+                transform: scale(0);
+                transform-origin: center;
+                transition: transform 0.2s ease-out;
+
+                .peppered-icon {
+                    display: block;
+                }
+
+                svg {
+                    fill: $colorBtnActiveTextHover;
+                    width: 0;
+                    height: 0;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    margin: auto;
+                    transform: translate(-50%, -50%);
+                    transition: transform 0.2s ease-out;
+                }
+            }
+        }
+
+        li.current {
+            a {
+                margin: v(5px $filterButtonSize 5px 0, tag_margin_selected);
+                border: v($defaultBtnBorderActiveHover, tag_active_border);
+                background: v($colorBtnActiveHover, tag_active_background);
+                color: v($colorBtnActiveTextHover, tag_active_color);
+                box-shadow: v($defaultBtnShadowActiveHover, tag_active_box_shadow);
+            }
+
+            .remove {
+                display: block;
+                width: $filterButtonSize;
+                min-width: unset;
+                height: $filterButtonSize;
+                transform: scale(1);
+
+                svg {
+                    width: v(26px, tag_remove_icon_width);
+                    height: v(26px, tag_remove_icon_height);
+                }
+            }
+        }
+    }
+}
+
+.pageListWrapper {
+    position: relative;
+
+    .inner {
+        position: relative;
+        padding: v(30px 15px, padding, $pageListPadding);
+    }
+
+    &.variant-boxed {
+        .inner {
+            @include container_width();
+        }
+    }
+
+    &.variant-slider-wide .inner {
+        @media (min-width: $bp_mobile) {
+            margin-right: 60px;
+            margin-left: 60px;
+        }
+    }
+
+    // Fade out slider
+    &.fadeout {
+        @media (min-width: $bp_mobile + 1) {
+            .slick-list {
+                -webkit-mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+                mask-image: linear-gradient(90deg, rgba(255,255,255,1) 80%, rgba(0,0,0,0.1) 100%);
+            }
+        }
+    }
+
+    .pageItems.grid-root {
+        @include cards_grid();
+    }
+    &.variant-grid-large .pageItems.grid-root {
+        @supports (display: grid) {
+            grid-column-gap: v(120px, large_grid_column_gap);
+            grid-row-gap: v(80px, large_grid_row_gap);
+            grid-template-columns: 1fr 1fr;
+            @media (max-width: $bp_tablet - 1) {
+                grid-template-columns: 1fr;
+            }
+            @media (max-width: $bp_mobile - 1) {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+    &.variant-grid-large.first-large .pageItems.grid-root > *:first-child {
+        @media (min-width: $bp_tablet) {
+            margin-right: v(120px, large_grid_column_gap);
+            margin-left: v(120px, large_grid_column_gap);
+            grid-column-start: 1;
+            grid-column-end: span 2;
+        }
+    }
+
+    .slick-track,
+    .slick-slide {
+        display: flex;
+    }
+    .slider:not(.slick-initialized) {
+        visibility: hidden;
+    }
+
+    .slider-root {
+        section {
+            height: auto;
+            margin: v(20px 10px, slide_margin, $pageListSlideMargin);
+        }
+    }
+
+    .slider-nav {
+        button {
+            color: v($grey2, nav_color, $pageListNavColor);
+
+            &:hover {
+                color: v($black, nav_color_hover, $pageListNavColorHover);
+            }
+        }
+    }
+
+    h2 {
+        margin: v($basicH2FontMargin, page_list_heading_margin);
+        font-family: v($fontTitleContent, page_list_heading_font_family);
+        font-weight: v(bold, page_list_heading_font_weight);
+        font-style: v(normal, page_list_heading_font_style);
+        line-height: v(1, page_list_heading_line_height);
+        text-transform: v(none, page_list_heading_text_transform);
+        color: v(inherit, page_list_heading_color);
+
+        @include fontsize(v($basicH1Fontsize, page_list_heading_font_size));
+    }
+}

@@ -1,0 +1,289 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$page_item: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $page_item;
+
+
+.pageCard {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: v(none, border, $pageCardBorder);
+    border-radius: $defaultCardRadius;
+    background: v($white, background, $pageCardBackground);
+    color: v(inherit, color, $pageCardColor);
+    box-shadow: $defaultBoxShadow;
+    transition: box-shadow .2s ease;
+    overflow: hidden;
+
+    @include fontsize(v($fs_small, font_size, $pageCardFontsize));
+
+    .thumb {
+        overflow: hidden;
+        img {
+            width: 100%;
+            padding: v(0, image_padding);
+            border-radius: v(0, image_border_radius);
+        }
+    }
+    &.random-images:not(.large-first) .thumb {
+        text-align: v(left, randomimage_alignment);
+        img {
+            width: auto;
+            max-width: 100%;
+            max-height: v(400px, randomimage_max_height);
+        }
+    }
+    .horizontal-thumb {
+        display: none;
+        margin-right: v(15px, inner_spacing);
+        background: transparent no-repeat center / cover;
+        img {
+            width: 100%;
+        }
+    }
+
+    @each $animation in v([], animations, $pageCardAnimations) {
+        @include card_animation($animation, '.thumb img', '.desc');
+    }
+
+    @at-root .pageItems[data-animations*='shadow'] .pageCard {
+        @include card_animation('shadow', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='glow'] .pageCard {
+        @include card_animation('glow', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='zoom'] .pageCard {
+        @include card_animation('zoom', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='twist'] .pageCard {
+        @include card_animation('twist', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='saturate'] .pageCard {
+        @include card_animation('saturate', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='desaturate'] .pageCard {
+        @include card_animation('desaturate', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='slide'] .pageCard {
+        @include card_animation('slide', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='shift'] .pageCard {
+        @include card_animation('shift', '.thumb img', '.desc');
+    }
+    @at-root .pageItems[data-animations*='skew'] .pageCard {
+        @include card_animation('skew', '.thumb img', '.desc');
+    }
+
+    .desc {
+        display: flex;
+        flex-direction: column;
+        margin: v(30px, desc_padding);
+        flex-grow: 1;
+
+        @if (v(false, flipped) == false) {
+            justify-content: space-between;
+        }
+
+        h3 {
+            margin-top: v(15px, title_margin_top);
+            margin-bottom: v(15px, title_margin_bottom, $pageCardTitleMarginBottom);
+            font-family: v($fontAlt1, title_font_family, $pageCardTitleFontfamily);
+            font-weight: v(bold, title_font_weight, $pageCardTitleWeight);
+            line-height: v(normal, title_line_height, $pageCardTitleLineheight);
+            text-decoration: v(inherit, title_text_decoration);
+            text-transform: v(none, title_text_transform, $pageCardTitleTexttransform);
+            color: v(inherit, title_color, $pageCardTitleColor);
+
+            @include fontsize(v($fs_large, title_font_size, $pageCardTitleFontsize));
+
+            &.image-middle {
+                display: block;
+                display: -webkit-box;
+                height: 4em;
+                line-height: 1.3em;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            @if (v(false, flipped) == true) {
+                // if true, footer with page types comes first
+                margin-top: v(15px, title_margin_top_flipped);
+            }
+
+            &:hover {
+                color: v(inherit, title_color_hover, $pageCardTitleColorHover);
+            }
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .desc-link {
+            text-decoration: none;
+
+            &:hover {
+                h3 {
+                    text-decoration: v(inherit, title_text_decoration_hover);
+                }
+                .richtext {
+                    text-decoration: v(none, teaser_text_decoration_hover);
+                }
+            }
+        }
+
+        > a.desc-link {
+            display: block;
+        }
+
+        .thumb {
+            margin-bottom: v(15px, image_margin_bottom);
+        }
+
+        .publication-date {
+            display: block;
+            margin: v(15px 0 10px, publication_date_margin);
+            font-family: v(inherit, publication_font_family);
+            font-weight: v(normal, publication_font_weight);
+            line-height: v(normal, publication_line_height);
+            text-transform: v(none, publication_text_transform);
+            color: v($colorDefaultText, publication_color);
+            @include fontsize(v(inherit, publication_font_size));
+        }
+
+        .richtext {
+            flex: 1;
+            font-family: v(inherit, teaser_font_family, $pageCardTeaserFontfamily);
+            font-weight: v(normal, teaser_font_weight, $pageCardTeaserWeight);
+            line-height: v(normal, teaser_line_height, $pageCardTeaserLineheight);
+            text-decoration: v(none, teaser_text_decoration);
+            text-transform: v(none, teaser_text_transform, $pageCardTeaserTexttransform);
+            color: v($colorDefaultText, teaser_color);
+
+            @include fontsize(v(inherit, teaser_font_size, $pageCardTeaserFontsize));
+        }
+
+        .footer {
+            display: flex;
+            flex-wrap: wrap;
+            margin: v(25px 0 0 0, footer_margin, $pageCardFooterPadding);
+
+            @if (v(false, flipped)) {
+                order: -1;
+                margin: v(20px 0 0 0, footer_margin_flipped);
+            }
+
+            img {
+                max-height: 100%;
+                margin: v(0 10px 0 0, icon_margin, $pageCardTypeImageMargin);
+            }
+
+            a,
+            a:link,
+            a:visited {
+                display: flex;
+                align-items: center;
+                height: v(30px, icon_height, $pageCardTypeHeight);
+                margin: v(5px 30px 0 0, icon_margin, $pageCardTypeMargin);
+                font-family: v($fontNormalBold, icon_font_family, $pageCardTypeFontfamily);
+                font-weight: v(bold, icon_font_weight, $pageCardTypeWeight);
+                line-height: v(1.2, icon_line_height, $pageCardTypeLineheight);
+                text-decoration: v(none, icon_text_decoration);
+                text-transform: v(none, icon_text_transform, $pageCardTypeTexttransform);
+                color: v($black, icon_color, $pageCardTypeColor);
+
+                @include fontsize(v($fs_normal, icon_font_size, $pageCardTypeFontsize));
+            }
+            a:hover,
+            a:active {
+                text-decoration: v(none, icon_text_decoration_hover);
+                color: v($grey2, icon_color_hover, $pageCardTypeColorHover);
+            }
+        }
+    }
+
+    &--show-date {
+        .desc h3 {
+            margin-top: 0;
+        }
+    }
+}
+
+.pageCard.default {
+    width: auto;
+    min-height: 360px;
+    position: relative;
+
+    .thumb {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+
+    .desc {
+        z-index: 1;
+        color: v($white, non_flat_color);
+        pointer-events: none;
+
+        h3 {
+            color: v(inherit, non_flat_title_color);
+            pointer-events: initial;
+            &:hover {
+                color: v(inherit, non_flat_title_color_hover);
+            }
+        }
+        .richtext {
+            display: inline-block;
+            text-decoration: v(none, teaser_text_decoration);
+            color: v($colorDefaultText, teaser_color);
+        }
+        .footer {
+            pointer-events: initial;
+
+            a,
+            a:link,
+            a:visited {
+                color: v($white, non_flat_icon_color);
+            }
+            a:hover,
+            a:active {
+                color: v($grey2, non_flat_icon_color_hover);
+            }
+        }
+    }
+}
+
+.variant-singular .pageCard {
+    @media (min-width: $bp_mobile) {
+        flex-direction: row;
+        > * {
+            flex: 1;
+        }
+        .thumb {
+            display: none;
+        }
+        .horizontal-thumb {
+            display: block;
+        }
+    }
+
+    + .pageCard {
+        margin-top: v(30px, spacing);
+    }
+}

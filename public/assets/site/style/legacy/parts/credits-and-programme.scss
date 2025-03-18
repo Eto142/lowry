@@ -1,0 +1,61 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$credits_and_programme: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $credits_and_programme;
+
+.creditsAndProgrammeWrapper {
+    .inner {
+        display: grid;
+        grid-column-gap: v(30px, grid_column_gap);
+        grid-row-gap: v(30px, grid_row_gap);
+        grid-template-columns: 1fr;
+        padding: v(0 15px, padding);
+        border: v(none, border);
+        background: v(transparent, background);
+
+        &.column-2 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        &::before,
+        &::after {
+            display: none;
+        }
+
+        .credits {
+            padding: v(0, padding_credits);
+            @if (v(false, flipped) == true) {
+                order: 2;
+            }
+        }
+
+        .programme {
+            padding: v(0, padding_programme);
+        }
+    }
+
+    h2 {
+        font-family: v($fontTitleTemplate, heading_font_family);
+        font-weight: v(bold, heading_font_weight);
+        line-height: v(normal, heading_line_height);
+        text-transform: v(none, heading_text_transform);
+        color: v($white, heading_color);
+
+        @include fontsize(v($basicH2Fontsize, heading_font_size));
+    }
+
+    .richtext {
+        font-family: v($fontNormal, desc_font_family);
+        font-weight: v(normal, desc_font_weight);
+        line-height: v($baseLineheight, desc_line_height);
+        text-transform: v(none, desc_text_transform);
+        color: v($white, desc_color);
+
+        @include fontsize(v($baseFontsize, desc_font_size));
+    }
+}

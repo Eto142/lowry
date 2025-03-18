@@ -1,0 +1,111 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$order_help: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $order_help;
+
+/* ----------------------------------------------------------------
+    Help + discount code
+-----------------------------------------------------------------*/
+
+@mixin heading() {
+    margin: v(0 0 5px 0, heading_margin);
+    font-family: v($fontNormal, heading_font_family, $helpTitleFontfamily);
+    font-weight: v(bold, heading_font_weight, $helpTitleWeight);
+    line-height: v(normal, heading_line_height, $helpTitleLineHeight);
+    text-transform: v(none, heading_text_transform, $helpTitleTexttransform);
+
+    @include fontsize(v($basicH3Fontsize, heading_font_size));
+}
+
+.help-discount-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 40px;
+    padding: v(0, padding);
+
+    > * {
+        flex: 1;
+    }
+
+    @media (max-width: $bp_tablet - 1) {
+        display: block;
+        > * + * {
+            margin-top: 40px;
+        }
+    }
+
+    .help-desc {
+        > * {
+            max-width: 40rem;
+        }
+        h2 {
+            @include heading();
+        }
+        p {
+            margin: 0;
+            font-family: v($fontNormal, desc_font_family, $helpDescFontfamily);
+            font-weight: v(normal, desc_font_weight, $helpDescWeight);
+            line-height: v(inherit, desc_line_height, $helpDescLineHeight);
+            text-transform: v(none, desc_text_transform, $helpDescTexttransform);
+
+            @include fontsize(v(inherit, desc_font_size, $helpDescFontsize));
+        }
+    }
+
+    .discount-code {
+        margin-right: 30px;
+
+        form {
+            margin: 0;
+        }
+        .form-group {
+            display: flex;
+            justify-content: center;
+            margin: 0;
+
+            @media (max-width: $bp_tiny + 1) {
+                display: block;
+            }
+        }
+
+        input {
+            height: auto;
+            margin-top: -1px;
+            margin-bottom: -1px;
+            padding: $defaultBtnPadding;
+            padding-right: 15px;
+            padding-left: 15px;
+            line-height: $defaultBtnLineHeight;
+        }
+
+        label {
+            @include heading();
+        }
+
+        .btn {
+            margin-left: 10px;
+            border: v($defaultBtnBorderActive, discount_button_border, $orderDiscountBtnBorder);
+            border-radius: v($defaultBtnRadius, discount_button_border_radius, $orderDiscountBtnRadius);
+            background: v($colorBgBtnActive, discount_button_background, $orderDiscountBtnBackground);
+            color: v($colorBtnActiveText, discount_button_color, $orderDiscountBtnColor);
+
+            &:hover {
+                border: v($defaultBtnBorderActiveHover, discount_button_border_hover, $orderDiscountBtnBorderHover);
+                background: v($colorBtnActiveHover, discount_button_background_hover, $orderDiscountBtnBackgroundHover);
+                color: v($colorBtnActiveTextHover, discount_button_color_hover, $orderDiscountBtnColorHover);
+            }
+
+            @media (max-width: $bp_tiny + 1) {
+                width: 100%;
+                margin: 10px auto auto auto;
+                text-align: center;
+            }
+        }
+    }
+}

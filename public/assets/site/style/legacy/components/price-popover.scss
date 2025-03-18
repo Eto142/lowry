@@ -1,0 +1,59 @@
+@import '../../settings/default-base-values';
+@import 'customBaseValues';
+
+// all values should be in a map called:
+$price_popover: ();
+// pick up the custom map from site-specific variables
+@import 'custom.scss';
+// and pass it to the v() function via the $v_map variable
+$v_map: $price_popover;
+
+
+[id^='popover-prices'].popover {
+    z-index: 999999;
+    margin: 15px 0 0 0;
+    border-radius: $defaultCardRadius;
+    font-family: v($fontNormal, font_family, $showDetailSubshowPriceFontfamily);
+    font-weight: v(normal, font_weight, $showDetailSubshowPriceWeight);
+    line-height: v(1.67, line_height, $showDetailSubshowPriceLineHeight);
+    text-transform: v(none, text_transform, $showDetailSubshowPriceTexttransform);
+    background: v($color11, background, $colorBgPopover);
+    color: v($white, color, $colorPopoverText);
+
+    @include fontsize(v($fs_small, font_size, $showDetailSubshowPriceFontsize));
+
+    &[aria-expanded='true'] {
+        display: block;
+    }
+    &[aria-expanded='false'] {
+        display: none;
+    }
+
+    .popover-content {
+        padding: v(10px 15px, popover_padding, $popoverPadding);
+    }
+
+    .arrow {
+        border-top-color: v($color11, arrow_color, $colorBgPopover);
+        &:after {
+            border-bottom-color: v($color11, arrow_color, $colorBgPopover);
+        }
+    }
+
+    table {
+        margin: 0;
+
+        .tickettype {
+            font-family: v($fontNormal, label_font_family, $popoverTicketTypeFontfamily);
+            font-weight: v(bold, label_font_weight, $popoverTicketTypeWeight);
+            line-height: v(1.67, label_line_height, $popoverTicketTypeLineHeight);
+            text-transform: v(none, label_text_transform, $popoverTicketTypeTexttransform);
+
+            @include fontsize(v($fs_small, label_font_size, $popoverTicketTypeFontsize));
+        }
+        .price {
+            padding-left: 20px;
+            color: v($color10, amount_color, $colorPopoverPrice);
+        }
+    }
+}

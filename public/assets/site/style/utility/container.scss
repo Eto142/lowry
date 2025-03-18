@@ -1,0 +1,42 @@
+@if $isBasicLayout == false {
+    .container-fluid {
+        @media screen and (max-width: $bp_mobile) {
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+
+    .container-fluid .container {
+        max-width: 100%;
+    }
+
+    @media (max-width: $bp_tiny - 1) {
+        .container {
+            box-sizing: border-box;
+            width: 100%;
+        }
+    }
+}
+
+.acceptance-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.receiver-row {
+    margin-top: 10px;
+}
+
+.col-centered {
+    float: none;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}

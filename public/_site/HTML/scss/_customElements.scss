@@ -1,0 +1,622 @@
+@import url("/css/typo.css");
+
+// DATE PICKER
+.daterangepicker {
+    .ranges ul li.active {
+        background: $lowry_border;
+        color: $black;
+    }
+    .calendar-table {
+        td.today:not(.active) {
+            outline: 1px solid $black;
+        }
+        td.available:hover {
+            background: $lowry_border;
+        }
+        td:not(.end-date).in-range {
+            background: $lowry_border;
+        }
+    }
+}
+// GENRES DROPDOWN
+.select {
+    .option-wrapper {
+        border-top: none;
+        &:hover {
+            background: $lowry_border;
+        }
+    }
+    .select-dropdown .dropdown-footer {
+        border-left: 1px solid $lowry_border;
+        border-right: 1px solid $lowry_border;
+        border-bottom: 1px solid $lowry_border;
+    }
+}
+
+// EXTENDED LIST ITEM AGENDA
+.eventCard.extended .listItemWrapper {
+    padding: 0;
+    .inner {
+        padding: 20px 20px 20px 40px;
+    }
+}
+
+// COOKIE BANNER
+.cookieConsentForm h2 {
+    font-family: 'ABC Gravity';
+}
+.cookieConsentBanner {
+    border-top: 1px solid $lowry_border;
+}
+
+// COMING SOON PADDING
+.soon2Wrapper .soon2List td.event {
+    padding: 20px 20px 20px 0;
+}
+
+// HIDE DESCRIPTION / STORY TYPE IN PAGE CARD
+//.pageCard .desc .richtext,
+.pageCard .desc .footer {
+    display: none;
+}
+
+// PAGE NOT FOUND
+.exceptionWrapper h1 {
+    font-family: $fontAltCompressed;
+    text-transform: uppercase;
+    font-size: $fs_huge_title;
+}
+
+// STATUS FOLD OUT BTN
+.listItemWrapper a.status-info.expand-sub {
+    border: $defaultBtnBorderDefault;
+    border-radius: $defaultBtnRadius;
+}
+
+// HIDE SUBTITLE IN EVENTBAR
+header #header-event-box .description .subtitle {
+    display: none;
+}
+
+// // META WRAPPER BORDER
+// .desc1Wrapper .metaWrapper > .inner {
+//     border-left: 1px solid $unavailable;
+// }
+
+// BORDER AROUND ARROW
+.slider-root .slider-nav button.with-bg {
+    border: 1px solid $lowry_silver;
+    &:hover {
+        border: 1px solid $lowry_silverLight;
+    }
+    i:hover {
+        color: $lowry_silverLight;
+    }
+    &.slick-disabled {
+        color: $lowry_silverLight;
+        border: 1px solid $lowry_silverLight;
+        i,
+        i:hover {
+            color: $lowry_silverLight;
+        }
+    }
+}
+
+// FONT FAMILY IN RICHTEXT EDITOR PAGE
+.detail.info .desc2Wrapper .richtext {
+    h2,
+    h3,
+    h4 {
+        font-family: $fontAlt1;
+    }
+}
+
+// TITLE HOVER HIGHLIGHT BANNER IN COMING SOON
+.soon2Wrapper .soon2Banner h3 a:hover {
+    color: $lowry_hover;
+}
+
+// NO UNDERLINE PEOPLE
+.people-card:link {
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+// REVIEWS IN UPPERCASE
+#reviews .reviewSlider .slide a {
+    text-transform: uppercase;
+}
+
+// DEFAULT LOGO COLOR IN FOOTER
+.footerWrapper {
+    svg.logo path {
+        fill: $lowry_silver;
+    }
+}
+
+// LOGO COLOR TOPBAR OPEN ON SHOWCASE
+header.menu-opened.has-showcase:not(.suckerfish-on-top):not(.is-scrolled) #topbar .brand img {
+    filter: invert(1);
+}
+
+// MENU PADDING
+header {
+    .foldout-container nav {
+        li {
+            padding: 15px 0 15px 25px;
+        }
+        .submenu-container li,
+        .submenu li,
+        .submenu .submenu li {
+            padding: 15px 0 0 30px;
+        }
+    }
+    #mobile-service-menu {
+        padding: 25px 0 25px 10px;
+    }
+}
+
+// CUSTOM SVG MY ACCOUNT
+header #service-menu [href="https://tickets.thelowry.com/crmdetails.aspx"] {
+    text-indent: -9999px;
+    overflow: hidden;
+    height: 25px;
+    width: 25px;
+    background: transparent url('/images/avatar.svg') center / contain;
+    &:hover {
+        background: transparent url('/images/avatar_hover.svg') center / contain;
+    }
+}
+header.has-showcase:not(.suckerfish-on-top):not(.is-scrolled):not(.menu-opened) #service-menu [href="https://tickets.thelowry.com/crmdetails.aspx"] {
+    background: transparent url('/images/avatar_white.svg') center / contain;
+    &:hover {
+        background: transparent url('/images/avatar_white_hover.svg') center / contain;
+    }
+}
+
+/* ----------------------------------------------------------------
+    COLOR RULES
+-----------------------------------------------------------------*/
+
+@mixin color($bgcolor) {
+    .desc2Wrapper[style*='#{$bgcolor}'],
+    .highlightBannerWrapper[style*='#{$bgcolor}'],
+    .teaserWrapper[style*='#{$bgcolor}'],
+    .descriptionImageWrapper[style*='#{$bgcolor}'] {
+        h2,
+        h3,
+        h4,
+        p.teaser,
+        p,
+        a,
+        .richtext,
+        .collapsed-heading .peppered-icon,
+        .collapsed-heading summary .inner {
+            color: $white;
+            a,
+            a:link,
+            a:hover {
+                color: $white;
+            }
+        }
+        .btn {
+            background: transparent;
+            color: $white;
+            border: 1px solid $white;
+            &:hover {
+                background: $white;
+                color: $bgcolor !important;
+                border: 1px solid $white;
+            }
+        }
+        .highlightBanner {
+            h2,
+            h2 a,
+            .title,
+            .subtitle {
+                color: $white;
+            }
+            .btn {
+                background: $bgcolor;
+                color: $white;
+                border: 1px solid $white;
+                &:hover {
+                    background: $white;
+                    color: $bgcolor;
+                    border: 1px solid $bgcolor;
+                }
+            }
+        }
+        .inner .desc .richtext {
+            color: $white;
+        }
+    }
+}
+
+@include color(#182553); //dark blue
+@include color(#0541E6); //blue
+@include color(#0541e6); //blue
+@include color(#2D1D4D); //dark purple
+@include color(#2d1d4d); //dark purple
+@include color(#5F23B4); //purple
+@include color(#5f23b4); //purple
+@include color(#A01E2F); //dark red
+@include color(#a01e2f); //dark red
+@include color(#DC0044); //lead red
+@include color(#dc0044); //lead red
+@include color(#1E5818); //dark green
+@include color(#1e5818); //dark green
+@include color(#C54216); //dark orange
+@include color(#c54216); //dark orange
+@include color(#2A3C40); //dark silver
+@include color(#2a3c40); //dark silver
+@include color(#6B787B); //silver
+@include color(#6b787b); //silver
+@include color(#000000); //black
+@include color(#262626); //grey
+@include color(#1c2463); //queen blue
+
+/* ----------------------------------------------------------------
+    BORDERS EVERYWHERE
+-----------------------------------------------------------------*/
+// COMING SOON BANNER ALIGNMENTS
+.soon2Wrapper {
+    > .container {
+        align-items: stretch;
+    }
+    .soon2List tr {
+        border: 1px solid $lowry_border;
+    }
+    .soon2Banner + .soon2List {
+        margin-right: 0 !important;
+    }
+    .soon2Banner {
+        margin-left: 0 !important;
+        border-top: 1px solid $lowry_border;
+        border-right: 1px solid $lowry_border;
+        border-bottom: 1px solid $lowry_border;
+    }
+}
+
+// GAP REDUCTION
+.people-grid .grid-root,
+.listItems.variant-mobile-ish,
+.pageListWrapper .pageItems.grid-root,
+.mediaWrapper .imageCard,
+.mediaWrapper .grid-root {
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+}
+
+// BORDERS EVERYWHERE
+.featuredSlidesWrapper .featuredSlidesCard,
+.suggestionWrapper #suggestions .suggestionCard {
+    padding: 20px;
+    border-top: 1px solid $lowry_border;
+    border-left: 1px solid $lowry_border;
+    border-bottom: 1px solid $lowry_border;
+    &:last-child {
+        border-right: 1px solid $lowry_border;
+        &:hover {
+            border-right: 1px solid $lowry_border;
+        }
+    }
+    &:hover {
+        border-top: 1px solid $lowry_border;
+        border-left: 1px solid $lowry_border;
+        border-bottom: 1px solid $lowry_border;
+    }
+}
+
+.people-card,
+.featuredFlexgrid.group-banners .flexItem .subtitle p,
+.showHeaderWrapper .genres ul {
+    margin-bottom: 0 !important;
+}
+
+.pageListWrapper.variant-boxed .inner {
+    @media (min-width: 1200px) {
+        max-width: 1172px;
+    }
+}
+
+.listItems li:not(.emptyList) .listItemWrapper,
+.people-card,
+.pageListWrapper .pageCard,
+.mediaWrapper .imageCard {
+    padding: 20px;
+    outline: 1px solid $lowry_border;
+    &:hover {
+        outline: 1px solid $lowry_border;
+    }
+}
+
+.pageListWrapper .slider-root section {
+    margin: 0px;
+}
+
+// BOTTOM LINE PROD HEADER
+.container-fluid.showHeaderWrapper {
+    border-bottom: 1px solid $lowry_border;
+}
+
+// ACCORDION
+.richtext details.mce-accordion {
+//.collapsed-heading details {
+    border: 1px solid $lowry_border;
+    padding: 15px;
+    p {
+        margin-top: 15px;
+    }
+}
+.richtext details.mce-accordion + details.mce-accordion {
+    border-top: 0;
+}
+
+/* ----------------------------------------------------------------
+    DATE SEPARATOR
+-----------------------------------------------------------------*/
+
+.featuredSlidesWrapper .featuredSlidesCard .desc .date,
+.listItemWrapper .top-date,
+header #header-event-box .description .date,
+.showHeaderWrapper .showHeader .top-date,
+.suggestionWrapper #suggestions .suggestionCard .date {
+    display: flex !important;
+    align-items: left;
+    align-self: stretch;
+
+    > * {
+        flex-grow: 0;
+    }
+
+    .start + .time {
+        margin-left: 1ex;
+    }
+
+    .separator {
+        flex-grow: 0.08;
+        margin: 11px 10px -15px 10px;
+        border-top: 1px solid currentColor;
+        text-indent: -9999px;
+        overflow: hidden;
+    }
+}
+
+.featuredSlidesWrapper .featuredSlidesCard .desc .date .separator {
+    margin: 7px 15px -15px 15px;
+}
+
+/* ----------------------------------------------------------------
+    FANCY EVENT LIST HEADER + PURPLE EVENT LIST
+-----------------------------------------------------------------*/
+.headerShowWrapper {
+    position: relative;
+    .shortcutMenu {
+        float: none;
+        display: flex;
+        > li {
+            display: flex;
+            flex: 1;
+            text-align: center;
+            &:nth-child(even) {
+                margin: 0 -1px;
+                margin-right: -1px;
+            }
+        }
+        a {
+            display: block;
+            flex: 1;
+            padding: 10px;
+            border: 1px solid $white;
+            &:hover {
+                border-color: darken($white, 20%);
+                z-index: 1;
+            }
+        }
+
+        @media (max-width: 480px) {
+            flex-direction: column;
+            li:nth-child(even) {
+                margin: -1px 0;
+            }
+        }
+    }
+}
+
+body.list.show {
+    header {
+        #topbar {
+            background: $lowry_purple;
+            color: $white;
+            .hamburger,
+            #service-menu button,
+            .cart,
+            .shortcuts-menu a {
+                color: $white;
+                &:link,
+                &:visited {
+                    color: $white;
+                }
+                &:hover {
+                    color: $lowry_purpleLight;
+                }
+            }
+            .brand img {
+                filter: brightness(0) invert(1);
+                opacity: 1;
+            }
+        }
+        .foldout-container {
+            background: $lowry_purpleDark;
+            nav a:not(.btn):hover {
+                color: $lowry_purpleLight;
+            }
+        }
+        #service-menu [href="https://tickets.thelowry.com/crmdetails.aspx"] {
+            background: transparent url('/images/avatar_white.svg') center / contain;
+            &:hover {
+                background: transparent url('/images/avatar_white_hover.svg') center / contain;
+            }
+        }
+    }
+    header.is-scrolled #topbar .brand img {
+        filter: brightness(0) invert(1);
+        opacity: 1;
+    }
+    .headerShowWrapper h1 {
+        text-align: center;
+        background: #5F23B4 url(/images/logo_purpleDark.svg) no-repeat center/100%;
+        padding-top: 31%;
+        padding-bottom: 26%;
+    }
+    .footerWrapper {
+        background: $lowry_purpleDark;
+        .btn.btn-active:hover {
+            color: $lowry_purpleDark;
+        }
+        a:not(.btn):hover.social-icon {
+            color: $lowry_purpleLight;
+        }
+        svg.logo path {
+            fill: $lowry_purple;
+        }
+    }
+    #postFooter {
+        background: $lowry_purpleDark;
+    }
+}
+
+/* ----------------------------------------------------------------
+    MASTHEAD
+-----------------------------------------------------------------*/
+
+@mixin masthead($property, $background, $color, $text, $text_hover, $image, $logo, $avatar, $avatar_hover) {
+    body.#{$property} {
+        header {
+            #topbar {
+                background: $background;
+                color: $text;
+                .hamburger,
+                #service-menu button,
+                .cart,
+                .shortcuts-menu a {
+                    color: $text;
+                    &:link,
+                    &:visited {
+                        color: $text;
+                    }
+                    &:hover {
+                        color: $text_hover;
+                    }
+                }
+                .brand img {
+                    filter: $logo;
+                    opacity: 1;
+                }
+            }
+            // CUSTOM SVG MY ACCOUNT
+            #service-menu [href="https://tickets.thelowry.com/crmdetails.aspx"] {
+                background: transparent url($avatar) center / contain;
+                &:hover {
+                    background: transparent url($avatar_hover) center / contain;
+                }
+            }
+            .foldout-container {
+                background: $color;
+                nav a:not(.btn) {
+                    color: $text;
+                    &:hover {
+                        color: $background;
+                    }
+                }
+            }
+            // .anchor-menu,
+            // .anchor-menu .active {
+            //     background: $color;
+            //     color: $text;
+            //     a:hover,
+            //     &:hover {
+            //         color: $text;
+            //     }
+            // }
+        }
+        header.is-scrolled #topbar .brand img {
+            filter: $logo;
+            opacity: 1;
+        }
+        .infoHeaderWrapper {
+            padding-top: 22% !important;
+            padding-bottom: 22% !important;
+            background: $background url($image) no-repeat center / 87% !important;
+            h1 {
+                font-size: var(--fs-gigantic-title);
+                color: $text;
+                text-align: center;
+            }
+        }
+        @media (min-width: 1320px) {
+            .infoHeaderWrapper {
+                padding-top: 17% !important;
+                padding-bottom: 17% !important;
+                background: $background url($image) no-repeat center / 69% !important;
+            }
+        }
+        .footerWrapper {
+            background: $background;
+            h2,
+            p,
+            a:not(.btn) {
+                color: $text;
+                &:hover {
+                    color: $text;
+                }
+            }
+            .btn.btn-active {
+                border: 1px solid $text;
+                color: $text;
+                &:hover {
+                    color: $background;
+                    background: $text;
+                    border: 1px solid $text;
+                }
+            }
+            a:not(.btn).social-icon {
+                color: $text;
+                &:hover {
+                    color: $color;
+                }
+            }
+            svg.logo path {
+                fill: $color;
+            }
+        }
+        #postFooter {
+            background: $background;
+            color: $text;
+            a {
+                color: $text;
+                &:hover {
+                    color: $text;
+                }
+            }
+        }
+    }
+}
+
+@include masthead(STYLE_BLUE, $lowry_blue, $lowry_blueDark, $white, $lowry_hoverWhite, '/images/logo_blueDark.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_DARKBLUE, $lowry_blueDark, $lowry_blue, $white, $lowry_hoverWhite, '/images/logo_blueLight.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_GREY, $lowry_silver, $lowry_silverDark, $white, $lowry_hoverWhite, '/images/logo_greyDark.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_DARKGREY, $lowry_silverDark, $lowry_silver, $white, $lowry_hoverWhite, '/images/logo_greyLight.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_GREEN,$lowry_greenLight, $lowry_green, $black, $lowry_hover, '/images/logo_greenDark.svg', none, '/images/avatar.svg', '/images/avatar_hover.svg');
+@include masthead(STYLE_DARKGREEN,$lowry_green, $lowry_greenLight, $black, $lowry_hover, '/images/logo_greenLight.svg', none, '/images/avatar.svg', '/images/avatar_hover.svg');
+@include masthead(STYLE_ORANGE, $lowry_orange, $lowry_orangeDark, $white, $lowry_hoverWhite, '/images/logo_orangeDark.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_DARKORANGE, $lowry_orangeDark, $lowry_orange, $white, $lowry_hoverWhite, '/images/logo_orangeLight.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_PURPLE, $lowry_purple, $lowry_purpleDark, $white, $lowry_hoverWhite, '/images/logo_purpleDark.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_DARKPURPLE, $lowry_purpleDark, $lowry_purple, $white, $lowry_hoverWhite, '/images/logo_purpleDark.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_RED, $lowry_red, $lowry_redDark, $white, $lowry_hoverWhite, '/images/logo_redDark.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_DARKRED, $lowry_redDark, $lowry_red, $white, $lowry_hoverWhite, '/images/logo_redLight.svg', brightness(0) invert(1), '/images/avatar_white.svg', '/images/avatar_white_hover.svg');
+@include masthead(STYLE_YELLOW, $lowry_yellowLight, $lowry_yellow, $black, $lowry_hover, '/images/logo_yellowDark.svg', none, '/images/avatar.svg', '/images/avatar_hover.svg');
+@include masthead(STYLE_DARKYELLOW, $lowry_yellow, $lowry_yellowLight, $black, $lowry_hover, '/images/logo_yellowLight.svg', none, '/images/avatar.svg', '/images/avatar_hover.svg');

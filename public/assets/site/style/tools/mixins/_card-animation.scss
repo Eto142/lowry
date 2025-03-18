@@ -1,0 +1,151 @@
+@mixin card_animation($animation, $image_selector:'', $text_selector:'') {
+    // choose either shadow or glow
+    @if ($animation == 'shadow') {
+        transition: all $cardAnimationShadowOut;
+
+        &:hover {
+            box-shadow: $cardAnimationShadowHover;
+            transition: all $cardAnimationShadowIn;
+        }
+
+        &:active {
+            box-shadow: $cardAnimationShadowActive;
+            transition: all $cardAnimationShadowOn;
+        }
+    }
+
+    @if ($animation == 'glow') {
+        transition: all $cardAnimationGlowOut;
+
+        &:hover {
+            box-shadow: $cardAnimationGlowHover;
+            transition: all $cardAnimationGlowIn;
+        }
+
+        &:active {
+            box-shadow: $cardAnimationGlowActive;
+            transition: all $cardAnimationGlowOn;
+        }
+    }
+
+    // choose either zoom or twist
+    @if ($animation == 'zoom' and $image_selector != '') {
+        #{$image_selector} {
+            will-change: transform;
+            transition: all $cardAnimationZoomOut;
+        }
+
+        &:hover #{$image_selector} {
+            transform: $cardAnimationZoomHover;
+            transition: all $cardAnimationZoomIn;
+        }
+
+        &:active #{$image_selector} {
+            transform: $cardAnimationZoomActive;
+            transition: all $cardAnimationZoomOn;
+        }
+    }
+
+    @if ($animation == 'twist' and $image_selector != '') {
+        #{$image_selector} {
+            will-change: transform;
+            transition: all $cardAnimationTwistOut;
+        }
+
+        &:hover #{$image_selector} {
+            transform: $cardAnimationTwistHover;
+            transition: all $cardAnimationTwistIn;
+        }
+
+        &:active #{$image_selector} {
+            transform: $cardAnimationTwistActive;
+            transition: all $cardAnimationTwistOn;
+        }
+    }
+
+    // choose either saturate or desaturate
+    @if ($animation == 'desaturate' and $image_selector != '') {
+        #{$image_selector} {
+            will-change: filter;
+            filter: grayscale(0%);
+            transition: all $cardAnimationSaturateOut;
+        }
+
+        &:hover #{$image_selector} {
+            filter: $cardAnimationDesaturateHover;
+            transition: all $cardAnimationDesaturateIn;
+        }
+
+        &:active #{$image_selector} {
+            filter: $cardAnimationDesaturateActive;
+            transition: all $cardAnimationDesaturateOn;
+        }
+    }
+
+    @if ($animation == 'saturate' and $image_selector != '') {
+        #{$image_selector} {
+            will-change: filter;
+            filter: grayscale(100%);
+            transition: all $cardAnimationDesaturateOut;
+        }
+
+        &:hover #{$image_selector} {
+            filter: $cardAnimationSaturateHover;
+            transition: all $cardAnimationSaturateIn;
+        }
+
+        &:active #{$image_selector} {
+            filter: $cardAnimationSaturateActive;
+            transition: all $cardAnimationSaturateOn;
+        }
+    }
+
+    // choose either slide or skew
+    @if ($animation == 'slide') {
+        will-change: transform;
+        transition: all $cardAnimationSlideOut;
+
+        &:hover {
+            transform: $cardAnimationSlideHover;
+            transition: all $cardAnimationSlideIn;
+        }
+
+        &:active {
+            transform: $cardAnimationSlideActive;
+            transition: all $cardAnimationSlideOn;
+        }
+    }
+
+    @if ($animation == 'skew') {
+        will-change: transform;
+        transition: all $cardAnimationSkewOut;
+        transform-origin: $cardAnimationSkewOrigin;
+
+        &:hover {
+            transform: $cardAnimationSkewHover;
+            transition: all $cardAnimationSkewIn;
+        }
+
+        &:active {
+            transform: $cardAnimationSkewActive;
+            transition: all $cardAnimationSkewOn;
+        }
+    }
+
+    @if ($animation == 'shift' and $text_selector != '') {
+        #{$text_selector} {
+            will-change: transform;
+            transition: transform $cardAnimationShiftOut;
+        }
+
+        &:hover #{$text_selector} {
+            transform: $cardAnimationShiftHover;
+            transition: transform $cardAnimationShiftIn;
+        }
+        
+        &:active #{$text_selector} {
+            transform: $cardAnimationShiftActive;
+            transition: transform $cardAnimationShiftOn;
+        }
+    }
+}

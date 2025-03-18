@@ -1,0 +1,95 @@
+.btn {
+    min-width: $defaultBtnWidth;
+    padding: $defaultBtnPadding;
+    border: $defaultBtnBorder;
+    border-radius: $defaultBtnRadius;
+    font-family: $defaultBtnFontfamily;
+    font-weight: $defaultBtnWeight;
+    line-height: $defaultBtnLineHeight;
+    text-decoration: none;
+    text-transform: $defaultBtnTexttransform;
+    text-align: center;
+    background: transparent;
+    transition: $defaultBtnTransitionLeave;
+    @include fontsize($defaultBtnFontsize);
+
+    &:hover {
+        text-decoration: none;
+        transition: $defaultBtnTransitionEnter;
+    }
+
+    &.active,
+    &:active {
+        // remove ugly bootstrap inset shadow on active buttons
+        box-shadow: none;
+    }
+
+    &.btn-default {
+        border: $defaultBtnBorderDefault;
+        background: $colorBgBtnDefault;
+        color: $colorBtnDefaultText;
+        box-shadow: $defaultBtnShadowDefault;
+    }
+
+    &.btn-active {
+        border: $defaultBtnBorderActive;
+        background: $colorBgBtnActive;
+        color: $colorBtnActiveText;
+        box-shadow: $defaultBtnShadowActive;
+    }
+
+    &.btn-default,
+    &.btn-active {
+        &:hover {
+            border: $defaultBtnBorderActiveHover;
+            background: $colorBtnActiveHover;
+            color: $colorBtnActiveTextHover;
+            box-shadow: $defaultBtnShadowActiveHover;
+        }
+
+        &:active {
+            box-shadow: $defaultBtnShadowActiveActive;
+        }
+    }
+
+    &.btn-disabled,
+    &:disabled,
+    &[disabled] {
+        border: $defaultBtnBorderDisabled !important;
+        background: $colorBgBtnDisabled !important;
+        color: $colorBtnDisabledText !important;
+        box-shadow: $defaultBtnShadowDisabled;
+        cursor: default;
+        opacity: 1; // bootstrap wants to make disabled buttons transparent...
+    }
+
+    &.btn-unavailable { // disabled, but unavailable is a special reason
+        border: $defaultBtnBorderUnavailable !important;
+        background: $colorBgBtnUnavailable !important;
+        color: $colorBtnUnavailableText !important;
+        box-shadow: $defaultBtnShadowUnavailable !important;
+        opacity: 1; // bootstrap wants to make disabled buttons transparent...
+    }
+
+    &.btn-clean {
+        display: inline;
+        width: auto;
+        padding: 0;
+        padding: 0;
+        border: 0;
+        background: none;
+        text-align: left;
+        &:active {
+            box-shadow: none;
+        }
+    }
+
+    .label {
+        // reset all crap bootstrap styles
+        all: unset;
+    }
+
+    .peppered-icon {
+        display: none;
+    }
+}
