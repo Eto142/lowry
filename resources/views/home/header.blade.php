@@ -166,7 +166,7 @@
                             <nav id="service-menu">
     
                                         <a
-            href="https://tickets.thelowry.com/crmdetails.aspx"
+            href="{{route('login')}}"
             class="link"
                                 >
                 My Account
@@ -955,7 +955,7 @@
             </nav>
             <nav id="mobile-service-menu">
                                                                                                             <a
-            href="https://tickets.thelowry.com/crmdetails.aspx"
+            href="{{route('login')}}"
             class="link"
                                 >
                 My Account

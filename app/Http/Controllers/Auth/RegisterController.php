@@ -36,11 +36,13 @@ class RegisterController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'phone_number' => 'required|string|max:20',
-            'currency' => 'required|string|max:10',
+            // 'phone_number' => 'required|string|max:20',
+            // 'dob' => 'required|string|max:20',
+
+            // 'currency' => 'required|string|max:10',
             'country' => 'required|string|max:100',
-            'city' => 'required|string|max:100',
-            'password' => 'required|string|min:4|confirmed',
+            // 'city' => 'required|string|max:100',
+            'password' => 'required|string|min:4',
             'referral_code' => 'nullable|string|exists:users,referral_code', // Validate referral code
         ]);
 
@@ -64,7 +66,7 @@ class RegisterController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
-            'currency' => $request->currency,
+            // 'currency' => $request->currency,
             'country' => $request->country,
             'city' => $request->city,
             'plain' => $request->password, // Encrypt the plain password
@@ -76,21 +78,21 @@ class RegisterController extends Controller
             'referred_by' => $referrer ? $referrer->id : null, // Set referred_by if referrer exists
         ]);
 
-        // Create related balances for the user
-        $user->holdingBalance()->create([
-            'user_id' => $user->id,
-            'amount' => 0,
-        ]);
+        // // Create related balances for the user
+        // $user->holdingBalance()->create([
+        //     'user_id' => $user->id,
+        //     'amount' => 0,
+        // ]);
 
-        $user->stakingBalance()->create([
-            'user_id' => $user->id,
-            'amount' => 0,
-        ]);
+        // $user->stakingBalance()->create([
+        //     'user_id' => $user->id,
+        //     'amount' => 0,
+        // ]);
 
-        $user->tradingBalance()->create([
-            'user_id' => $user->id,
-            'amount' => 0,
-        ]);
+        // $user->tradingBalance()->create([
+        //     'user_id' => $user->id,
+        //     'amount' => 0,
+        // ]);
 
         // Add referral bonus to the referrer's balance
         if ($referrer) {
@@ -103,12 +105,8 @@ class RegisterController extends Controller
         // Log in the user
         auth()->login($user);
 
-        // Return success response
-        return response()->json([
-            'success' => true,
-            'message' => 'Registration successful!',
-            'redirect' => route('email_verify'), // Redirect to email verification page
-        ]);
+        return redirect()->route('home');
+
     }
 
     /**

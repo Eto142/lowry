@@ -15,11 +15,12 @@
                   </svg>
                 </div>
                 
-                <form class="login-form">
+                <form class="login-form" action="{{route('login')}}" method="POST">
+                  @csrf
                   <div class="mb-3">
                     <label for="email">Email address:</label>
                     <div class="input-group">
-                      <input type="email" class="form-control py-1" id="email" placeholder="Email address:">
+                      <input type="email" name="email" class="form-control py-1" id="email" placeholder="Email address:">
                       <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
                     </div>
                   </div>
@@ -27,7 +28,7 @@
                   <div class="mb-3">
                     <label for="password">Password</label>
                     <div class="input-group">
-                      <input type="password" class="form-control py-1" id="password" placeholder="Password">
+                      <input type="password" name="password" class="form-control py-1" id="password" placeholder="Password">
                       <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
                     </div>
                   </div>

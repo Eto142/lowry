@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 
 
@@ -8,6 +9,11 @@ Route::get('/', function () {
     return view('home.homepage');
 });
 
+
+
+
+Route::get('/home', [DashboardController::class, 'index'])->name('home');
+Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
 
 Route::get('/login', [App\Http\Controllers\Auth\AuthController::class, 'showLoginForm'])->name('login.page');
 Route::post('/login', [App\Http\Controllers\Auth\AuthController::class, 'login'])->name('login');
