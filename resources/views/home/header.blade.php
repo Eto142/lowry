@@ -122,17 +122,17 @@
 
     <a class="brand" href="https://thelowry.com/" title="Go to homepage">
 
-            <img class="sticky-logo" src="https://thelowry.com/images/logo.svg" alt="Lowry">
+            <img class="sticky-logo" src="images/logo.png" alt="Lowry">
     
             <img class="showcase-logo" src="https://thelowry.com/images/logo_showcase.svg" alt="Lowry">
     
-            <img class="mobile-logo" src="https://thelowry.com/images/logo.svg" alt="Lowry">
+            <img class="mobile-logo" src="images/logo.png" alt="Lowry">
     
-            <img class="mobile-sticky-logo" src="https://thelowry.com/images/logo.svg" alt="Lowry">
+            <img class="mobile-sticky-logo" src="images/logo.png" alt="Lowry">
     
             <img class="mobile-showcase-logo" src="https://thelowry.com/images/logo_mobile_showcase.svg" alt="Lowry">
     
-    <img src="https://thelowry.com/images/logo.svg" alt="Lowry">
+    <img src="images/logo.png" alt="Lowry">
 
 </a>
 
