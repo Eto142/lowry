@@ -34,40 +34,6 @@
              border: 1px solid black;
              color: black;
          }
-
-         .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: white;
-            min-width: 100px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: black;
-            padding: 10px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .user-icon {
-            cursor: pointer;
-        }
      </style>
  </head>
  <body>
@@ -76,13 +42,7 @@
              <a class="navbar-brand fw-bold fs-3" href="#">LOWRY</a>
              <div class="d-flex align-items-center">
                  <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
-                 <div class="dropdown">
-                    <img src="user-icon.png" alt="User" width="30" class="user-icon">
-                    <div class="dropdown-content">
-                        <a href="#">KYC</a>
-                        <a href="#">Profile</a>
-                    </div>
-                </div>
+                 <img src="user-icon.png" alt="User" width="30">
              </div>
          </div>
      </nav>
@@ -143,7 +103,7 @@
             
      </div>
  
-  <!-- Edit Modal -->
+    <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,25 +112,15 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editCustomerForm" action="{{route('profile.update')}}" method="POST">
+                <form>
                     @csrf
-                    @if (session('status'))
-    <div class="alert alert-success">
-        {{ session('status') }}
-    </div>
-@endif
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">First Name</label>
-                        <input type="text" id="fullName" name="first_name" class="form-control" placeholder="Enter first name">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fullName" class="form-label">Last Name</label>
-                        <input type="text" id="fullName" name="last_name" class="form-control" placeholder="Enter last name">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input type="text" id="fullName" name="first_name" class="form-control" placeholder="Enter full name">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" id="email"  name="email" class="form-control" placeholder="Enter email" readonly>
+                        <input type="email" id="email" class="form-control" placeholder="Enter email" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="phoneNumber" class="form-label">Home Phone</label>
@@ -184,11 +134,11 @@
                         <label for="address" class="form-label">Address</label>
                         <input type="text" id="address" name="address" class="form-control" placeholder="Enter address">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
     </div>
@@ -294,5 +244,3 @@
      </div>
  </body>
  </html>
-
- 

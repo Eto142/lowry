@@ -35,6 +35,34 @@ class DashboardController extends Controller
 
         return back()->with('success', 'Password updated successfully.');
     }
+
+
+    public function profileUpdate(Request $request)
+    {
+        //validation rules
+
+        $request->validate([
+            'first_name' => 'string',
+            'last_name' => 'string',
+            'phone_number' => 'string',
+            'country' => 'string',
+            'address' => 'string'
+
+        ]);
+        $user = Auth::user();
+        $user->first_name = $request['first_name'];
+        $user->last_name = $request['last_name'];
+        $user->phone_number = $request['phone_number'];
+        $user->country = $request['country'];
+        $user->address = $request['address'];
+
+
+        $user->update();
+        return back()->with('status', 'Profile Updated');
+    }
+
+
+
 }
 
 
