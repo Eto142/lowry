@@ -2,28 +2,149 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Artwork;
 use App\Models\Exhibition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 
 class HomepageController extends Controller
 {
+
+
+    // Show all exhibitions (with different sections for past/future)
     public function index()
     {
-        // Get all exhibitions with either user or admin relationship
-        $exhibitions = Exhibition::with('admin')
-            ->orderBy('date', 'asc')
+        $now = Carbon::now();
+
+        // Past exhibitions (ended before today)
+        $pastExhibitions = Exhibition::where('end_date', '<', $now)
+            ->orderBy('end_date', 'desc')
+            ->get();
+
+        // Upcoming exhibitions (only shown to logged in users)
+        $upcomingExhibitions = [];
+        if (auth()->check()) {
+            $upcomingExhibitions = Exhibition::where('start_date', '>', $now)
+                ->orderBy('start_date', 'asc')
+                ->get();
+        }
+
+        // Available artworks for purchase
+        $availableArtworks = Artwork::where('is_sold', false)
+            ->with('artist')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('home.homepage', [
-            'exhibitions' => $exhibitions
+            'pastExhibitions' => $pastExhibitions,
+            'upcomingExhibitions' => $upcomingExhibitions,
+            'availableArtworks' => $availableArtworks
         ]);
     }
 
+    // Show single exhibition
     public function show(Exhibition $exhibition)
     {
+        $now = Carbon::now();
+        $isPast = $exhibition->end_date < $now;
+
         return view('exhibitions.show', [
-            'exhibition' => $exhibition->load(['user', 'admin'])
+            'exhibition' => $exhibition,
+            'isPast' => $isPast
+        ]);
+    }
+
+    // Show artwork details
+    public function showArtwork(Artwork $artwork)
+    {
+        return view('exhibitions.artwork', [
+            'artwork' => $artwork
+        ]);
+    }
+
+    // Handle auction bidding
+    public function placeBid(Request $request, Artwork $artwork)
+    {
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:' . ($artwork->current_bid + 1)
+        ]);
+
+        // Create new bid
+        $bid = $artwork->bids()->create([
+            'user_id' => auth()->id(),
+            'amount' => $validated['amount'],
+            'is_anonymous' => $request->has('anonymous')
+        ]);
+
+        // Update artwork current bid
+        $artwork->update([
+            'current_bid' => $validated['amount']
+        ]);
+
+        // Notify previous highest bidder
+        if ($artwork->current_bidder) {
+            Mail::to($artwork->current_bidder->email)->send(
+                new OutbidNotification($artwork, $validated['amount'])
+            );
+        }
+
+        return back()->with('success', 'Your bid has been placed!');
+    }
+
+    // Process artwork purchase
+    public function purchaseArtwork(Request $request, Artwork $artwork)
+    {
+        if ($artwork->is_sold) {
+            return back()->with('error', 'This artwork has already been sold.');
+        }
+
+        // Process payment (would integrate with Stripe/PayPal in real app)
+        try {
+            // In a real app, you would process payment here
+            // $payment = PaymentGateway::charge($request->payment_token, $artwork->price);
+
+            // Mark as sold
+            $artwork->update([
+                'is_sold' => true,
+                'buyer_id' => auth()->id(),
+                'sold_at' => now(),
+                'sale_amount' => $artwork->price
+            ]);
+
+            // Notify artist
+            Mail::to($artwork->artist->email)->send(
+                new ArtworkSoldNotification($artwork)
+            );
+
+            // Notify buyer
+            Mail::to(auth()->user()->email)->send(
+                new PurchaseConfirmation($artwork)
+            );
+
+            return redirect()->route('purchase.confirmation', $artwork)
+                ->with('success', 'Purchase completed successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Payment failed: ' . $e->getMessage());
+        }
+    }
+
+    // Auction live view
+    public function liveAuction(Artwork $artwork)
+    {
+        if (!$artwork->is_auction || $artwork->auction_end < now()) {
+            return redirect()->route('artwork.show', $artwork);
+        }
+
+        $bids = $artwork->bids()
+            ->with('bidder')
+            ->orderBy('amount', 'desc')
+            ->get();
+
+        return view('exhibitions.auction', [
+            'artwork' => $artwork,
+            'bids' => $bids
         ]);
     }
 }

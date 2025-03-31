@@ -1,13 +1,41 @@
 <?php
 
-use App\Http\Controllers\HomepageController;
+use App\Models\Artist;
+use App\Models\Artwork;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\DashboardController;
 
 
 
 Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name('exhibitions.index');
 Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController::class, 'show'])->name('exhibitions.show');
+
+// Public routes
+Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name('home');
+Route::get('/exhibitions', [App\Http\Controllers\HomepageController::class, 'index'])->name('exhibitions.index');
+Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController::class, 'show'])->name('exhibitions.show');
+Route::get('/artworks/{artwork}', [App\Http\Controllers\HomepageController::class, 'showArtwork'])->name('artwork.show');
+
+// Authenticated routes
+Route::middleware(['auth'])->group(function () {
+    // Auction routes
+    Route::post('/artworks/{artwork}/bid', [App\Http\Controllers\HomepageController::class, 'placeBid'])->name('artwork.bid');
+    Route::get('/auctions/{artwork}', [App\Http\Controllers\HomepageController::class, 'liveAuction'])->name('auction.live');
+
+    // Purchase routes
+    Route::post('/artworks/{artwork}/purchase', [App\Http\Controllers\HomepageController::class, 'purchaseArtwork'])->name('artwork.purchase');
+    Route::get('/purchase/{artwork}/confirmation', function (Artwork $artwork) {
+        return view('exhibitions.purchase-confirmation', ['artwork' => $artwork]);
+    })->name('purchase.confirmation');
+
+    // Artist contact (reveal email)
+    Route::get('/artist/{artist}/contact', function (Artist $artist) {
+        return response()->json(['email' => $artist->email]);
+    })->name('artist.contact');
+});
+
 
 
 

@@ -3,7 +3,6 @@
 
     <span id="pp_page_instance_746"></span>
 
-
     <div class="container-fluid align-" style="padding-top: 30px; padding-bottom: 30px; background: #fff;">
         <div class="container">
             <div class="infoHeaderBoxedImage" data-animations="">
@@ -75,32 +74,7 @@
         style="padding-top: 50px; padding-bottom: 20px; background: #fff;">
         <div class="container">
             <div class="richtext">
-                <h2>Permanent Collection</h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid mediaWrapper single variant-boxed_caption" data-animations=""
-        style="padding-top: 30px; padding-bottom: 30px; background: #fff;">
-        <div class="container">
-            <a class="captionWrapper" href="/permanent-collection">
-                <div class="wrapper imgBox">
-                    <img src="https://img.thelowry.com/FROID8QTU1PYzaf4fkuGQ-iLb8cQIkHxgbQ40gQ_GwA/rs:fit:1920:800:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzE0MTdfb3JpZy5qcGc"
-                        alt="Permanent Collection">
-                </div>
-                <div class="caption">
-                    <div class="title">Modern Perspectives: The Permanent Collection</div>
-                    <div class="desc">Explore our comprehensive collection of contemporary artworks</div>
-                </div>
-            </a>
-        </div>
-    </div>
-
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 50px; padding-bottom: 20px; background: #fff;">
-        <div class="container">
-            <div class="richtext">
-                <h2>Exhibition</h2>
+                <h2>Past Exhibitions</h2>
             </div>
         </div>
     </div>
@@ -108,7 +82,7 @@
     <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
         <div class="container">
             <ul data-animations="zoom" class="listItems variant-">
-                @foreach($exhibitions as $exhibition)
+                @foreach($pastExhibitions as $exhibition)
                 <li data-entry-id="{{ $exhibition->id }}"
                     class="eventCard context-default production-type-default variant-default topdate">
                     <style>
@@ -123,31 +97,22 @@
                         <div class="inner">
                             <div class="descMetaContainer">
                                 <a class="desc" href="/exhibitions/{{ $exhibition->id }}">
-                                    <div style="display: flex; align-items: center;">
-                                        <h2 class="title">{{ $exhibition->title }}</h2>
-                                        @if($exhibition->admin_id)
-                                        <img src="{{ $exhibition->picture }}" alt="Official Exhibition"
-                                            style="width: 20px; height: 20px; margin-left: 10px;">
-                                        @endif
-                                    </div>
+                                    <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
                                         <span class="start">{{ $exhibition->created_at->format('D d M Y') }}<span
                                                 class="time">10:00AM</span></span>
                                         @if($exhibition->end_date)
                                         <span class="separator"></span>
-                                        <span class="end">{{ $exhibition->end_date->format('D d M Y') }}<span
-                                                class="time">4:30PM</span></span>
+                                        <span class="end"> {{ \Carbon\Carbon::parse($exhibition->end_date)->format('d M
+                                            Y') }}
+                                            <span class="time">4:30PM</span></span>
                                         @endif
                                     </div>
                                     <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
                                     @if($exhibition->seller_name)
                                     <div class="seller-info" style="font-style: italic; margin-top: 5px;">
-                                        @if($exhibition->admin_id)
-                                        Curated by: {{ $exhibition->seller_name }}
-                                        @else
                                         Presented by: {{ $exhibition->seller_name }}
-                                        @endif
                                     </div>
                                     @endif
                                 </a>
@@ -160,6 +125,10 @@
                                     </div>
                                     <div class="meta-group button">
                                         <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
+                                        @auth
+                                        <a href="mailto:{{ $exhibition->artist_email }}"
+                                            class="btn btn-secondary">Contact Artist</a>
+                                        @endauth
                                     </div>
                                 </div>
                             </div>
@@ -171,13 +140,12 @@
         </div>
     </div>
 
-
-
+    @auth
     <div class="container-fluid desc2Wrapper variant- align-"
         style="padding-top: 70px; padding-bottom: 0px; background: #fff;">
         <div class="container">
             <div class="richtext">
-                <h2>Current & Upcoming Exhibitions</h2>
+                <h2>Upcoming Exhibitions</h2>
             </div>
         </div>
     </div>
@@ -185,130 +153,122 @@
     <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
         <div class="container">
             <ul data-animations="zoom" class="listItems variant-">
-                <li data-entry-id="388"
+                @foreach($upcomingExhibitions as $exhibition)
+                <li data-entry-id="{{ $exhibition->id }}"
                     class="eventCard context-default production-type-default variant-default topdate">
                     <style>
-                        [data-entry-id="388"] .thumb .image {
-                            background-image: url('https://img.thelowry.com/3xGmoQMm4Kg6pQTRGWnFxUf1a2dL9gknHJAdCnUTRYI/c:4624:3244:fp:0.5:0.33/s:855:600:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzI2NTNfb3JpZy5qcGc');
-                        }
+                        [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
+                            background-image: url('{{ $exhibition->picture ?? ' https: //via.placeholder.com/855x600' }}');
+                            }
                     </style>
                     <div class="listItemWrapper">
                         <div class="thumb">
-                            <a class="image" href="/immersive-360" tabindex="-1"></a>
+                            <a class="image" href="/exhibitions/{{ $exhibition->id }}" tabindex="-1"></a>
                         </div>
                         <div class="inner">
                             <div class="descMetaContainer">
-                                <a class="desc" href="/immersive-360">
-                                    <h2 class="title">Immersive 360</h2>
-                                    <div class="subtitle"></div>
+                                <a class="desc" href="/exhibitions/{{ $exhibition->id }}">
+                                    <h2 class="title">{{ $exhibition->title }}</h2>
+                                    <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">Sat 03 May 2025<span class="time">10:00AM</span></span>
+                                        <span class="start">{{ $exhibition->start_date->format('D d M Y') }}<span
+                                                class="time">10:00AM</span></span>
+                                        @if($exhibition->end_date)
                                         <span class="separator"></span>
-                                        <span class="end">Sun 31 Aug 2025<span class="time">4:30PM</span></span>
+                                        <span class="end">{{ $exhibition->end_date->format('D d M Y') }}<span
+                                                class="time">4:30PM</span></span>
+                                        @endif
                                     </div>
-                                    <div class="venue">Main Exhibition Hall</div>
+                                    <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
                                 </a>
                                 <div class="meta">
                                     <div class="meta-group">
                                         <ul class="genres">
-                                            <li class="genres__item"><a class="genres__link"
-                                                    href="/whats-on?genres[0]=17">Interactive</a></li>
+                                            <li class="genres__item"><a class="genres__link" href="#">{{
+                                                    $exhibition->genre ?? 'Art' }}</a></li>
                                         </ul>
                                     </div>
                                     <div class="meta-group button">
-                                        <a href="/immersive-360" class="btn btn-active">Dates</a>
+                                        <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
+                                        @if($exhibition->is_auction)
+                                        <a href="/auctions/{{ $exhibition->id }}" class="btn btn-primary">Join Live
+                                            Auction</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </li>
-
-                <li data-entry-id="389"
-                    class="eventCard context-default production-type-default variant-default topdate">
-                    <style>
-                        [data-entry-id="389"] .thumb .image {
-                            background-image: url('https://img.thelowry.com/B-D2rzbZQ5iN7HjHxSqykRSxDa1vEEwAnvOTbyUCpd0/c:1539:1080/s:855:600:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzI4MzNfb3JpZy5qcGc');
-                        }
-                    </style>
-                    <div class="listItemWrapper">
-                        <div class="thumb">
-                            <a class="image" href="/modern-perspectives" tabindex="-1"></a>
-                        </div>
-                        <div class="inner">
-                            <div class="descMetaContainer">
-                                <a class="desc" href="/modern-perspectives">
-                                    <h2 class="title">Modern Perspectives: Contemporary Art Exhibition</h2>
-                                    <div class="subtitle"></div>
-                                    <div class="top-date">
-                                        <span class="start">Sat 19 Jul 2025<span class="time">10:00AM</span></span>
-                                        <span class="separator"></span>
-                                        <span class="end">Sun 31 Aug 2025<span class="time">4:30PM</span></span>
-                                    </div>
-                                    <div class="venue">Gallery East</div>
-                                </a>
-                                <div class="meta">
-                                    <div class="meta-group">
-                                        <ul class="genres">
-                                            <li class="genres__item"><a class="genres__link"
-                                                    href="/whats-on?genres[0]=17">Contemporary</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="meta-group button">
-                                        <a href="/modern-perspectives" class="btn btn-active">Dates</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                @endforeach
             </ul>
         </div>
     </div>
+    @endauth
 
-    <div class="container-fluid pageListWrapper variant-grid variant-boxed arrows"
-        style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
-        <div class="inner">
-            <div class="pageItems grid-root" data-animations="">
-                <section class="pageCard flat">
-                    <a href="/upcoming-exhibition1" class="thumb" aria-label="Global Visions">
-                        <img src="https://img.thelowry.com/x-ZnYo6lqraXzp70uvf07-T1-chpy83VB58YRA2kzB4/c:6000:3391:fp:0.5:0.33/s:690:390:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzI1NzBfb3JpZy5qcGc"
-                            alt="Global Visions">
-                    </a>
-                    <div class="desc">
-                        <a class="desc-link" href="/upcoming-exhibition1">
-                            <h3>Global Visions</h3>
-                            <div class="richtext">Opens Thu 25 Sep 2025 - FREE ENTRY</div>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="pageCard flat">
-                    <a href="/upcoming-exhibition2" class="thumb" aria-label="Urban Expressions">
-                        <img src="https://img.thelowry.com/QsY_oIvcCueedU1HXwKEz2stkCtF9ytPkuEd7wLy70E/c:1280:723:fp:0.5:0.33/s:690:390:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzI1NjZfb3JpZy5qcGc"
-                            alt="Urban Expressions">
-                    </a>
-                    <div class="desc">
-                        <a class="desc-link" href="/upcoming-exhibition2">
-                            <h3>Urban Expressions</h3>
-                            <div class="richtext">Open from Fri 26 Sep 2025 - FREE ENTRY</div>
-                        </a>
-                    </div>
-                </section>
-
-                <section class="pageCard flat">
-                    <a href="/upcoming-exhibition3" class="thumb" aria-label="Color Theory">
-                        <img src="https://img.thelowry.com/3hpXCljzjlXxfyeHyWnSct275tdWSDm1LATr3o9zp_o/c:1362:770/s:690:390:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzE0MTVfb3JpZy5qcGc"
-                            alt="Color Theory">
-                    </a>
-                    <div class="desc">
-                        <a class="desc-link" href="/upcoming-exhibition3">
-                            <h3>Color Theory</h3>
-                            <div class="richtext">An Exhibition Celebrating Modern Artists</div>
-                        </a>
-                    </div>
-                </section>
+    <div class="container-fluid desc2Wrapper variant- align-"
+        style="padding-top: 50px; padding-bottom: 20px; background: #fff;">
+        <div class="container">
+            <div class="richtext">
+                <h2>Art Marketplace</h2>
+                <p>Browse and purchase artwork directly from our platform. Our secure payment system connects you with
+                    the artists.</p>
             </div>
+        </div>
+    </div>
+
+    <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
+        <div class="container">
+            <ul data-animations="zoom" class="listItems variant-">
+                @foreach($availableArtworks as $artwork)
+                <li data-entry-id="{{ $artwork->id }}"
+                    class="eventCard context-default production-type-default variant-default topdate">
+                    <style>
+                        [data-entry-id="{{ $artwork->id }}"] .thumb .image {
+                            background-image: url('{{ $artwork->image_url ?? ' https: //via.placeholder.com/855x600' }}');
+                            }
+                    </style>
+                    <div class="listItemWrapper">
+                        <div class="thumb">
+                            <a class="image" href="/artworks/{{ $artwork->id }}" tabindex="-1"></a>
+                        </div>
+                        <div class="inner">
+                            <div class="descMetaContainer">
+                                <a class="desc" href="/artworks/{{ $artwork->id }}">
+                                    <h2 class="title">{{ $artwork->title }}</h2>
+                                    <div class="subtitle">{{ Str::limit($artwork->description, 100) }}</div>
+                                    <div class="venue">By {{ $artwork->artist_name }}</div>
+                                    <div class="price">${{ number_format($artwork->price, 2) }}</div>
+                                    @if($artwork->is_auction)
+                                    <div class="auction-info">
+                                        <strong>Live Auction:</strong> {{ $artwork->auction_end->format('D d M Y H:i')
+                                        }}
+                                    </div>
+                                    @endif
+                                </a>
+                                <div class="meta">
+                                    <div class="meta-group">
+                                        <ul class="genres">
+                                            <li class="genres__item"><a class="genres__link" href="#">{{
+                                                    $artwork->medium }}</a></li>
+                                            <li class="genres__item"><a class="genres__link" href="#">{{
+                                                    $artwork->category }}</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="meta-group button">
+                                        <a href="/artworks/{{ $artwork->id }}" class="btn btn-active">View Details</a>
+                                        <a href="/checkout/{{ $artwork->id }}" class="btn btn-primary">Purchase</a>
+                                        @if($artwork->is_auction)
+                                        <a href="/auctions/{{ $artwork->id }}" class="btn btn-secondary">Place Bid</a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 

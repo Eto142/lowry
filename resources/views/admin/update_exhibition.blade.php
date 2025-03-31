@@ -56,6 +56,21 @@
                                             <small class="text-muted">Leave blank to keep current image</small>
                                             <small class="text-danger" id="picture-error"></small>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label class="text-dark">Image URL</label>
+                                            <input type="url" class="form-control" name="image_url"
+                                                value="{{ old('image_url', $exhibition->image_url) }}">
+                                            <small class="text-muted">Alternative to uploading an image</small>
+                                            <small class="text-danger" id="image_url-error"></small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="text-dark">Artist Email</label>
+                                            <input type="email" class="form-control" name="artist_email"
+                                                value="{{ old('artist_email', $exhibition->artist_email) }}">
+                                            <small class="text-danger" id="artist_email-error"></small>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-6">
@@ -76,6 +91,9 @@
                                         <div class="form-group">
                                             <label class="text-dark">Status *</label>
                                             <select class="form-control" name="exhibition_status" required>
+                                                <option value="pending" {{ old('exhibition_status', $exhibition->
+                                                    exhibition_status) == 'pending' ? 'selected' : '' }}>Pending
+                                                </option>
                                                 <option value="available" {{ old('exhibition_status', $exhibition->
                                                     exhibition_status) == 'available' ? 'selected' : '' }}>Available
                                                 </option>
@@ -100,6 +118,36 @@
                                             <input type="date" class="form-control" name="date"
                                                 value="{{ old('date', $exhibition->date ? \Carbon\Carbon::parse($exhibition->date)->format('Y-m-d') : '') }}">
                                             <small class="text-danger" id="date-error"></small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="text-dark">Start Date</label>
+                                            <input type="date" class="form-control" name="start_date"
+                                                value="{{ old('start_date', $exhibition->start_date ? \Carbon\Carbon::parse($exhibition->start_date)->format('Y-m-d') : '') }}">
+                                            <small class="text-danger" id="start_date-error"></small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="text-dark">End Date</label>
+                                            <input type="date" class="form-control" name="end_date"
+                                                value="{{ old('end_date', $exhibition->end_date ? \Carbon\Carbon::parse($exhibition->end_date)->format('Y-m-d') : '') }}">
+                                            <small class="text-danger" id="end_date-error"></small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="text-dark">Venue</label>
+                                            <input type="text" class="form-control" name="venue"
+                                                value="{{ old('venue', $exhibition->venue) }}">
+                                            <small class="text-danger" id="venue-error"></small>
+                                        </div>
+
+                                        <div class="form-group form-check">
+                                            <input type="checkbox" class="form-check-input" name="is_featured"
+                                                id="is_featured" value="1" {{ old('is_featured',
+                                                $exhibition->is_featured) ? 'checked' : '' }}>
+                                            <label class="form-check-label text-dark" for="is_featured">Featured
+                                                Item</label>
+                                            <small class="text-danger" id="is_featured-error"></small>
                                         </div>
                                     </div>
                                 </div>

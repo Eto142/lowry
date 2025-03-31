@@ -21,9 +21,15 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('buyer_name')->nullable();
             $table->string('seller_name')->nullable();
-            $table->string('exhibition_status')->nullable();
-            $table->decimal('amount_sold', 15, 2)->nullable();
+            $table->string('exhibition_status')->default('pending');
+            $table->decimal('amount_sold', 10, 2)->nullable();
             $table->date('date')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->string('venue')->nullable();
+            $table->string('image_url')->nullable();
+            $table->string('artist_email')->nullable();
+            $table->boolean('is_featured')->default(false);
             $table->timestamps();
 
             // Add foreign key constraints
