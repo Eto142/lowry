@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lowry</title>
+  <title>Ziirielcontemporaryartgallery</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -236,7 +236,7 @@
       <div class="mobile-nav-logo">
         <a href="#" class="navbar-brand">
           <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333">LOWRY</text>
+            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></text>
           </svg>
         </a>
       </div>
@@ -259,7 +259,7 @@
         <!-- Logo centered -->
         <a class="navbar-brand mx-auto position-absolute top-50 start-50 translate-middle" href="{{ url('/') }}">
           <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333">LOWRY</text>
+            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></text>
           </svg>
         </a>
         

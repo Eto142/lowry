@@ -1,10 +1,12 @@
-<!DOCTYPE html>
+@include('user.header')
+
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lowry Account</title>
+    <title>Ziirielcontemporaryartgallery Account</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <style>
@@ -81,7 +83,7 @@
 <body>
     <nav class="navbar navbar-light bg-white border-bottom">
         <div class="container d-flex justify-content-between">
-            <a class="navbar-brand fw-bold fs-3" href="#">LOWRY</a>
+            <a class="navbar-brand fw-bold fs-3" href="#"> <img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></a>
             <div class="d-flex align-items-center">
                 <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                 <div class="dropdown">
@@ -99,10 +101,10 @@
         <div class="row">
             <div class="col-md-3">
                 <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
-                <button class="btn btn-light sidebar-button mb-2">Donation pledges</button>
-                <button class="btn btn-light sidebar-button mb-2">Credit Cards</button>
+                <button class="btn btn-light sidebar-button mb-2">Deposit</button>
+                <button class="btn btn-light sidebar-button mb-2">Withdrawal</button>
                 <button class="btn btn-light sidebar-button mb-2">History</button>
-            </div>
+            </div> --}}
 
 
 
@@ -110,11 +112,11 @@
                 <div class="profile-container p-4 shadow rounded bg-light">
                     <div class="d-flex justify-content-between mb-3">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addexhibitionModal">
-                            <i class="bi bi-plus-lg"></i> Add Exhibition
+                            <i class="bi bi-plus-lg"></i> Future Exhibition
                         </button>
-                        <a href="exhibitions.html#exhibitionSection" class="btn btn-outline-secondary">
+                        {{-- <a href="exhibitions.html#exhibitionSection" class="btn btn-outline-secondary">
                             <i class="bi bi-eye"></i> View Exhibition
-                        </a>
+                        </a> --}}
 
                     </div>
                     <h5 class="fw-bold text-dark">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}}

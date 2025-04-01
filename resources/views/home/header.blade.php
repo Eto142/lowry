@@ -28,7 +28,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <meta name="description" content="The Law Family Galleries are located in Lowry and are free to enter for all. Donations are welcome.">
+    <meta name="description" content="The Law Family Galleries are located in Ziirielcontemporaryartgallery and are free to enter for all. Donations are welcome.">
 
                 <meta property="og:type" content="website">
                     <meta property="og:url" content="galleries.html">
@@ -37,10 +37,10 @@
                     <meta property="og:image:width" content="1200">
                     <meta property="og:image:height" content="630">
                     <meta property="og:title" content="Galleries">
-                    <meta property="og:description" content="The Law Family Galleries are located in Lowry and are free to enter for all. Donations are welcome.">
+                    <meta property="og:description" content="The Law Family Galleries are located in Ziirielcontemporaryartgallery and are free to enter for all. Donations are welcome.">
         
 
-<title>Galleries | Lowry</title>
+<title>Galleries | Ziirielcontemporaryartgallery</title>
 
 
 
@@ -120,13 +120,13 @@
                 <div class="inside">
                     
 
-    <a class="brand" href="https://thelowry.com/" title="Go to homepage">
+    <a class="brand" href="/" title="Go to homepage">
 
-            <img class="sticky-logo" src="images/logo.png" alt="Lowry">
+            <img class="sticky-logo" src="images/logo.png" alt="Ziirielcontemporaryartgallery">
     
             <img class="showcase-logo" src="https://thelowry.com/images/logo_showcase.svg" alt="Lowry">
     
-            <img class="mobile-logo" src="images/logo.png" alt="Lowry">
+            <img class="mobile-logo" src="images/logo.png" alt="Ziirielcontemporaryartgallery">
     
             <img class="mobile-sticky-logo" src="images/logo.png" alt="Lowry">
     
@@ -207,7 +207,7 @@
             <ul id="anchor-nav" class="anchor-nav" data-trigger-label="Jump to section">
                                     <li>
                         <a href="#pp_page_instance_810">
-                            <span>LS Lowry Permanent Collection</span>
+                            <span>LS Ziirielcontemporaryartgallery Permanent Collection</span>
                         </a>
                     </li>
                                     <li>
@@ -272,7 +272,7 @@
                     <a
                 href="https://thelowry.com/pQVG2T0/whats-on/ls-lowry-collection"
                 tabindex="-1"                >
-                <span>LS Lowry Collection</span>
+                <span>LS Ziirielcontemporaryartgallery Collection</span>
             </a>
             </li>
     <li class="">
@@ -533,7 +533,7 @@
                     <a
                 href="https://thelowry.com/pQ1jeFP/about-us/about-ls-lowry"
                 tabindex="-1"                >
-                <span>About LS Lowry</span>
+                <span>About LS Ziirielcontemporaryartgallery</span>
             </a>
             </li>
     <li class="">
@@ -614,7 +614,7 @@
                     <a
                 href="https://thelowry.com/pQVG2T0/whats-on/ls-lowry-collection"
                 tabindex="-1"                >
-                <span>LS Lowry Collection</span>
+                <span>LS Ziirielcontemporaryartgallery Collection</span>
             </a>
             </li>
     <li class="">
@@ -920,7 +920,7 @@
                     <a
                 href="https://thelowry.com/pQ1jeFP/about-us/about-ls-lowry"
                 tabindex="-1"                >
-                <span>About LS Lowry</span>
+                <span>About LS Ziirielcontemporaryartgallery</span>
             </a>
             </li>
     <li class="">

@@ -9,11 +9,11 @@
           <div class="card-body p-4">
             <div class="row">
               <div class="col-md-8 border-end">
-                <!-- Lowry Logo -->
+                <!-- Ziirielcontemporaryartgallery Logo -->
                 <div class="login-logo text-start mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
                     <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold"
-                      fill="#333">LOWRY</text>
+                      fill="#333"><img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></text>
                   </svg>
                 </div>
 
