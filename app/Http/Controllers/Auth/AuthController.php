@@ -13,37 +13,8 @@ use Illuminate\Auth\Events\PasswordReset;
 
 class AuthController extends Controller
 {
-    /**
-     * Show the login form.
-     */
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
 
-    /**
-     * Handle user login.
-     */
 
-    public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            return redirect()->route('home');
-        }
-        
-
-        return response()->json([
-            'success' => false,
-            'message' => 'Invalid credentials, please try again.',
-        ], 401);
-    }
 
 
 
@@ -54,31 +25,7 @@ class AuthController extends Controller
     }
 
     // Send reset link
-    public function sendResetLinkEmail(Request $request)
-    {
-        // Validate the email
-        $request->validate(['email' => 'required|email']);
-
-        // Check if the email exists in the database
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Email not found in our database.',
-            ], 404);
-        }
-
-        // Send the password reset link
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
-
-        // Return response based on the status
-        return $status === Password::RESET_LINK_SENT
-            ? response()->json(['success' => true, 'message' => __($status)])
-            : response()->json(['success' => false, 'message' => __($status)], 400);
-    }
+  
 
     // Show reset password form
     public function showResetForm($token)
@@ -116,6 +63,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        Auth::guard('web')->logout();
         Auth::logout(); // Logs out the user
         $request->session()->invalidate(); // Invalidates the session
         $request->session()->regenerateToken(); // Regenerates the CSRF token

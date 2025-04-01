@@ -14,19 +14,28 @@ class Exhibition extends Model
         'title',
         'description',
         'buyer_name',
+        'buyer_email',
+        'buyer_phone',
+        'buyer_address',
+        'show_buyer_contact',
         'seller_name',
+        'seller_email',
+        'seller_phone',
+        'seller_address',
+        'show_seller_contact',
         'exhibition_status',
+        'exhibition_type',
         'amount_sold',
         'date',
-        'start_date',
-        'end_date',
-        'venue',
-        'image_url',
-        'artist_email',
-        'is_featured'
+        'is_featured',
     ];
 
-    protected $dates = ['start_date', 'end_date'];
+    protected $casts = [
+        'date' => 'datetime',
+    ];
+
+
+
 
     /**
      * Get the user associated with the exhibition.

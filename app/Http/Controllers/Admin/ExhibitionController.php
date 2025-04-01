@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Log;
 use App\Models\Exhibition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -32,17 +33,29 @@ class ExhibitionController extends Controller
     public function store(Request $request)
     {
         try {
+            // Validate the request data
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
                 'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'seller_name' => 'nullable|string|max:255',
+                'seller_name' => 'required|string|max:255',
+                'seller_email' => 'nullable|email|max:255',
+                'seller_phone' => 'nullable|string|max:20',
+                'seller_address' => 'nullable|string|max:500',
+                'show_seller_contact' => 'sometimes|boolean',
                 'buyer_name' => 'nullable|string|max:255',
-                'exhibition_status' => 'required|in:available,sold,reserved',
+                'buyer_email' => 'nullable|email|max:255',
+                'buyer_phone' => 'nullable|string|max:20',
+                'buyer_address' => 'nullable|string|max:500',
+                'show_buyer_contact' => 'sometimes|boolean',
+                'exhibition_status' => 'required|in:pending,available,sold,reserved',
+                'exhibition_type' => 'required|in:past,current,future',
                 'amount_sold' => 'nullable|numeric|min:0',
-                'date' => 'nullable|date',
-                'admin_id' => 'required|exists:admins,id',
+                'date' => 'required|date',
+                'is_featured' => 'sometimes|boolean',
+                'admin_id' => 'required|exists:admins,id'
             ]);
+
 
             // Handle file upload
             if ($request->hasFile('picture')) {
@@ -52,21 +65,32 @@ class ExhibitionController extends Controller
                 $validated['picture'] = 'uploads/exhibitions/' . $filename;
             }
 
+            // Set default values for checkboxes if not provided
+            $validated['show_seller_contact'] = $request->has('show_seller_contact');
+            $validated['show_buyer_contact'] = $request->has('show_buyer_contact');
+            $validated['is_featured'] = $request->has('is_featured');
+
+            // Create the exhibition
             $exhibition = Exhibition::create($validated);
 
             return response()->json([
                 'success' => true,
-                'message' => 'Exhibition added successfully!',
+                'message' => 'Exhibition created successfully!',
                 'data' => $exhibition
-            ]);
-        } catch (\Exception $e) {
+            ], 201); // 201 Created status code
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage(),
-                'errors' => $e instanceof \Illuminate\Validation\ValidationException
-                    ? $e->errors()
-                    : ['general' => [$e->getMessage()]]
-            ], $e instanceof \Illuminate\Validation\ValidationException ? 422 : 500);
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Error creating exhibition: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error creating exhibition. Please try again.'
+            ], 500);
         }
     }
 
@@ -84,60 +108,73 @@ class ExhibitionController extends Controller
     // Update exhibition (AJAX)
     public function update(Request $request, Exhibition $exhibition)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'image_url' => 'nullable|url|max:255',
-            'seller_name' => 'nullable|string|max:255',
-            'buyer_name' => 'nullable|string|max:255',
-            'exhibition_status' => 'required|in:pending,available,sold,reserved',
-            'amount_sold' => 'nullable|numeric|min:0',
-            'date' => 'nullable|date',
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date',
-            'venue' => 'nullable|string|max:255',
-            'artist_email' => 'nullable|email|max:255',
-            'is_featured' => 'nullable|boolean',
-        ]);
+        try {
+            // Validate the request data
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'description' => 'required|string',
+                'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'current_picture' => 'nullable|string', // Hidden field with current picture path
+                'seller_name' => 'required|string|max:255',
+                'seller_email' => 'nullable|email|max:255',
+                'seller_phone' => 'nullable|string|max:20',
+                'seller_address' => 'nullable|string|max:500',
+                'show_seller_contact' => 'sometimes|boolean',
+                'buyer_name' => 'nullable|string|max:255',
+                'buyer_email' => 'nullable|email|max:255',
+                'buyer_phone' => 'nullable|string|max:20',
+                'buyer_address' => 'nullable|string|max:500',
+                'show_buyer_contact' => 'sometimes|boolean',
+                'exhibition_status' => 'required|in:pending,available,sold,reserved',
+                'exhibition_type' => 'required|in:past,current,future',
+                'amount_sold' => 'nullable|numeric|min:0',
+                'date' => 'required|date',
+                'is_featured' => 'sometimes|boolean',
+                'admin_id' => 'required|exists:admins,id'
+            ]);
 
-        // Handle file upload if new image is provided
-        if ($request->hasFile('picture')) {
-            // Delete old image if it exists
-            if ($exhibition->picture && file_exists(public_path($exhibition->picture))) {
-                unlink(public_path($exhibition->picture));
+            // Handle file upload
+            if ($request->hasFile('picture')) {
+                // Delete old picture if it exists
+                if ($exhibition->picture && file_exists(public_path($exhibition->picture))) {
+                    unlink(public_path($exhibition->picture));
+                }
+
+                $file = $request->file('picture');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->move('uploads/exhibitions/', $filename);
+                $validated['picture'] = 'uploads/exhibitions/' . $filename;
+            } else {
+                // Keep the current picture if no new one is uploaded
+                $validated['picture'] = $request->input('current_picture');
             }
 
-            $file = $request->file('picture');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move('uploads/exhibitions/', $filename);
-            $validated['picture'] = 'uploads/exhibitions/' . $filename;
+            // Set default values for checkboxes if not provided
+            $validated['show_seller_contact'] = $request->has('show_seller_contact');
+            $validated['show_buyer_contact'] = $request->has('show_buyer_contact');
+            $validated['is_featured'] = $request->has('is_featured');
+
+            // Update the exhibition
+            $exhibition->update($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Exhibition updated successfully!',
+                'data' => $exhibition
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation error',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Error updating exhibition: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating exhibition. Please try again.'
+            ], 500);
         }
-
-        // Convert checkbox value to boolean
-        $validated['is_featured'] = $request->has('is_featured');
-
-        // if ($request->hasFile('picture')) {
-        //     $file = $request->file('picture');
-        //     $filename = time() . '_' . $file->getClientOriginalName();
-        //     $file->move('uploads/exhibitions/', $filename);
-        //     $validated['picture'] = 'uploads/exhibitions/' . $filename;
-        // }
-
-        // If image_url is provided and picture is not being uploaded, clear the picture field
-        if ($request->filled('image_url') && !$request->hasFile('picture')) {
-            if ($exhibition->picture && file_exists(public_path($exhibition->picture))) {
-                unlink(public_path($exhibition->picture));
-            }
-            $validated['picture'] = null;
-        }
-
-        $exhibition->update($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Exhibition item updated successfully!'
-        ]);
     }
 
     // Update status only (AJAX)

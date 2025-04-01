@@ -231,7 +231,7 @@
                             <li class="nav-item ">
                                 <a href="{{route('admin.home')}}">
                                     <i class="fas fa-cubes " aria-hidden="true"></i>
-                                    <p>Transfer History</p>
+                                    <p>Manage Transactions</p>
                                 </a>
                             </li>
 
@@ -252,7 +252,14 @@
                             <li class="nav-item">
                                 <a href="{{route('admin.home')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                    <p>Loan History</p>
+                                    <p>Manage Deposits</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.home')}}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <p>Manage Withdrawal</p>
                                 </a>
                             </li>
 

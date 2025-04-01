@@ -19,17 +19,30 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->string('title')->nullable();
             $table->text('description')->nullable();
-            $table->string('buyer_name')->nullable();
-            $table->string('seller_name')->nullable();
-            $table->string('exhibition_status')->default('pending');
-            $table->decimal('amount_sold', 10, 2)->nullable();
+
+            // Exhibition date
             $table->date('date')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
-            $table->string('venue')->nullable();
-            $table->string('image_url')->nullable();
-            $table->string('artist_email')->nullable();
-            $table->boolean('is_featured')->default(false);
+
+            // Buyer information
+            $table->string('buyer_name')->nullable();
+            $table->string('buyer_email')->nullable();
+            $table->string('buyer_phone')->nullable();
+            $table->string('buyer_address')->nullable();
+            $table->boolean('show_buyer_contact')->default(true);
+
+            // Seller information
+            $table->string('seller_name')->nullable();
+            $table->string('seller_email')->nullable();
+            $table->string('seller_phone')->nullable();
+            $table->string('seller_address')->nullable();
+            $table->boolean('show_seller_contact')->default(true);
+
+            // Exhibition status and type
+            $table->string('exhibition_status')->default('pending');
+            $table->enum('exhibition_type', ['past', 'current', 'future'])->default('future');
+
+            $table->string('amount_sold')->nullable();
+            $table->boolean('is_featured')->default(true);
             $table->timestamps();
 
             // Add foreign key constraints

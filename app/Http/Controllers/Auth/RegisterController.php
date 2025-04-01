@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use DB;
+
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\User\ReferralBalance;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\User\ReferralBalance;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,90 +38,51 @@ class RegisterController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            // 'phone_number' => 'required|string|max:20',
-            // 'dob' => 'required|string|max:20',
-
-            // 'currency' => 'required|string|max:10',
+            'phone_number' => 'required|string|max:20',
             'country' => 'required|string|max:100',
-            // 'city' => 'required|string|max:100',
-            'password' => 'required|string|min:4',
-            'referral_code' => 'nullable|string|exists:users,referral_code', // Validate referral code
+            'password' => 'required|string|min:8|confirmed',
         ]);
 
         // If validation fails, return error response
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => $validator->errors()->first(),
+                'errors' => $validator->errors()
             ], 422);
         }
 
-        // Find the referrer if a valid referral code is provided
-        $referrer = null;
-        if ($request->referral_code) {
-            $referrer = User::where('referral_code', $request->referral_code)->first();
+        try {
+            // Create new user
+            $user = User::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone_number' => $request->phone_number,
+                'country' => $request->country,
+                'password' => Hash::make($request->password),
+            ]);
+
+            // You might want to add:
+            // - Email verification
+            // - Auto-login after registration
+            // - Welcome email
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Registration successful!',
+                // 'redirect_url' => route('dashboard') // Optional redirect
+            ]);
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Registration error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred during registration. Please try again.'
+            ], 500);
         }
 
-        // Create the user
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone_number' => $request->phone_number,
-            // 'currency' => $request->currency,
-            'country' => $request->country,
-            'city' => $request->city,
-            'plain' => $request->password, // Encrypt the plain password
-            'user_status' => 1, // Assuming 1 means active
-            'verification_code' => rand(1000, 9999), // Generate a random verification code
-            'verification_expiry' => now()->addMinutes(10), // Set expiry time for verification code
-            'password' => Hash::make($request->password), // Hash the password
-            'referral_code' => $this->generateReferralCode(), // Generate a unique referral code for the new user
-            'referred_by' => $referrer ? $referrer->id : null, // Set referred_by if referrer exists
-        ]);
-
-        // // Create related balances for the user
-        // $user->holdingBalance()->create([
-        //     'user_id' => $user->id,
-        //     'amount' => 0,
-        // ]);
-
-        // $user->stakingBalance()->create([
-        //     'user_id' => $user->id,
-        //     'amount' => 0,
-        // ]);
-
-        // $user->tradingBalance()->create([
-        //     'user_id' => $user->id,
-        //     'amount' => 0,
-        // ]);
-
-        // Add referral bonus to the referrer's balance
-        if ($referrer) {
-            $referrer->referralBalance()->updateOrCreate(
-                ['user_id' => $referrer->id],
-                ['amount' => DB::raw('amount + 10')] // Add $10 as referral bonus
-            );
-        }
-
-        // Log in the user
-        auth()->login($user);
 
         return redirect()->route('home');
-
-    }
-
-    /**
-     * Generate a unique referral code.
-     *
-     * @return string
-     */
-    protected function generateReferralCode()
-    {
-        do {
-            $code = strtoupper(substr(md5(uniqid()), 0, 8)); // Generate an 8-character code
-        } while (User::where('referral_code', $code)->exists()); // Ensure the code is unique
-
-        return $code;
     }
 }

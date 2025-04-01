@@ -19,15 +19,13 @@ class HomepageController extends Controller
         $now = Carbon::now();
 
         // Past exhibitions (ended before today)
-        $pastExhibitions = Exhibition::where('end_date', '<', $now)
-            ->orderBy('end_date', 'desc')
+        $pastExhibitions = Exhibition::where('exhibition_type', 'past')
+            ->orderBy('created_at', 'desc')
             ->get();
-
         // Upcoming exhibitions (only shown to logged in users)
         $upcomingExhibitions = [];
         if (auth()->check()) {
-            $upcomingExhibitions = Exhibition::where('start_date', '>', $now)
-                ->orderBy('start_date', 'asc')
+            $upcomingExhibitions = Exhibition::where('exhibition_type', 'future')
                 ->get();
         }
 
@@ -48,7 +46,7 @@ class HomepageController extends Controller
     public function show(Exhibition $exhibition)
     {
         $now = Carbon::now();
-        $isPast = $exhibition->end_date < $now;
+        $isPast = $exhibition->created_at < $now;
 
         return view('exhibitions.show', [
             'exhibition' => $exhibition,

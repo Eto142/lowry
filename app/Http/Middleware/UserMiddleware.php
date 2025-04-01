@@ -25,9 +25,9 @@ class UserMiddleware
 
         $user = Auth::user();
 
-        if ($user->email_verification === 0) {
-            return redirect()->route('email_verify')->with('error', 'You must verify your email before accessing this page.');
-        }
+        // if ($user->email_verification === 0) {
+        //     return redirect()->route('email_verify')->with('error', 'You must verify your email before accessing this page.');
+        // }
 
 
 

@@ -102,9 +102,10 @@
                                     <div class="top-date">
                                         <span class="start">{{ $exhibition->created_at->format('D d M Y') }}<span
                                                 class="time">10:00AM</span></span>
-                                        @if($exhibition->end_date)
+                                        @if($exhibition->created_at)
                                         <span class="separator"></span>
-                                        <span class="end"> {{ \Carbon\Carbon::parse($exhibition->end_date)->format('d M
+                                        <span class="end"> {{ \Carbon\Carbon::parse($exhibition->created_at)->format('d
+                                            M
                                             Y') }}
                                             <span class="time">4:30PM</span></span>
                                         @endif
@@ -171,11 +172,11 @@
                                     <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">{{ $exhibition->start_date->format('D d M Y') }}<span
+                                        <span class="start">{{ $exhibition->created_at->format('D d M Y') }}<span
                                                 class="time">10:00AM</span></span>
-                                        @if($exhibition->end_date)
+                                        @if($exhibition->created_at)
                                         <span class="separator"></span>
-                                        <span class="end">{{ $exhibition->end_date->format('D d M Y') }}<span
+                                        <span class="end">{{ $exhibition->created_at->format('D d M Y') }}<span
                                                 class="time">4:30PM</span></span>
                                         @endif
                                     </div>
