@@ -75,23 +75,21 @@
             <div class="col-6">
               <div class="mb-3">
                 <label for="sellerName" class="form-label fw-bold">Seller's Name</label>
-                <input type="text" id="sellerName" name="description" class="form-control" placeholder="Enter Description">
+                <input type="text" id="sellerName" name="seller_name" class="form-control" placeholder="Enter Seller's Name">
               </div>
               <div class="mb-3">
-                <label for="sellerEmail" class="form-label fw-bold">Seller's Name</label>
-                <input type="email" id="sellerEmail" name="seller_email" class="form-control" placeholder="Enter seller email">
+                <label for="sellerEmail" class="form-label fw-bold">Seller's Email</label>
+                <input type="email" id="sellerEmail" name="seller_email" class="form-control" placeholder="Enter seller's Name">
               </div>
               <div class="mb-3">
                 <label for="sellerPhone" class="form-label fw-bold">Seller's Phone</label>
-                <input type="email" id="sellerPhone" name="seller_phone" class="form-control" placeholder="Enter seller email">
+                <input type="email" id="sellerPhone" name="seller_phone" class="form-control" placeholder="Enter seller's Phone">
               </div>
               <div class="mb-3">
                 <label for="sellerAddress" class="form-label fw-bold">Seller's Address</label>
-                <input type="email" id="sellerPhone" name="seller_phone" class="form-control" placeholder="Enter seller's address">
+                <input type="email" id="sellerPhone" name="seller_phone" class="form-control" placeholder="Enter seller's Address">
               </div>
-  
             </div>
-
           </div>
           <div>
             <button type="submit" class="btn btn-dark w-100">Add exhibition</button>
