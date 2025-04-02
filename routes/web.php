@@ -66,6 +66,9 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
 Route::get('/user/add-exhibition', function(){
     return view('user.create-exhibition');
 });
+Route::get('/user/exhibitions', function(){
+    return view('user.exhibitions');
+});
 
 
 

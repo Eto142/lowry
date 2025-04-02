@@ -278,51 +278,15 @@
 
 
     </div>
-
-    {{-- <!-- add Exhibition Modal -->
-    <div class="modal fade" id="addexhibitionModal" tabindex="-1" aria-labelledby="addexhibitionModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Add Exhibition</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        @csrf
-                        <div class="mb-3">
-                            <label for="fullName" class="form-label">Picture</label>
-                            <input type="file" id="fullName" name="picture" class="form-control">
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Title</label>
-                            <input type="text" id="email" class="form-control" placeholder="Enter Title">
-                        </div>
-                        <div class="mb-3">
-                            <label for="Description" class="form-label">Description</label>
-                            <input type="text" id="Description" name="description" class="form-control"
-                                placeholder="Enter Description">
-                        </div>
-                        <div class="mb-3">
-                            <label for="country" class="form-label">Amount</label>
-                            <input type="number" id="country" name="amount" class="form-control"
-                                placeholder="Enter amount">
-                        </div>
-                        {{-- <div class="mb-3">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" id="address" name="address" class="form-control"
-                                placeholder="Enter address">
-                        </div> --}}
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div> --}}
+        </div> --}}
 
     </div>
 </body>
