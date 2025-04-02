@@ -5,13 +5,20 @@
     height: 200px;
     object-fit: cover;
   }
+  .ttf .card-body{
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow */
+    border-right: 1px solid #e9ecef;
+    border-left: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+  }
+
 </style>
 
 
 
-<div class="col-12 col-md-9">
+<div class="col-12 col-md-9 ttf">
   <div class="row">
-      <div class="col-12 col-md-4 mb-4 ccard">
+      <div class="col-12 col-md-4 mb-4">
         <div class="card h-50">
           <img src="https://placehold.co/300x400" class="card-img-top" alt="Abstract Harmony artwork">
           <div class="card-body">
