@@ -37,15 +37,54 @@
      </style>
  </head>
  <body>
-     <nav class="navbar navbar-light bg-white border-bottom">
-         <div class="container d-flex justify-content-between">
-             <a class="navbar-brand fw-bold fs-3" href="#"><img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery"></a>
-             <div class="d-flex align-items-center">
-                 <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
-                 <img src="user-icon.png" alt="User" width="30">
-             </div>
-         </div>
-     </nav>
+    <nav class="navbar navbar-light bg-white border-bottom">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold fs-3" href="#">
+                <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery">
+            </a>
+            <div class="d-flex align-items-center">
+                <span class="me-3 fw-bold">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+@if (Auth::user()->kyc_status == 0)
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kycModal">KYC Not verified</button>
+@else
+<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#kycModal">KYC verified</button>
+@endif
+
+            </div>
+        </div>
+    </nav>
+    
+    <!-- KYC Modal -->
+    <div class="modal fade" id="kycModal" tabindex="-1" aria-labelledby="kycModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kycModalLabel">KYC Verification</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('kyc.submit')}}" method="POST"  enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="kycAddress" class="form-label">ID card Type</label>
+                            <input type="text" class="form-control" name="id_type" id="kycAddress" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kycDocument" class="form-label">Upload Front of ID Document</label>
+                            <input type="file" class="form-control" name="front_id" id="kycDocument" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="kycDocument" class="form-label">Upload Back of ID Document</label>
+                            <input type="file" class="form-control" name="back_id" id="kycDocument" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
  
      <div class="container mt-4">
          <div class="row">

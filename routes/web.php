@@ -61,6 +61,7 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/kyc-submit', [DashboardController::class, 'submitKYC'])->name('kyc.submit');
 });
 
 Route::get('/user/add-exhibition', function(){
