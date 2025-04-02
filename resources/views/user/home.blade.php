@@ -279,7 +279,7 @@
 
     </div>
 
-    <!-- add Exhibition Modal -->
+    {{-- <!-- add Exhibition Modal -->
     <div class="modal fade" id="addexhibitionModal" tabindex="-1" aria-labelledby="addexhibitionModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -322,7 +322,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     </div>
 </body>

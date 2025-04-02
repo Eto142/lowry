@@ -17,8 +17,8 @@
 
             <!-- Exhibition Image -->
             <div class="exhibition-image mb-4">
-                <img src="{{ $exhibition->image_url ?? 'https://via.placeholder.com/1200x800' }}"
-                    alt="{{ $exhibition->title }}" class="img-fluid rounded">
+                <img src="{{ $exhibition->picture }}"
+                    alt="{{ $exhibition->title }}" width="100" height="100" class="img-fluid rounded">
             </div>
 
             <!-- Exhibition Details -->

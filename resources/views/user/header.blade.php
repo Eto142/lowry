@@ -54,7 +54,7 @@
                  <button class="btn btn-light sidebar-button mb-2"><a href="/">Home</a></button>
                  <button class="btn btn-light sidebar-button mb-2"><a href="">Deposit</a></button>
                  <button class="btn btn-light sidebar-button mb-2"><a href="">Withdrawal</a></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a href="">Add Exhibition</a></button>
+                 <button class="btn btn-light sidebar-button mb-2"><a href="{{ url('/user/add-exhibition') }}">Add Exhibition</a></button>
                  <button class="btn btn-light sidebar-button mb-2"><a href="">History</a></button>
              </div>
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
-class AdminsTableSeeder extends Seeder
+class http://127.0.0.1:8000 extends Seeder
 {
     /**
      * Run the database seeds.
