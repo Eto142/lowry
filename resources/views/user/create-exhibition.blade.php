@@ -48,7 +48,7 @@
     </div>
 </nav>
 
-    <div class="container">
+    <div class="container mb-5">
       <form>
       <div class="row mt-5">
         <h5 class="text-center mb-4 text-uppercase fw-bolder">Add a new exhibition</h5>
