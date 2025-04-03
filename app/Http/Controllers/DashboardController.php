@@ -12,6 +12,17 @@ class DashboardController extends Controller
         return view('user.home'); // Load the dashboard view
     }
 
+    public function ShowDeposit()
+    {
+        return view('user.deposit.home'); // Load the deposit view
+    }
+
+    public function Addexhibition()
+    {
+        return view('user.create-exhibition'); // Load the exhibition view
+    }
+
+
     
      // update password
     public function update(Request $request)

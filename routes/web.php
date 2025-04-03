@@ -62,11 +62,11 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/kyc-submit', [DashboardController::class, 'submitKYC'])->name('kyc.submit');
+    Route::get('/add-exhibition', [DashboardController::class, 'Addexhibition'])->name('add-exhibition');
+
 });
 
-Route::get('/user/add-exhibition', function(){
-    return view('user.create-exhibition');
-});
+
 Route::get('/user/exhibitions', function(){
     return view('user.exhibitions');
 });
