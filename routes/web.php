@@ -61,14 +61,18 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
+    Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'index'])->name('user.create.exhibition');
+    Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');
+    Route::get('/future-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'viewExhibitions'])->name('user.future.exhibition');
+    Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'showExhibition'])->name('user.exhibition.show');
+    Route::post('/exhibitions/purchase', [App\Http\Controllers\User\ExhibitionController::class, 'purchase'])->name('user.exhibition.purchase');
+    Route::get('/exhibitions/manage', [App\Http\Controllers\User\ExhibitionController::class, 'manageExhibition'])->name('user.exhibitions.manage');
+    Route::get('/exhibitions/{exhibition}/edit', [App\Http\Controllers\User\ExhibitionController::class, 'edit'])->name('user.exhibitions.edit');
+    Route::put('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'update'])->name('user.exhibitions.update');
+    Route::delete('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'destroy'])->name('user.exhibitions.destroy');
 });
 
-Route::get('/user/add-exhibition', function(){
-    return view('user.create-exhibition');
-});
-Route::get('/user/exhibitions', function(){
-    return view('user.exhibitions');
-});
+
 
 
 

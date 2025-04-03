@@ -155,7 +155,7 @@
 
     // Submit form via AJAX
     $.ajax({
-      url: "{{ route('register.submit') }}",
+      url: "{{ route('register.submit') }}", 
       type: "POST",
       data: $(this).serialize(),
       success: function(response) {
