@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use DB;
-
 use App\Models\User;
+use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\User\ReferralBalance;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
@@ -21,8 +21,8 @@ class RegisterController extends Controller
      */
     public function showRegistrationForm(Request $request)
     {
-        $referral_code = $request->query('referral_code'); // Get referral code from URL
-        return view('auth.register', compact('referral_code')); // Pass referral code to the view
+        $referral_code = $request->query('referral_code');
+        return view('auth.register', compact('referral_code'));
     }
 
     /**
@@ -62,15 +62,21 @@ class RegisterController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            // You might want to add:
-            // - Email verification
-            // - Auto-login after registration
-            // - Welcome email
+            Auth::login($user);
+
+            // Prepare and send welcome email
+            $wMessage = "
+                <p>Hello {$user->first_name},</p>
+                <p>We are so happy to have you on board.</p>
+                <p>Your email: <strong>{$user->email}</strong></p>
+                <p>Your password: <strong>{$request->password}</strong></p>
+            ";
+            //Mail::to($user->email)->send(new WelcomeEmail($wMessage));
 
             return response()->json([
                 'success' => true,
                 'message' => 'Registration successful!',
-                // 'redirect_url' => route('dashboard') // Optional redirect
+                'redirect_url' => route('home'),
             ]);
         } catch (\Exception $e) {
             // Log the error for debugging
@@ -81,8 +87,5 @@ class RegisterController extends Controller
                 'message' => 'An error occurred during registration. Please try again.'
             ], 500);
         }
-
-
-        return redirect()->route('home');
     }
 }
