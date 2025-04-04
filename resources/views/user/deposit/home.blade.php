@@ -40,7 +40,7 @@
 
   <nav class="navbar navbar-light bg-white border-bottom">
     <div class="container d-flex justify-content-between">
-        <a class="navbar-brand fw-bold fs-3" href="#"><img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery"></a>
+        <a class="navbar-brand fw-bold fs-3" href="{{route('home')}}"><img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery"></a>
         <div class="d-flex align-items-center">
             <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
             <img src="user-icon.png" alt="User" width="30">
@@ -48,59 +48,31 @@
     </div>
 </nav>
 
-    <div class="container">
-      <form>
-      <div class="row mt-5">
-        <h5 class="text-center mb-4 text-uppercase fw-bolder">Add a new exhibition</h5>
-        <div class="col-lg-10 col-md-12  mx-auto px-3">
-          <div class="row">
-            <div class="col-6">
-              <div class="mb-3">
-                <label for="picture" class="form-label fw-bold">Picture</label>
-                <input type="file" id="picture" name="picture" class="form-control">
-              </div>
-              <div class="mb-3">
-                <label for="title" class="form-label fw-bold">Title</label>
-                <input type="text" class="form-control" id="title" placeholder="Enter Title">
-              </div>
-              <div class="mb-3">
-                <label for="description" class="form-label fw-bold">Description</label>
-                <input type="text" id="Description" name="description" class="form-control" placeholder="Enter Description">
-              </div>
-              <div class="mb-3">
-                <label for="amount" class="form-label fw-bold">Amount</label>
-                <input type="number" id="Description" name="amount" class="form-control" placeholder="Enter Amount">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="mb-3">
-                <label for="sellerName" class="form-label fw-bold">Seller's Name</label>
-                <input type="text" id="sellerName" name="seller_name" class="form-control" placeholder="Enter Seller's Name">
-              </div>
-              <div class="mb-3">
-                <label for="sellerEmail" class="form-label fw-bold">Seller's Email</label>
-                <input type="email" id="sellerEmail" name="seller_email" class="form-control" placeholder="Enter seller's Name">
-              </div>
-              <div class="mb-3">
-                <label for="sellerPhone" class="form-label fw-bold">Seller's Phone</label>
-                <input type="email" id="sellerPhone" name="seller_phone" class="form-control" placeholder="Enter seller's Phone">
-              </div>
-              <div class="mb-3">
-                <label for="sellerAddress" class="form-label fw-bold">Seller's Address</label>
-                <input type="email" id="sellerPhone" name="seller_phone" class="form-control" placeholder="Enter seller's Address">
-              </div>
-            </div>
-          </div>
-          <div>
-            <button type="submit" class="btn btn-dark w-100">Add exhibition</button>
-          </div>
-          
-        </div> 
-            </div>   
+<div class="container">
+  <form>
+    <div class="row mt-5">
+      <h5 class="text-center mb-4 text-uppercase fw-bolder">Deposit</h5>
+      <div class="col-lg-6 col-md-10 mx-auto px-3">
+        <div class="mb-3">
+          <label for="amount" class="form-label fw-bold">Amount</label>
+          <input type="number" id="amount" name="amount" class="form-control" placeholder="Enter Amount" required>
+        </div>
+        <div class="mb-3">
+          <label for="paymentMethod" class="form-label fw-bold">Payment Method</label>
+          <select id="paymentMethod" name="payment_method" class="form-control" required>
+            <option value="">Select Payment Method</option>
+            <option value="crypto">Crypto</option>
+            <option value="bank">Direct Bank Transfer</option>
+            <option value="paypal">PayPal</option>
+          </select>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-dark w-100">Deposit</button>
+        </div>
       </div>
-    </form>
     </div>
+  </form>
+</div>
  </body>
  </html>
-
      

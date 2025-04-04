@@ -62,6 +62,8 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/kyc-submit', [DashboardController::class, 'submitKYC'])->name('kyc.submit');
+    Route::get('/user-deposit', [DashboardController::class, 'ShowDeposit'])->name('user.deposit');
+    Route::get('/user-withdrawal', [DashboardController::class, 'ShowWithdrawal'])->name('user.withdrawal');
     Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'index'])->name('user.create.exhibition');
     Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');
     Route::get('/future-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'viewExhibitions'])->name('user.future.exhibition');

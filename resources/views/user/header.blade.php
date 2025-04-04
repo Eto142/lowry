@@ -91,9 +91,9 @@
              <div class="col-md-3">
                  <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
                  <button class="btn btn-light sidebar-button mb-2"><a href="/">Home</a></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a href="">Deposit</a></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a href="">Withdrawal</a></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a href="{{ url('/user/add-exhibition') }}">Add Exhibition</a></button>
+                 <button class="btn btn-light sidebar-button mb-2"><a href="{{route('user.deposit') }}">Deposit</a></button>
+                 <button class="btn btn-light sidebar-button mb-2"><a href="{{route('user.withdrawal') }}">Withdrawal</a></button>
+                 <button class="btn btn-light sidebar-button mb-2"><a href="{{route('user.create.exhibition') }}">Add Exhibition</a></button>
                  <button class="btn btn-light sidebar-button mb-2"><a href="">History</a></button>
              </div>
 
