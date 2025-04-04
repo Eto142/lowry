@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('country');
             $table->string('phone_number');
+            $table->string('kyc_status');
+            $table->string('id_type');
+            $table->string('front_id');
+            $table->string('back_id');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -40,6 +40,7 @@
           <p class="card-text">${{ number_format($exhibition->amount_sold, 2) }}</p>
           <p class="card-text"><small class="text-muted">{{ $exhibition->date->format('Y') }}</small></p>
           <a href="{{ route('user.exhibition.show', $exhibition->id) }}" class="btn buy-btn">View Details</a>
+
         </div>
       </div>
     </div>

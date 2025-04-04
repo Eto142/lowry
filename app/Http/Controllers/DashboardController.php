@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -10,6 +11,17 @@ class DashboardController extends Controller
     {
         return view('user.home'); // Load the dashboard view
     }
+
+    public function ShowDeposit()
+    {
+        return view('user.deposit.home'); // Load the deposit view
+    }
+
+    public function Addexhibition()
+    {
+        return view('user.create-exhibition'); // Load the exhibition view
+    }
+
 
     
      // update password
@@ -36,7 +48,7 @@ class DashboardController extends Controller
         return back()->with('success', 'Password updated successfully.');
     }
 
-
+// update user profile
     public function profileUpdate(Request $request)
     {
         //validation rules
@@ -61,6 +73,31 @@ class DashboardController extends Controller
         return back()->with('status', 'Profile Updated');
     }
 
+   // update kyc details
+    public function submitKYC(Request $request)
+{
+    $request->validate([
+        'id_type' => 'required|string',
+        'front_id' => 'required|image|mimes:jpeg,png,jpg',
+        'back_id' => 'required|image|mimes:jpeg,png,jpg',
+    ]);
+
+    $user = Auth::user(); // Get logged-in user
+
+    // Store uploaded files
+    $frontPath = $request->file('front_id')->store('kyc_documents', 'public');
+    $backPath = $request->file('back_id')->store('kyc_documents', 'public');
+
+    // Update user KYC data
+    $user->update([
+        'id_type' => $request->id_type,
+        'front_id' => $frontPath,
+        'back_id' => $backPath,
+        'kyc_status' => 0, // Mark as verified
+    ]);
+
+    return redirect()->back()->with('success', 'KYC submitted successfully');
+}
 
 
 }

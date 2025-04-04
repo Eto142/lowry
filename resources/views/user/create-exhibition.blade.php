@@ -84,8 +84,9 @@
 
     <form id="exhibitionForm" enctype="multipart/form-data">
       @csrf
-      <div class="row mt-3">
-        <!-- Reduced mt-5 to mt-3 to account for back button -->
+
+      <div class="row mt-5">
+
         <h5 class="text-center mb-4 text-uppercase fw-bolder">Add a new exhibition</h5>
         <div class="col-lg-10 col-md-12 mx-auto px-3">
           <div class="row">

@@ -61,6 +61,7 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
+    Route::post('/kyc-submit', [DashboardController::class, 'submitKYC'])->name('kyc.submit');
     Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'index'])->name('user.create.exhibition');
     Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');
     Route::get('/future-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'viewExhibitions'])->name('user.future.exhibition');
@@ -71,6 +72,12 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::put('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'update'])->name('user.exhibitions.update');
     Route::delete('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'destroy'])->name('user.exhibitions.destroy');
 });
+
+
+
+
+
+
 
 
 
