@@ -19,9 +19,9 @@
                 <div><p><a href="https://thelowry.com/pQjo1s7/your-visit---lowry">Opening times</a><br><a href="https://help.thelowry.com/support/home">FAQs</a><br><a href="https://thelowry.com/pQGLpiK/your-visit/ticket-information">Contact us</a><br><a href="https://thelowry.com/pQ0P4sM/terms---conditions----lowry">Terms and Conditions</a><br><a href="https://thelowry.com/pQ7NauZ/about-us---our-policies">Policies</a></p></div>
 </section>
 
-<section class="column">
+{{-- <section class="column">
                 <div><p><a href="https://thelowry.com/pQEQJSd/media-centre">Media centre</a><br><a href="https://thelowry.com/pQpDjCN/blogs---lowry">Blogs</a><br><a href="https://thelowry.com/cms_files/File/Lowry Marketing Asset Guide 2025.pdf" target="_blank" rel="noopener">Marketing asset info</a><br><a href="https://thelowry.com/pQr51FY/visiting-company-information---lowry">Visiting Company Info</a><br><a href="https://shop.thelowry.com/#_ga=2.237593091.286562731.1727705816-1837513924.1678285955">Shop</a></p></div>
-</section>
+</section> --}}
 
 
 <section class="column">

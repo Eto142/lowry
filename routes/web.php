@@ -14,6 +14,19 @@ Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController
 
 // Public routes
 Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name('home');
+Route::get('/exhibition', [App\Http\Controllers\HomepageController::class, 'Exhibition'])->name('exhibition');
+Route::get('/collections', [App\Http\Controllers\HomepageController::class, 'Collections'])->name('collections');
+Route::get('/plan', [App\Http\Controllers\HomepageController::class, 'Plan'])->name('plan');
+Route::get('/access', [App\Http\Controllers\HomepageController::class, 'Access'])->name('access');
+Route::get('/membership', [App\Http\Controllers\HomepageController::class, 'Membership'])->name('membership');
+Route::get('/group', [App\Http\Controllers\HomepageController::class, 'Group'])->name('group');
+Route::get('/ticket', [App\Http\Controllers\HomepageController::class, 'Ticket'])->name('ticket');
+Route::get('/socially', [App\Http\Controllers\HomepageController::class, 'Socially'])->name('socially');
+Route::get('/families', [App\Http\Controllers\HomepageController::class, 'Families'])->name('families');
+Route::get('/young', [App\Http\Controllers\HomepageController::class, 'Young'])->name('young');
+Route::get('/artist', [App\Http\Controllers\HomepageController::class, 'Artist'])->name('artist');
+Route::get('/impact', [App\Http\Controllers\HomepageController::class, 'Impact'])->name('impact');
+Route::get('/support', [App\Http\Controllers\HomepageController::class, 'Support'])->name('support');
 Route::get('/exhibitions', [App\Http\Controllers\HomepageController::class, 'index'])->name('exhibitions.index');
 Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController::class, 'show'])->name('exhibitions.show');
 Route::get('/artworks/{artwork}', [App\Http\Controllers\HomepageController::class, 'showArtwork'])->name('artwork.show');
