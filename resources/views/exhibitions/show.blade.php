@@ -1,154 +1,609 @@
 @include('home.header')
-<div class="container exhibition-show">
-    <div class="row">
-        <!-- Main Exhibition Content -->
-        <div class="col-md-8">
-            <!-- Exhibition Header -->
-            <div class="exhibition-header mb-4">
-                <h1 class="mb-2">{{ $exhibition->title }}</h1>
-                <div class="exhibition-meta">
-                    <span class="badge {{ $isPast ? 'bg-secondary' : 'bg-primary' }}">
-                        {{ $isPast ? 'Past Exhibition' : 'Current Exhibition' }}
-                    </span>
-                    <span class="mx-2">•</span>
-                    <span>{{ $exhibition->venue }}</span>
-                </div>
-            </div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
-            <!-- Exhibition Image -->
-            <div class="exhibition-image mb-4">
-                <img src="{{ $exhibition->picture }}"
-                    alt="{{ $exhibition->title }}" width="100" height="100" class="img-fluid rounded">
-            </div>
+<style>
+    :root {
+        --primary-color: #1a1a1a;
+        --secondary-color: #6c757d;
+        --accent-color: #d4af37;
+        --light-bg: #f8f9fa;
+        --card-bg: #ffffff;
+        --border-radius: 12px;
+        --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        --transition: all 0.3s ease;
+    }
 
-            <!-- Exhibition Details -->
-            <div class="exhibition-details mb-5">
-                <div class="date mb-3">
-                    <h5>Exhibition Dates</h5>
-                    <p>
-                        {{ \Carbon\Carbon::parse($exhibition->start_date)->format('d M
-                        Y') }}
-                        {{ \Carbon\Carbon::parse($exhibition->end_date)->format('d M
-                        Y') }}
-                    </p>
-                </div>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--light-bg);
+        color: var(--primary-color);
+        line-height: 1.7;
+    }
 
-                <div class="description mb-4">
-                    {!! nl2br(e($exhibition->description)) !!}
-                </div>
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Playfair Display', serif;
+        letter-spacing: -0.02em;
+    }
 
-                @if($exhibition->artist)
-                <div class="artist-info mb-4">
-                    <h5>Featured Artist</h5>
-                    <div class="d-flex align-items-center mt-2">
-                        @if($exhibition->artist->profile_image)
-                        <img src="{{ $exhibition->artist->profile_image }}" class="rounded-circle me-3" width="60"
-                            alt="{{ $exhibition->artist->name }}">
-                        @endif
-                        <div>
-                            <h6>{{ $exhibition->artist->name }}</h6>
-                            @auth
-                            <a href="mailto:{{ $exhibition->artist->email }}" class="btn btn-sm btn-outline-dark">
-                                Contact Artist
-                            </a>
-                            @endauth
-                        </div>
+    .container {
+        max-width: 1400px;
+        padding: 0 20px;
+    }
+
+    .page-wrapper {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        margin: 30px 0;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        color: var(--secondary-color);
+        font-weight: 500;
+        transition: var(--transition);
+        margin-bottom: 1.5rem;
+        padding: 8px 16px;
+        border-radius: 30px;
+        background-color: rgba(0, 0, 0, 0.03);
+    }
+
+    .back-button:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+        transform: translateX(-5px);
+        color: var(--primary-color);
+    }
+
+    .exhibition-header {
+        position: relative;
+        padding: 2rem;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .exhibition-date {
+        font-size: 0.9rem;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .exhibition-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: var(--primary-color);
+    }
+
+    .exhibition-subtitle {
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+        font-weight: 300;
+    }
+
+    .exhibition-location {
+        font-size: 0.9rem;
+        color: var(--secondary-color);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .exhibition-presenter {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .badge-category {
+        background-color: var(--accent-color);
+        color: white;
+        font-weight: 500;
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        letter-spacing: 0.05em;
+    }
+
+    .artwork-image-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        margin: 0 2rem 2rem;
+    }
+
+    .artwork-image {
+        width: 100%;
+        height: auto;
+        transition: var(--transition);
+    }
+
+    .artwork-image:hover {
+        transform: scale(1.02);
+    }
+
+    .artwork-details {
+        padding: 0 2rem 2rem;
+    }
+
+    .artwork-title {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+    .artwork-medium {
+        color: var(--secondary-color);
+        margin-bottom: 1rem;
+    }
+
+    .badge-sold {
+        background-color: #ffeeee;
+        color: #dc3545;
+        border: 1px solid #ffd6d6;
+        padding: 0.4rem 1rem;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .artwork-price {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background-color: var(--accent-color);
+        border-radius: 3px;
+    }
+
+    .section-content {
+        color: #555;
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    .detail-label {
+        color: var(--secondary-color);
+        font-size: 0.85rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .detail-value {
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .provenance-item {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 1rem;
+    }
+
+    .provenance-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 10px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--accent-color);
+    }
+
+    .sticky-sidebar {
+        position: sticky;
+        top: 20px;
+    }
+
+    .action-button {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: var(--transition);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-button:hover {
+        background-color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .icon-button {
+        border: 1px solid #e0e0e0;
+        background-color: white;
+        color: var(--primary-color);
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+    }
+
+    .icon-button:hover {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+        transform: translateY(-2px);
+    }
+
+    .card {
+        border: none;
+        border-radius: var(--border-radius);
+        box-shadow: var(--box-shadow);
+        overflow: hidden;
+        transition: var(--transition);
+        margin-bottom: 2rem;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: rgba(0, 0, 0, 0.02);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0;
+        color: var(--primary-color);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 3px solid white;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .person-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .person-title {
+        color: var(--secondary-color);
+        font-size: 0.85rem;
+    }
+
+    .contact-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .contact-item i {
+        margin-right: 10px;
+        color: var(--accent-color);
+    }
+
+    .bio {
+        font-size: 0.9rem;
+        color: #555;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .certificate-button {
+        background-color: white;
+        color: var(--primary-color);
+        border: 1px solid #e0e0e0;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-weight: 500;
+        transition: var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .certificate-button:hover {
+        background-color: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+    }
+
+    .certificate-button i {
+        margin-right: 8px;
+    }
+
+    .divider {
+        height: 1px;
+        background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+        margin: 2rem 0;
+        border: none;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 767.98px) {
+        .page-wrapper {
+            margin: 15px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .exhibition-header {
+            padding: 1.5rem;
+        }
+
+        .exhibition-title {
+            font-size: 1.8rem;
+        }
+
+        .artwork-image-container {
+            margin: 0 1.5rem 1.5rem;
+        }
+
+        .artwork-details {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .artwork-title {
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+        }
+
+        .action-button,
+        .certificate-button {
+            width: 100%;
+            padding: 12px 20px;
+        }
+
+        .icon-buttons {
+            justify-content: space-between;
+        }
+
+        .icon-button {
+            width: 44px;
+            height: 44px;
+        }
+
+        .card {
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header,
+        .card-body {
+            padding: 1.2rem;
+        }
+    }
+
+    /* Animation for cards */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    .card:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .card:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .card:nth-child(4) {
+        animation-delay: 0.3s;
+    }
+</style>
+
+<div class="container">
+    <!-- Back button -->
+    <div class="page-wrapper">
+        <div class="row g-0">
+            <!-- Left column - Artwork details -->
+            <div class="col-lg-8">
+                <!-- Exhibition header -->
+                <div class="exhibition-header">
+                    <div class="exhibition-date">
+                        <i class="bi bi-calendar-event me-2"></i>
+                        <span>{{ strtoupper($exhibition->date->format('D d M Y')) }} 10:00AM — {{
+                            $exhibition->date->format('d M Y') }} 4:30PM</span>
                     </div>
+                    <h1 class="exhibition-title">{{ $exhibition->title }}</h1>
+                    <p class="exhibition-subtitle">{{ $exhibition->description }}</p>
+                    <div class="exhibition-location">
+                        <i class="bi bi-geo-alt me-2"></i>
+                        <span>Main Exhibition Hall</span>
+                    </div>
+                    <p class="exhibition-presenter">Presented by: {{ $exhibition->seller_name }}</p>
+                    <span class="badge-category">ART</span>
                 </div>
-                @endif
+
+                <!-- Artwork image -->
+                <div class="artwork-image-container">
+                    <img src="{{ asset($exhibition->picture) }}" alt="Artwork image" class="artwork-image">
+                </div>
+
+                <!-- Artwork details -->
+                <div class="artwork-details">
+                    <h2 class="artwork-title">Urban Serenity</h2>
+                    <p class="artwork-medium">Mixed Media on Canvas, {{ $exhibition->date->format('Y') }}</p>
+                    <div class="d-flex align-items-center mt-3 mb-4">
+                        <span class="badge-sold me-3">Sold</span>
+                        <p class="artwork-price mb-0">${{ number_format($exhibition->amount_sold, 2) }}</p>
+                    </div>
+
+                    <hr class="divider">
+
+                </div>
             </div>
 
-            <!-- Related Artworks -->
-            @if($exhibition->artworks->count() > 0)
-            <div class="related-artworks mb-5">
-                <h4 class="mb-4">Featured Artworks</h4>
-                <div class="row">
-                    @foreach($exhibition->artworks->take(3) as $artwork)
-                    <div class="col-md-4 mb-3">
-                        <a href="{{ route('artwork.show', $artwork) }}" class="text-decoration-none">
-                            <div class="card h-100">
-                                <img src="{{ asset($artwork->picture) }}" class="card-img-top"
-                                    alt="{{ $artwork->title }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ $artwork->title }}</h5>
-                                    <p class="card-text text-muted">
-                                        {{ $artwork->artist->name ?? 'Unknown Artist' }}
-                                    </p>
+            <!-- Right column - Seller and Buyer details -->
+            <div class="col-lg-4 bg-light">
+                <div class="p-4 sticky-sidebar">
+                    <!-- Action buttons -->
+                    <div class="mb-4">
+                        <button class="action-button w-100 mb-3">Contact Exhibition Organizer</button>
+                    </div>
+
+                    <!-- Seller details -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Seller Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="avatar me-3">
+                                    <img src="https://via.placeholder.com/60" alt="{{ $exhibition->seller_name }}">
+                                </div>
+                                <div>
+                                    <p class="person-name">{{ $exhibition->seller_name }}</p>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                    @endforeach
-                </div>
-                @if($exhibition->artworks->count() > 3)
-                <div class="text-center mt-3">
-                    <a href="#" class="btn btn-outline-primary">
-                        View All {{ $exhibition->artworks->count() }} Artworks
-                    </a>
-                </div>
-                @endif
-            </div>
-            @endif
-        </div>
-
-        <!-- Sidebar -->
-        <div class="col-md-4">
-            <div class="exhibition-sidebar">
-                <!-- Ticket Info -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Visitor Information</h5>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <span>Status</span>
-                                <span class="badge {{ $isPast ? 'bg-secondary' : 'bg-success' }}">
-                                    {{ $isPast ? 'Closed' : 'Open' }}
+                            <div class="contact-item">
+                                <i class="bi bi-envelope"></i>
+                                <span>
+                                    @if($exhibition->show_seller_contact)
+                                    {{ $exhibition->seller_email }}
+                                    @else
+                                    ********@****.***
+                                    @endif
                                 </span>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Hours:</strong>
-                                Tuesday-Friday 11:00-17:00<br>
-                                Saturday-Sunday 10:00-17:00
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Admission:</strong> Free
-                            </li>
-                        </ul>
-                        @if(!$isPast)
-                        <a href="#" class="btn btn-primary mt-3 w-100">
-                            Book Free Ticket
-                        </a>
-                        @endif
-                    </div>
-                </div>
-
-                <!-- Location -->
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Location</h5>
-                        <p>{{ $exhibition->venue }}</p>
-                        <div class="map-container">
-                            <!-- Embedded map would go here -->
-                            <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ urlencode($exhibition->venue) }}&zoom=15&size=600x300&maptype=roadmap"
-                                class="img-fluid rounded" alt="Map to {{ $exhibition->venue }}">
-                        </div>
-                        <a href="#" class="btn btn-outline-secondary mt-3 w-100">
-                            Get Directions
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Share -->
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Share This Exhibition</h5>
-                        <div class="social-share d-flex justify-content-between">
-                            <a href="#" class="btn btn-outline-dark"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="btn btn-outline-dark"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="btn btn-outline-dark"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="btn btn-outline-dark"><i class="fas fa-envelope"></i></a>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-telephone"></i>
+                                <span>
+                                    @if($exhibition->show_seller_contact)
+                                    {{ $exhibition->seller_phone }}
+                                    @else
+                                    ***********
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-person-badge"></i>
+                                <span>
+                                    @if($exhibition->show_seller_contact)
+                                    {{ $exhibition->seller_address }}
+                                    @else
+                                    ********************
+                                    @endif
+                                </span>
+                            </div>
                         </div>
                     </div>
+
+                    <!-- Buyer details -->
+                    @if($exhibition->buyer_name)
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h3 class="card-title">Buyer Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="avatar me-3">
+                                    <img src="https://via.placeholder.com/60" alt="{{ $exhibition->buyer_name }}">
+                                </div>
+                                <div>
+                                    <p class="person-name">{{ $exhibition->buyer_name }}</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-envelope"></i>
+                                <span>
+                                    @if($exhibition->show_buyer_contact)
+                                    {{ $exhibition->buyer_email }}
+                                    @else
+                                    ********@****.***
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-telephone"></i>
+                                <span>
+                                    @if($exhibition->show_buyer_contact)
+                                    {{ $exhibition->buyer_phone }}
+                                    @else
+                                    ***********
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="bi bi-person-badge"></i>
+                                <span>
+                                    @if($exhibition->show_buyer_contact)
+                                    {{ $exhibition->buyer_address }}
+                                    @else
+                                    ********************
+                                    @endif
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
