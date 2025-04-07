@@ -124,13 +124,13 @@
 
             <img class="sticky-logo" src="images/logo.png" alt="Ziirielcontemporaryartgallery">
     
-            <img class="showcase-logo" src="https://thelowry.com/images/logo_showcase.svg" alt="Lowry">
+            <img class="showcase-logo" src="images/logo.png" alt="Lowry">
     
             <img class="mobile-logo" src="images/logo.png" alt="Ziirielcontemporaryartgallery">
     
             <img class="mobile-sticky-logo" src="images/logo.png" alt="Lowry">
     
-            <img class="mobile-showcase-logo" src="https://thelowry.com/images/logo_mobile_showcase.svg" alt="Lowry">
+            <img class="mobile-showcase-logo" src="images/logo.png" alt="Lowry">
     
     <img src="images/logo.png" alt="Lowry">
 

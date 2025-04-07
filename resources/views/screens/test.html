@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artwork Details - Ewa's Art Exhibition</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1a1a1a;
+      --secondary-color: #6c757d;
+      --accent-color: #d4af37;
+      --light-bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-radius: 12px;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light-bg);
+      color: var(--primary-color);
+      line-height: 1.7;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      letter-spacing: -0.02em;
+    }
+    
+    .container {
+      max-width: 1400px;
+      padding: 0 20px;
+    }
+    
+    .page-wrapper {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      margin: 30px 0;
+    }
+    
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      color: var(--secondary-color);
+      font-weight: 500;
+      transition: var(--transition);
+      margin-bottom: 1.5rem;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+    
+    .back-button:hover {
+      background-color: rgba(0, 0, 0, 0.06);
+      transform: translateX(-5px);
+      color: var(--primary-color);
+    }
+    
+    .exhibition-header {
+      position: relative;
+      padding: 2rem;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0));
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .exhibition-date {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .exhibition-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+    
+    .exhibition-subtitle {
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+    
+    .exhibition-location {
+      font-size: 0.9rem;
+      color: var(--secondary-color);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+    }
+    
+    .exhibition-presenter {
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .badge-category {
+      background-color: var(--accent-color);
+      color: white;
+      font-weight: 500;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    
+    .artwork-image-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      margin: 0 2rem 2rem;
+    }
+    
+    .artwork-image {
+      width: 100%;
+      height: auto;
+      transition: var(--transition);
+    }
+    
+    .artwork-image:hover {
+      transform: scale(1.02);
+    }
+    
+    .artwork-details {
+      padding: 0 2rem 2rem;
+    }
+    
+    .artwork-title {
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .artwork-medium {
+      color: var(--secondary-color);
+      margin-bottom: 1rem;
+    }
+    
+    .badge-sold {
+      background-color: #ffeeee;
+      color: #dc3545;
+      border: 1px solid #ffd6d6;
+      padding: 0.4rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    
+    .artwork-price {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+      border-radius: 3px;
+    }
+    
+    .section-content {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    
+    .detail-label {
+      color: var(--secondary-color);
+      font-size: 0.85rem;
+      margin-bottom: 0.2rem;
+    }
+    
+    .detail-value {
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    
+    .provenance-item {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 1rem;
+    }
+    
+    .provenance-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-color);
+    }
+    
+    .sticky-sidebar {
+      position: sticky;
+      top: 20px;
+    }
+    
+    .action-button {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-button:hover {
+      background-color: #000;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .icon-button {
+      border: 1px solid #e0e0e0;
+      background-color: white;
+      color: var(--primary-color);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .icon-button:hover {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    .card {
+      border: none;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      margin-bottom: 2rem;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card-header {
+      background-color: rgba(0, 0, 0, 0.02);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+    }
+    
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0;
+      color: var(--primary-color);
+    }
+    
+    .card-body {
+      padding: 1.5rem;
+    }
+    
+    .avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid white;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .person-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.2rem;
+    }
+    
+    .person-title {
+      color: var(--secondary-color);
+      font-size: 0.85rem;
+    }
+    
+    .contact-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+    
+    .contact-item i {
+      margin-right: 10px;
+      color: var(--accent-color);
+    }
+    
+    .bio {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .certificate-button {
+      background-color: white;
+      color: var(--primary-color);
+      border: 1px solid #e0e0e0;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .certificate-button:hover {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .certificate-button i {
+      margin-right: 8px;
+    }
+    
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+      margin: 2rem 0;
+      border: none;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 767.98px) {
+      .page-wrapper {
+        margin: 15px 0;
+        border-radius: var(--border-radius);
+      }
+      
+      .exhibition-header {
+        padding: 1.5rem;
+      }
+      
+      .exhibition-title {
+        font-size: 1.8rem;
+      }
+      
+      .artwork-image-container {
+        margin: 0 1.5rem 1.5rem;
+      }
+      
+      .artwork-details {
+        padding: 0 1.5rem 1.5rem;
+      }
+      
+      .artwork-title {
+        font-size: 1.5rem;
+      }
+      
+      .section-title {
+        font-size: 1.3rem;
+      }
+      
+      .action-button, .certificate-button {
+        width: 100%;
+        padding: 12px 20px;
+      }
+      
+      .icon-buttons {
+        justify-content: space-between;
+      }
+      
+      .icon-button {
+        width: 44px;
+        height: 44px;
+      }
+      
+      .card {
+        margin-bottom: 1.5rem;
+      }
+      
+      .card-header, .card-body {
+        padding: 1.2rem;
+      }
+    }
+    
+    /* Animation for cards */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .card {
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    .card:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    
+    .card:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    
+    .card:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Back button -->
+    <div class="page-wrapper">
+      <div class="row g-0">
+        <!-- Left column - Artwork details -->
+        <div class="col-lg-8">
+          <!-- Exhibition header -->
+          <div class="exhibition-header">
+            <div class="exhibition-date">
+              <i class="bi bi-calendar-event me-2"></i>
+              <span>TUE 01 APR 2025 10:00AM — 01 APR 2025 4:30PM</span>
+            </div>
+            <h1 class="exhibition-title">EWA'S ART</h1>
+            <p class="exhibition-subtitle">ALL ABOUT EWA'S ART</p>
+            <div class="exhibition-location">
+              <i class="bi bi-geo-alt me-2"></i>
+              <span>Main Exhibition Hall</span>
+            </div>
+            <p class="exhibition-presenter">Presented by: Ewa</p>
+            <span class="badge-category">ART</span>
+          </div>
+
+          <!-- Artwork image -->
+          <div class="artwork-image-container">
+            <img src="download .jpg" alt="Artwork image" class="artwork-image">
+          </div>
+
+          <!-- Artwork details -->
+          <div class="artwork-details">
+            <h2 class="artwork-title">Urban Serenity</h2>
+            <p class="artwork-medium">Mixed Media on Canvas, 2024</p>
+            <div class="d-flex align-items-center mt-3 mb-4">
+              <span class="badge-sold me-3">Sold</span>
+              <p class="artwork-price mb-0">$2,500.00</p>
+            </div>
+
+            <hr class="divider">
+
+          </div>
+        </div>
+
+        <!-- Right column - Seller and Buyer details -->
+        <div class="col-lg-4 bg-light">
+          <div class="p-4 sticky-sidebar">
+            <!-- Action buttons -->
+            <div class="mb-4">
+              <button class="action-button w-100 mb-3">Contact Exhibition Organizer</button>
+            </div>
+
+            <!-- Seller details -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Seller Details</h3>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                  <div class="avatar me-3">
+                    <img src="https://via.placeholder.com/60" alt="Ewa">
+                  </div>
+                  <div>
+                    <p class="person-name">Ewa</p>
+                  </div>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>ewa@artexhibition.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+1 (555) 123-4567</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-person-badge"></i>
+                  <span>Seller's Address</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Buyer details -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Buyer Details</h3>
+              </div>
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                  <div class="avatar me-3">
+                    <img src="https://via.placeholder.com/60" alt="Michael Thompson">
+                  </div>
+                  <div>
+                    <p class="person-name">Michael Thompson</p>
+                  </div>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-envelope"></i>
+                  <span>m.thompson@artcollector.com</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-telephone"></i>
+                  <span>+1 (555) 987-6543</span>
+                </div>
+                <div class="contact-item">
+                  <i class="bi bi-person-badge"></i>
+                  <span>Buyer's address</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
