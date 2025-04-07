@@ -247,48 +247,48 @@
                 id="menu-flat-list-two-1"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on"
                 tabindex="-1"                >
                 <span>View All</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on?genres%5B%5D=13&amp;genres%5B%5D=17&amp;genres%5B%5D=15&amp;genres%5B%5D=2&amp;genres%5B%5D=40&amp;genres%5B%5D=22&amp;genres%5B%5D=23&amp;genres%5B%5D=18&amp;genres%5B%5D=25&amp;genres%5B%5D=39&amp;genres%5B%5D=20&amp;genres%5B%5D=16&amp;genres%5B%5D=4&amp;genres%5B%5D=19&amp;genres%5B%5D=36&amp;genres%5B%5D=21&amp;genres%5B%5D=37"
                 tabindex="-1"                >
                 <span>Theatre</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="galleries.html"
+                href="{{url('exhibition')}}"
                 tabindex="-1"                >
                 <span>Exhibition</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQVG2T0/whats-on/ls-lowry-collection"
+                href="{{url('collections')}}"
                 tabindex="-1"                >
                 <span>LS Ziirielcontemporaryartgallery Collection</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on?start=&amp;end=&amp;genres%5B%5D=29#anchorFilters"
                 tabindex="-1"                >
                 <span>Workshops</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on?start=&amp;end=&amp;themes%5B%5D=5&amp;themes%5B%5D=7&amp;themes%5B%5D=6&amp;themes%5B%5D=13&amp;themes%5B%5D=15&amp;themes%5B%5D=8&amp;themes%5B%5D=10#anchorFilters"
                 tabindex="-1"                >
                 <span>Access</span>
             </a>
-            </li>
+            </li> --}}
 
                 </ul>
             </div>
@@ -302,51 +302,51 @@
                 id="menu-flat-list-two-2"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQjo1s7/your-visit/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQM43S7/your-visit/plan-your-visit"
+                href="{{url('plan')}}"
                 tabindex="-1"                >
                 <span>Plan your visit</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQ5QeSw/your-visit/food-and-drink"
                 tabindex="-1"                >
                 <span>Food and Drink</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
-                href="https://thelowry.com/pQWD1IL/your-visit/access"
+                href="{{url('access')}}"
                 tabindex="-1"                >
                 <span>Access</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQJXLsB/your-visit/memberships"
+                href="{{url('membership')}}"
                 tabindex="-1"                >
                 <span>Memberships</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQ2mAfv/your-visit/groups"
+                href="{{url('group')}}"
                 tabindex="-1"                >
                 <span>Groups</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQGLpiK/your-visit/ticket-information"
+                href="{{url('ticket')}}"
                 tabindex="-1"                >
                 <span>Ticket Information</span>
             </a>
@@ -364,35 +364,35 @@
                 id="menu-flat-list-two-3"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQaofO/get-involved/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQvQUV/get-involved/socially-engaged-arts"
+                href="{{url('socially')}}"
                 tabindex="-1"                >
                 <span>Socially Engaged Arts</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQzwFx/get-involved/families"
+                href="{{url('families')}}"
                 tabindex="-1"                >
                 <span>Families</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQe6HX/get-involved/young-people"
+                href="{{url('young')}}"
                 tabindex="-1"                >
                 <span>Young People</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQEJCd/get-involved/schools"
                 tabindex="-1"                >
@@ -405,10 +405,10 @@
                 tabindex="-1"                >
                 <span>Communities</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQwXsQ/get-involved/artist-development"
+                href="{{url('artist')}}"
                 tabindex="-1"                >
                 <span>Artist Development</span>
             </a>
@@ -426,87 +426,87 @@
                 id="menu-flat-list-two-4"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQarocO/support-us/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQKjYTJ/support-us/our-impact"
+                href="{{url('impact')}}"
                 tabindex="-1"                >
                 <span>Our Impact</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQdKlUd/support-us/donate"
                 tabindex="-1"                >
                 <span>Donate</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQPowHb/support-us/ways-to-support-us"
+                href="{{url('support')}}"
                 tabindex="-1"                >
                 <span>Ways to Support Us</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQOAbtP/support-us/current-supporters"
                 tabindex="-1"                >
                 <span>Current Supporters</span>
             </a>
-            </li>
+            </li> --}}
 
                 </ul>
             </div>
 
             </li>
-    <li class="">
+    {{-- <li class="">
                                     <span>Venue Hire</span>
             
             <div
                 class="submenu-container"
                 id="menu-flat-list-two-5"
                                 >
-                <ul class="submenu inner">
-                        <li class="">
+                <ul class="submenu inner"> --}}
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQdK4ud/venue-hire/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQXpZco/venue-hire/conferences-and-events"
                 tabindex="-1"                >
                 <span>Conferences and Events</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQeo6fX/venue-hire/weddings"
                 tabindex="-1"                >
                 <span>Weddings</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQwjXiQ/venue-hire/christmas-parties"
                 tabindex="-1"                >
                 <span>Christmas Parties</span>
             </a>
-            </li>
+            </li> --}}
 
-                </ul>
+                {{-- </ul>
             </div>
 
-            </li>
+            </li> --}}
     <li class="">
                                     <span>About Us</span>
             
@@ -515,13 +515,13 @@
                 id="menu-flat-list-two-6"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQx40cK/about-us/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
                 href="https://thelowry.com/pQKYcJ/about-us/our-mission"
@@ -589,48 +589,48 @@
                                     aria-expanded="false"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on"
                 tabindex="-1"                >
                 <span>View All</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on?genres%5B%5D=13&amp;genres%5B%5D=17&amp;genres%5B%5D=15&amp;genres%5B%5D=2&amp;genres%5B%5D=40&amp;genres%5B%5D=22&amp;genres%5B%5D=23&amp;genres%5B%5D=18&amp;genres%5B%5D=25&amp;genres%5B%5D=39&amp;genres%5B%5D=20&amp;genres%5B%5D=16&amp;genres%5B%5D=4&amp;genres%5B%5D=19&amp;genres%5B%5D=36&amp;genres%5B%5D=21&amp;genres%5B%5D=37"
                 tabindex="-1"                >
                 <span>Theatre</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="galleries.html"
+                href="{{url('exhibition')}}"
                 tabindex="-1"                >
                 <span>Exhibition</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQVG2T0/whats-on/ls-lowry-collection"
+                href="{{url('collections')}}"
                 tabindex="-1"                >
                 <span>LS Ziirielcontemporaryartgallery Collection</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on?start=&amp;end=&amp;genres%5B%5D=29#anchorFilters"
                 tabindex="-1"                >
                 <span>Workshops</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/whats-on?start=&amp;end=&amp;themes%5B%5D=5&amp;themes%5B%5D=7&amp;themes%5B%5D=6&amp;themes%5B%5D=13&amp;themes%5B%5D=15&amp;themes%5B%5D=8&amp;themes%5B%5D=10#anchorFilters"
                 tabindex="-1"                >
                 <span>Access</span>
             </a>
-            </li>
+            </li> --}}
 
                 </ul>
             </div>
@@ -653,51 +653,51 @@
                                     aria-expanded="false"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQjo1s7/your-visit/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQM43S7/your-visit/plan-your-visit"
+                href="{{url('plan')}}"
                 tabindex="-1"                >
                 <span>Plan your visit</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQ5QeSw/your-visit/food-and-drink"
                 tabindex="-1"                >
                 <span>Food and Drink</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQWD1IL/your-visit/access"
+                href="{{url('access')}}"
                 tabindex="-1"                >
                 <span>Access</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQJXLsB/your-visit/memberships"
+                href="{{url('membership')}}"
                 tabindex="-1"                >
                 <span>Memberships</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQ2mAfv/your-visit/groups"
+                href="{{url('group')}}"
                 tabindex="-1"                >
                 <span>Groups</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQGLpiK/your-visit/ticket-information"
+                href="{{url('ticket')}}"
                 tabindex="-1"                >
                 <span>Ticket Information</span>
             </a>
@@ -724,35 +724,35 @@
                                     aria-expanded="false"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQaofO/get-involved/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQvQUV/get-involved/socially-engaged-arts"
+                href="{{url('socially')}}"
                 tabindex="-1"                >
                 <span>Socially Engaged Arts</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQzwFx/get-involved/families"
+                href="{{url('families')}}"
                 tabindex="-1"                >
                 <span>Families</span>
             </a>
             </li>
     <li class="">
                     <a
-                href="https://thelowry.com/pQe6HX/get-involved/young-people"
+                href="{{url('young')}}"
                 tabindex="-1"                >
                 <span>Young People</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQEJCd/get-involved/schools"
                 tabindex="-1"                >
@@ -765,10 +765,10 @@
                 tabindex="-1"                >
                 <span>Communities</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQwXsQ/get-involved/artist-development"
+                href="{{url('artist')}}"
                 tabindex="-1"                >
                 <span>Artist Development</span>
             </a>
@@ -795,47 +795,47 @@
                                     aria-expanded="false"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQarocO/support-us/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQKjYTJ/support-us/our-impact"
+                href="{{url('impact')}}"
                 tabindex="-1"                >
                 <span>Our Impact</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQdKlUd/support-us/donate"
                 tabindex="-1"                >
                 <span>Donate</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
-                href="https://thelowry.com/pQPowHb/support-us/ways-to-support-us"
+                href="{{url('support')}}"
                 tabindex="-1"                >
                 <span>Ways to Support Us</span>
             </a>
             </li>
-    <li class="">
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQOAbtP/support-us/current-supporters"
                 tabindex="-1"                >
                 <span>Current Supporters</span>
             </a>
-            </li>
+            </li> --}}
 
                 </ul>
             </div>
 
             </li>
-    <li class="">
+    {{-- <li class="">
                                     <a
                     href="#"
                     class="submenu-toggle"
@@ -851,15 +851,15 @@
                 id="menu-main-list-5"
                                     aria-expanded="false"
                                 >
-                <ul class="submenu inner">
-                        <li class="">
+                <ul class="submenu inner"> --}}
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQdK4ud/venue-hire/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
-    <li class="">
+            </li> --}}
+    {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQXpZco/venue-hire/conferences-and-events"
                 tabindex="-1"                >
@@ -882,7 +882,7 @@
             </li>
 
                 </ul>
-            </div>
+            </div> --}}
 
             </li>
     <li class="">
@@ -902,13 +902,13 @@
                                     aria-expanded="false"
                                 >
                 <ul class="submenu inner">
-                        <li class="">
+                        {{-- <li class="">
                     <a
                 href="https://thelowry.com/pQx40cK/about-us/overview"
                 tabindex="-1"                >
                 <span>Overview</span>
             </a>
-            </li>
+            </li> --}}
     <li class="">
                     <a
                 href="https://thelowry.com/pQKYcJ/about-us/our-mission"
@@ -1007,3 +1007,164 @@
 
 </header>
 
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exhibition Vibes</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fffafc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .popup-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .popup {
+      background: linear-gradient(135deg, #ffe0f0, #f9f0ff);
+      color: #6a0572;
+      border-left: 6px solid #ff85c0;
+      padding: 14px 20px;
+      border-radius: 18px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      min-width: 260px;
+      animation: fadeInOut 6s ease forwards;
+      font-size: 15px;
+    }
+
+    .avatar {
+      background-color: #ffadd2;
+      color: white;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(10px); }
+      10% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-10px); }
+    }
+
+    @media (max-width: 600px) {
+      .popup-container {
+        left: 10px;
+        bottom: 10px;
+      }
+      .popup {
+        font-size: 14px;
+        padding: 10px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="popup-container" id="popupContainer"></div>
+
+<script>
+  const names = [
+    "Emily Rose", "John Daniels", "Sophia Mei", "Liam Knight", "Noah Silvers", "Olivia Belle",
+    "Ava Taylor", "Ethan Walker", "Mia Luna", "Lucas James", "Chloe Rain", "Jackson Lee",
+    "Ella Grace", "Mason Oliver", "Lily Aurora", "Benjamin Cruz", "Harper Jade", "Henry Bloom",
+    "Aria Skye", "Leo Miles", "Isla Snow", "Caleb River", "Zoe Willow", "Owen Ash", "Nora Wren",
+    "Jasper Quinn", "Aurora Belle", "Sadie Rae", "Levi Brooks", "Hazel Moon", "Julian Reed",
+    "Ruby Fox", "Theo Aspen", "Clara Dawn", "Maxwell Grey", "Naomi Lake", "Finn Wilder",
+    "Daisy Vale", "Wesley Storm", "Elsie Plum", "Gavin Blue", "Freya Hope", "Ezra Orion",
+    "Camila Snow", "Silas Green", "Eliana Cloud", "Micah Ray", "Sienna Rose", "Kai Dusk"
+  ];
+
+  const messages = [
+    "{name} just grabbed the last spot! 💖",
+    "🎟️ {name} booked 2 tickets – it’s SOLD OUT now!",
+    "Wow! {name} made it just in time 😱",
+    "✨ {name} secured their place at the exhibition!",
+    "🌸 {name} got the final pass – so sweet!",
+    "💕 {name} is in! No tickets left now.",
+    "💫 {name} just joined the list – SOLD OUT!",
+    "{name} got lucky – exhibition is full! 🎉",
+    "🌷 {name} snuck in just before it closed!",
+    "{name} completed their booking – amazing timing!",
+    "🍰 {name} just got a spot – that's the last one!",
+    "🚀 {name} was quick! All spots are gone!"
+  ];
+
+  function getRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+  }
+
+  function getInitials(name) {
+    return name.split(' ').map(n => n[0]).join('');
+  }
+
+  function createPopup(message, name) {
+    const container = document.getElementById("popupContainer");
+    const popup = document.createElement("div");
+    popup.className = "popup";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = getInitials(name);
+
+    const text = document.createElement("div");
+    text.textContent = message;
+
+    popup.appendChild(avatar);
+    popup.appendChild(text);
+    container.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove();
+    }, 6000);
+  }
+
+  function showPopups() {
+    const shownNames = new Set();
+    let count = 0;
+    const max = 12;
+
+    const interval = setInterval(() => {
+      let name;
+      do {
+        name = getRandom(names);
+      } while (shownNames.has(name) && shownNames.size < names.length);
+
+      shownNames.add(name);
+      const msgTemplate = getRandom(messages);
+      const message = msgTemplate.replace("{name}", name);
+
+      createPopup(message, name);
+      count++;
+      if (count >= max) clearInterval(interval);
+    }, 1800); // every 1.8 seconds
+  }
+
+  window.onload = () => {
+    setTimeout(showPopups, 1000);
+  };
+</script>
+
+</body>
+</html>

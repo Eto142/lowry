@@ -1,6 +1,7 @@
 @include('user.header')
 
-{{-- <!DOCTYPE html>
+{{--
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -83,7 +84,8 @@
 <body>
     <nav class="navbar navbar-light bg-white border-bottom">
         <div class="container d-flex justify-content-between">
-            <a class="navbar-brand fw-bold fs-3" href="#"> <img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></a>
+            <a class="navbar-brand fw-bold fs-3" href="#"> <img src="{{asset('images/logo.png')}}"
+                    alt="Ziirielcontemporaryartgallery" width="150px"></a>
             <div class="d-flex align-items-center">
                 <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
                 <div class="dropdown">
@@ -111,12 +113,12 @@
             <div class="col-md-6">
                 <div class="profile-container p-4 shadow rounded bg-light">
                     <div class="d-flex justify-content-between mb-3">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addexhibitionModal">
+                        <a href="{{route('user.future.exhibition')}}" class="btn btn-primary">
                             <i class="bi bi-plus-lg"></i> Future Exhibition
-                        </button>
-                        {{-- <a href="exhibitions.html#exhibitionSection" class="btn btn-outline-secondary">
-                            <i class="bi bi-eye"></i> View Exhibition
-                        </a> --}}
+                        </a>
+                        <a href="{{route('user.exhibitions.manage')}}" class="btn btn-secondary">
+                            <i class="bi bi-eye"></i> Manage My Exhibition
+                        </a>
 
                     </div>
                     <h5 class="fw-bold text-dark">Welcome, {{Auth::user()->first_name}} {{Auth::user()->last_name}}
@@ -278,9 +280,6 @@
 
 
     </div>
-                    
-            </div>
-        </div>
 
     </div>
 </body>

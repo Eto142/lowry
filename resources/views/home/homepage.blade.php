@@ -289,12 +289,12 @@
                         Sign up to our Exhibition Newsletter
                     </div>
                 </summary>
-                <div class="container">
+                {{-- <div class="container">
                     <div class="inner">
                         <iframe src="/exhibition-newsletter-signup" height="400px" width="100%"
                             allow="autoplay; fullscreen" allowtransparency="true" allowfullscreen="true"></iframe>
                     </div>
-                </div>
+                </div> --}}
             </details>
         </div>
     </div>

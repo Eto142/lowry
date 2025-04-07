@@ -14,6 +14,19 @@ Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController
 
 // Public routes
 Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name('home');
+Route::get('/exhibition', [App\Http\Controllers\HomepageController::class, 'Exhibition'])->name('exhibition');
+Route::get('/collections', [App\Http\Controllers\HomepageController::class, 'Collections'])->name('collections');
+Route::get('/plan', [App\Http\Controllers\HomepageController::class, 'Plan'])->name('plan');
+Route::get('/access', [App\Http\Controllers\HomepageController::class, 'Access'])->name('access');
+Route::get('/membership', [App\Http\Controllers\HomepageController::class, 'Membership'])->name('membership');
+Route::get('/group', [App\Http\Controllers\HomepageController::class, 'Group'])->name('group');
+Route::get('/ticket', [App\Http\Controllers\HomepageController::class, 'Ticket'])->name('ticket');
+Route::get('/socially', [App\Http\Controllers\HomepageController::class, 'Socially'])->name('socially');
+Route::get('/families', [App\Http\Controllers\HomepageController::class, 'Families'])->name('families');
+Route::get('/young', [App\Http\Controllers\HomepageController::class, 'Young'])->name('young');
+Route::get('/artist', [App\Http\Controllers\HomepageController::class, 'Artist'])->name('artist');
+Route::get('/impact', [App\Http\Controllers\HomepageController::class, 'Impact'])->name('impact');
+Route::get('/support', [App\Http\Controllers\HomepageController::class, 'Support'])->name('support');
 Route::get('/exhibitions', [App\Http\Controllers\HomepageController::class, 'index'])->name('exhibitions.index');
 Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController::class, 'show'])->name('exhibitions.show');
 Route::get('/artworks/{artwork}', [App\Http\Controllers\HomepageController::class, 'showArtwork'])->name('artwork.show');
@@ -62,14 +75,26 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/kyc-submit', [DashboardController::class, 'submitKYC'])->name('kyc.submit');
-    Route::get('/add-exhibition', [DashboardController::class, 'Addexhibition'])->name('add-exhibition');
-
+    Route::get('/user-deposit', [DashboardController::class, 'ShowDeposit'])->name('user.deposit');
+    Route::get('/user-withdrawal', [DashboardController::class, 'ShowWithdrawal'])->name('user.withdrawal');
+    Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'index'])->name('user.create.exhibition');
+    Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');
+    Route::get('/future-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'viewExhibitions'])->name('user.future.exhibition');
+    Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'showExhibition'])->name('user.exhibition.show');
+    Route::post('/exhibitions/purchase', [App\Http\Controllers\User\ExhibitionController::class, 'purchase'])->name('user.exhibition.purchase');
+    Route::get('/exhibitions/manage', [App\Http\Controllers\User\ExhibitionController::class, 'manageExhibition'])->name('user.exhibitions.manage');
+    Route::get('/exhibitions/{exhibition}/edit', [App\Http\Controllers\User\ExhibitionController::class, 'edit'])->name('user.exhibitions.edit');
+    Route::put('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'update'])->name('user.exhibitions.update');
+    Route::delete('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'destroy'])->name('user.exhibitions.destroy');
 });
 
 
-Route::get('/user/exhibitions', function(){
-    return view('user.exhibitions');
-});
+
+
+
+
+
+
 
 
 
