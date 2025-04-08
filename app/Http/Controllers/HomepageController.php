@@ -43,7 +43,55 @@ class HomepageController extends Controller
     }
 
 
-    
+    public function futureExhibitions()
+    {
+        $now = Carbon::now();
+
+        // future exhibitions 
+        $futureExhibitions = Exhibition::where('exhibition_type', 'future')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Available artworks for purchase
+        return view('home.future_exhibition', [
+            'futureExhibitions' => $futureExhibitions,
+
+        ]);
+    }
+
+    public function currentExhibitions()
+    {
+        $now = Carbon::now();
+
+        // current exhibitions 
+        $currentExhibitions = Exhibition::where('exhibition_type', 'current')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Available artworks for purchase
+        return view('home.current_exhibition', [
+            'currentExhibitions' => $currentExhibitions,
+
+        ]);
+    }
+
+
+    public function pastExhibitions()
+    {
+        $now = Carbon::now();
+
+        // current exhibitions 
+        $pastExhibitions = Exhibition::where('exhibition_type', 'past')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Available artworks for purchase
+        return view('home.past_exhibition', [
+            'pastExhibitions' => $pastExhibitions,
+
+        ]);
+    }
+
     // Show exhibiton home page
     public function Exhibition()
     {
@@ -75,79 +123,79 @@ class HomepageController extends Controller
 
 
 
-     // Show Collections page
-     public function Collections()
-     { 
-         return view('home.collections');
-     }
+    // Show Collections page
+    public function Collections()
+    {
+        return view('home.collections');
+    }
 
-       // Show Plan page
-       public function Plan()
-       { 
-           return view('home.plan');
-       }
+    // Show Plan page
+    public function Plan()
+    {
+        return view('home.plan');
+    }
 
-         // Show Access page
-         public function Access()
-         { 
-             return view('home.access');
-         }
+    // Show Access page
+    public function Access()
+    {
+        return view('home.access');
+    }
 
-          // Show Membership page
-          public function Membership()
-          { 
-              return view('home.membership');
-          }
+    // Show Membership page
+    public function Membership()
+    {
+        return view('home.membership');
+    }
 
-          // Show Group page
-          public function Group()
-          { 
-              return view('home.group');
-          }
+    // Show Group page
+    public function Group()
+    {
+        return view('home.group');
+    }
 
-           // Show ticket page
-           public function Ticket()
-           { 
-               return view('home.ticket');
-           }
+    // Show ticket page
+    public function Ticket()
+    {
+        return view('home.ticket');
+    }
 
-            // Show socially page
-            public function Socially()
-            { 
-                return view('home.socially');
-            }
+    // Show socially page
+    public function Socially()
+    {
+        return view('home.socially');
+    }
 
-              // Show Families page
-              public function Families()
-              { 
-                  return view('home.families');
-              }
+    // Show Families page
+    public function Families()
+    {
+        return view('home.families');
+    }
 
-               // Show young page
-               public function Young()
-               { 
-                   return view('home.young');
-               }
+    // Show young page
+    public function Young()
+    {
+        return view('home.young');
+    }
 
-                // Show Artist page
-                public function Artist()
-                { 
-                    return view('home.artist');
-                }
+    // Show Artist page
+    public function Artist()
+    {
+        return view('home.artist');
+    }
 
-                 // Show Impact page
-                 public function Impact()
-                 { 
-                     return view('home.impact');
-                 }
+    // Show Impact page
+    public function Impact()
+    {
+        return view('home.impact');
+    }
 
-                 
-                 // Show Support page
-                 public function Support()
-                 { 
-                     return view('home.support');
-                 }
- 
+
+    // Show Support page
+    public function Support()
+    {
+        return view('home.support');
+    }
+
 
 
     // Show single exhibition

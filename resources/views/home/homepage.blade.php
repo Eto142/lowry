@@ -273,75 +273,51 @@
         </div>
     </div>
 
-    <div class="container-fluid iframeWrapper variant- align-"
-        style="padding-top: 30px; padding-bottom: 0px; background: #fff;">
-        <div class="collapsed-heading">
-            <details open>
-                <summary class="container align-">
-                    <div class="inner">
-                        <span class='peppered-icon icon-chevron-down'><svg version='1.1'
-                                xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px'
-                                y='0px' width='30' height='30' viewBox='0 0 20 20' xml:space='preserve'>
-                                <g transform='matrix(1,0,0,1,5,2)'>
-                                    <path d='M5,11L0,6L1.5,4.5L5,8.25L8.5,4.5L10,6L5,11Z' />
-                                </g>
-                            </svg></span>
-                        Sign up to our Exhibition Newsletter
-                    </div>
-                </summary>
-                {{-- <div class="container">
-                    <div class="inner">
-                        <iframe src="/exhibition-newsletter-signup" height="400px" width="100%"
-                            allow="autoplay; fullscreen" allowtransparency="true" allowfullscreen="true"></iframe>
-                    </div>
-                </div> --}}
-            </details>
-        </div>
-    </div>
 
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
-        <div class="container">
-            <div class="richtext">
-                <h2>Useful Information</h2>
-            </div>
-        </div>
-    </div>
 
     <div class="container-fluid mediaWrapper multi variant-masonry arrows" data-animations=""
         style="padding-top: 20px; padding-bottom: 30px; background: #fff;">
         <div class="container">
             <div class="grid-root">
-                <a class="imageCard" href="/exhibition-tours">
+                @auth
+                <a class="imageCard" href="{{route('future.exhibitions')}}">
                     <div class="wrapper">
                         <img src="https://img.thelowry.com/BM1_oS6aAg-1k_afGjgIkul3gNhaaBEO3G62hBYcpRc/c:5350:5350/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzODZfb3JpZy5qcGc"
                             alt="Book a Tour">
                     </div>
                     <div class="content">
-                        <div class="title">Book a Guided Tour</div>
-                        <div class="desc">Explore with our experts ></div>
+                        <div class="title">Future Exhibition</div>
                     </div>
                 </a>
+                @else
+                <a class="imageCard" href="{{route('login')}}">
+                    <div class="wrapper">
+                        <img src="https://img.thelowry.com/BM1_oS6aAg-1k_afGjgIkul3gNhaaBEO3G62hBYcpRc/c:5350:5350/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzODZfb3JpZy5qcGc"
+                            alt="Book a Tour">
+                    </div>
+                    <div class="content">
+                        <div class="title">Future Exhibition</div>
+                    </div>
+                </a>
+                @endauth
 
-                <a class="imageCard" href="/plan-your-visit">
+                <a class="imageCard" href="{{route('current.exhibitions')}}">
                     <div class="wrapper">
                         <img src="https://img.thelowry.com/hvowjLzFRgW1YiE1b0zSJMwjklIE5AXdzWIJg8o_-g8/c:5464:5464/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzODdfb3JpZy5qcGc"
                             alt="Plan Your Visit">
                     </div>
                     <div class="content">
-                        <div class="title">Plan Your Visit</div>
-                        <div class="desc">Access and facilities ></div>
+                        <div class="title">Current Exhibition</div>
                     </div>
                 </a>
 
-                <a class="imageCard" href="/exhibition-shop">
+                <a class="imageCard" href="{{route('past.exhibitions')}}">
                     <div class="wrapper">
                         <img src="https://img.thelowry.com/kE6e9bt_boJCLFzAjRoni07kf5oY9XTUG45UH6bC-Vg/c:5464:5464/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzE0MThfb3JpZy5qcGc"
                             alt="Exhibition Shop">
                     </div>
                     <div class="content">
-                        <div class="title">Exhibition Shop</div>
-                        <div class="desc">Catalogues and merchandise ></div>
+                        <div class="title">Past Exhibition</div>
                     </div>
                 </a>
             </div>
