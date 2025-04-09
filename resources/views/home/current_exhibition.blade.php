@@ -91,7 +91,7 @@
                                     <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">Now Showing Until {{ $exhibition->end_date->format('D d M
+                                        <span class="start">Now Showing Until {{ $exhibition->date->format('D d M
                                             Y') }}<span class="time">10:00AM</span></span>
                                     </div>
                                     <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
@@ -110,7 +110,7 @@
                                     </div>
                                     <div class="meta-group button">
                                         <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
-                                        <a href="/book/{{ $exhibition->id }}" class="btn btn-primary">Book Tickets</a>
+
                                         @auth
                                         <a href="mailto:{{ $exhibition->artist_email }}"
                                             class="btn btn-secondary">Contact Artist</a>
