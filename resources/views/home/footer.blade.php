@@ -91,7 +91,8 @@
                         <p><br><a class="btn btn-active" title="Sign up for the mailing list"
                                 href="https://thelowry.com/pQ0PmIM/join-lowry-s-mailing-list">Join our mailing list</a>
                         </p>
-                        <p>Address:&nbsp;<strong>Pier 8, The Quays, Salford, M50 3AZ</strong></p>
+                        <p>Address:&nbsp;<strong>Business Design Centre Ltd, 52 Upper St, London N1 0QH, United
+                                Kingdom</strong></p>
                     </div>
                 </div>
 

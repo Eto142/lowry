@@ -122,6 +122,19 @@ class HomepageController extends Controller
     }
 
 
+    public function about()
+    {
+
+        return view('home.about',);
+    }
+
+    public function permanent()
+    {
+
+        return view('home.permanent-collection',);
+    }
+
+
 
     // Show Collections page
     public function Collections()

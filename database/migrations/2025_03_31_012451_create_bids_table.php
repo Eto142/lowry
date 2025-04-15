@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('bids', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('artwork_id')->constrained('artworks')->onDelete('cascade');
+            $table->foreignId('exhibition_id')->constrained('exhibitions')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->decimal('amount', 10, 2);
-            $table->boolean('is_anonymous')->default(false);
+            $table->string('amount');
             $table->timestamps();
         });
     }

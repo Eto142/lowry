@@ -7,7 +7,7 @@
             @endif
             <div class="mt-2 mb-4">
                 <h1 class="title1 text-dark">Exhibition List</h1>
-            </div>
+            </div> 
 
             <div class="row">
                 <div class="col-12">
@@ -56,7 +56,7 @@
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody id="exhibitionlisttbl">
                                 @foreach($exhibitions as $index => $exhibition)
                                 <tr id="exhibition-row-{{ $exhibition->id }}">

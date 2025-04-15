@@ -18,6 +18,32 @@
             </div>
         </div>
     </div>
+    <!-- About Us Section Added Here -->
+    <div class="container-fluid desc2Wrapper variant- align-"
+        style="padding-top: 30px; padding-bottom: 30px; background: #f8f9fa;">
+        <div class="container">
+            <div class="richtext">
+                <h2>About Ziiriel Contemporary Art Gallery</h2>
+                <p>Welcome to Ziiriel Contemporary Art Gallery, a vibrant online space where creativity meets
+                    connection. We are a forward-thinking digital art gallery and marketplace dedicated to showcasing
+                    contemporary art from emerging and established artists around the world.</p>
+
+                <p>At Ziiriel, we believe art is more than just visual expression — it's a powerful dialogue between the
+                    artist and the viewer. Our platform is designed to celebrate that dialogue by making contemporary
+                    art accessible, discoverable, and collectible for everyone, everywhere.</p>
+
+                <p>Whether you're an art enthusiast, a seasoned collector, or simply looking to bring more beauty into
+                    your space, Ziiriel offers a curated selection of paintings, illustrations, drawings, mixed media
+                    works, and more — all available for purchase directly from the artists. We provide a seamless
+                    experience that connects creators with collectors, helping to support the global art community and
+                    elevate new voices in contemporary art.</p>
+
+                <p>Ziiriel is not just a gallery — it's a movement. We are passionate about nurturing artistic talent
+                    and giving artists the visibility they deserve in today's digital world. Join us on this journey and
+                    discover a world of contemporary art that inspires, challenges, and resonates.</p>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid infoHeaderWrapper type-page align-"
         style="padding-top: 30px; padding-bottom: 30px; background: #fff;">

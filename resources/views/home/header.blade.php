@@ -152,8 +152,8 @@
                                                 <span>What&#039;s on</span>
                                             </a>
                                         </li>
-                                       
-                                        
+
+
                                     </ul>
 
                                 </nav>
@@ -206,7 +206,7 @@
                     <div class="inner">
                         <ul id="anchor-nav" class="anchor-nav" data-trigger-label="Jump to section">
                             <li>
-                                <a href="#pp_page_instance_810">
+                                <a href="{{url('/permanent-collection')}}">
                                     <span>LS Ziirielcontemporaryartgallery Permanent Collection</span>
                                 </a>
                             </li>
@@ -262,8 +262,8 @@
                                         </div>
 
                                     </li>
-                                   
-                                
+
+
 
                             </nav>
 
@@ -319,8 +319,8 @@
                                         </div>
 
                                     </li>
-                                   
-                                   
+
+
                                     {{-- <li class="">
                                         <a href="#" class="submenu-toggle" aria-expanded="false"
                                             aria-controls="menu-main-list-5">
@@ -371,12 +371,12 @@
 
 
                                                 <li class="">
-                                                    <a href="{{url('/')}}" tabindex="-1">
+                                                    <a href="{{url('/about-us')}}" tabindex="-1">
                                                         <span>Careers &amp; Volunteering</span>
                                                     </a>
                                                 </li>
                                                 <li class="">
-                                                    <a href="{{url('/')}}" tabindex="-1">
+                                                    <a href="{{url('/about-us')}}" tabindex="-1">
                                                         <span>Future Exhibition</span>
                                                     </a>
                                                 </li>

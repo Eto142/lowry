@@ -11,6 +11,8 @@ use App\Http\Controllers\DashboardController;
 
 Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name('exhibitions.index');
 Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\HomepageController::class, 'show'])->name('exhibitions.show');
+Route::get('/about-us', [App\Http\Controllers\HomepageController::class, 'about'])->name('about');
+Route::get('/permanent-collection', [App\Http\Controllers\HomepageController::class, 'permanent'])->name('about');
 
 // Public routes
 Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name('home');
@@ -168,6 +170,17 @@ Route::prefix('admin')->group(function () {
 
             // AJAX route for exhibitions table
             Route::get('/getexhibitions', [App\Http\Controllers\Admin\ExhibitionController::class, 'getExhibitions'])->name('admin.getexhibitions');
+        });
+
+
+        // Bid Management Routes
+        Route::group(['prefix' => 'bids', 'as' => 'bids.'], function () {
+            Route::get('/', [App\Http\Controllers\Admin\ManageBidController::class, 'index'])->name('index');
+            Route::post('/', [App\Http\Controllers\Admin\ManageBidController::class, 'store'])->name('store');
+            Route::get('/{bid}/edit', [App\Http\Controllers\Admin\ManageBidController::class, 'edit'])->name('edit');
+            Route::put('/{bid}', [App\Http\Controllers\Admin\ManageBidController::class, 'update'])->name('update');
+            Route::patch('/{bid}/approve', [App\Http\Controllers\Admin\ManageBidController::class, 'approve'])->name('approve');
+            Route::delete('/{bid}', [App\Http\Controllers\Admin\ManageBidController::class, 'destroy'])->name('destroy');
         });
     });
 });
