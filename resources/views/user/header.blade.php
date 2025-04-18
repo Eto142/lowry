@@ -7,6 +7,14 @@
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
      <style>
+
+.sidebar-button {
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
          body {
              background-color: #ffffff;
          }
@@ -86,16 +94,40 @@
     </div>
     
  
-     <div class="container mt-4">
-         <div class="row">
-             <div class="col-md-3">
-                 <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a class="btn btn-light sidebar-button mb-2" href="/">Home</a></button>
-                 <button class="btn btn-dark sidebar-button mb-2"><a class="btn btn-light sidebar-button mb-2" href="{{route('user.deposit') }}">Deposit</a></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a class="btn btn-light sidebar-button mb-2" href="{{route('user.withdrawal') }}">Withdrawal</a></button>
-                 <button class="btn btn-dark sidebar-button mb-2"><a class="btn btn-light sidebar-button mb-2" href="{{route('user.create.exhibition') }}">Add Exhibition</a></button>
-                 <button class="btn btn-light sidebar-button mb-2"><a class="btn btn-light sidebar-button mb-2" href="">History</a></button>
-             </div>
+    <!-- Mobile Menu Toggle (visible only on phones) -->
+<div class="d-md-none text-end p-3 border-bottom">
+    <button class="btn btn-outline-dark" type="button" data-bs-toggle="collapse" data-bs-target="#mobileSidebar" aria-expanded="false" aria-controls="mobileSidebar">
+        ☰ Menu
+    </button>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Desktop Sidebar -->
+        <div class="col-md-3 d-none d-md-block">
+            <div class="d-grid gap-2">
+                <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
+                <a class="btn btn-light sidebar-button mb-2" href="/">Home</a>
+                <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.deposit') }}">Deposit</a>
+                <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.withdrawal') }}">Withdrawal</a>
+                <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.create.exhibition') }}">Add Exhibition</a>
+                <a class="btn btn-light sidebar-button mb-2" href="#">History</a>
+            </div>
+        </div>
+
+        <!-- Mobile Sidebar (collapsible) -->
+        <div class="collapse d-md-none mb-3" id="mobileSidebar">
+            <div class="d-grid gap-2">
+                <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
+                <a class="btn btn-light sidebar-button mb-2" href="/">Home</a>
+                <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.deposit') }}">Deposit</a>
+                <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.withdrawal') }}">Withdrawal</a>
+                <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.create.exhibition') }}">Add Exhibition</a>
+                <a class="btn btn-light sidebar-button mb-2" href="#">History</a>
+            </div>
+        </div>
+
+      
 
         
 
