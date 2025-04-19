@@ -472,7 +472,7 @@
                                             All
                                             rights reserved.</p>
                                         <p class="f-fallback sub align-center">
-                                            Prime Fidel Options
+                                            Ziiriel Contemporary Art Gallery
                                             <br>https://primefideloptions.com/
                                         </p>
                                     </td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\User;
 use App\Mail\WelcomeEmail;
 use Illuminate\Http\Request;
+use App\Mail\VerificationEmail;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,9 @@ class RegisterController extends Controller
         }
 
         try {
+
+            // Generate verification code
+            $verificationCode = rand(1000, 9999);
             // Create new user
             $user = User::create([
                 'first_name' => $request->first_name,
@@ -59,19 +63,54 @@ class RegisterController extends Controller
                 'email' => $request->email,
                 'phone_number' => $request->phone_number,
                 'country' => $request->country,
+                'verification_code' => $verificationCode,
+                'verification_expiry' => now()->addMinutes(10),
                 'password' => Hash::make($request->password),
             ]);
+
+            // Create related balances for the user
+            $user->userBalance()->create(['user_id' => $user->id, 'amount' => 0]);
+
+
+            // Prepare and send verification email
+            $full_name = $request->first_name . ' ' . $request->last_name;
+            $vmessage = "
+        <p style='line-height: 24px;margin-bottom:15px;'>
+            Hello $full_name,
+        </p>
+        <br>
+        <p>
+        We are so happy to have you on board, and thank you for joining us.
+        </p>
+        <p>
+        We just need to verify your email address before you can access cytopiacapital.
+        </p>
+        <br>
+        <p>
+        Use this code to verify your email: <strong>$verificationCode</strong>
+        </p>
+        <p style='color: red;'>
+        Please note that this code will expire in 10 minutes.
+        </p>
+        <br>
+        <p>
+        Don't hesitate to get in touch if you have any questions; we'll always get back to you.
+        </p>
+        ";
+
+            // Send the email
+            Mail::to($user->email)->send(new VerificationEmail($vmessage));
 
             Auth::login($user);
 
             // Prepare and send welcome email
-            $wMessage = "
-                <p>Hello {$user->first_name},</p>
-                <p>We are so happy to have you on board.</p>
-                <p>Your email: <strong>{$user->email}</strong></p>
-                <p>Your password: <strong>{$request->password}</strong></p>
-            ";
-            //Mail::to($user->email)->send(new WelcomeEmail($wMessage));
+            // $wMessage = "
+            //     <p>Hello {$user->first_name},</p>
+            //     <p>We are so happy to have you on board.</p>
+            //     <p>Your email: <strong>{$user->email}</strong></p>
+            //     <p>Your password: <strong>{$request->password}</strong></p>
+            // ";
+            // //Mail::to($user->email)->send(new WelcomeEmail($wMessage));
 
             return response()->json([
                 'success' => true,

@@ -70,6 +70,15 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('user.logout');
 
 
+// Email & User Verification
+Route::get('user/v', [App\Http\Controllers\Auth\EmailVerificationController::class, 'emailVerify'])->name('email_verify');
+Route::get('user/ver', [App\Http\Controllers\Auth\EmailVerificationController::class, 'userVerify'])->name('user_verify');
+Route::get('/verify/{id}', [App\Http\Controllers\Auth\EmailVerificationController::class, 'verify'])->name('verify');
+Route::post('/verify-code', [App\Http\Controllers\Auth\EmailVerificationController::class, 'verifyCode'])->name('verify.code');
+Route::get('/resend-verification-code', [App\Http\Controllers\Auth\EmailVerificationController::class, 'resendVerificationCode'])->name('resend.verification');
+Route::post('/skip-code', [App\Http\Controllers\Auth\EmailVerificationController::class, 'skipCode'])->name('skip.code');
+
+
 
 
 
@@ -80,7 +89,9 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::post('/update-password', [DashboardController::class, 'update'])->name('password.update');
     Route::post('/profile-update', [DashboardController::class, 'profileUpdate'])->name('profile.update');
     Route::post('/kyc-submit', [DashboardController::class, 'submitKYC'])->name('kyc.submit');
-    Route::get('/user-deposit', [DashboardController::class, 'ShowDeposit'])->name('user.deposit');
+    Route::get('/user-deposit', [App\Http\Controllers\User\DepositController::class, 'ShowDeposit'])->name('user.deposit');
+    Route::get('/deposit', [App\Http\Controllers\User\DepositController::class, 'create'])->name('deposit.create');
+    Route::post('/deposit', [App\Http\Controllers\User\DepositController::class, 'store'])->name('deposit.store');
     Route::get('/user-withdrawal', [DashboardController::class, 'ShowWithdrawal'])->name('user.withdrawal');
     Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'index'])->name('user.create.exhibition');
     Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');

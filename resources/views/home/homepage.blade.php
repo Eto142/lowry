@@ -126,15 +126,8 @@
                                     <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">{{ $exhibition->created_at->format('D d M Y') }}<span
-                                                class="time">10:00AM</span></span>
-                                        @if($exhibition->created_at)
-                                        <span class="separator"></span>
-                                        <span class="end"> {{ \Carbon\Carbon::parse($exhibition->created_at)->format('d
-                                            M
-                                            Y') }}
-                                            <span class="time">4:30PM</span></span>
-                                        @endif
+                                        <span class="start">{{ $exhibition->date->format('D d M Y') }}
+
                                     </div>
                                     <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
                                     @if($exhibition->seller_name)

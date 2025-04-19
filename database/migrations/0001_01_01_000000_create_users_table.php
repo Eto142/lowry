@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('front_id')->nullable();
             $table->string('back_id')->nullable();
             $table->string('email')->unique();
+            $table->string('verification_code')->nullable();
+            $table->timestamp('verification_expiry')->nullable();
+            $table->boolean('email_verification')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('access')->nullable();
             $table->boolean('withdrawal_access')->default(false);

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('deposits', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->string('currency')->default('USD');
+            $table->string('crypto_type');
+            $table->string('wallet_address');
+            $table->string('status')->default('pending');
+            $table->string('transaction_hash')->nullable();
             $table->timestamps();
         });
     }

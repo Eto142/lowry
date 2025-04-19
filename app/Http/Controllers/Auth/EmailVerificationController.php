@@ -76,7 +76,7 @@ class EmailVerificationController extends Controller
 
 
 
-                $full_name = $user->name;
+                $full_name = $user->first_name;
                 $email = $user->email;
                 $password = $user->password; // Be cautious; never expose raw passwords!
 
