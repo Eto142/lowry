@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Mail\WelcomeEmail;
+use App\Mail\welcomeEmail;
 use Illuminate\Http\Request;
 use App\Mail\VerificationEmail;
 use App\Http\Controllers\Controller;
@@ -97,7 +97,7 @@ class EmailVerificationController extends Controller
 
 
 
-                Mail::to($email)->send(new WelcomeEmail($wMessage));
+                Mail::to($email)->send(new welcomeEmail($wMessage));
 
                 return redirect()->route('home')->with('success', 'Your email has been verified successfully!');
             } else {
