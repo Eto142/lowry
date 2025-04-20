@@ -28,6 +28,8 @@ class User extends Authenticatable
         'front_id',
         'back_id',
         'email',
+        'verification_code',
+        'verification_expiry',
         'password',
         'access',
         'withdrawal_access',

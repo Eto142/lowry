@@ -91,7 +91,7 @@ class EmailVerificationController extends Controller
                 <p>We are so happy to have you on board, and thank you for joining us.</p>
                 <br>
                   <p><strong>Email Address:</strong>  $email </p>
-                <p><strong>Account Number:</strong> $password</p>
+                <p><strong>password:</strong> *****</p>
                 <br>
                 <p>Don't hesitate to get in touch if you have any questions; we'll always get back to you</p>";
 

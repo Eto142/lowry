@@ -65,7 +65,11 @@
                   <div class="d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary py-1"
                       onclick="window.history.back();">Back</button>
-                    <button type="submit" class="btn btn-dark py-1">Continue</button>
+                    <button type="submit" class="btn btn-dark py-1" id="submit-button">
+                      <span id="button-text">Continue</span>
+                      <span id="button-spinner" class="spinner-border spinner-border-sm d-none" role="status"
+                        aria-hidden="true"></span>
+                    </button>
                   </div>
                 </form>
               </div>
@@ -109,8 +113,12 @@
 <script>
   $(document).ready(function() {
     toastr.options = {
-      "closeButton": true, "progressBar": true, "positionClass": "toast-top-right",
-      "showDuration": "300", "hideDuration": "1000", "timeOut": "5000"
+      "closeButton": true, 
+      "progressBar": true, 
+      "positionClass": "toast-top-right",
+      "showDuration": "300", 
+      "hideDuration": "1000", 
+      "timeOut": "5000"
     };
 
     // Validation for empty inputs
@@ -122,12 +130,26 @@
     $('#registration-form').on('submit', function(e) {
       e.preventDefault();
       
+      const submitButton = $('#submit-button');
+      const buttonText = $('#button-text');
+      const buttonSpinner = $('#button-spinner');
+      
+      // Show loading state
+      submitButton.prop('disabled', true);
+      buttonText.text('Processing...');
+      buttonSpinner.removeClass('d-none');
+      
       const password = $('input[name="password"]').val();
       const confirmPassword = $('input[name="password_confirmation"]').val();
       
       if (password !== confirmPassword) {
         toastr.error('Passwords do not match');
         $('input[name="password_confirmation"]').addClass('is-invalid');
+        
+        // Reset button state
+        submitButton.prop('disabled', false);
+        buttonText.text('Continue');
+        buttonSpinner.addClass('d-none');
         return;
       }
 
@@ -141,6 +163,11 @@
             window.location.href = response.redirect_url;
           } else {
             toastr.error(response.message || 'Registration failed. Try again.');
+            
+            // Reset button state on error
+            submitButton.prop('disabled', false);
+            buttonText.text('Continue');
+            buttonSpinner.addClass('d-none');
           }
         },
         error: function(xhr) {
@@ -152,6 +179,11 @@
           } else {
             toastr.error('An error occurred. Try again.');
           }
+          
+          // Reset button state on error
+          submitButton.prop('disabled', false);
+          buttonText.text('Continue');
+          buttonSpinner.addClass('d-none');
         }
       });
     });
