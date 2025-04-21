@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+
+    'providers' => [
+        // ... other service providers
+
+        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+    ],
+
+    'aliases' => [
+        // ... other aliases
+
+        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+    ],
+
 ];
