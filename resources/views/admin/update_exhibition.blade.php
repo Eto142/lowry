@@ -38,12 +38,12 @@
                                             <input type="file" class="form-control-file" name="picture">
                                             <small class="text-danger" id="picture-error"></small>
                                             <small class="text-muted">Max size: 2MB (JPEG, PNG, JPG, GIF)</small>
-                                            @if($exhibition->picture)
+                                            @if($exhibition->picture_url)
                                             <div class="mt-2">
-                                                <img src="{{ asset($exhibition->picture) }}" alt="Current Image"
+                                                <img src="{{ $exhibition->picture_url }}" alt="Current Image"
                                                     style="max-width: 200px; max-height: 200px;">
                                                 <input type="hidden" name="current_picture"
-                                                    value="{{ $exhibition->picture }}">
+                                                    value="{{ $exhibition->picture_url }}">
                                             </div>
                                             @endif
                                         </div>

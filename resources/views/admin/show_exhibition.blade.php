@@ -16,9 +16,9 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    @if($exhibition->picture)
-                                    <img src="{{ asset('storage/'.$exhibition->picture) }}"
-                                        alt="{{ $exhibition->title }}" class="img-fluid rounded"
+                                    @if($exhibition->picture_url)
+                                    <img src="{{ $exhibition->picture_url }}" alt="{{ $exhibition->title }}"
+                                        class="img-fluid rounded"
                                         style="max-height: 400px; width: 100%; object-fit: cover;">
                                     @else
                                     <div class="bg-light d-flex align-items-center justify-content-center"

@@ -113,7 +113,7 @@
                     class="eventCard context-default production-type-default variant-default topdate">
                     <style>
                         [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                            background-image: url('{{ $exhibition->picture ?? ' https: //via.placeholder.com/855x600' }}');
+                            background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
                             }
                     </style>
                     <div class="listItemWrapper">
@@ -178,7 +178,7 @@
                     class="eventCard context-default production-type-default variant-default topdate">
                     <style>
                         [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                            background-image: url('{{ $exhibition->picture ?? ' https: //via.placeholder.com/855x600' }}');
+                            background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
                             }
                     </style>
                     <div class="listItemWrapper">

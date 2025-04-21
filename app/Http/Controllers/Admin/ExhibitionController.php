@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Models\Exhibition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
-
+use Cloudinary\Cloudinary;
 
 class ExhibitionController extends Controller
 {
@@ -29,7 +27,6 @@ class ExhibitionController extends Controller
     {
         return view('admin.create_exhibition');
     }
-
 
     public function store(Request $request)
     {
@@ -58,7 +55,10 @@ class ExhibitionController extends Controller
             ]);
 
             if ($request->hasFile('picture')) {
-                $uploadedFile = Cloudinary::upload(
+                $cloudinary = new Cloudinary();
+                $uploadApi = $cloudinary->uploadApi();
+
+                $uploadResult = $uploadApi->upload(
                     $request->file('picture')->getRealPath(),
                     [
                         'folder' => 'exhibitions',
@@ -70,10 +70,9 @@ class ExhibitionController extends Controller
                     ]
                 );
 
-                $validated['picture_url'] = $uploadedFile->getSecurePath();
-                $validated['picture_public_id'] = $uploadedFile->getPublicId();
+                $validated['picture_url'] = $uploadResult['secure_url'] ?? null;
+                $validated['picture_public_id'] = $uploadResult['public_id'] ?? null;
             }
-
 
             // Set default values for checkboxes
             $validated['show_seller_contact'] = $request->has('show_seller_contact');
@@ -97,7 +96,7 @@ class ExhibitionController extends Controller
         } catch (\Exception $e) {
             Log::error('Exhibition Creation Error: ' . $e->getMessage(), [
                 'exception' => $e,
-                'request' => $request->except('picture') // Don't log file data
+                'request' => $request->except('picture')
             ]);
 
             return response()->json([
@@ -106,6 +105,7 @@ class ExhibitionController extends Controller
             ], 500);
         }
     }
+
 
     // Show single exhibition
     public function show(Exhibition $exhibition)
@@ -133,33 +133,52 @@ class ExhibitionController extends Controller
                 'seller_phone' => 'nullable|string|max:20',
                 'seller_address' => 'nullable|string|max:500',
                 'show_seller_contact' => 'sometimes|boolean',
-                'buyer_name' => 'nullable|string|max:255',
-                'buyer_email' => 'nullable|email|max:255',
-                'buyer_phone' => 'nullable|string|max:20',
-                'buyer_address' => 'nullable|string|max:500',
+                'buyer_name' => 'nullable|required_if:exhibition_status,sold|string|max:255',
+                'buyer_email' => 'nullable|required_if:exhibition_status,sold|email|max:255',
+                'buyer_phone' => 'nullable|required_if:exhibition_status,sold|string|max:20',
+                'buyer_address' => 'nullable|required_if:exhibition_status,sold|string|max:500',
                 'show_buyer_contact' => 'sometimes|boolean',
                 'exhibition_status' => 'required|in:pending,available,sold,reserved',
                 'exhibition_type' => 'required|in:past,current,future',
-                'amount_sold' => 'nullable|numeric|min:0',
+                'amount_sold' => 'nullable|required_if:exhibition_status,sold|numeric|min:0',
                 'date' => 'required|date',
                 'is_featured' => 'sometimes|boolean',
                 'admin_id' => 'required|exists:admins,id'
             ]);
 
-            // Handle file upload to Cloudinary
+            // Handle file upload to Cloudinary if new picture is provided
             if ($request->hasFile('picture')) {
-                // Delete old picture from Cloudinary if it exists
-                if ($exhibition->picture_public_id) {
-                    Cloudinary::destroy($exhibition->picture_public_id);
-                }
+                $cloudinary = new Cloudinary();
+                $uploadApi = $cloudinary->uploadApi();
 
-                // Upload new picture
-                $cloudinaryImage = $request->file('picture')->storeOnCloudinary('exhibitions');
-                $validated['picture_url'] = $cloudinaryImage->getSecurePath();
-                $validated['picture_public_id'] = $cloudinaryImage->getPublicId();
+                try {
+                    // Delete old picture from Cloudinary if it exists
+                    if ($exhibition->picture_public_id) {
+                        $uploadApi->destroy($exhibition->picture_public_id);
+                    }
+
+                    // Upload new picture
+                    $uploadResult = $uploadApi->upload(
+                        $request->file('picture')->getRealPath(),
+                        [
+                            'folder' => 'exhibitions',
+                            'transformation' => [
+                                'width' => 800,
+                                'height' => 600,
+                                'crop' => 'limit',
+                            ],
+                        ]
+                    );
+
+                    $validated['picture_url'] = $uploadResult['secure_url'] ?? null;
+                    $validated['picture_public_id'] = $uploadResult['public_id'] ?? null;
+                } catch (\Exception $e) {
+                    Log::error('Cloudinary Error during update: ' . $e->getMessage());
+                    throw new \Exception('Failed to process image upload');
+                }
             }
 
-            // Set default values for checkboxes if not provided
+            // Set boolean values
             $validated['show_seller_contact'] = $request->has('show_seller_contact');
             $validated['show_buyer_contact'] = $request->has('show_buyer_contact');
             $validated['is_featured'] = $request->has('is_featured');
@@ -179,10 +198,14 @@ class ExhibitionController extends Controller
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            Log::error('Error updating exhibition: ' . $e->getMessage());
+            Log::error('Error updating exhibition ID ' . $exhibition->id . ': ' . $e->getMessage(), [
+                'exception' => $e,
+                'request' => $request->except('picture')
+            ]);
+
             return response()->json([
                 'success' => false,
-                'message' => 'Error updating exhibition. Please try again.'
+                'message' => 'Error updating exhibition: ' . $e->getMessage()
             ], 500);
         }
     }
@@ -204,22 +227,32 @@ class ExhibitionController extends Controller
     }
 
     // Delete exhibition (AJAX)
+    // Delete exhibition (AJAX)
     public function destroy(Exhibition $exhibition)
     {
         try {
             // Delete associated image from Cloudinary if it exists
             if ($exhibition->picture_public_id) {
-                Cloudinary::destroy($exhibition->picture_public_id);
+                $cloudinary = new Cloudinary();
+                $uploadApi = $cloudinary->uploadApi();
+
+                try {
+                    $uploadApi->destroy($exhibition->picture_public_id);
+                } catch (\Exception $e) {
+                    Log::error('Cloudinary Error during deletion: ' . $e->getMessage());
+                    // Continue with deletion even if image deletion fails
+                }
             }
 
             $exhibition->delete();
 
             return response()->json([
                 'success' => true,
-                'message' => 'Exhibition item deleted successfully!'
+                'message' => 'Exhibition deleted successfully!'
             ]);
         } catch (\Exception $e) {
-            Log::error('Error deleting exhibition: ' . $e->getMessage());
+            Log::error('Error deleting exhibition ID ' . $exhibition->id . ': ' . $e->getMessage());
+
             return response()->json([
                 'success' => false,
                 'message' => 'Error deleting exhibition. Please try again.'

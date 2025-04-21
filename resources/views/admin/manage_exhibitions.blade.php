@@ -7,7 +7,7 @@
             @endif
             <div class="mt-2 mb-4">
                 <h1 class="title1 text-dark">Exhibition List</h1>
-            </div> 
+            </div>
 
             <div class="row">
                 <div class="col-12">
@@ -56,7 +56,7 @@
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
-                            </thead> 
+                            </thead>
                             <tbody id="exhibitionlisttbl">
                                 @foreach($exhibitions as $index => $exhibition)
                                 <tr id="exhibition-row-{{ $exhibition->id }}">
@@ -76,9 +76,10 @@
                                         <small>{{ Str::limit($exhibition->description, 50) }}</small>
                                     </td>
                                     <td>
-                                        @if($exhibition->picture)
-                                        <img src="{{ asset($exhibition->picture) }}" width="50" height="50"
-                                            class="img-thumbnail">
+                                        @if($exhibition->picture_url)
+                                        <img src="{{ $exhibition->picture_url }}" width="50" height="50"
+                                            class="img-thumbnail" alt="{{ $exhibition->title }}"
+                                            style="object-fit: cover;">
                                         @else
                                         <span class="badge badge-secondary">No Image</span>
                                         @endif
