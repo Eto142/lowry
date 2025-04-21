@@ -11,8 +11,11 @@ class Exhibition extends Model
         'user_id',
         'admin_id',
         'picture',
+        'picture_url',
+        'picture_public_id',
         'title',
         'description',
+        'date',
         'buyer_name',
         'buyer_email',
         'buyer_phone',
@@ -26,7 +29,6 @@ class Exhibition extends Model
         'exhibition_status',
         'exhibition_type',
         'amount_sold',
-        'date',
         'is_featured',
     ];
 

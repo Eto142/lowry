@@ -190,12 +190,12 @@
 
         // Show/hide buyer info based on status
         $('#exhibition_status').change(function() {
-            if ($(this).val() === 'sold' || $(this).val() === 'pending' || $(this).val() === 'available') {
+            if ($(this).val() === 'sold') {
                 $('#buyerInfoSection').show();
             } else {
                 $('#buyerInfoSection').hide();
             }
-        }).trigger('change'); // Trigger on load to set initial state
+        }).trigger('change');
 
         $('#createExhibitionForm').on('submit', function(e) {
             e.preventDefault();
@@ -204,12 +204,15 @@
             $('.text-danger').text('');
             
             // Disable button and show spinner
-            $('#submitBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating...');
+            const submitBtn = $('#submitBtn');
+            const originalBtnText = submitBtn.html();
+            submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating...');
             $('#spinner').show();
             
             // Create FormData object
             let formData = new FormData(this);
             formData.append('admin_id', {{ Auth::guard('admin')->user()->id }});
+            
             
             $.ajax({
                 url: "{{ route('admin.exhibitions.store') }}",
@@ -223,11 +226,11 @@
                     
                     setTimeout(() => {
                         window.location.href = "{{ route('admin.exhibitions.index') }}";
-                    }, 2000);
+                    }, 1500);
                 },
                 error: function(xhr) {
                     // Re-enable button and restore original text
-                    $('#submitBtn').prop('disabled', false).html('<i class="fas fa-plus-circle"></i> Add Exhibition');
+                    submitBtn.prop('disabled', false).html(originalBtnText);
                     $('#spinner').hide();
                     
                     if(xhr.status === 422) {
@@ -236,9 +239,10 @@
                         $.each(errors, function(key, value) {
                             $(`#${key}-error`).text(value[0]);
                         });
-                        toastr.error('Please fix the form errors');
+                        toastr.error('Please correct the form errors');
                     } else {
-                        toastr.error(xhr.responseJSON?.message || 'An error occurred');
+                        const errorMessage = xhr.responseJSON?.message || 'An unexpected error occurred. Please try again.';
+                        toastr.error(errorMessage);
                     }
                 }
             });

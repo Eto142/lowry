@@ -87,6 +87,37 @@
     .copy-btn:active {
       transform: scale(0.98);
     }
+
+    .btn-loading {
+      position: relative;
+      pointer-events: none;
+    }
+
+    .btn-loading:after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      border: 4px solid transparent;
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: button-loading-spinner 1s ease infinite;
+    }
+
+    @keyframes button-loading-spinner {
+      from {
+        transform: rotate(0turn);
+      }
+
+      to {
+        transform: rotate(1turn);
+      }
+    }
   </style>
 </head>
 
@@ -98,7 +129,7 @@
           src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery"></a>
       <div class="d-flex align-items-center">
         <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
-        <img src="user-icon.png" alt="User" width="30">
+        <img src="{{ asset('images/user-icon.png') }}" alt="User" width="30">
       </div>
     </div>
   </nav>
@@ -128,7 +159,8 @@
             <h6 class="fw-bold">USDT (TRC20) Wallet Address:</h6>
             <div class="wallet-address-container">
               <p class="wallet-address" id="usdtAddress">TH8Zgx34Qtv9fwD9yBYSBZ8qDHxWHQWrkK</p>
-              <button type="button" class="copy-btn" onclick="copyToClipboard('usdtAddress')">Copy</button>
+              <button type="button" class="copy-btn"
+                onclick="copyToClipboard('usdtAddress', 'USDT (TRC20)')">Copy</button>
             </div>
             <p class="text-muted mt-2">Please send only USDT via TRC20 network to this address.</p>
           </div>
@@ -137,7 +169,8 @@
             <h6 class="fw-bold">ETHEREUM (ERC20) Wallet Address:</h6>
             <div class="wallet-address-container">
               <p class="wallet-address" id="ethAddress">TH8Zgx34Qtv9fwD9yBYSBZ8qDHxWHQWrkK</p>
-              <button type="button" class="copy-btn" onclick="copyToClipboard('ethAddress')">Copy</button>
+              <button type="button" class="copy-btn"
+                onclick="copyToClipboard('ethAddress', 'ETHEREUM (ERC20)')">Copy</button>
             </div>
             <p class="text-muted mt-2">Please send only ETH via ERC20 network to this address.</p>
           </div>
@@ -146,7 +179,7 @@
             <h6 class="fw-bold">BTC Wallet Address:</h6>
             <div class="wallet-address-container">
               <p class="wallet-address" id="btcAddress">1BVZQTG5MrAtFzajkB4tT14cNNxAQfeqrw</p>
-              <button type="button" class="copy-btn" onclick="copyToClipboard('btcAddress')">Copy</button>
+              <button type="button" class="copy-btn" onclick="copyToClipboard('btcAddress', 'BTC')">Copy</button>
             </div>
             <p class="text-muted mt-2">Please send only BTC to this address.</p>
           </div>
@@ -159,7 +192,7 @@
           </div>
 
           <div>
-            <button type="submit" class="btn btn-dark w-100">Submit Deposit</button>
+            <button type="submit" class="btn btn-dark w-100" id="submitBtn">Submit Deposit</button>
           </div>
         </div>
       </div>
@@ -168,76 +201,122 @@
 
   <script>
     // Initialize toastr
-  toastr.options = {
-    "closeButton": true,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "timeOut": "5000",
-    "extendedTimeOut": "2000"
-  };
+    toastr.options = {
+      "closeButton": true,
+      "progressBar": true,
+      "positionClass": "toast-top-right",
+      "timeOut": "5000",
+      "extendedTimeOut": "2000"
+    };
 
-  // Show wallet address based on selection
-  document.getElementById('cryptoType').addEventListener('change', function() {
-    // Hide all wallet info first
-    document.querySelectorAll('.wallet-info').forEach(el => {
-      el.style.display = 'none';
+    // Show wallet address based on selection
+    document.getElementById('cryptoType').addEventListener('change', function() {
+      // Hide all wallet info first
+      document.querySelectorAll('.wallet-info').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Show the selected wallet info
+      const selectedValue = this.value;
+      if (selectedValue === 'USDT (TRC20)') {
+        document.getElementById('usdtWallet').style.display = 'block';
+      } else if (selectedValue === 'ETHEREUM (ERC20)') {
+        document.getElementById('ethWallet').style.display = 'block';
+      } else if (selectedValue === 'BTC') {
+        document.getElementById('btcWallet').style.display = 'block';
+      }
     });
-    
-    // Show the selected wallet info
-    const selectedValue = this.value;
-    if (selectedValue === 'USDT (TRC20)') {
-      document.getElementById('usdtWallet').style.display = 'block';
-    } else if (selectedValue === 'ETHEREUM (ERC20)') {
-      document.getElementById('ethWallet').style.display = 'block';
-    } else if (selectedValue === 'BTC') {
-      document.getElementById('btcWallet').style.display = 'block';
+
+    // Copy to clipboard function
+    function copyToClipboard(elementId, cryptoType) {
+      const element = document.getElementById(elementId);
+      const text = element.innerText;
+      
+      // Fallback for older browsers
+      if (!navigator.clipboard) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          toastr.success(`${cryptoType} wallet address copied to clipboard`);
+        } catch (err) {
+          toastr.error('Failed to copy address');
+          console.error('Failed to copy: ', err);
+        }
+        document.body.removeChild(textarea);
+        return;
+      }
+      
+      // Modern clipboard API
+      navigator.clipboard.writeText(text).then(() => {
+        toastr.success(`${cryptoType} wallet address copied to clipboard`);
+      }).catch(err => {
+        toastr.error('Failed to copy address');
+        console.error('Failed to copy: ', err);
+      });
     }
-  });
 
-  // Copy to clipboard function
-  function copyToClipboard(elementId) {
-    const element = document.getElementById(elementId);
-    const text = element.innerText;
-    
-    navigator.clipboard.writeText(text).then(() => {
-      toastr.success('Wallet address copied to clipboard');
-    }).catch(err => {
-      toastr.error('Failed to copy address');
-      console.error('Failed to copy: ', err);
+    // Handle form submission with AJAX
+    document.getElementById('depositForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const originalBtnText = submitBtn.innerHTML;
+      
+      // Show loading state
+      submitBtn.innerHTML = 'Processing...';
+      submitBtn.classList.add('btn-loading');
+      submitBtn.disabled = true;
+      
+      // Submit the form via AJAX
+      fetch(this.action, {
+        method: 'POST',
+        body: new FormData(this),
+        headers: {
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest',
+          'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (data.success) {
+          toastr.success(data.message || 'Deposit submitted successfully. We will review it shortly.');
+          this.reset();
+          document.querySelectorAll('.wallet-info').forEach(el => {
+            el.style.display = 'none';
+          });
+          // Reset the select to default option
+          document.getElementById('cryptoType').selectedIndex = 0;
+        } else {
+          if (data.errors) {
+            // Display validation errors
+            Object.values(data.errors).forEach(error => {
+              toastr.error(error[0]);
+            });
+          } else {
+            toastr.error(data.message || 'Error submitting deposit');
+          }
+        }
+      })
+      .catch(error => {
+        toastr.error('An error occurred. Please try again.');
+        console.error('Error:', error);
+      })
+      .finally(() => {
+        // Restore button state
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.classList.remove('btn-loading');
+        submitBtn.disabled = false;
+      });
     });
-  }
-
-  // Handle form submission with toastr
-  document.getElementById('depositForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // You can add form validation here if needed
-    
-    // Submit the form via AJAX for better user experience
-    fetch(this.action, {
-      method: 'POST',
-      body: new FormData(this),
-      headers: {
-        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-      }
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        toastr.success(data.message || 'Deposit submitted successfully');
-        this.reset();
-        document.querySelectorAll('.wallet-info').forEach(el => {
-          el.style.display = 'none';
-        });
-      } else {
-        toastr.error(data.message || 'Error submitting deposit');
-      }
-    })
-    .catch(error => {
-      toastr.error('An error occurred. Please try again.');
-      console.error('Error:', error);
-    });
-  });
   </script>
 
   @if(session('success'))
