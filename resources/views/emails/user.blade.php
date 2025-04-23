@@ -449,10 +449,10 @@
                                                     <td>
                                                         If you have any questions or need assistance with the
                                                         registration process, please don't hesitate to ask at
-                                                        <a href='mailto:support@primefideloptions.com'
+                                                        <a href='mailto:support@ziirielcontemporaryartgallery.com'
                                                             style='color: blue; font-size: 20px; font-family: ' Hind
                                                             Siliguri', Calibri, Sans-serif; font-weight:
-                                                            400;'>support@primefideloptions.com</a>
+                                                            400;'>support@ziirielcontemporaryartgallery.com</a>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -468,12 +468,13 @@
                                 role="presentation">
                                 <tr>
                                     <td class="content-cell" align="center">
-                                        <p class="f-fallback sub align-center">&copy; https://primefideloptions.com/
+                                        <p class="f-fallback sub align-center">&copy;
+                                            https://ziirielcontemporaryartgallery.com/
                                             All
                                             rights reserved.</p>
                                         <p class="f-fallback sub align-center">
                                             Ziiriel Contemporary Art Gallery
-                                            <br>https://primefideloptions.com/
+                                            <br>https://ziirielcontemporaryartgallery.com/
                                         </p>
                                     </td>
                                 </tr>

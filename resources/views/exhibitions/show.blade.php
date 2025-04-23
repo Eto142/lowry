@@ -484,7 +484,7 @@
 
                 <!-- Artwork image -->
                 <div class="artwork-image-container">
-                    <img src="{{ asset($exhibition->picture) }}" alt="Artwork image" class="artwork-image">
+                    <img src="{{ asset($exhibition->picture_url) }}" alt="Artwork image" class="artwork-image">
                 </div>
 
                 <!-- Artwork details -->

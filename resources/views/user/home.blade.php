@@ -9,7 +9,7 @@
             <a href="{{route('user.future.exhibition')}}" class="btn btn-primary">
                 <i class="bi bi-plus-lg"></i> Future Exhibition
             </a>
-            <a href="{{route('user.exhibitions.manage')}}" class="btn btn-secondary">
+            <a href="{{route('user.current.exhibition')}}" class="btn btn-secondary">
                 <i class="bi bi-eye"></i> Current Exhibition
             </a>
 

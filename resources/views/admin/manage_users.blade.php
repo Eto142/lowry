@@ -120,8 +120,8 @@
                                     <th>SN</th>
                                     <th>Client Name</th>
                                     <th>Balance</th>
-                                    <th>User Status</th>
-                                    <th>Email Status</th>
+                                    {{-- <th>User Status</th>
+                                    <th>Email Status</th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -132,16 +132,20 @@
                                     <td style="display: flex; align-items: center;">
                                         <div
                                             style="width: 40px; height: 40px; border-radius: 50%; background: #007bff; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 10px;">
-                                            {{ strtoupper(substr($user->name, 0, 1)) }}{{
-                                            strtoupper(substr(strrchr($user->name, ' '), 1, 1)) }}
+                                            {{ strtoupper(substr($user->first_name ?? '', 0, 1)) }}{{
+                                            strtoupper(substr($user->last_name ?? '', 0, 1)) }}
+
                                         </div>
                                         <div>
                                             {{ $user->name }} <br>
                                             <small>{{ strtolower($user->email) }}</small>
                                         </div>
+
+
                                     </td>
-                                    <td>{{ $user->plain }}</td>
-                                    <td>
+                                    <td>${{ number_format($user->balance->amount ?? 0, 2) }}</td>
+
+                                    {{-- <td>
                                         <button class="btn btn-sm toggle-user-status" data-id="{{ $user->id }}"
                                             data-status="{{ $user->user_status }}">
                                             @if($user->user_status == 0)
@@ -150,8 +154,8 @@
                                             <span class="badge badge-success">Active</span>
                                             @endif
                                         </button>
-                                    </td>
-                                    <td>
+                                    </td> --}}
+                                    {{-- <td>
                                         <button class="btn btn-sm toggle-email-status" data-id="{{ $user->id }}"
                                             data-status="{{ $user->email_status }}">
                                             @if($user->email_status == 0)
@@ -160,7 +164,7 @@
                                             <span class="badge badge-success">Verified</span>
                                             @endif
                                         </button>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <a class="btn btn-secondary btn-sm"
                                             href="{{ route('admin.user.view', $user->id) }}" role="button">

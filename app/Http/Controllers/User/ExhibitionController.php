@@ -82,6 +82,26 @@ class ExhibitionController extends Controller
         return view('user.exhibitions', compact('exhibitions'));
     }
 
+    public function currentExhibitions()
+    {
+
+        $exhibitions = Exhibition::where('exhibition_type', 'current')
+            ->orderBy('date', 'desc')
+            ->paginate(9);
+
+        return view('user.current_exhibitions', compact('exhibitions'));
+    }
+
+    public function futureExhibitions()
+    {
+
+        $exhibitions = Exhibition::where('exhibition_type', 'future')
+            ->orderBy('date', 'desc')
+            ->paginate(9);
+
+        return view('user.future_exhibitions', compact('exhibitions'));
+    }
+
     public function showExhibition(Exhibition $exhibition)
     {
         return view('user.show_exhibition', compact('exhibition'));
