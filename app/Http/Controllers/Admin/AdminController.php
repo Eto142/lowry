@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Balance;
+use App\Models\Deposit;
 use App\Models\Exhibition;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -97,5 +101,79 @@ class AdminController extends Controller
             'labels' => $labels,
             'data' => $data
         ];
+    }
+
+
+    public function impersonate(User $user)
+    {
+        // Store the original user's ID in the session (if not already stored)
+        if (!session()->has('impersonate')) {
+            session()->put('impersonate', Auth::id());
+        }
+        $data['user'] = $user;
+
+        // Impersonate the specified user
+        Auth::loginUsingId($user->id);
+
+        // Get deposits and sums for the impersonated user
+        $data['holdingBalance'] = Balance::where('user_id', $user->id)->sum('amount') ?? 0;
+
+        // Redirect to the user's home page with the relevant data
+        return view('user.home', $data)->with('message', 'You are logged in as ' . $user->first_name . ' ' . $user->last_name);
+    }
+
+
+    public function leaveImpersonate(User $user)
+    {
+        // Check if the session has an 'impersonate' value
+        if (session()->has('impersonate')) {
+            // Retrieve the original user's ID from the session
+            $originalUserId = session()->get('impersonate');
+
+            // Log in as the original user
+            Auth::loginUsingId($originalUserId);
+
+            // Forget the impersonation session data
+            session()->forget('impersonate');
+
+
+            $userId = $user->id;
+
+            $data['user'] = $user;
+
+            // Fetch deposits for the user
+            $data['deposits'] = Deposit::where('user_id', $userId)->get();
+
+            // Sum of pending deposits
+            $data['pending_deposits_sum'] = Deposit::where('user_id', $userId)
+                ->where('status', 'pending')
+                ->sum('amount');
+
+            // Sum of successful deposits
+            $data['successful_deposits_sum'] = Deposit::where('user_id', $userId)
+                ->where('status', 'successful')
+                ->sum('amount');
+
+            // Sum of pending withdrawals
+            $data['pending_withdrawals_sum'] = Withdrawal::where('user_id', $userId)
+                ->where('status', 'pending')
+                ->sum('amount');
+
+            // Sum of successful withdrawals
+            $data['successful_withdrawals_sum'] = Withdrawal::where('user_id', $userId)
+                ->where('status', 'successful')
+                ->sum('amount');
+
+            // Sum of holding balance
+            $data['total_balance'] = Balance::where('user_id', $userId)
+                ->sum('amount');
+
+
+            // Redirect to the original user's dashboard or home page
+            return redirect()->route('admin.home', $data)->with('message', 'You have returned to your original account.');
+        }
+
+        // If no impersonation is happening, redirect to home
+        return redirect()->route('admin.home')->with('message', 'No impersonation found.');
     }
 }
