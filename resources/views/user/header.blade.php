@@ -194,7 +194,7 @@
                     <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
                     <a class="btn btn-light sidebar-button mb-2" href="/">Home</a>
                     <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.deposit') }}">Deposit</a>
-                    <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.withdrawal') }}">Withdrawal</a>
+                    <a class="btn btn-light sidebar-button mb-2" href="{{ route('withdrawals.index') }}">Withdrawal</a>
                     <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.create.exhibition') }}">Upload Art
                         For Exhibition</a>
                     <a class="btn btn-light sidebar-button mb-2" href="#">History</a>
