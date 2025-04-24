@@ -103,6 +103,15 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/exhibitions/{exhibition}/edit', [App\Http\Controllers\User\ExhibitionController::class, 'edit'])->name('user.exhibitions.edit');
     Route::put('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'update'])->name('user.exhibitions.update');
     Route::delete('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'destroy'])->name('user.exhibitions.destroy');
+
+    // Show KYC form
+    Route::get('/kyc', [App\Http\Controllers\User\KycController::class, 'index'])->name('kyc.index');
+
+    // Get KYC status (AJAX)
+    Route::get('/kyc/status', [App\Http\Controllers\User\KycController::class, 'status'])->name('kyc.status');
+
+    // Submit KYC (AJAX)
+    Route::post('/kyc/submit', [App\Http\Controllers\User\KycController::class, 'submit'])->name('kyc.submit');
     // Withdrawal System Routes
     Route::prefix('withdrawals')->name('withdrawals.')->group(function () {
         Route::get('/', [App\Http\Controllers\User\WithdrawalController::class, 'index'])->name('index');
