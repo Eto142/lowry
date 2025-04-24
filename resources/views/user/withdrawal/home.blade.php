@@ -15,7 +15,7 @@
     <div class="card-body">
       <div class="balance-card mb-4 p-3 bg-light rounded">
         <h5 class="text-secondary">Available Balance</h5>
-        <h2 class="text-dark">${{ number_format($balance, 2) }}</h2>
+        <h2 class="text-dark">${{ number_format(Auth::user()->balance->amount ?? 0, 2) }}</h2>
       </div>
 
       <div class="withdrawal-options mb-4">
