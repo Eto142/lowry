@@ -16,8 +16,9 @@ class WithdrawalController extends Controller
     {
         $user = Auth::user();
         $balance = Balance::firstOrCreate(['user_id' => $user->id], ['amount' => 0]);
+        $data['balance'] = Balance::firstOrCreate(['user_id' => $user->id], ['amount' => 0]);
 
-        return view('user.withdrawal.home', [
+        return view('user.withdrawal.home', $data, [
             'balance' => $balance->amount,
             'withdrawals' => Withdrawal::where('user_id', $user->id)->latest()->get()
         ]);
