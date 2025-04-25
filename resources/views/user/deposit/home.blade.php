@@ -6,8 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ziirielcontemporaryartgallery Account</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <style>
     body {
@@ -88,45 +90,28 @@
       transform: scale(0.98);
     }
 
-    .btn-loading {
-      position: relative;
-      pointer-events: none;
+    .is-invalid {
+      border-color: #dc3545;
     }
 
-    .btn-loading:after {
-      content: "";
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      border: 4px solid transparent;
-      border-top-color: #ffffff;
-      border-radius: 50%;
-      animation: button-loading-spinner 1s ease infinite;
+    .invalid-feedback {
+      color: #dc3545;
+      display: block;
     }
 
-    @keyframes button-loading-spinner {
-      from {
-        transform: rotate(0turn);
-      }
-
-      to {
-        transform: rotate(1turn);
-      }
+    .spinner-border {
+      display: none;
+      margin-left: 10px;
     }
   </style>
 </head>
 
 <body>
-
   <nav class="navbar navbar-light bg-white border-bottom">
     <div class="container d-flex justify-content-between">
-      <a class="navbar-brand fw-bold fs-3" href="{{route('home')}}"><img class="sticky-logo"
-          src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery"></a>
+      <a class="navbar-brand fw-bold fs-3" href="{{route('home')}}">
+        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery">
+      </a>
       <div class="d-flex align-items-center">
         <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
         <img src="{{ asset('images/user-icon.png') }}" alt="User" width="30">
@@ -135,24 +120,27 @@
   </nav>
 
   <div class="container">
-    <form action="{{ route('deposit.store') }}" method="POST" id="depositForm">
+    <form id="depositForm" enctype="multipart/form-data">
       @csrf
       <div class="row mt-5">
         <h5 class="text-center mb-4 text-uppercase fw-bolder">Deposit</h5>
         <div class="col-lg-6 col-md-10 mx-auto px-3">
           <div class="mb-3">
-            <label for="amount" class="form-label fw-bold">Amount (USD)</label>
+            <label for="amount" class="form-label fw-bold">Amount (USD) *</label>
             <input type="number" id="amount" name="amount" class="form-control" placeholder="Enter Amount" min="1"
               step="0.01" required>
+            <div class="invalid-feedback" id="amount-error"></div>
           </div>
+
           <div class="mb-3">
-            <label for="cryptoType" class="form-label fw-bold">Crypto Type</label>
+            <label for="cryptoType" class="form-label fw-bold">Crypto Type *</label>
             <select id="cryptoType" name="crypto_type" class="form-control" required>
               <option value="">Select Crypto Type</option>
               <option value="USDT (TRC20)">USDT (TRC20)</option>
               <option value="ETHEREUM (ERC20)">ETHEREUM (ERC20)</option>
               <option value="BTC">BTC</option>
             </select>
+            <div class="invalid-feedback" id="crypto_type-error"></div>
           </div>
 
           <div id="usdtWallet" class="wallet-info">
@@ -185,14 +173,16 @@
           </div>
 
           <div class="mb-3">
-            <label for="transactionHash" class="form-label fw-bold">Transaction Hash</label>
+            <label for="transactionHash" class="form-label fw-bold">Transaction Hash *</label>
             <input type="text" id="transactionHash" name="transaction_hash" class="form-control"
               placeholder="Enter Transaction Hash" required>
+            <div class="invalid-feedback" id="transaction_hash-error"></div>
             <small class="text-muted">Please provide the transaction hash from your wallet.</small>
           </div>
 
           <div>
             <button type="submit" class="btn btn-dark w-100" id="submitBtn">Submit Deposit</button>
+            <div class="spinner-border text-primary mt-2" id="spinner" role="status" style="display: none;"></div>
           </div>
         </div>
       </div>
@@ -200,136 +190,89 @@
   </div>
 
   <script>
-    // Initialize toastr
-    toastr.options = {
-      "closeButton": true,
-      "progressBar": true,
-      "positionClass": "toast-top-right",
-      "timeOut": "5000",
-      "extendedTimeOut": "2000"
-    };
+    $(document).ready(function() {
+      // Initialize toastr
+      toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "5000"
+      };
 
-    // Show wallet address based on selection
-    document.getElementById('cryptoType').addEventListener('change', function() {
-      // Hide all wallet info first
-      document.querySelectorAll('.wallet-info').forEach(el => {
-        el.style.display = 'none';
+      // Show wallet address based on selection
+      $('#cryptoType').change(function() {
+        $('.wallet-info').hide();
+        const selected = $(this).val();
+        if (selected === 'USDT (TRC20)') {
+          $('#usdtWallet').show();
+        } else if (selected === 'ETHEREUM (ERC20)') {
+          $('#ethWallet').show();
+        } else if (selected === 'BTC') {
+          $('#btcWallet').show();
+        }
       });
-      
-      // Show the selected wallet info
-      const selectedValue = this.value;
-      if (selectedValue === 'USDT (TRC20)') {
-        document.getElementById('usdtWallet').style.display = 'block';
-      } else if (selectedValue === 'ETHEREUM (ERC20)') {
-        document.getElementById('ethWallet').style.display = 'block';
-      } else if (selectedValue === 'BTC') {
-        document.getElementById('btcWallet').style.display = 'block';
-      }
-    });
 
-    // Copy to clipboard function
-    function copyToClipboard(elementId, cryptoType) {
-      const element = document.getElementById(elementId);
-      const text = element.innerText;
-      
-      // Fallback for older browsers
-      if (!navigator.clipboard) {
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-          document.execCommand('copy');
+      // Copy to clipboard function
+      window.copyToClipboard = function(elementId, cryptoType) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
           toastr.success(`${cryptoType} wallet address copied to clipboard`);
-        } catch (err) {
+        }).catch(err => {
           toastr.error('Failed to copy address');
           console.error('Failed to copy: ', err);
-        }
-        document.body.removeChild(textarea);
-        return;
-      }
-      
-      // Modern clipboard API
-      navigator.clipboard.writeText(text).then(() => {
-        toastr.success(`${cryptoType} wallet address copied to clipboard`);
-      }).catch(err => {
-        toastr.error('Failed to copy address');
-        console.error('Failed to copy: ', err);
-      });
-    }
+        });
+      };
 
-    // Handle form submission with AJAX
-    document.getElementById('depositForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const submitBtn = document.getElementById('submitBtn');
-      const originalBtnText = submitBtn.innerHTML;
-      
-      // Show loading state
-      submitBtn.innerHTML = 'Processing...';
-      submitBtn.classList.add('btn-loading');
-      submitBtn.disabled = true;
-      
-      // Submit the form via AJAX
-      fetch(this.action, {
-        method: 'POST',
-        body: new FormData(this),
-        headers: {
-          'Accept': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-        }
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (data.success) {
-          toastr.success(data.message || 'Deposit submitted successfully. We will review it shortly.');
-          this.reset();
-          document.querySelectorAll('.wallet-info').forEach(el => {
-            el.style.display = 'none';
-          });
-          // Reset the select to default option
-          document.getElementById('cryptoType').selectedIndex = 0;
-        } else {
-          if (data.errors) {
-            // Display validation errors
-            Object.values(data.errors).forEach(error => {
-              toastr.error(error[0]);
-            });
-          } else {
-            toastr.error(data.message || 'Error submitting deposit');
+      // Form submission
+      $('#depositForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset error messages
+        $('.invalid-feedback').text('');
+        $('.form-control').removeClass('is-invalid');
+        
+        // Disable button and show spinner
+        const submitBtn = $('#submitBtn');
+        const originalBtnText = submitBtn.html();
+        submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processing...');
+        $('#spinner').show();
+        
+        // Create FormData object
+        let formData = new FormData(this);
+        
+        $.ajax({
+          url: "{{ route('deposit.store') }}",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            toastr.success(response.message);
+            $('#depositForm')[0].reset();
+            $('.wallet-info').hide();
+            $('#cryptoType').val('').trigger('change');
+          },
+          error: function(xhr) {
+            // Re-enable button and restore original text
+            submitBtn.prop('disabled', false).html(originalBtnText);
+            $('#spinner').hide();
+            
+            if(xhr.status === 422) {
+              // Validation errors
+              const errors = xhr.responseJSON.errors;
+              $.each(errors, function(key, value) {
+                $(`#${key}-error`).text(value[0]);
+                $(`#${key}`).addClass('is-invalid');
+              });
+              toastr.error('Please correct the form errors');
+            } else {
+              toastr.error(xhr.responseJSON?.message || 'An unexpected error occurred');
+            }
           }
-        }
-      })
-      .catch(error => {
-        toastr.error('An error occurred. Please try again.');
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        // Restore button state
-        submitBtn.innerHTML = originalBtnText;
-        submitBtn.classList.remove('btn-loading');
-        submitBtn.disabled = false;
+        });
       });
     });
   </script>
-
-  @if(session('success'))
-  <script>
-    toastr.success('{{ session('success') }}');
-  </script>
-  @endif
-
-  @if(session('error'))
-  <script>
-    toastr.error('{{ session('error') }}');
-  </script>
-  @endif
 </body>
 
 </html>

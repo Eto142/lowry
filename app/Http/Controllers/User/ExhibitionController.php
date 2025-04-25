@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Exhibition;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 class ExhibitionController extends Controller
 {
 
-    public function index()
+    public function create()
     {
         return view('user.create-exhibition');
     }
@@ -23,30 +24,38 @@ class ExhibitionController extends Controller
             $validated = $request->validate([
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
-                'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'date' => 'required|date',
-                'amount_sold' => 'nullable|numeric',
+                'picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 'seller_name' => 'required|string|max:255',
                 'seller_email' => 'nullable|email|max:255',
                 'seller_phone' => 'nullable|string|max:20',
-                'seller_address' => 'nullable|string|max:500',
-
+                'date' => 'required|date',
+                'amount_sold' => 'nullable|numeric|min:0'
             ]);
 
-            // Handle file upload
+            // Handle file upload to Cloudinary
             if ($request->hasFile('picture')) {
-                $file = $request->file('picture');
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $file->move('uploads/exhibitions/', $filename);
-                $validated['picture'] = 'uploads/exhibitions/' . $filename;
+                $cloudinary = new Cloudinary();
+                $uploadApi = $cloudinary->uploadApi();
+
+                $uploadResult = $uploadApi->upload(
+                    $request->file('picture')->getRealPath(),
+                    [
+                        'folder' => 'exhibitions',
+                        'transformation' => [
+                            'width' => 800,
+                            'height' => 600,
+                            'crop' => 'limit',
+                        ],
+                    ]
+                );
+
+                $validated['picture_url'] = $uploadResult['secure_url'] ?? null;
+                $validated['picture_public_id'] = $uploadResult['public_id'] ?? null;
             }
 
-            // Set additional fields
-            $validated['user_id'] = auth()->id(); // Add authenticated user's ID
-            $validated['show_seller_contact'] = true;
+            // Set the user ID
+            $validated['user_id'] = Auth::id();
             $validated['exhibition_status'] = 'pending'; // Default status
-            $validated['is_featured'] = true; // Default not featured
-            $validated['exhibition_type'] = 'current'; // Default not featured
 
             // Create the exhibition
             $exhibition = Exhibition::create($validated);
@@ -55,18 +64,17 @@ class ExhibitionController extends Controller
                 'success' => true,
                 'message' => 'Exhibition created successfully!',
                 'data' => $exhibition
-            ], 201);
+            ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation error',
+                'message' => 'Validation failed',
                 'errors' => $e->errors()
             ], 422);
         } catch (\Exception $e) {
-            Log::error('Error creating exhibition: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => 'Error creating exhibition. Please try again.'
+                'message' => 'Error creating exhibition: ' . $e->getMessage()
             ], 500);
         }
     }

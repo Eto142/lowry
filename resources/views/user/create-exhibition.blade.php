@@ -62,11 +62,11 @@
 </head>
 
 <body>
-
   <nav class="navbar navbar-light bg-white border-bottom">
     <div class="container d-flex justify-content-between">
-      <a class="navbar-brand fw-bold fs-3" href="#"><img class="sticky-logo" src="{{asset('images/logo.png')}}"
-          width="100" alt="Ziirielcontemporaryartgallery"></a>
+      <a class="navbar-brand fw-bold fs-3" href="#">
+        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="Ziirielcontemporaryartgallery">
+      </a>
       <div class="d-flex align-items-center">
         <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
         <img src="user-icon.png" alt="User" width="30">
@@ -75,7 +75,6 @@
   </nav>
 
   <div class="container">
-    <!-- Back Button Added Here -->
     <div class="back-button">
       <a href="{{ route('home') }}" class="btn btn-primary">
         <i class="fas fa-arrow-left"></i> Back to Dashboard
@@ -86,95 +85,55 @@
       @csrf
 
       <div class="row mt-5">
-
         <h5 class="text-center mb-4 text-uppercase fw-bolder">Add a new exhibition</h5>
         <div class="col-lg-10 col-md-12 mx-auto px-3">
           <div class="row">
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="picture" class="form-label fw-bold">Picture *</label>
-                <input type="file" id="picture" name="picture"
-                  class="form-control @error('picture') is-invalid @enderror" required>
-                @error('picture')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="mb-3">
-                <label for="amount_sold" class="form-label fw-bold">Amount</label>
-                <input type="number" id="amount_sold" name="amount_sold"
-                  class="form-control @error('amount_sold') is-invalid @enderror" placeholder="Enter Amount"
-                  value="{{ old('amount_sold') }}">
-                @error('amount_sold')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="file" id="picture" name="picture" class="form-control" required>
+                <small class="text-muted">Max size: 2MB (JPEG, PNG, JPG)</small>
+                <div class="invalid-feedback" id="picture-error"></div>
               </div>
               <div class="mb-3">
                 <label for="title" class="form-label fw-bold">Title *</label>
-                <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title"
-                  placeholder="Enter Title" value="{{ old('title') }}" required>
-                @error('title')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="text" class="form-control" id="title" name="title" required>
+                <div class="invalid-feedback" id="title-error"></div>
               </div>
               <div class="mb-3">
                 <label for="description" class="form-label fw-bold">Description *</label>
-                <textarea id="description" name="description"
-                  class="form-control @error('description') is-invalid @enderror" placeholder="Enter Description"
-                  required>{{ old('description') }}</textarea>
-                @error('description')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-              </div>
-              <div class="mb-3">
-                <label for="date" class="form-label fw-bold">Exhibition Date *</label>
-                <input type="date" id="date" name="date" class="form-control @error('date') is-invalid @enderror"
-                  value="{{ old('date') }}" required>
-                @error('date')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <textarea id="description" name="description" class="form-control" required></textarea>
+                <div class="invalid-feedback" id="description-error"></div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="mb-3">
                 <label for="seller_name" class="form-label fw-bold">Seller's Name *</label>
-                <input type="text" id="seller_name" name="seller_name"
-                  class="form-control @error('seller_name') is-invalid @enderror" placeholder="Enter Seller's Name"
-                  value="{{ old('seller_name') }}" required>
-                @error('seller_name')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="text" id="seller_name" name="seller_name" class="form-control" required>
+                <div class="invalid-feedback" id="seller_name-error"></div>
               </div>
               <div class="mb-3">
                 <label for="seller_email" class="form-label fw-bold">Seller's Email</label>
-                <input type="email" id="seller_email" name="seller_email"
-                  class="form-control @error('seller_email') is-invalid @enderror" placeholder="Enter Seller's Email"
-                  value="{{ old('seller_email') }}">
-                @error('seller_email')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="email" id="seller_email" name="seller_email" class="form-control">
+                <div class="invalid-feedback" id="seller_email-error"></div>
               </div>
               <div class="mb-3">
                 <label for="seller_phone" class="form-label fw-bold">Seller's Phone</label>
-                <input type="text" id="seller_phone" name="seller_phone"
-                  class="form-control @error('seller_phone') is-invalid @enderror" placeholder="Enter Seller's Phone"
-                  value="{{ old('seller_phone') }}">
-                @error('seller_phone')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <input type="text" id="seller_phone" name="seller_phone" class="form-control">
+                <div class="invalid-feedback" id="seller_phone-error"></div>
               </div>
               <div class="mb-3">
-                <label for="seller_address" class="form-label fw-bold">Seller's Address</label>
-                <input type="text" id="seller_address" name="seller_address"
-                  class="form-control @error('seller_address') is-invalid @enderror"
-                  placeholder="Enter Seller's Address" value="{{ old('seller_address') }}">
-                @error('seller_address')
-                <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+                <label for="date" class="form-label fw-bold">Exhibition Date *</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+                <div class="invalid-feedback" id="date-error"></div>
               </div>
             </div>
           </div>
           <div>
             <button type="submit" id="submitBtn" class="btn btn-dark w-100">Add exhibition</button>
+            <div class="spinner-border text-primary mt-2" id="spinner" role="status" style="display: none;">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
         </div>
       </div>
@@ -183,63 +142,73 @@
 
   <script>
     $(document).ready(function() {
-        // Initialize toastr
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000"
-        };
+      // Initialize toastr
+      toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "5000"
+      };
 
-        // Form submission
-        $('#exhibitionForm').on('submit', function(e) {
-            e.preventDefault();
+      $('#exhibitionForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset error messages
+        $('.invalid-feedback').text('');
+        $('.form-control').removeClass('is-invalid');
+        
+        // Validate file type
+        const pictureInput = document.getElementById('picture');
+        if (pictureInput.files.length > 0) {
+          const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+          if (!allowedTypes.includes(pictureInput.files[0].type)) {
+            $('#picture-error').text('Invalid file type. Only JPEG, PNG, JPG allowed.');
+            $('#picture').addClass('is-invalid');
+            return false;
+          }
+        }
+        
+        // Disable button and show spinner
+        const submitBtn = $('#submitBtn');
+        const originalBtnText = submitBtn.html();
+        submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating...');
+        $('#spinner').show();
+        
+        // Create FormData object
+        let formData = new FormData(this);
+        
+        $.ajax({
+          url: "{{ route('exhibitions.store') }}",
+          type: "POST",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function(response) {
+            toastr.success(response.message);
+            $('#exhibitionForm')[0].reset();
+            setTimeout(() => {
+              window.location.href = "{{ route('home') }}";
+            }, 1500);
+          },
+          error: function(xhr) {
+            // Re-enable button and restore original text
+            submitBtn.prop('disabled', false).html(originalBtnText);
+            $('#spinner').hide();
             
-            var formData = new FormData(this);
-            var submitBtn = $('#submitBtn');
-            
-            // Save original button text
-            var originalText = submitBtn.html();
-            
-            // Show spinner and disable button
-            submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating...');
-            
-            $.ajax({
-                url: "{{ route('exhibitions.store') }}",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if(response.success) {
-                        toastr.success(response.message);
-                        $('#exhibitionForm')[0].reset();
-                        // Optional: Redirect to dashboard after success
-                        window.location.href = "{{ route('home') }}";
-                    } else {
-                        toastr.error(response.message);
-                    }
-                },
-                error: function(xhr) {
-                    if(xhr.status === 422) {
-                        var errors = xhr.responseJSON.errors;
-                        $.each(errors, function(key, value) {
-                            toastr.error(value[0]);
-                        });
-                    } else {
-                        toastr.error('An error occurred. Please try again.');
-                    }
-                },
-                complete: function() {
-                    // Restore original button text and enable button
-                    submitBtn.prop('disabled', false).html(originalText);
-                }
-            });
+            if(xhr.status === 422) {
+              // Validation errors
+              const errors = xhr.responseJSON.errors;
+              $.each(errors, function(key, value) {
+                $(`#${key}-error`).text(value[0]);
+                $(`#${key}`).addClass('is-invalid');
+              });
+              toastr.error('Please correct the form errors');
+            } else {
+              toastr.error(xhr.responseJSON?.message || 'An unexpected error occurred');
+            }
+          }
         });
+      });
     });
   </script>
 </body>

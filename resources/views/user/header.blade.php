@@ -180,7 +180,7 @@
                     <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
                     <a class="btn btn-light sidebar-button mb-2" href="/">Home</a>
                     <a class="btn btn-dark sidebar-button mb-2" href="{{ route('home') }}">Dashboard</a>
-                    <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.deposit') }}">Deposit</a>
+                    <a class="btn btn-light sidebar-button mb-2" href="{{ route('deposit.create') }}">Deposit</a>
                     <a class="btn btn-dark sidebar-button mb-2" href="{{ route('withdrawals.index') }}">Withdrawal</a>
                     <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.create.exhibition') }}">Add
                         Exhibition</a>
@@ -193,7 +193,7 @@
                 <div class="d-grid gap-2">
                     <button class="btn btn-dark sidebar-button mb-2">Welcome ></button>
                     <a class="btn btn-light sidebar-button mb-2" href="/">Home</a>
-                    <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.deposit') }}">Deposit</a>
+                    <a class="btn btn-dark sidebar-button mb-2" href="{{ route('deposit.create') }}">Deposit</a>
                     <a class="btn btn-light sidebar-button mb-2" href="{{ route('withdrawals.index') }}">Withdrawal</a>
                     <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.create.exhibition') }}">Upload Art
                         For Exhibition</a>
