@@ -19,6 +19,7 @@ Route::get('/', [App\Http\Controllers\HomepageController::class, 'index'])->name
 Route::get('/future-exhibitions', [App\Http\Controllers\HomepageController::class, 'futureExhibitions'])->name('future.exhibitions');
 Route::get('/current-exhibitions', [App\Http\Controllers\HomepageController::class, 'currentExhibitions'])->name('current.exhibitions');
 Route::get('/past-exhibitions', [App\Http\Controllers\HomepageController::class, 'pastExhibitions'])->name('past.exhibitions');
+Route::get('/static-exhibitions', [App\Http\Controllers\HomepageController::class, 'staticExhibitions'])->name('static.exhibitions');
 Route::get('/exhibition', [App\Http\Controllers\HomepageController::class, 'Exhibition'])->name('exhibition');
 Route::get('/collections', [App\Http\Controllers\HomepageController::class, 'Collections'])->name('collections');
 Route::get('/plan', [App\Http\Controllers\HomepageController::class, 'Plan'])->name('plan');

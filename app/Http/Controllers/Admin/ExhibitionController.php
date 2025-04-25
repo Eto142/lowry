@@ -36,6 +36,7 @@ class ExhibitionController extends Controller
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
                 'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240',
                 'seller_name' => 'required|string|max:255',
                 'seller_email' => 'nullable|email|max:255',
                 'seller_phone' => 'nullable|string|max:20',
@@ -47,17 +48,18 @@ class ExhibitionController extends Controller
                 'buyer_address' => 'nullable|required_if:exhibition_status,sold|string|max:500',
                 'show_buyer_contact' => 'sometimes|boolean',
                 'exhibition_status' => 'required|in:pending,available,sold,reserved',
-                'exhibition_type' => 'required|in:past,current,future',
+                'exhibition_type' => 'required|in:past,current,future,static',
                 'amount_sold' => 'nullable|required_if:exhibition_status,sold|numeric|min:0',
                 'date' => 'required|date',
                 'is_featured' => 'sometimes|boolean',
                 'admin_id' => 'required|exists:admins,id'
             ]);
 
-            if ($request->hasFile('picture')) {
-                $cloudinary = new Cloudinary();
-                $uploadApi = $cloudinary->uploadApi();
+            $cloudinary = new Cloudinary();
+            $uploadApi = $cloudinary->uploadApi();
 
+            // Handle picture upload
+            if ($request->hasFile('picture')) {
                 $uploadResult = $uploadApi->upload(
                     $request->file('picture')->getRealPath(),
                     [
@@ -72,6 +74,20 @@ class ExhibitionController extends Controller
 
                 $validated['picture_url'] = $uploadResult['secure_url'] ?? null;
                 $validated['picture_public_id'] = $uploadResult['public_id'] ?? null;
+            }
+
+            // Handle video upload
+            if ($request->hasFile('video')) {
+                $videoResult = $uploadApi->upload(
+                    $request->file('video')->getRealPath(),
+                    [
+                        'folder' => 'exhibitions',
+                        'resource_type' => 'video',
+                    ]
+                );
+
+                $validated['video_url'] = $videoResult['secure_url'] ?? null;
+                $validated['video_public_id'] = $videoResult['public_id'] ?? null;
             }
 
             // Set default values for checkboxes
@@ -96,7 +112,7 @@ class ExhibitionController extends Controller
         } catch (\Exception $e) {
             Log::error('Exhibition Creation Error: ' . $e->getMessage(), [
                 'exception' => $e,
-                'request' => $request->except('picture')
+                'request' => $request->except(['picture', 'video'])
             ]);
 
             return response()->json([
@@ -105,7 +121,6 @@ class ExhibitionController extends Controller
             ], 500);
         }
     }
-
 
     // Show single exhibition
     public function show(Exhibition $exhibition)
@@ -128,6 +143,7 @@ class ExhibitionController extends Controller
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
                 'picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'video' => 'nullable|file|mimes:mp4,mov,avi|max:10240',
                 'seller_name' => 'required|string|max:255',
                 'seller_email' => 'nullable|email|max:255',
                 'seller_phone' => 'nullable|string|max:20',
@@ -139,18 +155,18 @@ class ExhibitionController extends Controller
                 'buyer_address' => 'nullable|required_if:exhibition_status,sold|string|max:500',
                 'show_buyer_contact' => 'sometimes|boolean',
                 'exhibition_status' => 'required|in:pending,available,sold,reserved',
-                'exhibition_type' => 'required|in:past,current,future',
+                'exhibition_type' => 'required|in:past,current,future,static',
                 'amount_sold' => 'nullable|required_if:exhibition_status,sold|numeric|min:0',
                 'date' => 'required|date',
                 'is_featured' => 'sometimes|boolean',
                 'admin_id' => 'required|exists:admins,id'
             ]);
 
+            $cloudinary = new Cloudinary();
+            $uploadApi = $cloudinary->uploadApi();
+
             // Handle file upload to Cloudinary if new picture is provided
             if ($request->hasFile('picture')) {
-                $cloudinary = new Cloudinary();
-                $uploadApi = $cloudinary->uploadApi();
-
                 try {
                     // Delete old picture from Cloudinary if it exists
                     if ($exhibition->picture_public_id) {
@@ -173,8 +189,33 @@ class ExhibitionController extends Controller
                     $validated['picture_url'] = $uploadResult['secure_url'] ?? null;
                     $validated['picture_public_id'] = $uploadResult['public_id'] ?? null;
                 } catch (\Exception $e) {
-                    Log::error('Cloudinary Error during update: ' . $e->getMessage());
+                    Log::error('Cloudinary Error during picture update: ' . $e->getMessage());
                     throw new \Exception('Failed to process image upload');
+                }
+            }
+
+            // Handle video update
+            if ($request->hasFile('video')) {
+                try {
+                    // Delete old video from Cloudinary if it exists
+                    if ($exhibition->video_public_id) {
+                        $uploadApi->destroy($exhibition->video_public_id, ['resource_type' => 'video']);
+                    }
+
+                    // Upload new video
+                    $videoResult = $uploadApi->upload(
+                        $request->file('video')->getRealPath(),
+                        [
+                            'folder' => 'exhibitions',
+                            'resource_type' => 'video',
+                        ]
+                    );
+
+                    $validated['video_url'] = $videoResult['secure_url'] ?? null;
+                    $validated['video_public_id'] = $videoResult['public_id'] ?? null;
+                } catch (\Exception $e) {
+                    Log::error('Cloudinary Error during video update: ' . $e->getMessage());
+                    throw new \Exception('Failed to process video upload');
                 }
             }
 
@@ -200,7 +241,7 @@ class ExhibitionController extends Controller
         } catch (\Exception $e) {
             Log::error('Error updating exhibition ID ' . $exhibition->id . ': ' . $e->getMessage(), [
                 'exception' => $e,
-                'request' => $request->except('picture')
+                'request' => $request->except(['picture', 'video'])
             ]);
 
             return response()->json([
@@ -227,20 +268,27 @@ class ExhibitionController extends Controller
     }
 
     // Delete exhibition (AJAX)
-    // Delete exhibition (AJAX)
     public function destroy(Exhibition $exhibition)
     {
         try {
+            $cloudinary = new Cloudinary();
+            $uploadApi = $cloudinary->uploadApi();
+
             // Delete associated image from Cloudinary if it exists
             if ($exhibition->picture_public_id) {
-                $cloudinary = new Cloudinary();
-                $uploadApi = $cloudinary->uploadApi();
-
                 try {
                     $uploadApi->destroy($exhibition->picture_public_id);
                 } catch (\Exception $e) {
-                    Log::error('Cloudinary Error during deletion: ' . $e->getMessage());
-                    // Continue with deletion even if image deletion fails
+                    Log::error('Cloudinary Error during image deletion: ' . $e->getMessage());
+                }
+            }
+
+            // Delete associated video from Cloudinary if it exists
+            if ($exhibition->video_public_id) {
+                try {
+                    $uploadApi->destroy($exhibition->video_public_id, ['resource_type' => 'video']);
+                } catch (\Exception $e) {
+                    Log::error('Cloudinary Error during video deletion: ' . $e->getMessage());
                 }
             }
 

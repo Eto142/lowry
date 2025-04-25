@@ -207,24 +207,24 @@
 
                 <nav id="anchor-menu" class="anchor-menu">
                     <div class="inner">
-                        <ul id="anchor-nav" class="anchor-nav" data-trigger-label="Jump to section">
+                        <ul>
                             <li>
-                                <a href="#pp_page_instance_810">
+                                <a href="{{route('static.exhibitions')}}">
                                     <span>LS Ziirielcontemporaryartgallery Permanent Collection</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#pp_page_instance_801">
-                                    <span>Current &amp; Upcoming Exhibitions</span>
+                                <a href="{{route('current.exhibitions')}}">
+                                    <span>Current Exhibitions</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#pp_page_instance_1050">
-                                    <span>Newsletter</span>
+                                <a href="{{route('future.exhibitions')}}">
+                                    <span>Upcoming Exhibitions</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#pp_page_instance_812">
+                                <a href="{{route('login')}}">
                                     <span>Useful Information</span>
                                 </a>
                             </li>
@@ -301,7 +301,7 @@
                                                     </a>
                                                 </li>
                                                 <li class="">
-                                                    <a href="{{url('collections')}}" tabindex="-1">
+                                                    <a href="{{route('static.exhibitions')}}" tabindex="-1">
                                                         <span>LS Ziirielcontemporaryartgallery Collection</span>
                                                     </a>
                                                 </li>

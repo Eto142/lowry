@@ -92,6 +92,22 @@ class HomepageController extends Controller
         ]);
     }
 
+    public function staticExhibitions()
+    {
+        $now = Carbon::now();
+
+        // current exhibitions 
+        $pastExhibitions = Exhibition::where('exhibition_type', 'static')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Available artworks for purchase
+        return view('home.static_exhibition', [
+            'pastExhibitions' => $pastExhibitions,
+
+        ]);
+    }
+
     // Show exhibiton home page
     public function Exhibition()
     {

@@ -33,9 +33,17 @@
 
                                         <div class="form-group">
                                             <label class="text-dark">Image *</label>
-                                            <input type="file" class="form-control-file" name="picture" required>
+                                            <input type="file" class="form-control-file" name="picture"
+                                                id="pictureInput" required>
                                             <small class="text-danger" id="picture-error"></small>
                                             <small class="text-muted">Max size: 2MB (JPEG, PNG, JPG, GIF)</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="text-dark">Video (Optional)</label>
+                                            <input type="file" class="form-control-file" name="video" id="videoInput">
+                                            <small class="text-danger" id="video-error"></small>
+                                            <small class="text-muted">Max size: 10MB (MP4, MOV, AVI)</small>
                                         </div>
 
                                         <div class="form-group">
@@ -44,6 +52,7 @@
                                                 <option value="past">Past</option>
                                                 <option value="current" selected>Current</option>
                                                 <option value="future">Future</option>
+                                                <option value="static">Static</option>
                                             </select>
                                             <small class="text-danger" id="exhibition_type-error"></small>
                                         </div>
@@ -209,10 +218,35 @@
             submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating...');
             $('#spinner').show();
             
+            // Validate file types
+            const pictureInput = document.getElementById('pictureInput');
+            const videoInput = document.getElementById('videoInput');
+            
+            // Validate image
+            if (pictureInput.files.length > 0) {
+                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                if (!allowedImageTypes.includes(pictureInput.files[0].type)) {
+                    $('#picture-error').text('Invalid image file type. Only JPEG, PNG, JPG, GIF are allowed.');
+                    submitBtn.prop('disabled', false).html(originalBtnText);
+                    $('#spinner').hide();
+                    return false;
+                }
+            }
+            
+            // Validate video
+            if (videoInput.files.length > 0) {
+                const allowedVideoTypes = ['video/mp4', 'video/quicktime', 'video/x-msvideo'];
+                if (!allowedVideoTypes.includes(videoInput.files[0].type)) {
+                    $('#video-error').text('Invalid video file type. Only MP4, MOV, AVI are allowed.');
+                    submitBtn.prop('disabled', false).html(originalBtnText);
+                    $('#spinner').hide();
+                    return false;
+                }
+            }
+            
             // Create FormData object
             let formData = new FormData(this);
             formData.append('admin_id', {{ Auth::guard('admin')->user()->id }});
-            
             
             $.ajax({
                 url: "{{ route('admin.exhibitions.store') }}",

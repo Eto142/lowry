@@ -26,6 +26,16 @@
                                         <i class="fas fa-image fa-5x text-muted"></i>
                                     </div>
                                     @endif
+
+                                    @if($exhibition->video_url)
+                                    <div class="mt-3">
+                                        <h5 class="text-dark">Video</h5>
+                                        <video controls style="width: 100%; max-height: 300px;">
+                                            <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-6">
                                     <h2 class="text-dark">{{ $exhibition->title }}</h2>
@@ -38,6 +48,12 @@
                                             @else badge-warning @endif">
                                             {{ ucfirst($exhibition->exhibition_status) }}
                                         </span>
+                                        <span class="badge badge-secondary ml-1">
+                                            {{ ucfirst($exhibition->exhibition_type) }}
+                                        </span>
+                                        @if($exhibition->is_featured)
+                                        <span class="badge badge-info ml-1">Featured</span>
+                                        @endif
                                     </div>
 
                                     <div class="mb-3">
@@ -49,10 +65,37 @@
                                         <div class="col-md-6">
                                             <h5 class="text-dark">Seller</h5>
                                             <p>{{ $exhibition->seller_name ?? 'Not specified' }}</p>
+                                            @if($exhibition->show_seller_contact)
+                                            <p class="text-muted small">
+                                                @if($exhibition->seller_email)
+                                                <i class="fas fa-envelope"></i> {{ $exhibition->seller_email }}<br>
+                                                @endif
+                                                @if($exhibition->seller_phone)
+                                                <i class="fas fa-phone"></i> {{ $exhibition->seller_phone }}<br>
+                                                @endif
+                                                @if($exhibition->seller_address)
+                                                <i class="fas fa-map-marker-alt"></i> {{ $exhibition->seller_address }}
+                                                @endif
+                                            </p>
+                                            @endif
                                         </div>
                                         <div class="col-md-6">
                                             <h5 class="text-dark">Buyer</h5>
                                             <p>{{ $exhibition->buyer_name ?? 'Not specified' }}</p>
+                                            @if($exhibition->exhibition_status == 'sold' &&
+                                            $exhibition->show_buyer_contact)
+                                            <p class="text-muted small">
+                                                @if($exhibition->buyer_email)
+                                                <i class="fas fa-envelope"></i> {{ $exhibition->buyer_email }}<br>
+                                                @endif
+                                                @if($exhibition->buyer_phone)
+                                                <i class="fas fa-phone"></i> {{ $exhibition->buyer_phone }}<br>
+                                                @endif
+                                                @if($exhibition->buyer_address)
+                                                <i class="fas fa-map-marker-alt"></i> {{ $exhibition->buyer_address }}
+                                                @endif
+                                            </p>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -119,69 +162,69 @@
 
 <script>
     $(document).ready(function() {
-    // Status Update Form
-    $('#statusForm').submit(function(e) {
-        e.preventDefault();
-        
-        $.ajax({
-            url: "{{ route('admin.exhibitions.update-status', $exhibition->id) }}",
-            type: "POST",
-            data: $(this).serialize(),
-            success: function(response) {
-                showMessage('success', response.message);
-                // Update status badge
-                const badge = $('.badge');
-                badge.removeClass('badge-success badge-danger badge-warning');
-                
-                if(response.new_status === 'available') {
-                    badge.addClass('badge-success').text('Available');
-                } else if(response.new_status === 'sold') {
-                    badge.addClass('badge-danger').text('Sold');
-                    // Reload to show sold details
-                    location.reload();
-                } else {
-                    badge.addClass('badge-warning').text('Reserved');
+        // Status Update Form
+        $('#statusForm').submit(function(e) {
+            e.preventDefault();
+            
+            $.ajax({
+                url: "{{ route('admin.exhibitions.update-status', $exhibition->id) }}",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    showMessage('success', response.message);
+                    // Update status badge
+                    const badge = $('.badge');
+                    badge.removeClass('badge-success badge-danger badge-warning');
+                    
+                    if(response.new_status === 'available') {
+                        badge.addClass('badge-success').text('Available');
+                    } else if(response.new_status === 'sold') {
+                        badge.addClass('badge-danger').text('Sold');
+                        // Reload to show sold details
+                        location.reload();
+                    } else {
+                        badge.addClass('badge-warning').text('Reserved');
+                    }
+                },
+                error: function(xhr) {
+                    showMessage('danger', xhr.responseJSON?.message || 'An error occurred');
                 }
-            },
-            error: function(xhr) {
-                showMessage('danger', xhr.responseJSON?.message || 'An error occurred');
-            }
+            });
         });
-    });
 
-    // Delete Form
-    $('#deleteForm').submit(function(e) {
-        e.preventDefault();
-        
-        if(!confirm('Are you sure you want to delete this item?')) return;
-        
-        $.ajax({
-            url: "{{ route('admin.exhibitions.destroy', $exhibition->id) }}",
-            type: "POST",
-            data: $(this).serialize(),
-            success: function(response) {
-                window.location.href = "{{ route('admin.exhibitions.index') }}";
-            },
-            error: function(xhr) {
-                showMessage('danger', xhr.responseJSON?.message || 'An error occurred');
-            }
+        // Delete Form
+        $('#deleteForm').submit(function(e) {
+            e.preventDefault();
+            
+            if(!confirm('Are you sure you want to delete this item?')) return;
+            
+            $.ajax({
+                url: "{{ route('admin.exhibitions.destroy', $exhibition->id) }}",
+                type: "POST",
+                data: $(this).serialize(),
+                success: function(response) {
+                    window.location.href = "{{ route('admin.exhibitions.index') }}";
+                },
+                error: function(xhr) {
+                    showMessage('danger', xhr.responseJSON?.message || 'An error occurred');
+                }
+            });
         });
-    });
 
-    function showMessage(type, message) {
-        const container = $('#message-container');
-        container.html(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
-            ${message}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>`);
-        
-        setTimeout(() => {
-            container.find('.alert').alert('close');
-        }, 5000);
-    }
-});
+        function showMessage(type, message) {
+            const container = $('#message-container');
+            container.html(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                ${message}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>`);
+            
+            setTimeout(() => {
+                container.find('.alert').alert('close');
+            }, 5000);
+        }
+    });
 </script>
 
 @include('admin.footer')

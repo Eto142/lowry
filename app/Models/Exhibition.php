@@ -13,6 +13,9 @@ class Exhibition extends Model
         'picture',
         'picture_url',
         'picture_public_id',
+        'video',
+        'video_url',
+        'video_public_id',
         'title',
         'description',
         'date',
@@ -30,6 +33,7 @@ class Exhibition extends Model
         'exhibition_type',
         'amount_sold',
         'is_featured',
+
     ];
 
     protected $casts = [

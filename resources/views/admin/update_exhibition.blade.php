@@ -35,7 +35,8 @@
 
                                         <div class="form-group">
                                             <label class="text-dark">Image</label>
-                                            <input type="file" class="form-control-file" name="picture">
+                                            <input type="file" class="form-control-file" name="picture"
+                                                id="pictureInput">
                                             <small class="text-danger" id="picture-error"></small>
                                             <small class="text-muted">Max size: 2MB (JPEG, PNG, JPG, GIF)</small>
                                             @if($exhibition->picture_url)
@@ -49,6 +50,23 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label class="text-dark">Video</label>
+                                            <input type="file" class="form-control-file" name="video" id="videoInput">
+                                            <small class="text-danger" id="video-error"></small>
+                                            <small class="text-muted">Max size: 10MB (MP4, MOV, AVI)</small>
+                                            @if($exhibition->video_url)
+                                            <div class="mt-2">
+                                                <video controls style="max-width: 200px; max-height: 200px;">
+                                                    <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                                                    Your browser does not support the video tag.
+                                                </video>
+                                                <input type="hidden" name="current_video"
+                                                    value="{{ $exhibition->video_url }}">
+                                            </div>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group">
                                             <label class="text-dark">Exhibition Type *</label>
                                             <select class="form-control" name="exhibition_type" required>
                                                 <option value="past" {{ $exhibition->exhibition_type == 'past' ?
@@ -57,6 +75,8 @@
                                                     'selected' : '' }}>Current</option>
                                                 <option value="future" {{ $exhibition->exhibition_type == 'future' ?
                                                     'selected' : '' }}>Future</option>
+                                                <option value="static" {{ $exhibition->exhibition_type == 'static' ?
+                                                    'selected' : '' }}>Static</option>
                                             </select>
                                             <small class="text-danger" id="exhibition_type-error"></small>
                                         </div>
@@ -107,7 +127,7 @@
                                     <div class="col-md-6">
                                         <!-- Buyer Information (only shown if status is sold) -->
                                         <div id="buyerInfoSection"
-                                            style="display: {{ in_array($exhibition->exhibition_status, ['sold', 'pending', 'available']) ? 'block' : 'none' }};">
+                                            style="display: {{ in_array($exhibition->exhibition_status, ['sold']) ? 'block' : 'none' }};">
                                             <h5 class="text-dark mb-3">Buyer Information</h5>
                                             <div class="form-group">
                                                 <label class="text-dark">Buyer Name</label>
@@ -220,12 +240,12 @@
 
         // Show/hide buyer info based on status
         $('#exhibition_status').change(function() {
-            if ($(this).val() === 'sold' || $(this).val() === 'pending' || $(this).val() === 'available') {
+            if ($(this).val() === 'sold') {
                 $('#buyerInfoSection').show();
             } else {
                 $('#buyerInfoSection').hide();
             }
-        });
+        }).trigger('change');
 
         $('#updateExhibitionForm').on('submit', function(e) {
             e.preventDefault();
@@ -233,8 +253,32 @@
             // Reset error messages
             $('.text-danger').text('');
             
+            // Validate file types
+            const pictureInput = document.getElementById('pictureInput');
+            const videoInput = document.getElementById('videoInput');
+            
+            // Validate image if new one is selected
+            if (pictureInput.files.length > 0) {
+                const allowedImageTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+                if (!allowedImageTypes.includes(pictureInput.files[0].type)) {
+                    $('#picture-error').text('Invalid image file type. Only JPEG, PNG, JPG, GIF are allowed.');
+                    return false;
+                }
+            }
+            
+            // Validate video if new one is selected
+            if (videoInput.files.length > 0) {
+                const allowedVideoTypes = ['video/mp4', 'video/quicktime', 'video/x-msvideo'];
+                if (!allowedVideoTypes.includes(videoInput.files[0].type)) {
+                    $('#video-error').text('Invalid video file type. Only MP4, MOV, AVI are allowed.');
+                    return false;
+                }
+            }
+            
             // Disable button and show spinner
-            $('#submitBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Updating...');
+            const submitBtn = $('#submitBtn');
+            const originalBtnText = submitBtn.html();
+            submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Updating...');
             $('#spinner').show();
             
             // Create FormData object
@@ -257,7 +301,7 @@
                 },
                 error: function(xhr) {
                     // Re-enable button and restore original text
-                    $('#submitBtn').prop('disabled', false).html('<i class="fas fa-save"></i> Update Exhibition');
+                    submitBtn.prop('disabled', false).html(originalBtnText);
                     $('#spinner').hide();
                     
                     if(xhr.status === 422) {
