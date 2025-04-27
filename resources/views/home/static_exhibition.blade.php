@@ -24,7 +24,7 @@
         <div class="container">
             <div class="infoHeaderContent">
                 <div class="inner">
-                    <h1>Past Exhibitions</h1>
+                    <h1>LS Exhibitions</h1>
                 </div>
             </div>
         </div>

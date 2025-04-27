@@ -36,8 +36,7 @@
             <div class="richtext">
                 <p>Explore our archive of past exhibitions that have graced our halls. These shows represent the diverse
                     range of artistic experiences we've presented over the years.</p>
-                <p>Many of our past exhibitions have accompanying catalogues and merchandise available in our <a
-                        href="/shop">online shop</a>.</p>
+                <p>Many of our past exhibitions have accompanying catalogues and merchandise available in our.</p>
             </div>
         </div>
     </div>
@@ -48,56 +47,19 @@
                 @foreach($pastExhibitions as $exhibition)
                 <li data-entry-id="{{ $exhibition->id }}"
                     class="eventCard context-default production-type-default variant-default topdate">
-                    <style>
-                        [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                            background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
-                            }
-                    </style>
                     <div class="listItemWrapper">
                         <div class="thumb">
-                            <a class="image" href="/exhibitions/{{ $exhibition->id }}" tabindex="-1"></a>
-                        </div>
-                        <div class="inner">
-                            <div class="descMetaContainer">
-                                <a class="desc" href="/exhibitions/{{ $exhibition->id }}">
-                                    <h2 class="title">{{ $exhibition->title }}</h2>
-                                    <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
-                                    <div class="top-date">
-                                        <span class="start">{{ $exhibition->date->format('D d M Y') }}<span
-                                                class="time">10:00AM</span></span>
-                                        @if($exhibition->end_date)
-                                        <span class="separator"></span>
-                                        <span class="end"> {{ $exhibition->date->format('d M Y') }}
-                                            <span class="time">4:30PM</span></span>
-                                        @endif
-                                    </div>
-                                    <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
-                                    @if($exhibition->seller_name)
-                                    <div class="seller-info" style="font-style: italic; margin-top: 5px;">
-                                        Presented by: {{ $exhibition->seller_name }}
-                                    </div>
-                                    @endif
-                                </a>
-                                <div class="meta">
-                                    <div class="meta-group">
-                                        <ul class="genres">
-                                            <li class="genres__item"><a class="genres__link" href="#">{{
-                                                    $exhibition->genre ?? 'Art' }}</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="meta-group button">
-                                        <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
-                                        @if($exhibition->has_catalogue)
-                                        <a href="/shop/catalogue/{{ $exhibition->id }}" class="btn btn-primary">View
-                                            Catalogue</a>
-                                        @endif
-                                        @auth
-                                        <a href="mailto:{{ $exhibition->artist_email }}"
-                                            class="btn btn-secondary">Contact Artist</a>
-                                        @endauth
-                                    </div>
-                                </div>
+                            @if($exhibition->video_url)
+                            <video class="video-thumbnail" controls
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                                <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            @else
+                            <div class="image"
+                                style="background-image: url('{{ $exhibition->picture_url ?? 'https://via.placeholder.com/855x600' }}'); height: 300px; background-size: cover;">
                             </div>
+                            @endif
                         </div>
                     </div>
                 </li>

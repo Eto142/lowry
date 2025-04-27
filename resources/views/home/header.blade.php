@@ -207,7 +207,7 @@
 
                 <nav id="anchor-menu" class="anchor-menu">
                     <div class="inner">
-                        <ul>
+                        <ul id="anchor-nav" class="anchor-nav">
                             <li>
                                 <a href="{{route('static.exhibitions')}}">
                                     <span>LS Ziirielcontemporaryartgallery Permanent Collection</span>
