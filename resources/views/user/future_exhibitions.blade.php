@@ -250,7 +250,7 @@
                         data-budget="{{ $exhibition->formatted_budget }}"
                         data-date="{{ $exhibition->exhibition_date->format('F j, Y') }}"
                         data-status="{{ $exhibition->is_featured ? 'Featured' : 'Active' }}">
-                        View Exhibition Details
+                        See More Details
                     </button>
                 </div>
             </div>

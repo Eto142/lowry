@@ -14,6 +14,22 @@ class FutureExhibitionsTableSeeder extends Seeder
     public function run(): void
     {
         $exhibitions = [
+
+            [
+                'title' => 'Future Canvas Chronicles',
+                'theme' => 'The Evolution of Visual Storytelling through Tech & Tradition',
+                'description' => null,
+                'mediums' => 'Mixed media, digital illustration, and canvas painting',
+                'objective' => 'To highlight the harmony between analog and digital creativity through narrative art.',
+                'sections' => json_encode([
+                    'Legacy Brushstrokes',
+                    'Interactive Digital Myths',
+                    'Expressive Fusion Zones'
+                ]),
+                'budget' => 23500.00,
+                'exhibition_date' => '2025-05-25',
+            ],
+
             [
                 'title' => 'SKETCHCODE: Lines of Innovation',
                 'theme' => 'Exploring the Role of Sketching in the Digital Age',
