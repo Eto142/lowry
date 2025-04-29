@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Models\Exhibition;
 use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
+use App\Models\FutureExhibition;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -103,9 +104,10 @@ class ExhibitionController extends Controller
     public function futureExhibitions()
     {
 
-        $exhibitions = Exhibition::where('exhibition_type', 'future')
-            ->orderBy('date', 'desc')
-            ->paginate(9);
+
+
+        $exhibitions = FutureExhibition::orderBy('exhibition_date', 'asc')->get();
+
 
         return view('user.future_exhibitions', compact('exhibitions'));
     }

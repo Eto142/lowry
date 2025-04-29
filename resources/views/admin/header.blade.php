@@ -250,6 +250,13 @@
                             </li>
 
                             <li class="nav-item">
+                                <a href="{{route('admin.future-exhibitions.index')}}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <p>Manage Future Exhibitions</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="{{route('admin.home')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <p>Manage Deposits</p>

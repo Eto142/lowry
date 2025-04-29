@@ -260,6 +260,17 @@ Route::prefix('admin')->group(function () {
             Route::get('/getexhibitions', [App\Http\Controllers\Admin\ExhibitionController::class, 'getExhibitions'])->name('admin.getexhibitions');
         });
 
+ 
+        // routes/web.php
+        Route::prefix('admin/future-exhibitions')->group(function () {
+            Route::get('/', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'index'])->name('admin.future-exhibitions.index');
+            Route::get('/create', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'create'])->name('admin.future-exhibitions.create');
+            Route::post('/', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'store'])->name('admin.future-exhibitions.store');
+            Route::get('/{exhibition}/edit', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'edit'])->name('admin.future-exhibitions.edit');
+            Route::put('/{exhibition}', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'update'])->name('admin.future-exhibitions.update');
+            Route::delete('/{exhibition}', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'destroy'])->name('admin.future-exhibitions.destroy');
+        });
+
 
         // Bid Management Routes
         Route::group(['prefix' => 'bids', 'as' => 'bids.'], function () {
