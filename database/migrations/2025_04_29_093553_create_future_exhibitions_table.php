@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('sections')->nullable(); // JSON or text field for sections
             $table->decimal('budget', 10, 2)->nullable();
             $table->date('exhibition_date')->nullable();
+            $table->enum('type', ['future', 'current'])->default('future');
             $table->timestamps();
         });
     }

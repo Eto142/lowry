@@ -260,15 +260,46 @@ Route::prefix('admin')->group(function () {
             Route::get('/getexhibitions', [App\Http\Controllers\Admin\ExhibitionController::class, 'getExhibitions'])->name('admin.getexhibitions');
         });
 
- 
+
         // routes/web.php
-        Route::prefix('admin/future-exhibitions')->group(function () {
-            Route::get('/', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'index'])->name('admin.future-exhibitions.index');
-            Route::get('/create', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'create'])->name('admin.future-exhibitions.create');
-            Route::post('/', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'store'])->name('admin.future-exhibitions.store');
-            Route::get('/{exhibition}/edit', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'edit'])->name('admin.future-exhibitions.edit');
-            Route::put('/{exhibition}', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'update'])->name('admin.future-exhibitions.update');
-            Route::delete('/{exhibition}', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'destroy'])->name('admin.future-exhibitions.destroy');
+        Route::prefix('admin/future-exhibitions')->name('admin.future-exhibitions.')->group(function () {
+            // Display all future exhibitions
+            Route::get('/', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'index'])->name('index');
+
+            // Show create form
+            Route::get('/create', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'create'])->name('create');
+
+            // Store new future exhibition
+            Route::post('/', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'store'])->name('store');
+
+            // Show edit form
+            Route::get('/{exhibition}/edit', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'edit'])->name('edit');
+
+            // Update future exhibition
+            Route::put('/{exhibition}', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'update'])->name('update');
+
+            // Delete future exhibition
+            Route::delete('/{exhibition}', [App\Http\Controllers\Admin\FutureExhibitionController::class, 'destroy'])->name('destroy');
+        });
+
+        Route::prefix('admin/current-exhibitions')->name('admin.current-exhibitions.')->group(function () {
+            // Display all current exhibitions
+            Route::get('/', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'index'])->name('index');
+
+            // Show create form
+            Route::get('/create', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'create'])->name('create');
+
+            // Store new current exhibition
+            Route::post('/', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'store'])->name('store');
+
+            // Show edit form
+            Route::get('/{exhibition}/edit', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'edit'])->name('edit');
+
+            // Update current exhibition
+            Route::put('/{exhibition}', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'update'])->name('update');
+
+            // Delete current exhibition
+            Route::delete('/{exhibition}', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'destroy'])->name('destroy');
         });
 
 

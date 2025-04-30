@@ -14,7 +14,6 @@ class FutureExhibitionsTableSeeder extends Seeder
     public function run(): void
     {
         $exhibitions = [
-
             [
                 'title' => 'Future Canvas Chronicles',
                 'theme' => 'The Evolution of Visual Storytelling through Tech & Tradition',
@@ -28,8 +27,8 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 23500.00,
                 'exhibition_date' => '2025-05-25',
+                'type' => 'future'
             ],
-
             [
                 'title' => 'SKETCHCODE: Lines of Innovation',
                 'theme' => 'Exploring the Role of Sketching in the Digital Age',
@@ -43,6 +42,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 28000.00,
                 'exhibition_date' => '2025-06-29',
+                'type' => 'future'
             ],
             [
                 'title' => 'ILLUSTRATECH: Culture Reframed',
@@ -57,6 +57,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 17550.00,
                 'exhibition_date' => '2025-07-23',
+                'type' => 'future'
             ],
             [
                 'title' => 'Painted Algorithms',
@@ -71,6 +72,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 31250.00,
                 'exhibition_date' => '2025-08-28',
+                'type' => 'current'
             ],
             [
                 'title' => 'RENDERED ROOTS',
@@ -85,6 +87,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 21700.00,
                 'exhibition_date' => '2025-09-21',
+                'type' => 'current'
             ],
             [
                 'title' => 'DUALITY IN DESIGN',
@@ -99,6 +102,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 18550.00,
                 'exhibition_date' => '2025-10-29',
+                'type' => 'future'
             ],
             [
                 'title' => 'CULTURECORE',
@@ -113,6 +117,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 35200.00,
                 'exhibition_date' => '2025-11-30',
+                'type' => 'current'
             ],
             [
                 'title' => 'BRUSH + BYTE',
@@ -127,6 +132,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 40850.00,
                 'exhibition_date' => '2025-12-28',
+                'type' => 'future'
             ],
             [
                 'title' => 'CODED FIGURES',
@@ -141,6 +147,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 22500.00,
                 'exhibition_date' => '2026-01-30',
+                'type' => 'future'
             ],
             [
                 'title' => 'THE IMAGINED MACHINE',
@@ -155,6 +162,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 27400.00,
                 'exhibition_date' => '2026-01-29',
+                'type' => 'current'
             ],
             [
                 'title' => 'ARTCODE SYMPHONY',
@@ -169,6 +177,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 19800.00,
                 'exhibition_date' => '2026-03-27',
+                'type' => 'future'
             ],
             [
                 'title' => 'VISUAL CULTURE LOOP',
@@ -183,6 +192,7 @@ class FutureExhibitionsTableSeeder extends Seeder
                 ]),
                 'budget' => 32200.00,
                 'exhibition_date' => '2026-04-30',
+                'type' => 'current'
             ]
         ];
 

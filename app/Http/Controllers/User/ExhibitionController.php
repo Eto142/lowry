@@ -94,9 +94,9 @@ class ExhibitionController extends Controller
     public function currentExhibitions()
     {
 
-        $exhibitions = Exhibition::where('exhibition_type', 'current')
-            ->orderBy('date', 'desc')
-            ->paginate(9);
+        $exhibitions = FutureExhibition::where('type', 'current')
+            ->orderBy('exhibition_date', 'asc')
+            ->get();
 
         return view('user.current_exhibitions', compact('exhibitions'));
     }
@@ -106,8 +106,9 @@ class ExhibitionController extends Controller
 
 
 
-        $exhibitions = FutureExhibition::orderBy('exhibition_date', 'asc')->get();
-
+        $exhibitions = FutureExhibition::where('type', 'future')
+            ->orderBy('exhibition_date', 'asc')
+            ->get();
 
         return view('user.future_exhibitions', compact('exhibitions'));
     }

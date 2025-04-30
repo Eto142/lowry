@@ -255,6 +255,12 @@
                                     <p>Manage Future Exhibitions</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.current-exhibitions.index')}}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <p>Manage Current Exhibitions</p>
+                                </a>
+                            </li>
 
                             <li class="nav-item">
                                 <a href="{{route('admin.home')}}">
