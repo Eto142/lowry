@@ -96,6 +96,26 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/user-withdrawal', [DashboardController::class, 'ShowWithdrawal'])->name('user.withdrawal');
     Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'create'])->name('user.create.exhibition');
     Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');
+    // Exhibition Management
+    Route::get('/manage-exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'manageExhibition'])
+        ->name('user.manage.exhibitions');
+
+    Route::get('/edit-exhibition/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'edit'])
+        ->name('user.edit.exhibition');
+
+    Route::put('/update-exhibition/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'update'])
+        ->name('user.update.exhibition');
+
+    Route::get('/show-exhibition/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'showExhibition'])
+        ->name('user.show.exhibition');
+
+    // Exhibition Purchase
+    Route::post('/purchase-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'purchase'])
+        ->name('user.purchase.exhibition');
+
+    Route::delete('/delete-exhibition/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'destroy'])
+        ->name('user.delete.exhibition');
+
     Route::get('/future-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'futureExhibitions'])->name('user.future.exhibition');
     Route::get('/current-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'currentExhibitions'])->name('user.current.exhibition');
     Route::get('/exhibitions/{exhibition}', [App\Http\Controllers\User\ExhibitionController::class, 'showExhibition'])->name('user.exhibition.show');

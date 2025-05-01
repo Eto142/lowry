@@ -9,81 +9,66 @@ use App\Models\FutureExhibition;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Cloudinary\Api\Upload\UploadApi;
 
 class ExhibitionController extends Controller
 {
-
     public function create()
     {
         return view('user.create-exhibition');
     }
+
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'seller_name' => 'required|string|max:255',
+            'seller_email' => 'nullable|email|max:255',
+            'seller_phone' => 'nullable|string|max:20',
+            'date' => 'required|date',
+            'amount_sold' => 'required|numeric|min:0'
+        ]);
+
         try {
-            // Validate the request data
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'picture' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-                'seller_name' => 'required|string|max:255',
-                'seller_email' => 'nullable|email|max:255',
-                'seller_phone' => 'nullable|string|max:20',
-                'date' => 'required|date',
-                'amount_sold' => 'nullable|numeric|min:0'
+            // Upload to Cloudinary
+            $cloudinary = new Cloudinary();
+            $uploader = new UploadApi();
+
+            $uploadResult = $uploader->upload($request->file('picture')->getRealPath(), [
+                'folder' => 'exhibitions',
+                'transformation' => [
+                    'width' => 800,
+                    'height' => 600,
+                    'crop' => 'limit'
+                ]
             ]);
 
-            // Handle file upload to Cloudinary
-            if ($request->hasFile('picture')) {
-                $cloudinary = new Cloudinary();
-                $uploadApi = $cloudinary->uploadApi();
-
-                $uploadResult = $uploadApi->upload(
-                    $request->file('picture')->getRealPath(),
-                    [
-                        'folder' => 'exhibitions',
-                        'transformation' => [
-                            'width' => 800,
-                            'height' => 600,
-                            'crop' => 'limit',
-                        ],
-                    ]
-                );
-
-                $validated['picture_url'] = $uploadResult['secure_url'] ?? null;
-                $validated['picture_public_id'] = $uploadResult['public_id'] ?? null;
-            }
-
-            // Set the user ID
-            $validated['user_id'] = Auth::id();
-            $validated['exhibition_status'] = 'pending'; // Default status
-
-            // Create the exhibition
-            $exhibition = Exhibition::create($validated);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Exhibition created successfully!',
-                'data' => $exhibition
+            $exhibition = Exhibition::create([
+                'user_id' => Auth::id(),
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+                'picture_url' => $uploadResult['secure_url'],
+                'picture_public_id' => $uploadResult['public_id'],
+                'seller_name' => $validated['seller_name'],
+                'seller_email' => $validated['seller_email'],
+                'seller_phone' => $validated['seller_phone'],
+                'date' => $validated['date'],
+                'amount_sold' => $validated['amount_sold'],
+                'exhibition_status' => 'pending'
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors()
-            ], 422);
+
+            return redirect()->route('user.exhibitions.manage')
+                ->with('success', 'Exhibition created successfully!');
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Error creating exhibition: ' . $e->getMessage()
-            ], 500);
+            Log::error('Exhibition creation failed: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Failed to create exhibition. Please try again.');
         }
     }
 
-
     public function viewExhibitions()
     {
-
         $exhibitions = Exhibition::where('exhibition_status', 'available')
             ->orderBy('date', 'desc')
             ->paginate(9);
@@ -93,7 +78,6 @@ class ExhibitionController extends Controller
 
     public function currentExhibitions()
     {
-
         $exhibitions = FutureExhibition::where('type', 'current')
             ->orderBy('exhibition_date', 'asc')
             ->get();
@@ -103,9 +87,6 @@ class ExhibitionController extends Controller
 
     public function futureExhibitions()
     {
-
-
-
         $exhibitions = FutureExhibition::where('type', 'future')
             ->orderBy('exhibition_date', 'asc')
             ->get();
@@ -131,7 +112,6 @@ class ExhibitionController extends Controller
         try {
             $exhibition = Exhibition::findOrFail($request->exhibition_id);
 
-            // Update exhibition with buyer info
             $exhibition->update([
                 'buyer_name' => $request->name,
                 'buyer_email' => $request->email,
@@ -163,51 +143,58 @@ class ExhibitionController extends Controller
 
     public function edit(Exhibition $exhibition)
     {
-
-        return view('exhibitions.form', compact('exhibition'));
+        //$this->authorize('update', $exhibition);
+        return view('user.exhibition.edit_exhibition', compact('exhibition'));
     }
 
     public function update(Request $request, Exhibition $exhibition)
     {
-        // $this->authorize('update', $exhibition);
+        //$this->authorize('update', $exhibition);
 
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'picture' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'date' => 'required|date',
-            'amount_sold' => 'required|numeric|min:0',
-            'exhibition_type' => 'required|in:past,current,future',
-            'exhibition_status' => 'required|in:pending,available,sold,reserved',
-            'is_featured' => 'sometimes|boolean',
+            'picture' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
             'seller_name' => 'required|string|max:255',
             'seller_email' => 'nullable|email|max:255',
             'seller_phone' => 'nullable|string|max:20',
-            'seller_address' => 'nullable|string|max:500',
-            'show_seller_contact' => 'sometimes|boolean',
+            'date' => 'required|date',
+            'amount_sold' => 'required|numeric|min:0',
+            'exhibition_status' => 'required|in:pending,available,sold'
         ]);
 
         try {
-            // Handle file upload if new picture provided
+            // Handle new picture upload
             if ($request->hasFile('picture')) {
-                // Delete old picture
-                if ($exhibition->picture) {
-                    $oldPath = str_replace('storage/', '', $exhibition->picture);
-                    Storage::disk('public')->delete($oldPath);
+                $cloudinary = new Cloudinary();
+                $uploader = new UploadApi();
+
+                // Delete old image if exists
+                if ($exhibition->picture_public_id) {
+                    $uploader->destroy($exhibition->picture_public_id);
                 }
 
-                // Store new picture
-                $path = $request->file('picture')->store('exhibitions', 'public');
-                $validated['picture'] = 'storage/' . $path;
+                // Upload new image
+                $uploadResult = $uploader->upload($request->file('picture')->getRealPath(), [
+                    'folder' => 'exhibitions',
+                    'transformation' => [
+                        'width' => 800,
+                        'height' => 600,
+                        'crop' => 'limit'
+                    ]
+                ]);
+
+                $validated['picture_url'] = $uploadResult['secure_url'];
+                $validated['picture_public_id'] = $uploadResult['public_id'];
             }
 
             $exhibition->update($validated);
 
-            return redirect()->route('exhibitions.manage')
+            return redirect()->route('user.manage.exhibitions')
                 ->with('success', 'Exhibition updated successfully!');
         } catch (\Exception $e) {
-            return back()->withInput()
-                ->with('error', 'Error updating exhibition: ' . $e->getMessage());
+            Log::error('Exhibition update failed: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Failed to update exhibition. Please try again.');
         }
     }
 
@@ -216,18 +203,20 @@ class ExhibitionController extends Controller
         // $this->authorize('delete', $exhibition);
 
         try {
-            // Delete picture file
-            if ($exhibition->picture) {
-                $path = str_replace('storage/', '', $exhibition->picture);
-                Storage::disk('public')->delete($path);
+            // Delete image from Cloudinary if exists
+            if ($exhibition->picture_public_id) {
+                $cloudinary = new Cloudinary();
+                $uploader = new UploadApi();
+                $uploader->destroy($exhibition->picture_public_id);
             }
 
             $exhibition->delete();
 
-            return redirect()->route('exhibitions.manage')
+            return redirect()->route('user.exhibitions.manage')
                 ->with('success', 'Exhibition deleted successfully!');
         } catch (\Exception $e) {
-            return back()->with('error', 'Error deleting exhibition: ' . $e->getMessage());
+            Log::error('Exhibition deletion failed: ' . $e->getMessage());
+            return back()->with('error', 'Failed to delete exhibition. Please try again.');
         }
     }
 }
