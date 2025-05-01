@@ -209,28 +209,42 @@
                     <div class="inner">
                         <ul id="anchor-nav" class="anchor-nav">
                             <li>
-                                <a href="{{route('static.exhibitions')}}">
+                                <a href="{{route('static.exhibitions')}}"
+                                    onclick="event.stopPropagation(); return true;">
                                     <span>LS Ziirielcontemporaryartgallery Permanent Collection</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('current.exhibitions')}}">
+                                <a href="{{route('current.exhibitions')}}"
+                                    onclick="event.stopPropagation(); return true;">
                                     <span>Current Exhibitions</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('future.exhibitions')}}">
+                                <a href="{{route('future.exhibitions')}}"
+                                    onclick="event.stopPropagation(); return true;">
                                     <span>Upcoming Exhibitions</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('login')}}">
-                                    <span>Useful Information</span>
+                                <a href="{{route('past.exhibitions')}}" onclick="event.stopPropagation(); return true;">
+                                    <span>Past Exhibition</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </nav>
+
+                <script>
+                    // Override the existing anchor menu behavior for these specific links
+                document.querySelectorAll('#anchor-nav a[href*="exhibitions"], #anchor-nav a[href*="login"]').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        // Completely bypass the smooth scroll/preventDefault logic
+                        window.location = this.href;
+                        return false;
+                    }, true); // Use capturing phase to trigger before other handlers
+                });
+                </script>
 
 
                 <div id="foldout-container-main" class="foldout-container" aria-expanded="false">

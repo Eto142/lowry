@@ -52,6 +52,7 @@ class HomepageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+
         // Available artworks for purchase
         return view('home.future_exhibition', [
             'futureExhibitions' => $futureExhibitions,

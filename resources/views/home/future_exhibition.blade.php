@@ -49,7 +49,7 @@
     <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 50px; background: #fff;">
         <div class="container">
             <ul data-animations="zoom" class="listItems variant-">
-                @foreach($upcomingExhibitions as $exhibition)
+                @foreach($futureExhibitions as $exhibition)
                 <li data-entry-id="{{ $exhibition->id }}"
                     class="eventCard context-default production-type-default variant-default topdate">
                     <style>

@@ -13,7 +13,7 @@
                         srcset="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc">
                     <img class="picture__image"
                         src="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc"
-                        alt="Past Exhibitions">
+                        alt="Ziiriel Contemporary Art Gallery Permanent Collection">
                 </picture>
             </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="container">
             <div class="infoHeaderContent">
                 <div class="inner">
-                    <h1>LS Exhibitions</h1>
+                    <h1>Ziiriel Contemporary Art Gallery Permanent Collection</h1>
                 </div>
             </div>
         </div>
@@ -34,9 +34,13 @@
         style="padding-top: 30px; padding-bottom: 30px; background: #CCD5D8;">
         <div class="container">
             <div class="richtext">
-                <p>Explore our archive of past exhibitions that have graced our halls. These shows represent the diverse
-                    range of artistic experiences we've presented over the years.</p>
-                <p>Many of our past exhibitions have accompanying catalogues and merchandise available in our.</p>
+                <p>Explore our esteemed permanent collection featuring masterpieces from renowned contemporary artists.
+                    This curated selection represents the core of Ziiriel's artistic vision and legacy.</p>
+                <p style="text-align: center;"><strong>Permanent Collection Halls opening hours</strong></p>
+                <p style="text-align: center;">Tuesday – Friday | 11:00–17:00<br>Saturday - Sunday | 10:00 –
+                    17:00<br>Monday | closed</p>
+                <p>The permanent collection is available for viewing year-round and includes rotating featured pieces
+                    from our archives.</p>
             </div>
         </div>
     </div>
@@ -49,20 +53,12 @@
                     class="eventCard context-default production-type-default variant-default topdate">
                     <style>
                         [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                            background-image: url('{{ $exhibition->video_url ? '' : ($exhibition->picture_url ?? ' https: //via.placeholder.com/855x600') }}');
+                            background-image: url('{{ $exhibition->picture_url?? ' https: //via.placeholder.com/855x600' }}');
                             }
                     </style>
                     <div class="listItemWrapper">
                         <div class="thumb">
-                            @if($exhibition->video_url)
-                            <video class="video-thumbnail" controls
-                                style="width: 100%; height: 100%; object-fit: cover;">
-                                <source src="{{ $exhibition->video_url }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            @else
                             <a class="image" href="/exhibitions/{{ $exhibition->id }}" tabindex="-1"></a>
-                            @endif
                         </div>
                         <div class="inner">
                             <div class="descMetaContainer">
@@ -70,20 +66,15 @@
                                     <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">{{ $exhibition->date->format('D d M Y') }}<span
-                                                class="time">10:00AM</span></span>
+                                        <span class="start">Opening: {{ $exhibition->created_at->format('D d M Y')
+                                            }}<span class="time">10:00AM</span></span>
                                         @if($exhibition->end_date)
                                         <span class="separator"></span>
-                                        <span class="end"> {{ $exhibition->date->format('d M Y') }}
-                                            <span class="time">4:30PM</span></span>
+                                        <span class="end">Until: {{ $exhibition->end_date->format('D d M Y') }}<span
+                                                class="time">4:30PM</span></span>
                                         @endif
                                     </div>
                                     <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
-                                    @if($exhibition->seller_name)
-                                    <div class="seller-info" style="font-style: italic; margin-top: 5px;">
-                                        Presented by: {{ $exhibition->seller_name }}
-                                    </div>
-                                    @endif
                                 </a>
                                 <div class="meta">
                                     <div class="meta-group">
@@ -94,14 +85,13 @@
                                     </div>
                                     <div class="meta-group button">
                                         <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
-                                        @if($exhibition->has_catalogue)
-                                        <a href="/shop/catalogue/{{ $exhibition->id }}" class="btn btn-primary">View
-                                            Catalogue</a>
+                                        @if($exhibition->is_auction)
+                                        <a href="/auctions/{{ $exhibition->id }}" class="btn btn-primary">Join Live
+                                            Auction</a>
                                         @endif
-                                        @auth
-                                        <a href="mailto:{{ $exhibition->artist_email }}"
-                                            class="btn btn-secondary">Contact Artist</a>
-                                        @endauth
+                                        @if($exhibition->can_prebook)
+                                        <a href="/book/{{ $exhibition->id }}" class="btn btn-secondary">Pre-book Now</a>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
