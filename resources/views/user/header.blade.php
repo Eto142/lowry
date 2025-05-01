@@ -184,9 +184,9 @@
                     <a class="btn btn-dark sidebar-button mb-2" href="{{ route('withdrawals.index') }}">Withdrawal</a>
                     <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.create.exhibition') }}">Add
                         Exhibition</a>
-                    <a class="btn btn-light sidebar-button mb-2" href="{{ route('user.manage.exhibitions') }}"> Manage
+                    <a class="btn btn-dark sidebar-button mb-2" href="{{ route('user.manage.exhibitions') }}"> Manage
                         Exhibition</a>
-                    <a class="btn btn-dark sidebar-button mb-2" href="#">History</a>
+                    <a class="btn btn-light sidebar-button mb-2" href="#">History</a>
                 </div>
             </div>
 

@@ -20,7 +20,7 @@
     <!-- Exhibitions Grid -->
     <div class="container-fluid" style="padding: 30px 0; background: #fff;">
         <div class="container">
-            <div class="row exhibition-grid">
+            <div class="row exhibition-grid"> 
                 @foreach($pastExhibitions as $exhibition)
                 <div class="col-12 col-md-6 col-lg-4 mb-4" data-entry-id="{{ $exhibition->id }}">
                     <div class="media-container">

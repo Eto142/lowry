@@ -109,49 +109,21 @@
         <div class="container">
             <ul data-animations="zoom" class="listItems variant-">
                 @foreach($pastExhibitions as $exhibition)
-                <li data-entry-id="{{ $exhibition->id }}"
-                    class="eventCard context-default production-type-default variant-default topdate">
-                    <style>
-                        [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                            background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
-                            }
-                    </style>
+                <li data-entry-id="{{ $exhibition->id }}" class="eventCard">
                     <div class="listItemWrapper">
                         <div class="thumb">
-                            <a class="image" href="/exhibitions/{{ $exhibition->id }}" tabindex="-1"></a>
-                        </div>
-                        <div class="inner">
-                            <div class="descMetaContainer">
-                                <a class="desc" href="/exhibitions/{{ $exhibition->id }}">
-                                    <h2 class="title">{{ $exhibition->title }}</h2>
-                                    <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
-                                    <div class="top-date">
-                                        <span class="start">{{ $exhibition->date->format('D d M Y') }}
-
-                                    </div>
-                                    <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
-                                    @if($exhibition->seller_name)
-                                    <div class="seller-info" style="font-style: italic; margin-top: 5px;">
-                                        Presented by: {{ $exhibition->seller_name }}
-                                    </div>
-                                    @endif
-                                </a>
-                                <div class="meta">
-                                    <div class="meta-group">
-                                        <ul class="genres">
-                                            <li class="genres__item"><a class="genres__link" href="#">{{
-                                                    $exhibition->genre ?? 'Art' }}</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="meta-group button">
-                                        <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
-                                        @auth
-                                        <a href="mailto:{{ $exhibition->artist_email }}"
-                                            class="btn btn-secondary">Contact Artist</a>
-                                        @endauth
-                                    </div>
-                                </div>
-                            </div>
+                            @if(isset($exhibition->video_url))
+                            <video controls style="width:100%; height:auto;">
+                                <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                            </video>
+                            @else
+                            <style>
+                                [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
+                                    background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
+                                    }
+                            </style>
+                            <div class="image"></div>
+                            @endif
                         </div>
                     </div>
                 </li>
