@@ -94,7 +94,7 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::get('/deposit', [App\Http\Controllers\User\DepositController::class, 'create'])->name('deposit.create');
     Route::post('/deposit', [App\Http\Controllers\User\DepositController::class, 'store'])->name('deposit.store');
     Route::get('/user-withdrawal', [DashboardController::class, 'ShowWithdrawal'])->name('user.withdrawal');
-    Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'index'])->name('user.create.exhibition');
+    Route::get('/add-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'create'])->name('user.create.exhibition');
     Route::post('/exhibitions', [App\Http\Controllers\User\ExhibitionController::class, 'store'])->name('exhibitions.store');
     Route::get('/future-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'futureExhibitions'])->name('user.future.exhibition');
     Route::get('/current-exhibition', [App\Http\Controllers\User\ExhibitionController::class, 'currentExhibitions'])->name('user.current.exhibition');
