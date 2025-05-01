@@ -22,26 +22,22 @@
         <div class="container">
             <div class="row exhibition-grid">
                 @foreach($pastExhibitions as $exhibition)
-                <div class="col-12 col-md-6 col-lg-4 mb-5" data-entry-id="{{ $exhibition->id }}">
-                    <div class="exhibition-item">
-                        <!-- Image Section -->
-                        <div class="media-section image-section">
-                            <a href="/exhibitions/{{ $exhibition->id }}" class="d-block">
-                                <img src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/800x600' }}"
-                                    alt="{{ $exhibition->title ?? 'Exhibition image' }}"
-                                    class="img-fluid w-100 exhibition-image">
-                            </a>
-                        </div>
-
-                        <!-- Video Section (if exists) -->
+                <div class="col-12 col-md-6 col-lg-4 mb-4" data-entry-id="{{ $exhibition->id }}">
+                    <div class="media-container">
+                        <!-- Show video if available, otherwise show image -->
                         @if($exhibition->video_url)
-                        <div class="media-section video-section mt-3">
-                            <div class="video-container">
-                                <video controls class="w-100">
-                                    <source src="{{ $exhibition->video_url }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
+                        <div class="media-item video-item">
+                            <video controls>
+                                <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        @else
+                        <div class="media-item image-item">
+                            <a href="/exhibitions/{{ $exhibition->id }}">
+                                <img src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/800x600' }}"
+                                    alt="{{ $exhibition->title ?? 'Exhibition image' }}">
+                            </a>
                         </div>
                         @endif
                     </div>
@@ -54,83 +50,66 @@
 @include('home.footer')
 
 <style>
-    /* Exhibition Grid Layout */
+    /* Grid Layout */
     .exhibition-grid {
         display: flex;
         flex-wrap: wrap;
-        margin: -15px;
+        margin: -12px;
     }
 
     .exhibition-grid>div {
-        padding: 15px;
+        padding: 12px;
     }
 
-    .exhibition-item {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Media Sections */
-    .media-section {
+    /* Media Container */
+    .media-container {
+        width: 100%;
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        transition: transform 0.3s ease;
     }
 
-    .media-section:hover {
+    .media-container:hover {
         transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    /* Image Section */
-    .image-section {
-        flex: 1;
-    }
-
-    .exhibition-image {
-        height: 400px;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    /* Video Section */
-    .video-section {
-        background: #000;
-    }
-
-    .video-container {
+    /* Consistent Media Dimensions */
+    .media-item {
         position: relative;
-        padding-bottom: 56.25%;
-        /* 16:9 aspect ratio */
-        height: 0;
-        overflow: hidden;
+        width: 100%;
+        padding-top: 56.25%;
+        /* 16:9 Aspect Ratio */
+        background: #f5f5f5;
     }
 
-    .video-container video {
+    .media-item img,
+    .media-item video {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
 
-    /* Responsive Adjustments */
+    /* Video Specific Styles */
+    .video-item video {
+        background: #000;
+    }
+
+    /* Responsive Columns */
     @media (min-width: 992px) {
-        .exhibition-image {
-            height: 500px;
+        .exhibition-grid>div {
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
         }
     }
 
-    @media (max-width: 991px) {
+    @media (min-width: 768px) and (max-width: 991px) {
         .exhibition-grid>div {
             flex: 0 0 50%;
             max-width: 50%;
-        }
-
-        .exhibition-image {
-            height: 350px;
         }
     }
 
@@ -138,10 +117,6 @@
         .exhibition-grid>div {
             flex: 0 0 100%;
             max-width: 100%;
-        }
-
-        .exhibition-image {
-            height: 300px;
         }
     }
 </style>
