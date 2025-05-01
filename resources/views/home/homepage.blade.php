@@ -107,29 +107,50 @@
 
     <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
         <div class="container">
-            <ul data-animations="zoom" class="listItems variant-">
+            <ul class="media-list">
                 @foreach($pastExhibitions as $exhibition)
-                <li data-entry-id="{{ $exhibition->id }}" class="eventCard">
-                    <div class="listItemWrapper">
-                        <div class="thumb">
-                            @if(isset($exhibition->video_url))
-                            <video controls style="width:100%; height:auto;">
-                                <source src="{{ $exhibition->video_url }}" type="video/mp4">
-                            </video>
-                            @else
-                            <style>
-                                [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                                    background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
-                                    }
-                            </style>
-                            <div class="image"></div>
-                            @endif
-                        </div>
-                    </div>
+                <li class="media-item">
+                    @if(!empty($exhibition->video_url))
+                    <!-- Show video only if it exists -->
+                    <video controls class="media-element">
+                        <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    @else
+                    <!-- Fallback to picture if no video -->
+                    <img class="media-element"
+                        src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/855x600' }}"
+                        alt="Exhibition media">
+                    @endif
                 </li>
                 @endforeach
             </ul>
         </div>
+
+        <style>
+            .media-list {
+                list-style: none;
+                padding: 0;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                gap: 20px;
+            }
+
+            .media-item {
+                aspect-ratio: 16/9;
+            }
+
+            .media-element {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+
+            video.media-element {
+                background: #000;
+            }
+        </style>
     </div>
 
     @auth
