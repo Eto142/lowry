@@ -268,33 +268,18 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-3">
-                    <p><strong>Theme:</strong> <span id="modalTheme"></span></p>
-                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
-                    <p><strong>Status:</strong> <span id="modalStatus"></span></p>
-                    <p><strong>Budget:</strong> <span id="modalBudget"></span> (shared between exhibitor and artist)</p>
-                </div>
 
-                <div class="mb-3">
-                    <h6>Mediums</h6>
-                    <p id="modalMediums"></p>
-                </div>
 
-                <div class="mb-3">
-                    <h6>Objective</h6>
-                    <p id="modalObjective"></p>
-                </div>
 
-                <div class="mb-3">
-                    <h6>Sections</h6>
-                    <ul id="modalSections" class="exhibition-sections"></ul>
-                </div>
 
                 <div class="modal-contact-info">
                     <h6 class="modal-section-title"><i class="fas fa-info-circle contact-icon"></i>Contact for More
                         Information</h6>
-                    <p>For inquiries about this exhibition, please contact the organizer directly using the button
-                        below.</p>
+                    <p>For more inquiries about this exhibition, please contact the exhibitor/ art collector that is
+                        contracted to this exhibition. The exhibitor will provide details of the artworks required to be
+                        exhibited and the participating artist will create the artworks according to the descriptions
+                        given by the exhibitor/ art collector and these arts created will be featured in this exhibition
+                    </p>
                     <button class="btn btn-primary w-100 mt-2">
                         <i class="fas fa-envelope me-2"></i>Contact Organizer
                     </button>
