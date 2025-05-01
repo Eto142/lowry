@@ -18,32 +18,33 @@
     </div>
 
     <!-- Exhibitions Grid -->
-    <div class="container-fluid" style="padding: 0; background: #fff;">
+    <div class="container-fluid" style="padding: 30px 0; background: #fff;">
         <div class="container">
             <div class="row exhibition-grid">
                 @foreach($pastExhibitions as $exhibition)
-                <div class="col-12 col-sm-6 col-lg-4 mb-4" data-entry-id="{{ $exhibition->id }}">
-                    <!-- Image Card -->
-                    <div class="media-card">
-                        <div class="media-thumbnail">
-                            <a href="/exhibitions/{{ $exhibition->id }}">
-                                <img src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/855x600' }}"
-                                    alt="{{ $exhibition->title ?? 'Exhibition image' }}" class="img-fluid w-100">
+                <div class="col-12 col-md-6 col-lg-4 mb-5" data-entry-id="{{ $exhibition->id }}">
+                    <div class="exhibition-item">
+                        <!-- Image Section -->
+                        <div class="media-section image-section">
+                            <a href="/exhibitions/{{ $exhibition->id }}" class="d-block">
+                                <img src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/800x600' }}"
+                                    alt="{{ $exhibition->title ?? 'Exhibition image' }}"
+                                    class="img-fluid w-100 exhibition-image">
                             </a>
                         </div>
-                    </div>
 
-                    <!-- Video (if exists) -->
-                    @if($exhibition->video_url)
-                    <div class="media-card mt-2">
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <video class="embed-responsive-item" controls>
-                                <source src="{{ $exhibition->video_url }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                        <!-- Video Section (if exists) -->
+                        @if($exhibition->video_url)
+                        <div class="media-section video-section mt-3">
+                            <div class="video-container">
+                                <video controls class="w-100">
+                                    <source src="{{ $exhibition->video_url }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </div>
+                        @endif
                     </div>
-                    @endif
                 </div>
                 @endforeach
             </div>
@@ -53,74 +54,94 @@
 @include('home.footer')
 
 <style>
-    /* Responsive Grid Layout */
+    /* Exhibition Grid Layout */
     .exhibition-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-        padding: 20px 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin: -15px;
     }
 
-    .media-card {
-        background: #f8f9fa;
+    .exhibition-grid>div {
+        padding: 15px;
+    }
+
+    .exhibition-item {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Media Sections */
+    .media-section {
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .media-card:hover {
+    .media-section:hover {
         transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .media-thumbnail {
-        position: relative;
-        padding-top: 56.25%;
-        /* 16:9 Aspect Ratio */
-        overflow: hidden;
+    /* Image Section */
+    .image-section {
+        flex: 1;
     }
 
-    .media-thumbnail img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    .exhibition-image {
+        height: 400px;
         object-fit: cover;
+        object-position: center;
     }
 
-    /* Responsive Video */
-    .embed-responsive {
+    /* Video Section */
+    .video-section {
+        background: #000;
+    }
+
+    .video-container {
         position: relative;
-        display: block;
-        width: 100%;
-        padding: 0;
+        padding-bottom: 56.25%;
+        /* 16:9 aspect ratio */
+        height: 0;
         overflow: hidden;
     }
 
-    .embed-responsive-16by9::before {
-        padding-top: 56.25%;
-    }
-
-    .embed-responsive-item {
+    .video-container video {
         position: absolute;
         top: 0;
-        bottom: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        border: 0;
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 767px) {
-        .exhibition-grid {
-            grid-template-columns: 1fr;
-            gap: 15px;
+    /* Responsive Adjustments */
+    @media (min-width: 992px) {
+        .exhibition-image {
+            height: 500px;
+        }
+    }
+
+    @media (max-width: 991px) {
+        .exhibition-grid>div {
+            flex: 0 0 50%;
+            max-width: 50%;
         }
 
-        .media-card {
-            margin-bottom: 15px;
+        .exhibition-image {
+            height: 350px;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .exhibition-grid>div {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .exhibition-image {
+            height: 300px;
         }
     }
 </style>
