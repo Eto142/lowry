@@ -34,10 +34,11 @@
                         </div>
                         @else
                         <div class="media-item image-item">
-                            <a href="/exhibitions/{{ $exhibition->id }}">
-                                <img src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/800x600' }}"
-                                    alt="{{ $exhibition->title ?? 'Exhibition image' }}">
-                            </a>
+                            {{-- <a href="/exhibitions/{{ $exhibition->id }}"> --}}
+                                <a href="">
+                                    <img src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/800x600' }}"
+                                        alt="{{ $exhibition->title ?? 'Exhibition image' }}">
+                                </a>
                         </div>
                         @endif
                     </div>
