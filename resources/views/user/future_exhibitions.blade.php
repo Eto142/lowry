@@ -268,9 +268,27 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <div class="mb-3">
+                    <p><strong>Theme:</strong> <span id="modalTheme"></span></p>
+                    <p><strong>Date:</strong> <span id="modalDate"></span></p>
+                    <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+                    <p><strong>Budget:</strong> <span id="modalBudget"></span> (shared between exhibitor and artist)</p>
+                </div>
 
+                <div class="mb-3">
+                    <h6>Mediums</h6>
+                    <p id="modalMediums"></p>
+                </div>
 
+                <div class="mb-3">
+                    <h6>Objective</h6>
+                    <p id="modalObjective"></p>
+                </div>
 
+                <div class="mb-3">
+                    <h6>Sections</h6>
+                    <ul id="modalSections" class="exhibition-sections"></ul>
+                </div>
 
                 <div class="modal-contact-info">
                     <h6 class="modal-section-title"><i class="fas fa-info-circle contact-icon"></i>Contact for More
