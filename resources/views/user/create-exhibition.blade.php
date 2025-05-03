@@ -127,6 +127,11 @@
                 <input type="date" id="date" name="date" class="form-control" required>
                 <div class="invalid-feedback" id="date-error"></div>
               </div>
+              <div class="mb-3">
+                <label for="amount_sold" class="form-label fw-bold">Amount Sold *</label>
+                <input type="number" step="0.01" id="amount_sold" name="amount_sold" class="form-control" required>
+                <div class="invalid-feedback" id="amount_sold-error"></div>
+              </div>
             </div>
           </div>
           <div>
@@ -187,7 +192,7 @@
             toastr.success(response.message);
             $('#exhibitionForm')[0].reset();
             setTimeout(() => {
-              window.location.href = "{{ route('home') }}";
+              window.location.href = response.redirect || "{{ route('home') }}";
             }, 1500);
           },
           error: function(xhr) {

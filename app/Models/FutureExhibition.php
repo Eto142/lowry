@@ -66,4 +66,15 @@ class FutureExhibition extends Model
     {
         return ['future', 'current'];
     }
+
+    // app/Models/FutureExhibition.php
+
+    // Add this method to your model
+    public function getFormattedBudgetAttribute()
+    {
+        if ($this->budget) {
+            return '£' . number_format($this->budget, 2);
+        }
+        return 'Not specified';
+    }
 }

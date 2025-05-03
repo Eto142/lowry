@@ -32,25 +32,36 @@ class ExhibitionController extends Controller
         ]);
 
         try {
-            // Upload to Cloudinary
             $cloudinary = new Cloudinary();
-            $uploader = new UploadApi();
+            $uploadApi = $cloudinary->uploadApi();
 
-            $uploadResult = $uploader->upload($request->file('picture')->getRealPath(), [
-                'folder' => 'exhibitions',
-                'transformation' => [
-                    'width' => 800,
-                    'height' => 600,
-                    'crop' => 'limit'
-                ]
-            ]);
+            // Handle picture upload
+            $pictureUrl = null;
+            $picturePublicId = null;
+
+            if ($request->hasFile('picture')) {
+                $uploadResult = $uploadApi->upload(
+                    $request->file('picture')->getRealPath(),
+                    [
+                        'folder' => 'exhibitions',
+                        'transformation' => [
+                            'width' => 800,
+                            'height' => 600,
+                            'crop' => 'limit',
+                        ],
+                    ]
+                );
+
+                $pictureUrl = $uploadResult['secure_url'] ?? null;
+                $picturePublicId = $uploadResult['public_id'] ?? null;
+            }
 
             $exhibition = Exhibition::create([
                 'user_id' => Auth::id(),
                 'title' => $validated['title'],
                 'description' => $validated['description'],
-                'picture_url' => $uploadResult['secure_url'],
-                'picture_public_id' => $uploadResult['public_id'],
+                'picture_url' => $pictureUrl,
+                'picture_public_id' => $picturePublicId,
                 'seller_name' => $validated['seller_name'],
                 'seller_email' => $validated['seller_email'],
                 'seller_phone' => $validated['seller_phone'],
@@ -59,11 +70,15 @@ class ExhibitionController extends Controller
                 'exhibition_status' => 'pending'
             ]);
 
-            return redirect()->route('user.exhibitions.manage')
-                ->with('success', 'Exhibition created successfully!');
+            return response()->json([
+                'message' => 'Exhibition created successfully!',
+                'redirect' => route('user.manage.exhibitions')
+            ]);
         } catch (\Exception $e) {
             Log::error('Exhibition creation failed: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Failed to create exhibition. Please try again.');
+            return response()->json([
+                'message' => 'Failed to create exhibition. Please try again.'
+            ], 500);
         }
     }
 

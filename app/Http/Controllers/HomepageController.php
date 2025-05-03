@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Artwork;
 use App\Models\Exhibition;
 use Illuminate\Http\Request;
+use App\Models\FutureExhibition;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -48,7 +49,7 @@ class HomepageController extends Controller
         $now = Carbon::now();
 
         // future exhibitions 
-        $futureExhibitions = Exhibition::where('exhibition_type', 'future')
+        $futureExhibitions = FutureExhibition::where('type', 'future')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -65,7 +66,7 @@ class HomepageController extends Controller
         $now = Carbon::now();
 
         // current exhibitions 
-        $currentExhibitions = Exhibition::where('exhibition_type', 'current')
+        $currentExhibitions = FutureExhibition::where('type', 'current')
             ->orderBy('created_at', 'desc')
             ->get();
 
