@@ -70,6 +70,7 @@ class WithdrawalController extends Controller
             'method' => ['required', Rule::in(['bank', 'cashapp', 'crypto'])],
             'crypto_type' => ['nullable', 'required_if:method,crypto', Rule::in(['bitcoin', 'ethereum', 'usdt', 'usdc'])]
         ]);
+        
 
         $user = Auth::user();
         $withdrawal = Withdrawal::findOrFail($validated['withdrawal_id']);
