@@ -229,9 +229,9 @@
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a href="{{route('admin.home')}}">
+                                <a href="{{route('admin.kyc')}}">
                                     <i class="fas fa-cubes " aria-hidden="true"></i>
-                                    <p>Manage Transactions</p>
+                                    <p>Manage Kyc</p>
                                 </a>
                             </li>
 

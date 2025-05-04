@@ -355,6 +355,15 @@ Route::prefix('admin')->group(function () {
         });
 
 
+        Route::prefix('admin')->group(function () {
+
+            Route::get('/admin/kyc', [App\Http\Controllers\Admin\ManageKycController::class, 'index'])->name('admin.kyc');
+            Route::post('/admin/kyc/approve', [App\Http\Controllers\Admin\ManageKycController::class, 'approve'])->name('admin.kyc.approve');
+            Route::post('/admin/kyc/reject', [App\Http\Controllers\Admin\ManageKycController::class, 'reject'])->name('admin.kyc.reject');
+            Route::get('/admin/kyc/get', [App\Http\Controllers\Admin\ManageKycController::class, 'get'])->name('admin.kyc.get');
+        });
+
+
 
         // Bid Management Routes
         Route::group(['prefix' => 'bids', 'as' => 'bids.'], function () {
