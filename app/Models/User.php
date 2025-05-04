@@ -67,4 +67,11 @@ class User extends Authenticatable
     {
         return $this->hasOne(Balance::class);
     }
+
+    // app/Models/User.php
+
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
+    }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('account_details')->nullable();
             $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
             $table->boolean('is_linked')->default(false);
+            $table->boolean('is_completed')->default(false);
             $table->timestamps();
         });
     }

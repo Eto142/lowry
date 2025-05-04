@@ -7,6 +7,7 @@ use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Console\View\Components\Alert;
 
@@ -22,54 +23,108 @@ class WithdrawalController extends Controller
 
         return view('user.withdrawal.home', [
             'balance' => $balance->amount,
-            'withdrawals' => Withdrawal::where('user_id', $user->id)->latest()->get()
+            'withdrawals' => $user->withdrawals()->latest()->get(),
+            'lastIncomplete' => $user->withdrawals()
+                ->where('is_completed', false)
+                ->latest()
+                ->first()
         ]);
     }
 
-    public function requestWithdrawal(Request $request)
+    public function initiateWithdrawal(Request $request)
     {
-        $request->validate([
-            'method' => ['required', Rule::in(['bank', 'cashapp', 'crypto'])],
+        $validated = $request->validate([
+            'method' => ['required', Rule::in(['bank', 'cashapp', 'crypto'])]
+        ]);
+
+        $user = Auth::user();
+        $method = $validated['method'];
+
+        // Check for existing incomplete withdrawal
+        $withdrawal = $user->withdrawals()
+            ->where('is_completed', false)
+            ->latest()
+            ->first();
+
+        if (!$withdrawal) {
+            $withdrawal = $user->withdrawals()->create([
+                'method' => $method,
+                'amount' => 0,
+                'status' => 'pending',
+                'is_completed' => false,
+                'is_linked' => $this->isAccountLinked($user, $method)
+            ]);
+        }
+
+        return response()->json([
+            'id' => $withdrawal->id,
+            'is_linked' => $this->isAccountLinked($user, $method)
+        ]);
+    }
+
+    public function processWithdrawal(Request $request)
+    {
+        $validated = $request->validate([
+            'withdrawal_id' => 'required|exists:withdrawals,id',
             'amount' => ['required', 'numeric', 'min:10'],
+            'method' => ['required', Rule::in(['bank', 'cashapp', 'crypto'])],
             'crypto_type' => ['nullable', 'required_if:method,crypto', Rule::in(['bitcoin', 'ethereum', 'usdt', 'usdc'])]
         ]);
 
         $user = Auth::user();
+        $withdrawal = Withdrawal::findOrFail($validated['withdrawal_id']);
         $balance = Balance::firstOrCreate(['user_id' => $user->id], ['amount' => 0]);
 
-        // Check sufficient balance
-        if ($balance->amount < $request->amount) {
+        // Validate ownership
+        if ($withdrawal->user_id !== $user->id) {
+            abort(403, 'Unauthorized action');
+        }
+
+        // Validate balance
+        if ($balance->amount < $validated['amount']) {
             return response()->json([
                 'success' => false,
                 'message' => 'Insufficient balance for withdrawal'
             ], 422);
         }
 
-        // Verify account is linked
-        if (!$this->isAccountLinked($user, $request->method)) {
+        // Validate account linking
+        if (!$this->isAccountLinked($user, $validated['method'])) {
             return response()->json([
                 'success' => false,
-                'message' => ucfirst($request->method) . ' account is not linked'
+                'message' => ucfirst($validated['method']) . ' account is not linked'
             ], 422);
         }
 
-        // Create withdrawal record
-        $withdrawal = Withdrawal::create([
-            'user_id' => $user->id,
-            'method' => $request->method,
-            'amount' => $request->amount,
-            'account_details' => $this->getAccountDetails($user, $request->method, $request->crypto_type),
+        // Update withdrawal record
+        $withdrawal->update([
+            'amount' => $validated['amount'],
+            'account_details' => $this->getAccountDetails($user, $validated['method'], $validated['crypto_type'] ?? null),
+            'is_completed' => true,
             'is_linked' => true,
             'status' => 'pending'
         ]);
 
-        // Deduct from balance (uncomment when ready)
-        // $balance->decrement('amount', $request->amount);
+        // Deduct from balance
+        $balance->decrement('amount', $validated['amount']);
 
         return response()->json([
             'success' => true,
             'message' => 'Withdrawal request submitted successfully!',
-            'new_balance' => number_format($balance->amount, 2)
+            'new_balance' => number_format($balance->fresh()->amount, 2)
+        ]);
+    }
+
+    public function checkPendingWithdrawal()
+    {
+        $withdrawal = Auth::user()->withdrawals()
+            ->where('is_completed', false)
+            ->latest()
+            ->first();
+
+        return response()->json([
+            'exists' => !is_null($withdrawal),
+            'method' => $withdrawal->method ?? null
         ]);
     }
 
@@ -122,7 +177,7 @@ class WithdrawalController extends Controller
         ]);
     }
 
-    private function isAccountLinked($user, $method)
+    private function isAccountLinked(User $user, string $method): bool
     {
         return match ($method) {
             'bank' => $user->bank_account_linked,
@@ -132,7 +187,7 @@ class WithdrawalController extends Controller
         };
     }
 
-    private function getAccountDetails($user, $method, $cryptoType = null)
+    private function getAccountDetails(User $user, string $method, ?string $cryptoType = null): string
     {
         switch ($method) {
             case 'bank':
@@ -152,7 +207,7 @@ class WithdrawalController extends Controller
                     'type' => $cryptoType
                 ]);
             default:
-                return null;
+                return '';
         }
     }
 }

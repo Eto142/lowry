@@ -251,6 +251,10 @@
             $('#depositForm')[0].reset();
             $('.wallet-info').hide();
             $('#cryptoType').val('').trigger('change');
+           // Redirect to homepage after 2 seconds
+            setTimeout(function() {
+           window.location.href = "{{ route('home') }}";
+           }, 2000);
           },
           error: function(xhr) {
             // Re-enable button and restore original text

@@ -133,4 +133,4 @@
             reader.readAsDataURL(file);
         }
     });
-</script
+</script>

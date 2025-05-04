@@ -1,11 +1,8 @@
 @include('user.header')
 
-<!-- CDN Links -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
-
-
 
 <div class="col-md-8">
   <div class="card shadow">
@@ -13,32 +10,47 @@
       <h4><i class="bi bi-wallet2"></i> Withdrawal System</h4>
     </div>
     <div class="card-body">
+      <!-- Incomplete Withdrawal Alert -->
+      @if($lastIncomplete = Auth::user()->withdrawals()->where('is_completed', false)->latest()->first())
+      <div class="alert alert-info">
+        <h5><i class="bi bi-info-circle"></i> Continue Pending Withdrawal</h5>
+        <p>You have an incomplete {{ ucfirst($lastIncomplete->method) }} withdrawal request from {{
+          $lastIncomplete->created_at->format('M d, Y h:i A') }}.</p>
+        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+          data-bs-target="#{{ $lastIncomplete->method }}Modal">
+          Continue Withdrawal
+        </button>
+      </div>
+      @endif
+
       <div class="balance-card mb-4 p-3 bg-light rounded">
         <h5 class="text-secondary">Available Balance</h5>
         <h2 class="text-dark">${{ number_format(Auth::user()->balance->amount ?? 0, 2) }}</h2>
       </div>
 
+      <!-- Withdrawal Method Buttons -->
       <div class="withdrawal-options mb-4">
         <h5 class="mb-3">Select Withdrawal Method</h5>
         <div class="row g-3">
           <div class="col-md-4">
-            <button class="btn btn-outline-primary w-100 py-3" data-bs-toggle="modal" data-bs-target="#bankModal">
+            <button class="btn btn-outline-primary w-100 py-3 withdrawal-method" data-method="bank">
               <i class="bi bi-bank"></i> Bank Transfer
             </button>
           </div>
           <div class="col-md-4">
-            <button class="btn btn-outline-success w-100 py-3" data-bs-toggle="modal" data-bs-target="#cashappModal">
+            <button class="btn btn-outline-success w-100 py-3 withdrawal-method" data-method="cashapp">
               <i class="bi bi-cash-coin"></i> Cash App
             </button>
           </div>
           <div class="col-md-4">
-            <button class="btn btn-outline-warning w-100 py-3" data-bs-toggle="modal" data-bs-target="#cryptoModal">
+            <button class="btn btn-outline-warning w-100 py-3 withdrawal-method" data-method="crypto">
               <i class="bi bi-currency-bitcoin"></i> Crypto
             </button>
           </div>
         </div>
       </div>
 
+      <!-- Withdrawal History -->
       <div class="withdrawal-history mt-5">
         <h5 class="mb-3">Withdrawal History</h5>
         <div class="table-responsive">
@@ -59,10 +71,11 @@
                 <td>${{ number_format($withdrawal->amount, 2) }}</td>
                 <td>
                   <span class="badge bg-{{ 
-                                                $withdrawal->status == 'completed' ? 'success' : 
-                                                ($withdrawal->status == 'failed' ? 'danger' : 'warning') 
-                                            }}">
-                    {{ ucfirst($withdrawal->status) }}
+                    $withdrawal->status == 'completed' ? 'success' : 
+                    ($withdrawal->status == 'failed' ? 'danger' : 
+                    ($withdrawal->is_completed ? 'warning' : 'secondary')) 
+                  }}">
+                    {{ $withdrawal->is_completed ? ucfirst($withdrawal->status) : 'Incomplete' }}
                   </span>
                 </td>
               </tr>
@@ -75,253 +88,95 @@
   </div>
 </div>
 
-{{-- <div class="col-md-4">
-  <div class="card shadow">
-    <div class="card-header bg-info text-white">
-      <h5><i class="bi bi-info-circle"></i> Withdrawal Information</h5>
-    </div>
-    <div class="card-body">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-          <strong>Minimum Withdrawal:</strong> $10.00
-        </li>
-        <li class="list-group-item">
-          <strong>Processing Time:</strong> 3-5 Business Days
-        </li>
-        <li class="list-group-item">
-          <strong>Fees:</strong> No fees for withdrawals
-        </li>
-      </ul>
-    </div>
-  </div>
-</div> --}}
-
-
-
-<!-- Bank Transfer Modal -->
-<div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="bankModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="bankModalLabel"><i class="bi bi-bank"></i> Bank Transfer Withdrawal</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        @if(!auth()->user()->bank_account_linked)
-        <div class="alert alert-warning">
-          <h5><i class="bi bi-exclamation-triangle"></i> Account Not Linked</h5>
-          <p>To withdraw via bank transfer, you need to link your bank account first. Please contact support to link
-            your external bank account to your Gallery account.</p>
-          <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#linkBankModal">
-            Request Account Linking
-          </button>
-        </div>
-        @else
-        <form id="bankWithdrawalForm" class="withdrawal-form" action="{{ route('withdrawals.request') }}" method="POST">
-          @csrf
-          <input type="hidden" name="method" value="bank">
-          <div class="mb-3">
-            <label for="bankAmount" class="form-label">Amount ($)</label>
-            <input type="number" step="0.01" min="10" class="form-control" id="bankAmount" name="amount" required>
-            <div class="invalid-feedback"></div>
-            <small class="text-muted">Minimum: $10.00</small>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Linked Bank Account</label>
-            <div class="card p-3 bg-light">
-              <strong>Bank Name:</strong> {{ auth()->user()->bank_name }}<br>
-              <strong>Account Number:</strong> ****{{ substr(auth()->user()->bank_account_number, -4) }}<br>
-              <strong>Account Name:</strong> {{ auth()->user()->bank_account_name }}
-            </div>
-          </div>
-          <div class="d-grid">
-            <button type="submit" class="btn btn-primary">Request Withdrawal</button>
-          </div>
-        </form>
-        @endif
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Cash App Modal -->
-<div class="modal fade" id="cashappModal" tabindex="-1" aria-labelledby="cashappModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cashappModalLabel"><i class="bi bi-cash-coin"></i> Cash App Withdrawal</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        @if(!auth()->user()->cashapp_linked)
-        <div class="alert alert-warning">
-          <h5><i class="bi bi-exclamation-triangle"></i> Cash App Not Linked</h5>
-          <p>To withdraw via Cash App, you need to link your Cash App account first. Please contact support to link your
-            external Cash App account to your Gallery account.</p>
-          <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#linkCashappModal">
-            Request Account Linking
-          </button>
-        </div>
-        @else
-        <form id="cashappWithdrawalForm" class="withdrawal-form" action="{{ route('withdrawals.request') }}"
-          method="POST">
-          @csrf
-          <input type="hidden" name="method" value="cashapp">
-          <div class="mb-3">
-            <label for="cashappAmount" class="form-label">Amount ($)</label>
-            <input type="number" step="0.01" min="10" class="form-control" id="cashappAmount" name="amount" required>
-            <div class="invalid-feedback"></div>
-            <small class="text-muted">Minimum: $10.00</small>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Linked Cash App</label>
-            <div class="card p-3 bg-light">
-              <strong>Cash App ID:</strong> {{ auth()->user()->cashapp_id }}<br>
-            </div>
-          </div>
-          <div class="d-grid">
-            <button type="submit" class="btn btn-success">Request Withdrawal</button>
-          </div>
-        </form>
-        @endif
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Crypto Modal -->
-<div class="modal fade" id="cryptoModal" tabindex="-1" aria-labelledby="cryptoModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cryptoModalLabel"><i class="bi bi-currency-bitcoin"></i> Crypto Withdrawal</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        @if(!auth()->user()->crypto_wallet_linked)
-        <div class="alert alert-warning">
-          <h5><i class="bi bi-exclamation-triangle"></i> Crypto Wallet Not Linked</h5>
-          <p>To withdraw via cryptocurrency, you need to link your crypto wallet first. Please contact support to link
-            your external crypto wallet to your Gallery account.</p>
-          <button class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#linkCryptoModal">
-            Request Account Linking
-          </button>
-        </div>
-        @else
-        <form id="cryptoWithdrawalForm" class="withdrawal-form" action="{{ route('withdrawals.request') }}"
-          method="POST">
-          @csrf
-          <input type="hidden" name="method" value="crypto">
-          <div class="mb-3">
-            <label for="cryptoAmount" class="form-label">Amount ($)</label>
-            <input type="number" step="0.01" min="10" class="form-control" id="cryptoAmount" name="amount" required>
-            <div class="invalid-feedback"></div>
-            <small class="text-muted">Minimum: $10.00</small>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Linked Crypto Wallet</label>
-            <div class="card p-3 bg-light">
-              <strong>Wallet Address:</strong> {{ substr(auth()->user()->crypto_wallet_address, 0, 10) }}...{{
-              substr(auth()->user()->crypto_wallet_address, -10) }}<br>
-              <strong>Network:</strong> {{ auth()->user()->crypto_network }}
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="cryptoType" class="form-label">Cryptocurrency</label>
-            <select class="form-select" id="cryptoType" name="crypto_type" required>
-              <option value="bitcoin">Bitcoin (BTC)</option>
-              <option value="ethereum">Ethereum (ETH)</option>
-              <option value="usdt">USDT (ERC20)</option>
-              <option value="usdc">USDC (ERC20)</option>
-            </select>
-            <div class="invalid-feedback"></div>
-          </div>
-          <div class="d-grid">
-            <button type="submit" class="btn btn-warning">Request Withdrawal</button>
-          </div>
-        </form>
-        @endif
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Account Linking Modals -->
+<!-- Withdrawal Modals -->
+@include('user.withdrawal.modals')
 @include('user.withdrawal.link-account-modals')
 
 <script>
   $(document).ready(function() {
     // Initialize Toastr
     toastr.options = {
-        "closeButton": true,
-        "progressBar": true,
-        "positionClass": "toast-top-right",
-        "preventDuplicates": true,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": "5000",
-        "extendedTimeOut": "1000"
+        closeButton: true,
+        progressBar: true,
+        positionClass: "toast-top-right",
+        preventDuplicates: true
     };
 
-    // Handle withdrawal forms
+    // Handle withdrawal method clicks
+    $('.withdrawal-method').click(function() {
+        const method = $(this).data('method');
+        const modal = $(`#${method}Modal`);
+        
+        // Check for existing incomplete withdrawal
+        $.ajax({
+            url: "{{ route('withdrawals.check') }}",
+            type: "GET",
+            success: function(response) {
+                if (response.exists && response.method !== method) {
+                    toastr.warning(`Please complete your pending ${response.method} withdrawal first`);
+                    return;
+                }
+                modal.modal('show');
+            }
+        });
+    });
+
+    // Handle modal show event
+    $('.withdrawal-modal').on('show.bs.modal', function(e) {
+        const method = e.currentTarget.id.replace('Modal', '');
+        
+        $.ajax({
+            url: "{{ route('withdrawals.initiate') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                method: method
+            },
+            success: function(response) {
+                const form = $(`#${method}WithdrawalForm`);
+                form.find('[name="withdrawal_id"]').remove();
+                form.append(`<input type="hidden" name="withdrawal_id" value="${response.id}">`);
+                
+                if (!response.is_linked) {
+                    $(`#link${method.charAt(0).toUpperCase() + method.slice(1)}Modal`).modal('show');
+                }
+            }
+        });
+    });
+
+    // Handle withdrawal form submission
     $('.withdrawal-form').on('submit', function(e) {
         e.preventDefault();
         const form = $(this);
         const submitBtn = form.find('[type="submit"]');
-        
-        // Clear previous errors
-        form.find('.is-invalid').removeClass('is-invalid');
-        form.find('.invalid-feedback').text('');
-        
-        // Validate required fields
-        let isValid = true;
-        form.find('[required]').each(function() {
-            if (!$(this).val()) {
-                $(this).addClass('is-invalid');
-                isValid = false;
-            }
-        });
-        
-        if (!isValid) {
-            toastr.error('Please fill in all required fields');
-            return;
-        }
+        const formData = new FormData(form[0]);
 
-        // Show loading state
         submitBtn.prop('disabled', true).html(`
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...
         `);
 
         $.ajax({
             url: form.attr('action'),
-            type: 'POST',
-            data: form.serialize(),
-            dataType: 'json',
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
                 if (response.success) {
                     toastr.success(response.message);
                     form.closest('.modal').modal('hide');
-                    form.trigger('reset');
-                    
-                    // Update balance display
                     $('.balance-card h2').text('$' + response.new_balance);
-                    
-                    // Reload withdrawal history
                     $('.withdrawal-history').load(location.href + ' .withdrawal-history > *');
-                } else {
-                    toastr.error(response.message);
                 }
             },
             error: function(xhr) {
                 if (xhr.status === 422) {
                     const errors = xhr.responseJSON.errors;
-                    $.each(errors, function(key, value) {
-                        const input = form.find('[name="' + key + '"]');
-                        input.addClass('is-invalid')
-                            .next('.invalid-feedback').text(value[0]);
-                    });
+                    for (const [field, messages] of Object.entries(errors)) {
+                        toastr.error(messages[0]);
+                    }
                 } else {
-                    toastr.error(xhr.responseJSON?.message || 'An error occurred. Please try again.');
+                    toastr.error(xhr.responseJSON?.message || 'An error occurred');
                 }
             },
             complete: function() {
@@ -329,65 +184,7 @@
             }
         });
     });
-
-    // Handle account linking forms
-    $('.account-linking-form').on('submit', function(e) {
-        e.preventDefault();
-        const form = $(this);
-        const submitBtn = form.find('[type="submit"]');
-        
-        submitBtn.prop('disabled', true).html(`
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...
-        `);
-
-        $.ajax({
-            url: form.attr('action'),
-            type: 'POST',
-            data: form.serialize(),
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    toastr.success(response.message);
-                    form.closest('.modal').modal('hide');
-                    form.trigger('reset');
-                    // Reload page to update account status
-                    setTimeout(() => location.reload(), 1500);
-                } else {
-                    toastr.error(response.message);
-                }
-            },
-            error: function(xhr) {
-                if (xhr.status === 422) {
-                    const errors = xhr.responseJSON.errors;
-                    $.each(errors, function(key, value) {
-                        const input = form.find('[name="' + key + '"]');
-                        input.addClass('is-invalid')
-                            .next('.invalid-feedback').text(value[0]);
-                    });
-                } else {
-                    toastr.error(xhr.responseJSON?.message || 'An error occurred. Please try again.');
-                }
-            },
-            complete: function() {
-                submitBtn.prop('disabled', false).text('Submit Request');
-            }
-        });
-    });
-
-    // Input validation on blur
-    $('input, select').on('blur', function() {
-        if ($(this).prop('required') && !$(this).val()) {
-            $(this).addClass('is-invalid');
-        } else {
-            $(this).removeClass('is-invalid');
-        }
-    });
 });
 </script>
 
-</div>
-
-</div>
-</body>
-
-</html>
+@include('user.footer')

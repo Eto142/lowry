@@ -263,14 +263,14 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{route('admin.home')}}">
+                                <a href="{{route('admin.deposit.index')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <p>Manage Deposits</p>
                                 </a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{route('admin.home')}}">
+                                <a href="{{route('admin.withdrawals')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <p>Manage Withdrawal</p>
                                 </a>

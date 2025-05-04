@@ -295,18 +295,11 @@ pep_global_config['http_host'] = 'thelowry.com';
 
 
 <script>
-    // this is the end of the document,
-// so we're sure we done pushing data to the datalayer
-// of course, using the modern object using tracking_data() this is
-// basically superfluous, but still a friendly service for our users
-// and it's explicit > implicit, which is also nice
-dataLayer.push({
+    dataLayer.push({
 'event': 'datalayer_ready'
 });
 </script>
 
 </body>
-
-<!-- Mirrored from thelowry.com/pQp4jSN/galleries by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Mar 2025 11:42:19 GMT -->
 
 </html>

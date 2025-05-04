@@ -15,7 +15,8 @@ class Withdrawal extends Model
         'amount',
         'account_details',
         'status',
-        'is_linked'
+        'is_linked',
+        'is_completed',
     ];
 
     public function user()
