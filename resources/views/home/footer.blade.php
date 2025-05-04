@@ -17,12 +17,9 @@
 
             <section class="column">
                 <div>
-                    <p><a href="https://thelowry.com/pQjo1s7/your-visit---lowry">Opening times</a><br><a
-                            href="https://help.thelowry.com/support/home">FAQs</a><br><a
-                            href="https://thelowry.com/pQGLpiK/your-visit/ticket-information">Contact us</a><br><a
-                            href="https://thelowry.com/pQ0P4sM/terms---conditions----lowry">Terms and
-                            Conditions</a><br><a
-                            href="https://thelowry.com/pQ7NauZ/about-us---our-policies">Policies</a></p>
+                    <p><a href="">Opening times</a><br><a href="">FAQs</a><br><a href="">Contact us</a><br><a
+                            href="">Terms and
+                            Conditions</a><br><a href="">Policies</a></p>
                 </div>
             </section>
 
@@ -49,23 +46,23 @@
                             <span class='peppered-icon icon-facebook '><svg version='1.1'
                                     xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
                                     x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'>
-                                    <use xlink:href="https://thelowry.com/images/socials.svg#facebook"></use>
+                                    <use xlink:href=""></use>
                                 </svg></span>
                             <span class="screenreader">facebook</span>
                         </a>
-                        <a href="https://www.instagram.com/the_lowry/" target="_blank" class="socials__link">
+                        <a href="" target="_blank" class="socials__link">
                             <span class='peppered-icon icon-instagram '><svg version='1.1'
                                     xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
                                     x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'>
-                                    <use xlink:href="https://thelowry.com/images/socials.svg#instagram"></use>
+                                    <use xlink:href=""></use>
                                 </svg></span>
                             <span class="screenreader">instagram</span>
                         </a>
-                        <a href="https://www.tiktok.com/@the_lowry_salford" target="_blank" class="socials__link">
+                        <a href="" target="_blank" class="socials__link">
                             <span class='peppered-icon icon-tiktok '><svg version='1.1'
                                     xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
                                     x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'>
-                                    <use xlink:href="https://thelowry.com/images/socials.svg#tiktok"></use>
+                                    <use xlink:href=""></use>
                                 </svg></span>
                             <span class="screenreader">tiktok</span>
                         </a>
@@ -73,23 +70,23 @@
                             <span class='peppered-icon icon-linkedin '><svg version='1.1'
                                     xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
                                     x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'>
-                                    <use xlink:href="https://thelowry.com/images/socials.svg#linkedin"></use>
+                                    <use xlink:href=""></use>
                                 </svg></span>
                             <span class="screenreader">linkedin</span>
                         </a>
-                        <a href="https://www.youtube.com/@thelowry" target="_blank" class="socials__link">
+                        <a href="" target="_blank" class="socials__link">
                             <span class='peppered-icon icon-youtube '><svg version='1.1'
                                     xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
                                     x='0px' y='0px' width='40' height='40' viewBox='0 0 20 20' xml:space='preserve'>
-                                    <use xlink:href="https://thelowry.com/images/socials.svg#youtube"></use>
+                                    <use xlink:href=""></use>
                                 </svg></span>
                             <span class="screenreader">youtube</span>
                         </a>
                     </div>
 
                     <div class="richtext">
-                        <p><br><a class="btn btn-active" title="Sign up for the mailing list"
-                                href="https://thelowry.com/pQ0PmIM/join-lowry-s-mailing-list">Join our mailing list</a>
+                        <p><br><a class="btn btn-active" title="Sign up for the mailing list" href="">Join our mailing
+                                list</a>
                         </p>
                         <p>Address:&nbsp;<strong>Business Design Centre Ltd, 52 Upper St, London N1 0QH, United
                                 Kingdom</strong></p>
@@ -209,11 +206,10 @@
                         <span class="item-info"></span>
                     </p>
                     <p>
-                        <a class="btn btn-active" aria-controls="wishlistModal" aria-expanded="false"
-                            href="https://thelowry.com/whats-on">
+                        <a class="btn btn-active" aria-controls="wishlistModal" aria-expanded="false" href="">
                             OK
                         </a>
-                        <a class="btn btn-default" href="https://thelowry.com/my/wishlist">
+                        <a class="btn btn-default" href="">
                             To wishlist
                         </a>
                     </p>

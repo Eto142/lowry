@@ -28,7 +28,8 @@
     </div>
 
     @auth
-    <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 50px; background: #fff;">
+    <div class="container-fluid listWrapper theme" style="padding: 0 30px 50px 30px; background: #fff;">
+
         <div class="container">
             <div class="row">
                 <div class="col-12">
