@@ -67,7 +67,8 @@
                     17:00<br>Monday | closed</p>
                 <p style="text-align: left;"><br>We welcome everyone to our Exhibition Spaces. You can find out more
                     about which exhibitions are currently showing and what is upcoming, plus more information on how to
-                    <a href="/plan-your-visit">plan your visit</a>.
+                    <a href="#" onclick="Smartsupp('chat:open'); return false;">plan your visit</a>.
+
                 </p>
                 <p>&nbsp;</p>
                 <h4>Visiting our Exhibitions this season</h4>

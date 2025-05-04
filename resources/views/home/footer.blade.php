@@ -85,9 +85,13 @@
                     </div>
 
                     <div class="richtext">
-                        <p><br><a class="btn btn-active" title="Sign up for the mailing list" href="">Join our mailing
-                                list</a>
+                        <p><br>
+                            <a class="btn btn-active" title="Sign up for the mailing list"
+                                href="mailto:support@ziirielcontemporaryartgallery.com">
+                                Join our mailing list
+                            </a>
                         </p>
+
                         <p>Address:&nbsp;<strong>Business Design Centre Ltd, 52 Upper St, London N1 0QH, United
                                 Kingdom</strong></p>
                     </div>

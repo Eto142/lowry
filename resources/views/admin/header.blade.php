@@ -256,7 +256,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('admin.current-exhibitions.index')}}">
+                                <a href="{{route('admin.exhibitions')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <p>Manage Current Exhibitions</p>
                                 </a>

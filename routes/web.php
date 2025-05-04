@@ -319,7 +319,7 @@ Route::prefix('admin')->group(function () {
 
         Route::prefix('admin/current-exhibitions')->name('admin.current-exhibitions.')->group(function () {
             // Display all current exhibitions
-            Route::get('/', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'index'])->name('index');
+            // Route::get('/', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'index'])->name('index');
 
             // Show create form
             Route::get('/create', [App\Http\Controllers\Admin\CurrentExhibitionController::class, 'create'])->name('create');
@@ -364,6 +364,16 @@ Route::prefix('admin')->group(function () {
             Route::post('/admin/kyc/approve', [App\Http\Controllers\Admin\ManageKycController::class, 'approve'])->name('admin.kyc.approve');
             Route::post('/admin/kyc/reject', [App\Http\Controllers\Admin\ManageKycController::class, 'reject'])->name('admin.kyc.reject');
             Route::get('/admin/kyc/get', [App\Http\Controllers\Admin\ManageKycController::class, 'get'])->name('admin.kyc.get');
+        });
+
+        Route::prefix('')->group(function () {
+
+
+            Route::get('/admin/exhibitions', [App\Http\Controllers\Admin\ManagCurrentController::class, 'index'])->name('admin.exhibitions');
+            Route::post('/admin/exhibitions/store', [App\Http\Controllers\Admin\ManagCurrentController::class, 'store'])->name('admin.exhibitions.store');
+            Route::get('/admin/exhibitions/edit', [App\Http\Controllers\Admin\ManagCurrentController::class, 'edit'])->name('admin.exhibitions.edit');
+            Route::post('/admin/exhibitions/update', [App\Http\Controllers\Admin\ManagCurrentController::class, 'update'])->name('admin.exhibitions.update');
+            Route::post('/admin/exhibitions/delete', [App\Http\Controllers\Admin\ManagCurrentController::class, 'delete'])->name('admin.exhibitions.delete');
         });
 
 
