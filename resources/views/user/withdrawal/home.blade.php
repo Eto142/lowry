@@ -33,6 +33,7 @@
         <h5 class="mb-3">Select Withdrawal Method</h5>
         <div class="row g-3">
           <div class="col-md-4">
+
             <button class="btn btn-outline-primary w-100 py-3 withdrawal-method" data-method="bank">
               <i class="bi bi-bank"></i> Bank Transfer
             </button>

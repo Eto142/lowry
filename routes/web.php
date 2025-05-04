@@ -139,6 +139,9 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
         // Display withdrawal page
         Route::get('/', [App\Http\Controllers\User\WithdrawalController::class, 'index'])->name('withdrawals.index');
 
+        // Handle account linking
+        Route::post('/link-account-request', [App\Http\Controllers\User\WithdrawalController::class, 'linkAccountRequest'])->name('withdrawals.link.request');
+
         // Initiate withdrawal process
         Route::post('/initiate', [App\Http\Controllers\User\WithdrawalController::class, 'initiateWithdrawal'])->name('withdrawals.initiate');
 

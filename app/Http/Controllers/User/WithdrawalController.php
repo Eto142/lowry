@@ -31,36 +31,9 @@ class WithdrawalController extends Controller
         ]);
     }
 
-    public function initiateWithdrawal(Request $request)
-    {
-        $validated = $request->validate([
-            'method' => ['required', Rule::in(['bank', 'cashapp', 'crypto'])]
-        ]);
 
-        $user = Auth::user();
-        $method = $validated['method'];
 
-        // Check for existing incomplete withdrawal
-        $withdrawal = $user->withdrawals()
-            ->where('is_completed', false)
-            ->latest()
-            ->first();
 
-        if (!$withdrawal) {
-            $withdrawal = $user->withdrawals()->create([
-                'method' => $method,
-                'amount' => 0,
-                'status' => 'pending',
-                'is_completed' => false,
-                'is_linked' => $this->isAccountLinked($user, $method)
-            ]);
-        }
-
-        return response()->json([
-            'id' => $withdrawal->id,
-            'is_linked' => $this->isAccountLinked($user, $method)
-        ]);
-    }
 
     public function processWithdrawal(Request $request)
     {
@@ -70,7 +43,7 @@ class WithdrawalController extends Controller
             'method' => ['required', Rule::in(['bank', 'cashapp', 'crypto'])],
             'crypto_type' => ['nullable', 'required_if:method,crypto', Rule::in(['bitcoin', 'ethereum', 'usdt', 'usdc'])]
         ]);
-        
+
 
         $user = Auth::user();
         $withdrawal = Withdrawal::findOrFail($validated['withdrawal_id']);
