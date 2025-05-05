@@ -366,15 +366,9 @@ Route::prefix('admin')->group(function () {
             Route::get('/admin/kyc/get', [App\Http\Controllers\Admin\ManageKycController::class, 'get'])->name('admin.kyc.get');
         });
 
-        Route::prefix('')->group(function () {
 
 
-            Route::get('/admin/exhibitions', [App\Http\Controllers\Admin\ManagCurrentController::class, 'index'])->name('admin.exhibitions');
-            Route::post('/admin/exhibitions/store', [App\Http\Controllers\Admin\ManagCurrentController::class, 'store'])->name('admin.exhibitions.store');
-            Route::get('/admin/exhibitions/edit', [App\Http\Controllers\Admin\ManagCurrentController::class, 'edit'])->name('admin.exhibitions.edit');
-            Route::post('/admin/exhibitions/update', [App\Http\Controllers\Admin\ManagCurrentController::class, 'update'])->name('admin.exhibitions.update');
-            Route::post('/admin/exhibitions/delete', [App\Http\Controllers\Admin\ManagCurrentController::class, 'delete'])->name('admin.exhibitions.delete');
-        });
+
 
 
 
