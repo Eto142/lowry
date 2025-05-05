@@ -63,12 +63,12 @@
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
                                         <span class="start">Date: {{ $exhibition->date->format('D d M Y')
-                                            }}<span class="time">10:00AM</span></span>
-                                        @if($exhibition->end_date)
-                                        <span class="separator"></span>
-                                        <span class="end">Until: {{ $exhibition->end_date->format('D d M Y') }}<span
-                                                class="time">4:30PM</span></span>
-                                        @endif
+                                            }}
+                                            @if($exhibition->end_date)
+                                            <span class="separator"></span>
+                                            <span class="end">Until: {{ $exhibition->end_date->format('D d M Y') }}<span
+                                                    class="time">4:30PM</span></span>
+                                            @endif
                                     </div>
                                     <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
                                 </a>
