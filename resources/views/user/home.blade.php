@@ -30,10 +30,10 @@
         <p><strong>Full Name:</strong> {{Auth::user()->first_name}} {{Auth::user()->last_name}}</p>
         <p><strong>Email:</strong> {{Auth::user()->email}}</p>
         <p><strong>Home Phone:</strong> {{Auth::user()->phone_number}}</p>
-        <p><strong>Mobile:</strong> -</p>
+        {{-- <p><strong>Mobile:</strong> -</p>
         <p><strong>Fax:</strong> -</p>
-        <p><strong>Address:</strong> -</p>
-        <div class="d-grid gap-2 d-md-flex">
+        <p><strong>Address:</strong> -</p> --}}
+        {{-- <div class="d-grid gap-2 d-md-flex">
             <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editModal">
                 <i class="bi bi-pencil"></i> Edit
             </button>
@@ -43,16 +43,16 @@
             <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#passwordModal">
                 <i class="bi bi-key"></i> Change Password
             </button>
-        </div>
+        </div> --}}
     </div>
 </div>
 
-<div class="col-md-3">
+{{-- <div class="col-md-3">
     <div class="profile-container p-4 shadow rounded bg-light text-center">
         <h6 class="fw-bold text-secondary"><i class="bi bi-calendar"></i> My Next Event</h6>
         <p class="text-muted">No tickets found</p>
     </div>
-</div>
+</div> --}}
 
 </div>
 
@@ -127,7 +127,7 @@
             </div>
         </div>
     </div>
-</div> 
+</div>
 
 <!-- Change Password Modal -->
 <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">

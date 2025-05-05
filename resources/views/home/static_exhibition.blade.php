@@ -66,7 +66,7 @@
                                     <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">Opening: {{ $exhibition->created_at->format('D d M Y')
+                                        <span class="start">Opening: {{ $exhibition->date->format('D d M Y')
                                             }}<span class="time">10:00AM</span></span>
                                         @if($exhibition->end_date)
                                         <span class="separator"></span>
