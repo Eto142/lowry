@@ -36,11 +36,7 @@
             <div class="richtext">
                 <p>Explore our esteemed permanent collection featuring masterpieces from renowned contemporary artists.
                     This curated selection represents the core of Ziiriel's artistic vision and legacy.</p>
-                <p style="text-align: center;"><strong>Permanent Collection Halls opening hours</strong></p>
-                <p style="text-align: center;">Tuesday – Friday | 11:00–17:00<br>Saturday - Sunday | 10:00 –
-                    17:00<br>Monday | closed</p>
-                <p>The permanent collection is available for viewing year-round and includes rotating featured pieces
-                    from our archives.</p>
+
             </div>
         </div>
     </div>
@@ -66,7 +62,7 @@
                                     <h2 class="title">{{ $exhibition->title }}</h2>
                                     <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
                                     <div class="top-date">
-                                        <span class="start">Opening: {{ $exhibition->date->format('D d M Y')
+                                        <span class="start">Date: {{ $exhibition->date->format('D d M Y')
                                             }}<span class="time">10:00AM</span></span>
                                         @if($exhibition->end_date)
                                         <span class="separator"></span>
