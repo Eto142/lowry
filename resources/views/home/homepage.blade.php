@@ -154,71 +154,7 @@
         </style>
     </div>
 
-    @auth
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 70px; padding-bottom: 0px; background: #fff;">
-        <div class="container">
-            <div class="richtext">
-                <h2>Upcoming Exhibitions</h2>
-            </div>
-        </div>
-    </div>
 
-    <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
-        <div class="container">
-            <ul data-animations="zoom" class="listItems variant-">
-                @foreach($upcomingExhibitions as $exhibition)
-                <li data-entry-id="{{ $exhibition->id }}"
-                    class="eventCard context-default production-type-default variant-default topdate">
-                    <style>
-                        [data-entry-id="{{ $exhibition->id }}"] .thumb .image {
-                            background-image: url('{{ $exhibition->picture_url ?? ' https: //via.placeholder.com/855x600' }}');
-                            }
-                    </style>
-                    <div class="listItemWrapper">
-                        <div class="thumb">
-                            <a class="image" href="/exhibitions/{{ $exhibition->id }}" tabindex="-1"></a>
-                        </div>
-                        <div class="inner">
-                            <div class="descMetaContainer">
-                                <a class="desc" href="/exhibitions/{{ $exhibition->id }}">
-                                    <h2 class="title">{{ $exhibition->title }}</h2>
-                                    <div class="subtitle">{{ Str::limit($exhibition->description, 100) }}</div>
-                                    <div class="top-date">
-                                        <span class="start">{{ $exhibition->created_at->format('D d M Y') }}<span
-                                                class="time">10:00AM</span></span>
-                                        @if($exhibition->created_at)
-                                        <span class="separator"></span>
-                                        <span class="end">{{ $exhibition->created_at->format('D d M Y') }}<span
-                                                class="time">4:30PM</span></span>
-                                        @endif
-                                    </div>
-                                    <div class="venue">{{ $exhibition->venue ?? 'Main Exhibition Hall' }}</div>
-                                </a>
-                                <div class="meta">
-                                    <div class="meta-group">
-                                        <ul class="genres">
-                                            <li class="genres__item"><a class="genres__link" href="#">{{
-                                                    $exhibition->genre ?? 'Art' }}</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="meta-group button">
-                                        <a href="/exhibitions/{{ $exhibition->id }}" class="btn btn-active">Details</a>
-                                        @if($exhibition->is_auction)
-                                        <a href="/auctions/{{ $exhibition->id }}" class="btn btn-primary">Join Live
-                                            Auction</a>
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-    </div>
-    @endauth
 
     <div class="container-fluid desc2Wrapper variant- align-"
         style="padding-top: 50px; padding-bottom: 20px; background: #fff;">

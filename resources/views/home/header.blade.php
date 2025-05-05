@@ -321,7 +321,7 @@
                                                     </a>
                                                 </li> --}}
                                                 <li class="">
-                                                    <a href="{{url('exhibition')}}" tabindex="-1">
+                                                    <a href="{{route('current.exhibitions')}}" tabindex="-1">
                                                         <span>Exhibition</span>
                                                     </a>
                                                 </li>
@@ -437,7 +437,7 @@
 
 
                 <div id="search-box" aria-expanded="false">
-                    <form class="inner" id="zoekForm" action="https://thelowry.com/search" method="get">
+                    <form class="inner" id="zoekForm" action="" method="get">
                         <input name="s" placeholder="Search" minlength="3" required type="text"
                             aria-labelledby="zoekSubmit" value="">
                         <button type="submit" id="zoekSubmit" title="Search">
