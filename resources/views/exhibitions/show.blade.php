@@ -489,8 +489,8 @@
 
                 <!-- Artwork details -->
                 <div class="artwork-details">
-                    <h2 class="artwork-title">Urban Serenity</h2>
-                    <p class="artwork-medium">Mixed Media on Canvas, {{ $exhibition->date->format('Y') }}</p>
+
+                    <p class="artwork-medium">{{ $exhibition->date->format('Y') }}</p>
                     <div class="d-flex align-items-center mt-3 mb-4">
                         <span class="badge-sold me-3">Sold</span>
                         <p class="artwork-price mb-0">${{ number_format($exhibition->amount_sold, 2) }}</p>
