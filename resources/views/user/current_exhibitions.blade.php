@@ -219,12 +219,14 @@
             <strong>Objective:</strong> {{ Str::limit($exhibition->objective, 80) }}
           </div>
 
-          @if(is_array($exhibition->sections) && count($exhibition->sections))
+          @if(!empty($exhibition->sections) && is_array($exhibition->sections))
           <div class="card-text">
             <strong>Sections:</strong>
             <ul class="exhibition-sections">
               @foreach($exhibition->sections as $section)
+              @if(is_string($section))
               <li>{{ $section }}</li>
+              @endif
               @endforeach
             </ul>
           </div>
@@ -234,7 +236,7 @@
           <div class="budget-note">(Shared between exhibitor and artist)</div>
 
           <div class="exhibition-meta">
-            <span class="exhibition-date">{{ $exhibition->formatted_date }}</span>
+            <span class="exhibition-date">{{ $exhibition->exhibition_date->format('F j, Y') }}</span>
             @if($exhibition->is_featured)
             <span class="exhibition-status status-featured">Featured</span>
             @else
@@ -245,7 +247,7 @@
           <button class="btn view-btn view-exhibition-btn" data-bs-toggle="modal" data-bs-target="#exhibitionModal"
             data-title="{{ $exhibition->title }}" data-theme="{{ $exhibition->theme }}"
             data-mediums="{{ $exhibition->mediums }}" data-objective="{{ $exhibition->objective }}"
-            data-sections="{{ json_encode($exhibition->sections ?? []) }}"
+            data-sections="{{ is_array($exhibition->sections) ? json_encode($exhibition->sections) : json_encode([]) }}"
             data-budget="{{ $exhibition->formatted_budget }}"
             data-date="{{ $exhibition->exhibition_date->format('F j, Y') }}"
             data-status="{{ $exhibition->is_featured ? 'Featured' : 'Active' }}">
@@ -323,7 +325,7 @@
             var theme = button.getAttribute('data-theme');
             var mediums = button.getAttribute('data-mediums');
             var objective = button.getAttribute('data-objective');
-            var sections = JSON.parse(button.getAttribute('data-sections'));
+            var sections = JSON.parse(button.getAttribute('data-sections') || '[]');
             var budget = button.getAttribute('data-budget');
             var date = button.getAttribute('data-date');
             var status = button.getAttribute('data-status');
@@ -341,11 +343,15 @@
             var sectionsList = document.getElementById('modalSections');
             sectionsList.innerHTML = '';
             
-            sections.forEach(function(section) {
-                var li = document.createElement('li');
-                li.textContent = section;
-                sectionsList.appendChild(li);
-            });
+            if (Array.isArray(sections)) {
+                sections.forEach(function(section) {
+                    if (section && typeof section === 'string') {
+                        var li = document.createElement('li');
+                        li.textContent = section;
+                        sectionsList.appendChild(li);
+                    }
+                });
+            }
         });
     });
 </script>
