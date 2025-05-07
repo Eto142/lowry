@@ -197,11 +197,37 @@
         margin-top: -8px;
         margin-bottom: 12px;
     }
+
+    /* Complex section styling */
+    .section-title {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .section-description {
+        color: #666;
+        margin-left: 5px;
+    }
 </style>
 
 <div class="col-12 col-md-9">
     <div class="exhibitions-grid">
         @foreach($exhibitions as $exhibition)
+        @php
+        $formattedSections = [];
+        if (!empty($exhibition->sections)) {
+        if (is_string($exhibition->sections)) {
+        try {
+        $decoded = json_decode($exhibition->sections, true);
+        $formattedSections = json_last_error() === JSON_ERROR_NONE ? $decoded : [$exhibition->sections];
+        } catch (Exception $e) {
+        $formattedSections = [$exhibition->sections];
+        }
+        } elseif (is_array($exhibition->sections)) {
+        $formattedSections = $exhibition->sections;
+        }
+        }
+        @endphp
         <div class="exhibition-card-container">
             <div class="card exhibition-card">
                 <div class="card-body">
@@ -219,13 +245,24 @@
                         <strong>Objective:</strong> {{ Str::limit($exhibition->objective, 80) }}
                     </div>
 
-                    @if(!empty($exhibition->sections) && is_array($exhibition->sections))
+                    @if(!empty($formattedSections))
                     <div class="card-text">
                         <strong>Sections:</strong>
                         <ul class="exhibition-sections">
-                            @foreach($exhibition->sections as $section)
+                            @foreach($formattedSections as $section)
                             @if(is_string($section))
                             <li>{{ $section }}</li>
+                            @elseif(is_array($section))
+                            <li>
+                                @if(isset($section['title']))
+                                <span class="section-title">{{ $section['title'] }}:</span>
+                                @if(isset($section['description']))
+                                <span class="section-description">{{ $section['description'] }}</span>
+                                @endif
+                                @else
+                                {{ json_encode($section) }}
+                                @endif
+                            </li>
                             @endif
                             @endforeach
                         </ul>
@@ -233,7 +270,9 @@
                     @endif
 
                     <div class="price-tag">Budget: {{ $exhibition->formatted_budget }}</div>
-                    <div class="budget-note">(Shared between exhibitor and artist)</div>
+                    <div class="budget-note">(This payment is shared between the exhibitor and the participating artist.
+                        Payment will be dispatched to both parties on, or after the exhibition date - after art sale)
+                    </div>
 
                     <div class="exhibition-meta">
                         <span class="exhibition-date">{{ $exhibition->exhibition_date->format('F j, Y') }}</span>
@@ -248,7 +287,7 @@
                         data-bs-target="#exhibitionModal" data-title="{{ $exhibition->title }}"
                         data-theme="{{ $exhibition->theme }}" data-mediums="{{ $exhibition->mediums }}"
                         data-objective="{{ $exhibition->objective }}"
-                        data-sections="{{ is_array($exhibition->sections) ? json_encode($exhibition->sections) : json_encode([]) }}"
+                        data-sections="{{ is_array($formattedSections) ? json_encode($formattedSections) : json_encode([]) }}"
                         data-budget="{{ $exhibition->formatted_budget }}"
                         data-date="{{ $exhibition->exhibition_date->format('F j, Y') }}"
                         data-status="{{ $exhibition->is_featured ? 'Featured' : 'Active' }}">
@@ -326,7 +365,7 @@
             var theme = button.getAttribute('data-theme');
             var mediums = button.getAttribute('data-mediums');
             var objective = button.getAttribute('data-objective');
-            var sections = JSON.parse(button.getAttribute('data-sections') || '[]');
+            var sections = button.getAttribute('data-sections');
             var budget = button.getAttribute('data-budget');
             var date = button.getAttribute('data-date');
             var status = button.getAttribute('data-status');
@@ -344,14 +383,37 @@
             var sectionsList = document.getElementById('modalSections');
             sectionsList.innerHTML = '';
             
-            if (Array.isArray(sections)) {
-                sections.forEach(function(section) {
-                    if (section && typeof section === 'string') {
+            try {
+                var parsedSections = JSON.parse(sections);
+                if (Array.isArray(parsedSections)) {
+                    parsedSections.forEach(function(section) {
                         var li = document.createElement('li');
-                        li.textContent = section;
+                        if (typeof section === 'string') {
+                            li.textContent = section;
+                        } else if (section && typeof section === 'object') {
+                            if (section.title) {
+                                var titleSpan = document.createElement('span');
+                                titleSpan.className = 'section-title';
+                                titleSpan.textContent = section.title + ':';
+                                li.appendChild(titleSpan);
+                                
+                                if (section.description) {
+                                    var descSpan = document.createElement('span');
+                                    descSpan.className = 'section-description';
+                                    descSpan.textContent = section.description;
+                                    li.appendChild(descSpan);
+                                }
+                            } else {
+                                li.textContent = JSON.stringify(section);
+                            }
+                        }
                         sectionsList.appendChild(li);
-                    }
-                });
+                    });
+                }
+            } catch (e) {
+                var li = document.createElement('li');
+                li.textContent = "No sections data available";
+                sectionsList.appendChild(li);
             }
         });
     });

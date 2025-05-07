@@ -73,7 +73,7 @@ class FutureExhibition extends Model
     public function getFormattedBudgetAttribute()
     {
         if ($this->budget) {
-            return '£' . number_format($this->budget, 2);
+            return '$' . number_format($this->budget, 2);
         }
         return 'Not specified';
     }
