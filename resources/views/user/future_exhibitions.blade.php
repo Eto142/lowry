@@ -198,7 +198,7 @@
         margin-bottom: 12px;
     }
 
-    /* Complex section styling */
+    /* Section styling */
     .section-title {
         font-weight: 600;
         color: #333;
@@ -214,20 +214,30 @@
     <div class="exhibitions-grid">
         @foreach($exhibitions as $exhibition)
         @php
-        $formattedSections = [];
+        // Process sections to ensure it's always an array
+        $sections = [];
+
         if (!empty($exhibition->sections)) {
         if (is_string($exhibition->sections)) {
-        try {
+        // Try to decode JSON
         $decoded = json_decode($exhibition->sections, true);
-        $formattedSections = json_last_error() === JSON_ERROR_NONE ? $decoded : [$exhibition->sections];
-        } catch (Exception $e) {
-        $formattedSections = [$exhibition->sections];
+        if (json_last_error() === JSON_ERROR_NONE) {
+        $sections = is_array($decoded) ? $decoded : [$decoded];
+        } else {
+        // If not JSON, treat as single line
+        $sections = [trim($exhibition->sections)];
         }
         } elseif (is_array($exhibition->sections)) {
-        $formattedSections = $exhibition->sections;
+        $sections = $exhibition->sections;
+        } elseif (is_object($exhibition->sections)) {
+        $sections = (array)$exhibition->sections;
         }
         }
+
+        // Ensure we have an array of sections
+        $sections = is_array($sections) ? $sections : [];
         @endphp
+
         <div class="exhibition-card-container">
             <div class="card exhibition-card">
                 <div class="card-body">
@@ -245,19 +255,25 @@
                         <strong>Objective:</strong> {{ Str::limit($exhibition->objective, 80) }}
                     </div>
 
-                    @if(!empty($formattedSections))
+                    @if(!empty($sections))
                     <div class="card-text">
                         <strong>Sections:</strong>
                         <ul class="exhibition-sections">
-                            @foreach($formattedSections as $section)
+                            @foreach($sections as $section)
                             @if(is_string($section))
                             <li>{{ $section }}</li>
-                            @elseif(is_array($section))
+                            @elseif(is_array($section) || is_object($section))
                             <li>
-                                @if(isset($section['title']))
-                                <span class="section-title">{{ $section['title'] }}:</span>
-                                @if(isset($section['description']))
-                                <span class="section-description">{{ $section['description'] }}</span>
+                                @php
+                                $title = is_array($section) ? ($section['title'] ?? null) : ($section->title ?? null);
+                                $description = is_array($section) ? ($section['description'] ?? null) :
+                                ($section->description ?? null);
+                                @endphp
+
+                                @if(!empty($title))
+                                <span class="section-title">{{ $title }}</span>
+                                @if(!empty($description))
+                                : <span class="section-description">{{ $description }}</span>
                                 @endif
                                 @else
                                 {{ json_encode($section) }}
@@ -286,8 +302,7 @@
                     <button class="btn view-btn view-exhibition-btn" data-bs-toggle="modal"
                         data-bs-target="#exhibitionModal" data-title="{{ $exhibition->title }}"
                         data-theme="{{ $exhibition->theme }}" data-mediums="{{ $exhibition->mediums }}"
-                        data-objective="{{ $exhibition->objective }}"
-                        data-sections="{{ is_array($formattedSections) ? json_encode($formattedSections) : json_encode([]) }}"
+                        data-objective="{{ $exhibition->objective }}" data-sections="{{ json_encode($sections) }}"
                         data-budget="{{ $exhibition->formatted_budget }}"
                         data-date="{{ $exhibition->exhibition_date->format('F j, Y') }}"
                         data-status="{{ $exhibition->is_featured ? 'Featured' : 'Active' }}">
@@ -388,19 +403,24 @@
                 if (Array.isArray(parsedSections)) {
                     parsedSections.forEach(function(section) {
                         var li = document.createElement('li');
+                        
                         if (typeof section === 'string') {
                             li.textContent = section;
-                        } else if (section && typeof section === 'object') {
-                            if (section.title) {
+                        } 
+                        else if (typeof section === 'object' && section !== null) {
+                            var title = section.title || section['title'] || null;
+                            var description = section.description || section['description'] || null;
+                            
+                            if (title) {
                                 var titleSpan = document.createElement('span');
                                 titleSpan.className = 'section-title';
-                                titleSpan.textContent = section.title + ':';
+                                titleSpan.textContent = title;
                                 li.appendChild(titleSpan);
                                 
-                                if (section.description) {
+                                if (description) {
                                     var descSpan = document.createElement('span');
                                     descSpan.className = 'section-description';
-                                    descSpan.textContent = section.description;
+                                    descSpan.textContent = ': ' + description;
                                     li.appendChild(descSpan);
                                 }
                             } else {
