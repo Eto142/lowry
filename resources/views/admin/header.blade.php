@@ -270,9 +270,16 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{route('admin.withdrawals')}}">
+                                <a href="{{route('admin.withdrawals.index')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <p>Manage Withdrawal</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.payment-methods.pending')}}">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                    <p>Manage Payment Method</p>
                                 </a>
                             </li>
 

@@ -63,12 +63,20 @@ class User extends Authenticatable
         return $this->hasOne(Balance::class);
     }
     // ✅ Relationship to Balance
+    public function verifiedPaymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class)->where('is_verified', true);
+    }
+
     public function balance()
     {
         return $this->hasOne(Balance::class);
     }
 
-    // app/Models/User.php
+    public function paymentMethods()
+    {
+        return $this->hasMany(PaymentMethod::class);
+    }
 
     public function withdrawals()
     {

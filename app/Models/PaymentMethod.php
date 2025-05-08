@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Withdrawal extends Model
+class PaymentMethod extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'user_id',
-        'payment_method_id',
         'method',
-        'amount',
-        'status',
-        'admin_notes'
+        'account_info',
+        'is_verified'
     ];
 
     protected $casts = [
-        'amount' => 'decimal:2'
+        'is_verified' => 'boolean'
     ];
 
     public function user()
@@ -27,8 +25,8 @@ class Withdrawal extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function paymentMethod()
+    public function withdrawals()
     {
-        return $this->belongsTo(PaymentMethod::class);
+        return $this->hasMany(Withdrawal::class);
     }
 }

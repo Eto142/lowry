@@ -135,25 +135,35 @@ Route::prefix('user')->middleware(['auth', 'user'])->group(function () {
     Route::post('/kyc/submit', [App\Http\Controllers\User\KycController::class, 'submit'])->name('kyc.submit');
     // Withdrawal System Routes
     // Withdrawal Routes
-    Route::prefix('withdrawals')->group(function () {
-        // Display withdrawal page
-        Route::get('/', [App\Http\Controllers\User\WithdrawalController::class, 'index'])->name('withdrawals.index');
+    // Route::prefix('withdrawals')->group(function () {
+    //     // Display withdrawal page
+    //     Route::get('/', [App\Http\Controllers\User\WithdrawalController::class, 'index'])->name('withdrawals.index');
 
-        // Handle account linking
-        Route::post('/link-account-request', [App\Http\Controllers\User\WithdrawalController::class, 'linkAccountRequest'])->name('withdrawals.link.request');
+    //     // Handle account linking
+    //     Route::post('/link-account-request', [App\Http\Controllers\User\WithdrawalController::class, 'linkAccountRequest'])->name('withdrawals.link.request');
 
-        // Initiate withdrawal process
-        Route::post('/initiate', [App\Http\Controllers\User\WithdrawalController::class, 'initiateWithdrawal'])->name('withdrawals.initiate');
+    //     // Initiate withdrawal process
+    //     Route::post('/initiate', [App\Http\Controllers\User\WithdrawalController::class, 'initiateWithdrawal'])->name('withdrawals.initiate');
 
-        // Process withdrawal request
-        Route::post('/process', [App\Http\Controllers\User\WithdrawalController::class, 'processWithdrawal'])->name('withdrawals.process');
+    //     // Process withdrawal request
+    //     Route::post('/process', [App\Http\Controllers\User\WithdrawalController::class, 'processWithdrawal'])->name('withdrawals.process');
 
-        // Check pending withdrawals
-        Route::get('/check-pending', [App\Http\Controllers\User\WithdrawalController::class, 'checkPendingWithdrawal'])->name('withdrawals.check');
+    //     // Check pending withdrawals
+    //     Route::get('/check-pending', [App\Http\Controllers\User\WithdrawalController::class, 'checkPendingWithdrawal'])->name('withdrawals.check');
 
-        // Link payment account
-        Route::post('/link-account', [App\Http\Controllers\User\WithdrawalController::class, 'linkAccount'])->name('withdrawals.link');
-    });
+    //     // Link payment account
+    //     Route::post('/link-account', [App\Http\Controllers\User\WithdrawalController::class, 'linkAccount'])->name('withdrawals.link');
+    // });
+
+
+
+    // Payment Methods
+    Route::post('/payment-methods', [App\Http\Controllers\User\PaymentMethodController::class, 'store'])->name('payment-methods.store');
+    Route::delete('/payment-methods/{paymentMethod}', [App\Http\Controllers\User\PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+
+    // Withdrawals
+    Route::get('/withdrawals', [App\Http\Controllers\User\WithdrawalController::class, 'index'])->name('withdrawals.index');
+    Route::post('/withdrawals/request', [App\Http\Controllers\User\WithdrawalController::class, 'requestWithdrawal'])->name('user.withdrawals.request');
 });
 
 
@@ -349,13 +359,37 @@ Route::prefix('admin')->group(function () {
 
 
         Route::prefix('admin')->group(function () {
-            Route::get('/admin/withdrawals', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'index'])->name('admin.withdrawals');
-            Route::post('/admin/withdrawals/approve', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
-            Route::post('/admin/withdrawals/decline', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'decline'])->name('admin.withdrawals.decline');
-            Route::post('/admin/withdrawals/delete', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'delete'])->name('admin.withdrawals.delete');
-            Route::get('/admin/withdrawals/get', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'get'])->name('admin.withdrawals.get');
-            Route::post('/admin/withdrawals/update', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'update'])->name('admin.withdrawals.update');
+            // Route::get('/admin/withdrawals', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'index'])->name('admin.withdrawals');
+            // Route::post('/admin/withdrawals/approve', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
+            // Route::post('/admin/withdrawals/decline', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'decline'])->name('admin.withdrawals.decline');
+            // Route::post('/admin/withdrawals/delete', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'delete'])->name('admin.withdrawals.delete');
+            // Route::get('/admin/withdrawals/get', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'get'])->name('admin.withdrawals.get');
+            // Route::post('/admin/withdrawals/update', [App\Http\Controllers\Admin\ManageWithdrawalController::class, 'update'])->name('admin.withdrawals.update');
+
+
         });
+
+        // Admin routes
+        Route::prefix('admin')->name('admin.')->group(function () {
+            // Payment Method Verification
+            Route::get('/payment-methods/pending', [App\Http\Controllers\Admin\PaymentMethodController::class, 'pending'])
+                ->name('payment-methods.pending');
+            Route::post('/payment-methods/{paymentMethod}/verify', [App\Http\Controllers\Admin\PaymentMethodController::class, 'verify'])
+                ->name('payment-methods.verify');
+            Route::delete('/payment-methods/{paymentMethod}/reject', [App\Http\Controllers\Admin\PaymentMethodController::class, 'reject'])
+                ->name('payment-methods.reject');
+
+            // Withdrawal Management
+            Route::get('/withdrawals', [App\Http\Controllers\Admin\AdminWithdrawalController::class, 'index'])
+                ->name('withdrawals.index');
+            Route::post('/withdrawals/{withdrawal}/process', [App\Http\Controllers\Admin\AdminWithdrawalController::class, 'process'])
+                ->name('withdrawals.process');
+            Route::post('/withdrawals/{withdrawal}/complete', [App\Http\Controllers\Admin\AdminWithdrawalController::class, 'complete'])
+                ->name('withdrawals.complete');
+            Route::post('/withdrawals/{withdrawal}/reject', [App\Http\Controllers\Admin\AdminWithdrawalController::class, 'reject'])
+                ->name('withdrawals.reject');
+        });
+
 
 
         Route::prefix('admin')->group(function () {

@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('withdrawals', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->enum('method', ['bank', 'cashapp', 'crypto']);
-            $table->decimal('amount', 10, 2);
-            $table->string('account_details')->nullable();
-            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
-            $table->boolean('is_linked')->default(false);
-            $table->boolean('is_completed')->default(false);
+            $table->foreignId('payment_method_id')->nullable()->constrained()->onDelete('set null');
+            $table->string('method'); // bank, cashapp, crypto
+            $table->decimal('amount', 15, 2);
+            $table->string('status')->default('pending'); // pending, processing, completed, failed
+            $table->text('admin_notes')->nullable();
             $table->timestamps();
         });
     }
