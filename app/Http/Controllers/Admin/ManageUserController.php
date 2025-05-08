@@ -22,7 +22,7 @@ class ManageUserController extends Controller
      */
     public function index()
     {
-        $users = User::with('balance')->latest()->paginate(10);
+        $users = User::with('balance')->latest();
         return view('admin.manage_users', compact('users'));
     }
 
@@ -167,7 +167,7 @@ class ManageUserController extends Controller
                 $data['password'] = Hash::make($request->password);
             }
 
-      
+
 
             $user->update($data);
 
