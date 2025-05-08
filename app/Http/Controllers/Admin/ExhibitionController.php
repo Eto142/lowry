@@ -13,7 +13,7 @@ class ExhibitionController extends Controller
     // List all exhibitions
     public function index()
     {
-        $exhibitions = Exhibition::latest();
+        $exhibitions = Exhibition::latest()->paginate(1000000000);
         return view('admin.manage_exhibitions', compact('exhibitions'));
     }
 
