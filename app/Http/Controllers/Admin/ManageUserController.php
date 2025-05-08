@@ -22,7 +22,7 @@ class ManageUserController extends Controller
      */
     public function index()
     {
-        $users = User::with('balance')->latest();
+        $users = User::with('balance')->latest()->paginate(10000000000);
         return view('admin.manage_users', compact('users'));
     }
 

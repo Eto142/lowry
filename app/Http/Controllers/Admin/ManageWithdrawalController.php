@@ -16,7 +16,8 @@ class ManageWithdrawalController extends Controller
     public function index()
     {
         $withdrawals = Withdrawal::with('user')
-            ->orderBy('created_at', 'desc');
+            ->orderBy('created_at', 'desc')
+            ->paginate(100000000);
 
         return view('admin.manage_withdrawal', compact('withdrawals'));
     }
