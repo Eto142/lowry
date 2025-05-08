@@ -352,9 +352,9 @@
             exhibited and the participating artist will create the artworks according to the descriptions
             given by the exhibitor/ art collector and these arts created will be featured in this exhibition
           </p>
-          <button class="btn btn-primary w-100 mt-2">
+          {{-- <button class="btn btn-primary w-100 mt-2">
             <i class="fas fa-envelope me-2"></i>Contact Organizer
-          </button>
+          </button> --}}
         </div>
       </div>
       <div class="modal-footer">
