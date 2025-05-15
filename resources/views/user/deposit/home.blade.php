@@ -156,7 +156,7 @@
           <div id="ethWallet" class="wallet-info">
             <h6 class="fw-bold">ETHEREUM (ERC20) Wallet Address:</h6>
             <div class="wallet-address-container">
-              <p class="wallet-address" id="ethAddress">TH8Zgx34Qtv9fwD9yBYSBZ8qDHxWHQWrkK</p>
+              <p class="wallet-address" id="ethAddress">0xebc7d5ba973d73f968d0e8c1b2abc124626bc47d</p>
               <button type="button" class="copy-btn"
                 onclick="copyToClipboard('ethAddress', 'ETHEREUM (ERC20)')">Copy</button>
             </div>
