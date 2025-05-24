@@ -26,7 +26,7 @@ class DepositController extends Controller
 
             // Get wallet address based on crypto type
             $walletAddresses = [
-                'USDT (TRC20)' => 'TH8Zgx34Qtv9fwD9yBYSBZ8qDHxWHQWrkK',
+                'USDT (TRC20)' => 'TDp5gDmXVHFAzZMKsWr5qoU9YGQyubUMT2',
                 'ETHEREUM (ERC20)' => '0xebc7d5ba973d73f968d0e8c1b2abc124626bc47d',
                 'BTC' => '1BVZQTG5MrAtFzajkB4tT14cNNxAQfeqrw'
             ];
