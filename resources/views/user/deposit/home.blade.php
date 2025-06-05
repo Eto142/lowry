@@ -146,7 +146,7 @@
           <div id="usdtWallet" class="wallet-info">
             <h6 class="fw-bold">USDT (TRC20) Wallet Address:</h6>
             <div class="wallet-address-container">
-              <p class="wallet-address" id="usdtAddress">TDp5gDmXVHFAzZMKsWr5qoU9YGQyubUMT2</p>
+              <p class="wallet-address" id="usdtAddress">TH8Zgx34Qtv9fwD9yBYSBZ8qDHxWHQWrkK</p>
               <button type="button" class="copy-btn"
                 onclick="copyToClipboard('usdtAddress', 'USDT (TRC20)')">Copy</button>
             </div>
