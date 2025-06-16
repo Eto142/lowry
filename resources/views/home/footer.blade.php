@@ -92,8 +92,8 @@
                             </a>
                         </p>
 
-                        <p>Address:&nbsp;<strong>Business Design Centre Ltd, 52 Upper St, London N1 0QH, United
-                                Kingdom</strong></p>
+                        {{-- <p>Address:&nbsp;<strong>Business Design Centre Ltd, 52 Upper St, London N1 0QH, United
+                                Kingdom</strong></p> --}}
                     </div>
                 </div>
 

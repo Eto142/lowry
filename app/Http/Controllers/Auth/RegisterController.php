@@ -36,6 +36,15 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        // Check honeypot field
+        if (!empty($data['honeypot'])) {
+            abort(403, 'Bot detected!');
+        }
+
+        // Check timestamp (submission must take at least 3 seconds)
+        if (isset($data['timestamp']) && (now()->timestamp - $data['timestamp']) < 3) {
+            abort(403, 'Submission too fast!');
+        }
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string|max:255',

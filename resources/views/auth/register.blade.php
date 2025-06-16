@@ -12,6 +12,10 @@
 
                 <form id="registration-form" method="POST" action="{{ route('register.submit') }}">
                   @csrf
+                  <!-- Honeypot field -->
+                  <input type="text" name="honeypot" style="display:none;">
+                  <!-- Timestamp field -->
+                  <input type="hidden" name="timestamp" value="{{ now()->timestamp }}">
                   <div class="mb-3">
                     <input type="text" name="first_name" class="form-control py-1" placeholder="First Name" required>
                   </div>
