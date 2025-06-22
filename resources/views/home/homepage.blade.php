@@ -67,7 +67,7 @@
                     17:00<br>Monday | closed</p>
                 <p style="text-align: left;"><br>We welcome everyone to our Exhibition Spaces. You can find out more
                     about which exhibitions are currently showing and what is upcoming, plus more information on how to
-                    <a href="mailto:support@ziirielcontemporaryartgallery.com">plan your visit</a>
+                    <a href="mailto:support@ziiriel-arthouse.com">plan your visit</a>
 
 
                 </p>

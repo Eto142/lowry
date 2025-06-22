@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ziirielcontemporaryartgallery</title>
+  <title>ziiriel-arthouse</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&family=Sahitya:wght@400;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&family=Sahitya:wght@400;700&display=swap"
+    rel="stylesheet">
   <style>
-    html, body {
+    html,
+    body {
       height: 100%;
       margin: 0;
     }
@@ -121,13 +125,15 @@
       background-color: #000;
       color: #fff;
     }
-    .rounded-bit{
+
+    .rounded-bit {
       border-radius: 15px;
     }
 
     .name-input {
       width: 50%;
     }
+
     .name-input:focus {
       box-shadow: none;
       border-color: red;
@@ -193,15 +199,15 @@
         padding-bottom: 2rem;
         margin-bottom: 2rem;
       }
-      
+
       .col-md-4 {
         padding-top: 1rem;
       }
-      
+
       .modal-overlay {
         align-items: flex-start;
       }
-      
+
       .card {
         margin-top: 30px;
       }
@@ -209,8 +215,13 @@
 
     /* Animation for form appearance */
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
     }
 
     .fade-in {
@@ -218,6 +229,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="page-wrapper">
     <!-- Mobile Navigation Bar -->
@@ -236,7 +248,8 @@
       <div class="mobile-nav-logo">
         <a href="#" class="navbar-brand">
           <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></text>
+            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
+                src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse" width="150px"></text>
           </svg>
         </a>
       </div>
@@ -255,14 +268,15 @@
             </li>
           </ul>
         </div>
-        
+
         <!-- Logo centered -->
         <a class="navbar-brand mx-auto position-absolute top-50 start-50 translate-middle" href="{{ url('/') }}">
           <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img  src="{{asset('images/logo.png')}}" alt="Ziirielcontemporaryartgallery" width="150px"></text>
+            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
+                src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse" width="150px"></text>
           </svg>
         </a>
-        
+
         <div class="d-flex align-items-center ms-auto">
           <button class="btn btn-link text-dark me-2">
             <i class="bi bi-search"></i>
@@ -282,9 +296,9 @@
       <div class="row mb-5">
         <div class="col-12">
           <p class="lead">
-            In order to proceed, your personal details are required. Please 
-            <a href="{{ url('/login') }}" class="text-primary text-decoration-none">log-in</a> or 
-            <a href="{{ url('/register') }}" id="register-link" class="text-primary text-decoration-none">register</a> 
+            In order to proceed, your personal details are required. Please
+            <a href="{{ url('/login') }}" class="text-primary text-decoration-none">log-in</a> or
+            <a href="{{ url('/register') }}" id="register-link" class="text-primary text-decoration-none">register</a>
             to continue
           </p>
         </div>

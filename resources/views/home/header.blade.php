@@ -25,7 +25,7 @@
 
 
     <meta name="description"
-        content="The Law Family Galleries are located in Ziirielcontemporaryartgallery and are free to enter for all. Donations are welcome.">
+        content="The Law Family Galleries are located in ziiriel-arthouse and are free to enter for all. Donations are welcome.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="galleries.html">
@@ -37,10 +37,10 @@
     <meta property="og:image:height" content="630">
     <meta property="og:title" content="Galleries">
     <meta property="og:description"
-        content="The Law Family Galleries are located in Ziirielcontemporaryartgallery and are free to enter for all. Donations are welcome.">
+        content="The Law Family Galleries are located in ziiriel-arthouse and are free to enter for all. Donations are welcome.">
 
 
-    <title>Galleries | Ziirielcontemporaryartgallery</title>
+    <title>Galleries | ziiriel-arthouse</title>
 
 
 
@@ -140,13 +140,11 @@
 
                             <a class="brand" href="/" title="Go to homepage">
 
-                                <img class="sticky-logo" src="{{asset('images/logo.png')}}"
-                                    alt="Ziirielcontemporaryartgallery">
+                                <img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse">
 
                                 <img class="showcase-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
-                                <img class="mobile-logo" src="{{asset('images/logo.png')}}"
-                                    alt="Ziirielcontemporaryartgallery">
+                                <img class="mobile-logo" src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse">
 
                                 <img class="mobile-sticky-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
@@ -222,7 +220,7 @@
                             <li>
                                 <a href="{{route('static.exhibitions')}}"
                                     onclick="event.stopPropagation(); return true;">
-                                    <span>LS Ziirielcontemporaryartgallery Permanent Collection</span>
+                                    <span>LS ziiriel-arthouse Permanent Collection</span>
                                 </a>
                             </li>
                             <li>
@@ -327,7 +325,7 @@
                                                 </li>
                                                 <li class="">
                                                     <a href="{{route('static.exhibitions')}}" tabindex="-1">
-                                                        <span>LS Ziirielcontemporaryartgallery Collection</span>
+                                                        <span>LS ziiriel-arthouse Collection</span>
                                                     </a>
                                                 </li>
                                                 {{-- <li class="">
