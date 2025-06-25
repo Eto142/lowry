@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 
-<!--
-
-    Peppered is the leading saas online marketing solution
-    for venues in the BeNeLux, Scandinavia, the UK... the world!
-    Peppered is part of CultureSuite.
-
-    Join us!
-
-    https://www.culturesuite.co/about-us
-
-    -->
-
 <html dir="ltr" lang="en" data-theme="system" xmlns:og="http://ogp.me/ns#">
-
-
-<!-- Mirrored from thelowry.com/pQp4jSN/galleries by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 17 Mar 2025 11:42:12 GMT -->
-<!-- Added by HTTrack -->
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 <head>

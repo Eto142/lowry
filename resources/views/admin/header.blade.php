@@ -164,7 +164,8 @@
                                     <div class="dropdown-user-scroll scrollbar-outer">
                                         <li>
                                             <a class="dropdown-item" href="#">Account Settings</a>
-                                            <a class="dropdown-item" href="#">Change Password</a>
+                                            <a class="dropdown-item" href="{{route('admin.change-password')}}">Change
+                                                Password</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="{{route('admin.home')}}">
                                                 Logout
@@ -280,6 +281,13 @@
                                 <a href="{{route('admin.payment-methods.pending')}}">
                                     <i class="fa fa-download" aria-hidden="true"></i>
                                     <p>Manage Payment Method</p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{route('admin.change-password')}}">
+                                    <i class="fas fa-cubes " aria-hidden="true"></i>
+                                    <p>Change Password</p>
                                 </a>
                             </li>
 

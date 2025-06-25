@@ -68,6 +68,19 @@ Route::middleware('guest')->group(function () {
 });
 
 
+Route::get('forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+
+Route::post('forgot-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+
+Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])
+    ->name('password.update');
+
+
 Route::post('/logout', [App\Http\Controllers\Auth\AuthController::class, 'logout'])->name('user.logout');
 
 
@@ -416,4 +429,13 @@ Route::prefix('admin')->group(function () {
             Route::delete('/{bid}', [App\Http\Controllers\Admin\ManageBidController::class, 'destroy'])->name('destroy');
         });
     });
+});
+
+
+Route::prefix('admin')->middleware(['admin'])->group(function () {
+    // ... other admin routes ...
+
+    // Password change routes
+    Route::get('/change-password', [App\Http\Controllers\Admin\AdminController::class, 'showChangePasswordForm'])->name('admin.change-password');
+    Route::put('/{admin}/change-password', [App\Http\Controllers\Admin\AdminController::class, 'changePassword'])->name('admin.change-password.post');
 });

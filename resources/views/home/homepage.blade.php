@@ -7,13 +7,9 @@
         <div class="container">
             <div class="infoHeaderBoxedImage" data-animations="">
                 <picture class="picture" style="--picture-aspect-ratio: 16/9">
-                    <source media="(max-width: 991px)"
-                        srcset="https://img.thelowry.com/iS1FHr8tnmGsTwmLtXA8wVHWoTSgFKNmVC4qaxJ0psM/c:8021:4533:fp:0.5:0.33/s:690:390:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc">
-                    <source media="(min-width: 992px)"
-                        srcset="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc">
-                    <img class="picture__image"
-                        src="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc"
-                        alt="Exhibition Hall">
+                    <source media="(max-width: 991px)" srcset="images/home.jpg">
+                    <source media="(min-width: 992px)" srcset="images/home.jpg">
+                    <img class="picture__image" src="images/home.jpg" alt="Exhibition Hall">
                 </picture>
             </div>
         </div>

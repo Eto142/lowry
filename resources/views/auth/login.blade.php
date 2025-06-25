@@ -39,8 +39,9 @@
                     <div class="invalid-feedback password-error"></div>
                   </div>
 
+                  <!-- Updated Forgot Password Link -->
                   <div class="mb-2">
-                    <small><a href="" class="password-link">Forgot password?</a></small>
+                    <small><a href="{{ route('password.request') }}" class="password-link">Forgot password?</a></small>
                   </div>
 
                   <button type="submit" class="btn btn-dark btn-signin rounded-bit bg-white py-1 text-dark my-2">
