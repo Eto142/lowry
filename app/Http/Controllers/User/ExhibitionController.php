@@ -17,7 +17,7 @@ class ExhibitionController extends Controller
     {
         return view('user.create-exhibition');
     }
-
+ 
     public function store(Request $request)
     {
         $validated = $request->validate([

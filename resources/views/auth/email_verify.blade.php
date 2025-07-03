@@ -6,7 +6,7 @@
             <div class="card shadow">
                 <div class="card-body p-4">
                     <div class="text-center mb-4">
-                        <img src="{{ asset('images/logo.png') }}" alt="Logo" width="150px">
+                        <img src="{{ asset('images/logo.jpeg') }}" alt="Logo" width="150px">
                     </div>
 
                     <h4 class="text-center mb-4">Email Verification</h4>

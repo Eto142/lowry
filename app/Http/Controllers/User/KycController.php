@@ -2,17 +2,35 @@
 
 namespace App\Http\Controllers\User;
 
-
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KycVerification;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Cloudinary\Cloudinary;
+use Cloudinary\Api\Upload\UploadApi;
 
 class KycController extends Controller
 {
+    protected $cloudinary;
+    protected $uploadApi;
+
+    public function __construct()
+    {
+        $this->cloudinary = new Cloudinary([
+            'cloud' => [
+                'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
+                'api_key' => env('CLOUDINARY_API_KEY'),
+                'api_secret' => env('CLOUDINARY_API_SECRET'),
+            ],
+            'url' => [
+                'secure' => true
+            ]
+        ]);
+        $this->uploadApi = new UploadApi();
+    }
+
     public function showForm()
     {
         return view('kyc.form');
@@ -51,33 +69,44 @@ class KycController extends Controller
         }
 
         try {
-            // Store documents
+            // Store documents in Cloudinary
+            $frontPhotoUrl = null;
+            $frontPhotoPublicId = null;
+            $backPhotoUrl = null;
+            $backPhotoPublicId = null;
+
             // Handle front ID upload
-            $frontPhotoPath = null;
             if ($request->hasFile('front_id')) {
-                $frontPhoto = $request->file('front_id');
-                $frontFilename = 'front_' . time() . '.' . $frontPhoto->getClientOriginalExtension();
-                $destinationPath = public_path('uploads/kyc_documents/');
-                $frontPhoto->move($destinationPath, $frontFilename);
-                $frontPhotoPath = 'uploads/kyc_documents/' . $frontFilename;
+                $uploadResult = $this->uploadApi->upload($request->file('front_id')->getRealPath(), [
+                    'folder' => 'kyc_documents',
+                    'resource_type' => 'auto',
+                    'quality' => 'auto:best'
+                ]);
+
+                $frontPhotoUrl = $uploadResult['secure_url'];
+                $frontPhotoPublicId = $uploadResult['public_id'];
             }
 
             // Handle back ID upload
-            $backPhotoPath = null;
             if ($request->hasFile('back_id')) {
-                $backPhoto = $request->file('back_id');
-                $backFilename = 'back_' . time() . '.' . $backPhoto->getClientOriginalExtension();
-                $destinationPath = public_path('uploads/kyc_documents/');
-                $backPhoto->move($destinationPath, $backFilename);
-                $backPhotoPath = 'uploads/kyc_documents/' . $backFilename;
+                $uploadResult = $this->uploadApi->upload($request->file('back_id')->getRealPath(), [
+                    'folder' => 'kyc_documents',
+                    'resource_type' => 'auto',
+                    'quality' => 'auto:best'
+                ]);
+
+                $backPhotoUrl = $uploadResult['secure_url'];
+                $backPhotoPublicId = $uploadResult['public_id'];
             }
 
             // Create new KYC record
             KycVerification::create([
                 'user_id' => $user->id,
                 'id_type' => $request->id_type,
-                'front_document_path' => $frontPhotoPath,
-                'back_document_path' => $backPhotoPath,
+                'front_document_path' => $frontPhotoUrl,
+                'front_document_public_id' => $frontPhotoPublicId,
+                'back_document_path' => $backPhotoUrl,
+                'back_document_public_id' => $backPhotoPublicId,
                 'status' => 'pending'
             ]);
 
@@ -87,11 +116,20 @@ class KycController extends Controller
             ]);
         } catch (\Exception $e) {
             // Clean up uploaded files if error occurs
-            if (isset($frontPhotoPath) && file_exists(public_path($frontPhotoPath))) {
-                @unlink(public_path($frontPhotoPath));
+            if (isset($frontPhotoPublicId)) {
+                try {
+                    $this->uploadApi->destroy($frontPhotoPublicId);
+                } catch (\Exception $cleanupException) {
+                    Log::error('Failed to cleanup front document: ' . $cleanupException->getMessage());
+                }
             }
-            if (isset($backPhotoPath) && file_exists(public_path($backPhotoPath))) {
-                @unlink(public_path($backPhotoPath));
+
+            if (isset($backPhotoPublicId)) {
+                try {
+                    $this->uploadApi->destroy($backPhotoPublicId);
+                } catch (\Exception $cleanupException) {
+                    Log::error('Failed to cleanup back document: ' . $cleanupException->getMessage());
+                }
             }
 
             Log::error('KYC Submission Error: ' . $e->getMessage());
@@ -99,7 +137,7 @@ class KycController extends Controller
 
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to submit KYC documents. Error: ' . $e->getMessage()
+                'message' => 'Failed to submit KYC documents. Please try again.'
             ], 500);
         }
     }
@@ -136,15 +174,5 @@ class KycController extends Controller
             'success' => true,
             'message' => 'KYC rejected successfully!'
         ]);
-    }
-
-    private function storeDocument($file, $userId)
-    {
-        $fileName = Str::random(20) . '.' . $file->getClientOriginalExtension();
-        $path = "kyc_docs/user_{$userId}/{$fileName}";
-
-        Storage::put($path, file_get_contents($file));
-
-        return $path;
     }
 }

@@ -2,45 +2,44 @@
 
 <!-- Forgot Password Form -->
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
-                            <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold"
-                                fill="#333"><img src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse"
-                                    width="150px"></text>
-                        </svg>
-                        <h3 class="mt-3">Reset Your Password</h3>
-                    </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body p-4">
+          <div class="text-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
+              <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
+                  src="{{asset('images/logo.jpeg')}}" alt="ziiriel-arthouse" width="150px"></text>
+            </svg>
+            <h3 class="mt-3">Reset Your Password</h3>
+          </div>
 
-                    <form id="forgot-password-form" action="{{ route('password.email') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="email">Email address</label>
-                            <div class="input-group">
-                                <input type="email" name="email" class="form-control py-2" id="email"
-                                    placeholder="Enter your email" required>
-                                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-                            </div>
-                            <div class="invalid-feedback email-error"></div>
-                        </div>
-
-                        <button type="submit" class="btn btn-dark w-100 py-2">
-                            Send Reset Link
-                        </button>
-
-                        <div class="text-center mt-3">
-                            <a href="{{ route('login') }}" class="text-decoration-none">
-                                <i class="bi bi-arrow-left"></i> Back to Login
-                            </a>
-                        </div>
-                    </form>
-                </div>
+          <form id="forgot-password-form" action="{{ route('password.email') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+              <label for="email">Email address</label>
+              <div class="input-group">
+                <input type="email" name="email" class="form-control py-2" id="email" placeholder="Enter your email"
+                  required>
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+              </div>
+              <div class="invalid-feedback email-error"></div>
             </div>
+
+            <button type="submit" class="btn btn-dark w-100 py-2">
+              Send Reset Link
+            </button>
+
+            <div class="text-center mt-3">
+              <a href="{{ route('login') }}" class="text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Back to Login
+              </a>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 @include("auth.footer")
@@ -51,20 +50,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <style>
-    .is-invalid {
-        border-color: #dc3545 !important;
-        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
-    }
+  .is-invalid {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+  }
 
-    .invalid-feedback {
-        display: none;
-        color: #dc3545;
-        font-size: 0.875em;
-    }
+  .invalid-feedback {
+    display: none;
+    color: #dc3545;
+    font-size: 0.875em;
+  }
 </style>
 
 <script>
-    $(document).ready(function() {
+  $(document).ready(function() {
     toastr.options = {
       "closeButton": true,
       "positionClass": "toast-top-right",

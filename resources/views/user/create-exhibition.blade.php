@@ -65,7 +65,7 @@
   <nav class="navbar navbar-light bg-white border-bottom">
     <div class="container d-flex justify-content-between">
       <a class="navbar-brand fw-bold fs-3" href="#">
-        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="ziiriel-arthouse">
+        <img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" width="100" alt="ziiriel-arthouse">
       </a>
       <div class="d-flex align-items-center">
         <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>

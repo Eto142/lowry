@@ -420,7 +420,7 @@
                     <tr>
                         <td class="email-masthead">
                             <a href="'.$site_url.'" class="">
-                                <img src="{{ asset('images/logo.png') }}" class="email-masthead_logo">
+                                <img src="{{ asset('images/logo.jpeg') }}" class="email-masthead_logo">
                             </a>
                         </td>
                     </tr>
@@ -473,7 +473,7 @@
                                             All
                                             rights reserved.</p>
                                         <p class="f-fallback sub align-center">
-                                            Ziiriel Contemporary Art Gallery
+                                            Ziiriel Art House
                                             <br>https://ziiriel-arthouse.com/
                                         </p>
                                     </td>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ziiriel contemporary art gallery Account</title>
+    <title>Ziiriel Art House Account</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Add these CDNs to your layout -->
@@ -80,7 +80,7 @@
     <nav class="navbar navbar-light bg-white border-bottom">
         <div class="container d-flex justify-content-between">
             <a class="navbar-brand fw-bold fs-3" href="#">
-                <img class="sticky-logo" src="{{ asset('images/logo.png') }}" width="100" alt="ziiriel-arthouse">
+                <img class="sticky-logo" src="{{ asset('images/logo.jpeg') }}" width="100" alt="ziiriel-arthouse">
             </a>
             <div class="d-flex align-items-center">
                 <span class="me-3 fw-bold">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>

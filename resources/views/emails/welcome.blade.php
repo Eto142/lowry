@@ -11,7 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet'>
     <!--<![endif]-->
 
-    <title>Ziiriel Contemporary Art Gallery</title>
+    <title>Ziiriel Art House</title>
 
     <style type='text/css'>
         body {
@@ -160,8 +160,7 @@
                                         <a href=''
                                             style='display: block; border-style: none !important; border: 0 !important;'>
                                             <img width='100' border='0' style='display: block; width: 100%;'
-                                                src="{{ asset('images/logo.png') }}"
-                                                alt="Ziiriel Contemporary Art Gallery" />
+                                                src="{{ asset('images/logo.jpeg') }}" alt="Ziiriel Art House" />
                                         </a>
                                     </td>
                                 </tr>
@@ -183,7 +182,7 @@
                     <tr>
                         <td align='left'
                             style='color: #888888; font-size: 16px; font-family: "Work Sans", Calibri, sans-serif; line-height: 24px;'>
-                            <h2>Welcome to Ziiriel Contemporary Art Gallery!</h2>
+                            <h2>Welcome to Ziiriel Art House!</h2>
                             <br>
                             <br>
                             {!!$wMessage!!}
@@ -191,7 +190,7 @@
                             <br />
                             <p style='line-height: 24px'>
                                 Kind Regards,<br>
-                                Ziiriel Contemporary Art Gallery.
+                                Ziiriel Art House.
                             </p>
                         </td>
                     </tr>

@@ -13,7 +13,7 @@
                         srcset="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc">
                     <img class="picture__image"
                         src="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc"
-                        alt="Ziiriel Contemporary Art Gallery Permanent Collection">
+                        alt="Ziiriel Art House Permanent Collection">
                 </picture>
             </div>
         </div>
@@ -24,7 +24,7 @@
         <div class="container">
             <div class="infoHeaderContent">
                 <div class="inner">
-                    <h1>Ziiriel Contemporary Art Gallery Permanent Collection</h1>
+                    <h1>Ziiriel Art House Permanent Collection</h1>
                 </div>
             </div>
         </div>

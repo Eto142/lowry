@@ -19,7 +19,7 @@
                 <div class="col-lg-8 mx-auto">
                     <div class="richtext">
                         <h2 class="mb-4">Our Story</h2>
-                        <p class="mb-4">Founded in 2023, Ziiriel Contemporary Art Gallery emerged from a passion to
+                        <p class="mb-4">Founded in 2023, Ziiriel Art House emerged from a passion to
                             democratize access to contemporary art. We recognized that the traditional gallery model
                             excluded many talented artists and art lovers, so we built a digital platform that
                             transcends geographical boundaries.</p>

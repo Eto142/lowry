@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto text-center">
-                    <h1 class="display-4 mb-4">LS Ziiriel Contemporary Art Gallery Permanent Collection</h1>
+                    <h1 class="display-4 mb-4">LS Ziiriel Art House Permanent Collection</h1>
                     <p class="lead">A curated selection of significant works that define our artistic legacy</p>
                 </div>
             </div>

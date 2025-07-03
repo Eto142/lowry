@@ -249,7 +249,7 @@
         <a href="#" class="navbar-brand">
           <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
             <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
-                src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse" width="150px"></text>
+                src="{{asset('images/logo.jpeg')}}" alt="ziiriel-arthouse" width="150px"></text>
           </svg>
         </a>
       </div>
@@ -273,7 +273,7 @@
         <a class="navbar-brand mx-auto position-absolute top-50 start-50 translate-middle" href="{{ url('/') }}">
           <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
             <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
-                src="{{asset('images/logo.png')}}" alt="ziiriel-arthouse" width="150px"></text>
+                src="{{asset('images/logo.jpeg')}}" alt="ziiriel-arthouse" width="150px"></text>
           </svg>
         </a>
 
