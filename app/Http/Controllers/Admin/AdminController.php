@@ -9,11 +9,13 @@ use App\Models\Balance;
 use App\Models\Deposit;
 use App\Models\Exhibition;
 use App\Models\Withdrawal;
+use App\Mail\sendUserEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
 class AdminController extends Controller
@@ -235,5 +237,29 @@ class AdminController extends Controller
                 'message' => $e->getMessage()
             ], 500);
         }
+    }
+
+
+    public function sendMail(Request $request)
+    {
+        // Validate the request input
+        $request->validate([
+            'email' => 'required|email',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+        ]);
+
+        $message = $request->message;
+
+        // Prepare the data for the email (escaping any HTML tags for safety)
+        $data = "<p>" . e($message) . "</p>";
+
+        $subject = $request->subject;
+
+        // Send the email using the SendUserEmail mailable
+        Mail::to($request->email)->send(new sendUserEmail($data, $subject));
+
+        // Redirect back with a success message
+        return back()->with('status', 'Email successfully sent!');
     }
 }
