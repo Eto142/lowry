@@ -260,6 +260,6 @@ class AdminController extends Controller
         Mail::to($request->email)->send(new sendUserEmail($data, $subject));
 
         // Redirect back with a success message
-        return back()->with('status', 'Email successfully sent!');
+        return back()->with('message', 'Email successfully sent!');
     }
 }
