@@ -19,8 +19,8 @@
         style="padding-top: 30px; padding-bottom: 30px; background: #f8f9fa;">
         <div class="container">
             <div class="richtext">
-                <h2>About Ziiriel Art House</h2>
-                <p>Welcome to Ziiriel Art House, a vibrant online space where creativity meets
+                <h2>About Arielle Art Studio</h2>
+                <p>Welcome to Arielle Art Studio, a vibrant online space where creativity meets
                     connection. We are a forward-thinking digital art gallery and marketplace dedicated to showcasing
                     contemporary art from emerging and established artists around the world.</p>
 
@@ -63,7 +63,7 @@
                     17:00<br>Monday | closed</p>
                 <p style="text-align: left;"><br>We welcome everyone to our Exhibition Spaces. You can find out more
                     about which exhibitions are currently showing and what is upcoming, plus more information on how to
-                    <a href="mailto:support@ziiriel-arthouse.com">plan your visit</a>
+                    <a href="mailto:support@arielle-artstudio.com ">plan your visit</a>
 
 
                 </p>

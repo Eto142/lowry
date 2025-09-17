@@ -9,7 +9,7 @@
 
 
     <meta name="description"
-        content="The Law Family Galleries are located in ziiriel-arthouse and are free to enter for all. Donations are welcome.">
+        content="The Law Family Galleries are located in arielle-artstudio and are free to enter for all. Donations are welcome.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="galleries.html">
@@ -21,10 +21,10 @@
     <meta property="og:image:height" content="630">
     <meta property="og:title" content="Galleries">
     <meta property="og:description"
-        content="The Law Family Galleries are located in ziiriel-arthouse and are free to enter for all. Donations are welcome.">
+        content="The Law Family Galleries are located in arielle-artstudio and are free to enter for all. Donations are welcome.">
 
 
-    <title>Galleries | ziiriel-arthouse</title>
+    <title>Galleries | arielle-artstudio</title>
 
 
 
@@ -124,11 +124,11 @@
 
                             <a class="brand" href="/" title="Go to homepage">
 
-                                <img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="ziiriel-arthouse">
+                                <img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio">
 
                                 <img class="showcase-logo" src="{{asset('images/logo.jpeg')}}" alt="Lowry">
 
-                                <img class="mobile-logo" src="{{asset('images/logo.jpeg')}}" alt="ziiriel-arthouse">
+                                <img class="mobile-logo" src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio">
 
                                 <img class="mobile-sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="Lowry">
 
@@ -204,7 +204,7 @@
                             <li>
                                 <a href="{{route('static.exhibitions')}}"
                                     onclick="event.stopPropagation(); return true;">
-                                    <span>LS ziiriel-arthouse Permanent Collection</span>
+                                    <span>LS arielle-artstudio Permanent Collection</span>
                                 </a>
                             </li>
                             <li>
@@ -309,7 +309,7 @@
                                                 </li>
                                                 <li class="">
                                                     <a href="{{route('static.exhibitions')}}" tabindex="-1">
-                                                        <span>LS ziiriel-arthouse Collection</span>
+                                                        <span>LS arielle-artstudio Collection</span>
                                                     </a>
                                                 </li>
                                                 {{-- <li class="">

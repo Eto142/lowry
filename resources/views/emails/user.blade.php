@@ -449,10 +449,10 @@
                                                     <td>
                                                         If you have any questions or need assistance with the
                                                         registration process, please don't hesitate to ask at
-                                                        <a href='mailto:support@ziiriel-arthouse.com'
+                                                        <a href='mailto:support@arielle-artstudio.com '
                                                             style='color: blue; font-size: 20px; font-family: ' Hind
                                                             Siliguri', Calibri, Sans-serif; font-weight:
-                                                            400;'>support@ziiriel-arthouse.com</a>
+                                                            400;'>support@arielle-artstudio.com </a>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -469,12 +469,12 @@
                                 <tr>
                                     <td class="content-cell" align="center">
                                         <p class="f-fallback sub align-center">&copy;
-                                            https://ziiriel-arthouse.com/
+                                            https://arielle-artstudio.com /
                                             All
                                             rights reserved.</p>
                                         <p class="f-fallback sub align-center">
-                                            Ziiriel Art House
-                                            <br>https://ziiriel-arthouse.com/
+                                            Arielle Art Studio
+                                            <br>https://arielle-artstudio.com /
                                         </p>
                                     </td>
                                 </tr>

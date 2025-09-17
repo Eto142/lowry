@@ -11,7 +11,7 @@
     <div class="footerWrapper">
         <div class="inner">
             <section class="column">
-                <div><img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="ziiriel-arthouse" width="150px">
+                <div><img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio" width="150px">
                 </div>
             </section>
 
@@ -87,7 +87,7 @@
                     <div class="richtext">
                         <p><br>
                             <a class="btn btn-active" title="Sign up for the mailing list"
-                                href="mailto:support@ziiriel-arthouse.com">
+                                href="mailto:support@arielle-artstudio.com ">
                                 Join our mailing list
                             </a>
                         </p>
@@ -113,7 +113,7 @@
     <div id="postFooter" class="variant-boxedLeftRight">
         <div class="inner">
             <section class="column">
-                &copy; ziiriel-arthouse
+                &copy; arielle-artstudio
             </section>
 
 
