@@ -35,7 +35,7 @@
         <div class="container">
             <div class="richtext">
                 <p>Explore our esteemed permanent collection featuring masterpieces from renowned contemporary artists.
-                    This curated selection represents the core of Ziiriel's artistic vision and legacy.</p>
+                    This curated selection represents the core of Arielle 's artistic vision and legacy.</p>
 
             </div>
         </div>

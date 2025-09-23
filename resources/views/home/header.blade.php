@@ -76,15 +76,16 @@
     <!-- Smartsupp Live Chat script -->
     <script type="text/javascript">
         var _smartsupp = _smartsupp || {};
-    _smartsupp.key = 'e62c3314375e86409ccbe28d9d4cd2ca935584b7';
-    window.smartsupp||(function(d) {
-      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-      c.type='text/javascript';c.charset='utf-8';c.async=true;
-      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-    })(document);
+_smartsupp.key = '6aba53ff744ead05661b392afc5d94f1f980dab6';
+window.smartsupp||(function(d) {
+  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+  c.type='text/javascript';c.charset='utf-8';c.async=true;
+  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+})(document);
     </script>
     <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
+
 </head>
 
 <body class="detail info type-usefulinfo">
@@ -262,7 +263,7 @@
                                                 </li>
                                                 <li class="">
                                                     <a href="{{url('collections')}}" tabindex="-1">
-                                                        <span>LS Ziiriel contemporary artgallery Collection</span>
+                                                        <span>LS Arielle Art Studio</span>
                                                     </a>
                                                 </li>
 

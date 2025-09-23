@@ -5,7 +5,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="display-4 mb-4">About Ziiriel Contemporary</h1>
+                    <h1 class="display-4 mb-4">About Arielle Contemporary</h1>
                     <p class="lead">Where creativity meets connection in the digital art world.</p>
                 </div>
 
@@ -25,14 +25,15 @@
                             transcends geographical boundaries.</p>
 
                         <h2 class="mb-4">Our Mission</h2>
-                        <p class="mb-4">At Ziiriel, we believe art is more than just visual expression — it's a powerful
+                        <p class="mb-4">At Arielle , we believe art is more than just visual expression — it's a
+                            powerful
                             dialogue between the artist and the viewer. Our mission is to celebrate that dialogue by
                             making contemporary art accessible, discoverable, and collectible for everyone, everywhere.
                         </p>
 
                         <div class="mission-card p-4 mb-5" style="background: #CCD5D8; border-left: 4px solid #000;">
                             <h3 class="mb-3">"To create a world where art knows no boundaries"</h3>
-                            <p class="mb-0">— Ziiriel Founding Principle</p>
+                            <p class="mb-0">— Arielle Founding Principle</p>
                         </div>
 
                         <h2 class="mb-4">What We Offer</h2>
