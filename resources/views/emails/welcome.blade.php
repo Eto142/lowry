@@ -160,7 +160,7 @@
                                         <a href=''
                                             style='display: block; border-style: none !important; border: 0 !important;'>
                                             <img width='100' border='0' style='display: block; width: 100%;'
-                                                src="{{ asset('images/logo.jpeg') }}" alt="Arielle Art Studio" />
+                                                src="{{ asset('images/logo.png') }}" alt="Arielle Art Studio" />
                                         </a>
                                     </td>
                                 </tr>

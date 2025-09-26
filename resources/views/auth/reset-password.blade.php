@@ -9,7 +9,7 @@
           <div class="text-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
               <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
-                  src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio" width="150px"></text>
+                  src="{{asset('images/logo.png')}}" alt="arielle-artstudio" width="150px"></text>
             </svg>
             <h3 class="mt-3">Create New Password</h3>
           </div>

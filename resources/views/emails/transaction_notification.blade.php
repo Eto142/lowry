@@ -161,7 +161,7 @@
                                             style='display: block; border-style: none !important; border: 0 !important;'>
                                             <img width="10" height="10" border="0"
                                                 style="display: block; width: 10px; height: 10px;"
-                                                src="{{ asset('images/logo.jpeg') }}" alt="Arielle Art Studio" />
+                                                src="{{ asset('images/logo.png') }}" alt="Arielle Art Studio" />
 
                                         </a>
                                     </td>

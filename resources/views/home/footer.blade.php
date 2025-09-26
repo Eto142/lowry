@@ -11,7 +11,7 @@
     <div class="footerWrapper">
         <div class="inner">
             <section class="column">
-                <div><img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio" width="150px">
+                <div><img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="arielle-artstudio" width="150px">
                 </div>
             </section>
 

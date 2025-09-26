@@ -125,17 +125,17 @@ window.smartsupp||(function(d) {
 
                             <a class="brand" href="/" title="Go to homepage">
 
-                                <img class="sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio">
+                                <img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="arielle-artstudio">
 
-                                <img class="showcase-logo" src="{{asset('images/logo.jpeg')}}" alt="Lowry">
+                                <img class="showcase-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
-                                <img class="mobile-logo" src="{{asset('images/logo.jpeg')}}" alt="arielle-artstudio">
+                                <img class="mobile-logo" src="{{asset('images/logo.png')}}" alt="arielle-artstudio">
 
-                                <img class="mobile-sticky-logo" src="{{asset('images/logo.jpeg')}}" alt="Lowry">
+                                <img class="mobile-sticky-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
-                                <img class="mobile-showcase-logo" src="{{asset('images/logo.jpeg')}}" alt="Lowry">
+                                <img class="mobile-showcase-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
-                                <img src="{{asset('images/logo.jpeg')}}" alt="Lowry">
+                                <img src="{{asset('images/logo.png')}}" alt="Lowry">
 
                             </a>
 
