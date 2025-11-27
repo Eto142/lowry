@@ -92,8 +92,7 @@
                             </a>
                         </p>
 
-                        {{-- <p>Address:&nbsp;<strong>Business Design Centre Ltd, 52 Upper St, London N1 0QH, United
-                                Kingdom</strong></p> --}}
+                        <p>Address:&nbsp;<strong>2375 Marron Rd, Carlsbad, CA 92008, United States</strong></p>
                     </div>
                 </div>
 
