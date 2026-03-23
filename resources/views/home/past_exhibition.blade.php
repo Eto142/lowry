@@ -20,19 +20,19 @@
     <!-- Exhibitions Grid -->
     <div class="container-fluid" style="padding: 30px 0; background: #fff;">
         <div class="container">
-            <div class="row exhibition-grid"> 
+            <div class="row exhibition-grid">
                 @foreach($pastExhibitions as $exhibition)
                 <div class="col-12 col-md-6 col-lg-4 mb-4" data-entry-id="{{ $exhibition->id }}">
                     <div class="media-container">
                         <!-- Show video if available, otherwise show image -->
-                        @if($exhibition->video_url)
+                        {{-- @if($exhibition->video_url)
                         <div class="media-item video-item">
                             <video controls>
                                 <source src="{{ $exhibition->video_url }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
-                        @else
+                        @else --}}
                         <div class="media-item image-item">
                             {{-- <a href="/exhibitions/{{ $exhibition->id }}"> --}}
                                 <a href="">
@@ -40,7 +40,7 @@
                                         alt="{{ $exhibition->title ?? 'Exhibition image' }}">
                                 </a>
                         </div>
-                        @endif
+                        {{-- @endif --}}
                     </div>
                 </div>
                 @endforeach
