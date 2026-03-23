@@ -106,24 +106,22 @@
 
     <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
         <div class="container">
-            <ul class="media-list">
+            {{-- <ul class="media-list">
                 @foreach($pastExhibitions as $exhibition)
                 <li class="media-item">
-                    {{-- @if(!empty($exhibition->video_url))
-                    <!-- Show video only if it exists -->
+                    @if(!empty($exhibition->video_url))
                     <video controls class="media-element">
                         <source src="{{ $exhibition->video_url }}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    @else --}}
-                    <!-- Fallback to picture if no video -->
+                    @else
                     <img class="media-element"
                         src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/855x600' }}"
                         alt="Exhibition media">
-                    {{-- @endif --}}
+                    @endif
                 </li>
                 @endforeach
-            </ul>
+            </ul> --}}
         </div>
 
         <style>
