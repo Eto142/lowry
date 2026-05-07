@@ -1,14 +1,12 @@
 @include('home.header')
 <main id="content">
 
-    <div class="container-fluid infoHeaderWrapper type-page align-"
-        style="padding-top: 30px; padding-bottom: 30px; background: #fff;">
-        <div class="container">
-            <div class="infoHeaderContent">
-                <div class="inner">
-                    <h1>Upcoming Exhibitions</h1>
-                </div>
-            </div>
+    <!-- Hero Banner -->
+    <div class="container-fluid" style="padding: 0; position: relative; overflow: hidden; max-height: 400px;">
+        <img src="{{ asset('images/future-exhibition.png') }}" alt="Upcoming Exhibitions" style="width: 100%; height: 400px; object-fit: cover; display: block; filter: brightness(0.7);">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
+            <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 52px); font-weight: 600; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Upcoming Exhibitions</h1>
+            <p style="font-size: 1.1rem; margin-top: 12px; opacity: 0.9; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Preview what's coming soon to our gallery spaces</p>
         </div>
     </div>
 

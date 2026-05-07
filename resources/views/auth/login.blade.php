@@ -9,11 +9,11 @@
           <div class="card-body p-4">
             <div class="row">
               <div class="col-md-8 border-end">
-                <!-- arielle-artstudio Logo -->
+                <!-- zyrelisgallery Logo -->
                 <div class="login-logo text-start mb-4">
                   <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
                     <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold"
-                      fill="#333"><img src="{{asset('images/logo.png')}}" alt="arielle-artstudio" width="150px"></text>
+                      fill="#333"><img src="{{asset('images/logo.png')}}" alt="zyrelisgallery" width="150px"></text>
                   </svg>
                 </div>
 
@@ -106,7 +106,7 @@
 </style>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Initialize toastr
     toastr.options = {
       "closeButton": true,
@@ -120,7 +120,7 @@
     };
 
     // Validate inputs on blur
-    $('input').blur(function() {
+    $('input').blur(function () {
       if ($(this).val() === '') {
         $(this).addClass('is-invalid').removeClass('is-valid');
       } else {
@@ -129,39 +129,39 @@
     });
 
     // AJAX form submission
-    $('#login-form').submit(function(e) {
+    $('#login-form').submit(function (e) {
       e.preventDefault();
       const form = $(this);
-      
+
       // Reset validation
       form.find('.is-invalid').removeClass('is-invalid');
       form.find('.invalid-feedback').text('').hide();
-      
+
       // Validate all required fields
       let isValid = true;
-      form.find('[required]').each(function() {
+      form.find('[required]').each(function () {
         if ($(this).val() === '') {
           $(this).addClass('is-invalid');
           $(this).next('.invalid-feedback').text('This field is required').show();
           isValid = false;
         }
       });
-      
+
       if (!isValid) {
         toastr.error('Please fill in all required fields');
         return;
       }
-      
+
       // Show loading state
       const submitBtn = form.find('[type="submit"]');
       submitBtn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Signing in...');
-      
+
       $.ajax({
         url: form.attr('action') || "{{ route('login') }}",
         type: "POST",
         data: form.serialize(),
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             toastr.success(response.message);
             window.location.href = response.redirect || "{{ route('home') }}";
@@ -169,13 +169,13 @@
             toastr.error(response.message || 'Login failed. Please try again.');
           }
         },
-        error: function(xhr) {
+        error: function (xhr) {
           submitBtn.prop('disabled', false).text('Sign In');
-          
+
           if (xhr.status === 422) {
             // Validation errors
             const errors = xhr.responseJSON.errors;
-            $.each(errors, function(key, value) {
+            $.each(errors, function (key, value) {
               const input = form.find('[name="' + key + '"]');
               const errorField = form.find('.' + key + '-error');
               input.addClass('is-invalid');

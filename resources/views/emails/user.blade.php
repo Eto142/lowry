@@ -449,10 +449,10 @@
                                                     <td>
                                                         If you have any questions or need assistance with the
                                                         registration process, please don't hesitate to ask at
-                                                        <a href='mailto:support@arielle-artstudio.com '
+                                                        <a href='mailto:support@zyrelisgallery.com '
                                                             style='color: blue; font-size: 20px; font-family: ' Hind
                                                             Siliguri', Calibri, Sans-serif; font-weight:
-                                                            400;'>support@arielle-artstudio.com </a>
+                                                            400;'>support@zyrelisgallery.com </a>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -469,12 +469,12 @@
                                 <tr>
                                     <td class="content-cell" align="center">
                                         <p class="f-fallback sub align-center">&copy;
-                                            https://arielle-artstudio.com /
+                                            https://zyrelisgallery.com /
                                             All
                                             rights reserved.</p>
                                         <p class="f-fallback sub align-center">
                                             Arielle Art Studio
-                                            <br>https://arielle-artstudio.com /
+                                            <br>https://zyrelisgallery.com /
                                         </p>
                                     </td>
                                 </tr>

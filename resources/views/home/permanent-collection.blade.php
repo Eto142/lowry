@@ -2,14 +2,11 @@
 
 <main id="content">
     <!-- Hero Section -->
-    <div class="container-fluid hero-section" style="padding-top: 80px; padding-bottom: 80px; background: #f8f9fa;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8 mx-auto text-center">
-                    <h1 class="display-4 mb-4">LS Arielle Art Studio Permanent Collection</h1>
-                    <p class="lead">A curated selection of significant works that define our artistic legacy</p>
-                </div>
-            </div>
+    <div class="container-fluid" style="padding: 0; position: relative; overflow: hidden; max-height: 450px;">
+        <img src="{{ asset('images/permanent-collection.png') }}" alt="Permanent Collection" style="width: 100%; height: 450px; object-fit: cover; display: block; filter: brightness(0.7);">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
+            <h1 class="display-4 mb-3" style="font-family: 'Playfair Display', serif; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">LS Arielle Art Studio Permanent Collection</h1>
+            <p class="lead" style="font-size: 1.3rem; max-width: 650px; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">A curated selection of significant works that define our artistic legacy</p>
         </div>
     </div>
 
@@ -43,7 +40,7 @@
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="artwork-card h-100">
                         <div class="artwork-image"
-                            style="background-image: url('https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:800:600:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc');">
+                            style="background-image: url('{{ asset('images/gallery-exhibition.png') }}');">
                             <div class="overlay d-flex align-items-center justify-content-center">
                                 <a href="/artwork/digital-dawn" class="btn btn-outline-light">View Details</a>
                             </div>
@@ -62,7 +59,7 @@
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="artwork-card h-100">
                         <div class="artwork-image"
-                            style="background-image: url('https://via.placeholder.com/800x600');">
+                            style="background-image: url('{{ asset('images/abstract-painting.png') }}');">
                             <div class="overlay d-flex align-items-center justify-content-center">
                                 <a href="/artwork/urban-echoes" class="btn btn-outline-light">View Details</a>
                             </div>
@@ -80,7 +77,7 @@
                 <div class="col-md-6 col-lg-4 mb-5">
                     <div class="artwork-card h-100">
                         <div class="artwork-image"
-                            style="background-image: url('https://via.placeholder.com/800x600/333/fff');">
+                            style="background-image: url('{{ asset('images/sculpture-gallery.png') }}');">
                             <div class="overlay d-flex align-items-center justify-content-center">
                                 <a href="/artwork/silent-dialogue" class="btn btn-outline-light">View Details</a>
                             </div>

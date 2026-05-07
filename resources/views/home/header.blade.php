@@ -9,7 +9,7 @@
 
 
     <meta name="description"
-        content="The Law Family Galleries are located in arielle-artstudio and are free to enter for all. Donations are welcome.">
+        content="The Law Family Galleries are located in zyrelisgallery and are free to enter for all. Donations are welcome.">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="galleries.html">
@@ -21,13 +21,17 @@
     <meta property="og:image:height" content="630">
     <meta property="og:title" content="Galleries">
     <meta property="og:description"
-        content="The Law Family Galleries are located in arielle-artstudio and are free to enter for all. Donations are welcome.">
+        content="The Law Family Galleries are located in zyrelisgallery and are free to enter for all. Donations are welcome.">
 
 
-    <title>Galleries | arielle-artstudio</title>
+    <title>Galleries | zyrelisgallery</title>
 
 
 
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('dist/site-libb1d1.css')}}">
     <link rel="stylesheet" href="{{asset('dist/site-bundleb1d1.css')}}">
@@ -125,11 +129,11 @@ window.smartsupp||(function(d) {
 
                             <a class="brand" href="/" title="Go to homepage">
 
-                                <img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="arielle-artstudio">
+                                <img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="zyrelisgallery">
 
                                 <img class="showcase-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
-                                <img class="mobile-logo" src="{{asset('images/logo.png')}}" alt="arielle-artstudio">
+                                <img class="mobile-logo" src="{{asset('images/logo.png')}}" alt="zyrelisgallery">
 
                                 <img class="mobile-sticky-logo" src="{{asset('images/logo.png')}}" alt="Lowry">
 
@@ -205,7 +209,7 @@ window.smartsupp||(function(d) {
                             <li>
                                 <a href="{{route('static.exhibitions')}}"
                                     onclick="event.stopPropagation(); return true;">
-                                    <span>LS arielle-artstudio Permanent Collection</span>
+                                    <span>LS zyrelisgallery Permanent Collection</span>
                                 </a>
                             </li>
                             <li>
@@ -310,7 +314,7 @@ window.smartsupp||(function(d) {
                                                 </li>
                                                 <li class="">
                                                     <a href="{{route('static.exhibitions')}}" tabindex="-1">
-                                                        <span>LS arielle-artstudio Collection</span>
+                                                        <span>LS zyrelisgallery Collection</span>
                                                     </a>
                                                 </li>
                                                 {{-- <li class="">
@@ -460,20 +464,7 @@ window.smartsupp||(function(d) {
 
 
 
-        <!DOCTYPE html>
-        <html lang="en">
-
-        <head>
-            <meta charset="UTF-8">
-            <title>Exhibition Vibes</title>
-            <style>
-                body {
-                    font-family: 'Segoe UI', sans-serif;
-                    background-color: #fffafc;
-                    margin: 0;
-                    padding: 0;
-                }
-
+        <style>
                 .popup-container {
                     position: fixed;
                     bottom: 20px;
@@ -485,31 +476,34 @@ window.smartsupp||(function(d) {
                 }
 
                 .popup {
-                    background: linear-gradient(135deg, #ffe0f0, #f9f0ff);
-                    color: #6a0572;
-                    border-left: 6px solid #ff85c0;
+                    background: linear-gradient(135deg, #fdf8ed, #f5efe0);
+                    color: #5a4a1e;
+                    border-left: 4px solid #c49b2a;
                     padding: 14px 20px;
-                    border-radius: 18px;
-                    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+                    border-radius: 12px;
+                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
                     display: flex;
                     align-items: center;
                     min-width: 260px;
                     animation: fadeInOut 6s ease forwards;
-                    font-size: 15px;
+                    font-size: 14px;
+                    font-family: 'Inter', -apple-system, sans-serif;
+                    backdrop-filter: blur(8px);
                 }
 
-                .avatar {
-                    background-color: #ffadd2;
+                .popup .avatar {
+                    background: linear-gradient(135deg, #c49b2a, #8b6914);
                     color: white;
-                    width: 38px;
-                    height: 38px;
+                    width: 36px;
+                    height: 36px;
                     border-radius: 50%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-weight: bold;
+                    font-weight: 600;
                     margin-right: 12px;
                     flex-shrink: 0;
+                    font-size: 13px;
                 }
 
                 @keyframes fadeInOut {
@@ -545,9 +539,6 @@ window.smartsupp||(function(d) {
                     }
                 }
             </style>
-        </head>
-
-        <body>
 
             <div class="popup-container" id="popupContainer"></div>
 
@@ -635,7 +626,3 @@ window.smartsupp||(function(d) {
             
               window.onload = () => setTimeout(showPopups, 1000); // Start after 1 second
             </script>
-
-        </body>
-
-        </html>

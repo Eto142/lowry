@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>arielle-artstudio Account</title>
+  <title>zyrelisgallery Account</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
   <nav class="navbar navbar-light bg-white border-bottom">
     <div class="container d-flex justify-content-between">
       <a class="navbar-brand fw-bold fs-3" href="#">
-        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="arielle-artstudio">
+        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="zyrelisgallery">
       </a>
       <div class="d-flex align-items-center">
         <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
@@ -146,7 +146,7 @@
   </div>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       // Initialize toastr
       toastr.options = {
         "closeButton": true,
@@ -155,13 +155,13 @@
         "timeOut": "5000"
       };
 
-      $('#exhibitionForm').on('submit', function(e) {
+      $('#exhibitionForm').on('submit', function (e) {
         e.preventDefault();
-        
+
         // Reset error messages
         $('.invalid-feedback').text('');
         $('.form-control').removeClass('is-invalid');
-        
+
         // Validate file type
         const pictureInput = document.getElementById('picture');
         if (pictureInput.files.length > 0) {
@@ -172,38 +172,38 @@
             return false;
           }
         }
-        
+
         // Disable button and show spinner
         const submitBtn = $('#submitBtn');
         const originalBtnText = submitBtn.html();
         submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Creating...');
         $('#spinner').show();
-        
+
         // Create FormData object
         let formData = new FormData(this);
-        
+
         $.ajax({
           url: "{{ route('exhibitions.store') }}",
           type: "POST",
           data: formData,
           processData: false,
           contentType: false,
-          success: function(response) {
+          success: function (response) {
             toastr.success(response.message);
             $('#exhibitionForm')[0].reset();
             setTimeout(() => {
               window.location.href = response.redirect || "{{ route('home') }}";
             }, 1500);
           },
-          error: function(xhr) {
+          error: function (xhr) {
             // Re-enable button and restore original text
             submitBtn.prop('disabled', false).html(originalBtnText);
             $('#spinner').hide();
-            
-            if(xhr.status === 422) {
+
+            if (xhr.status === 422) {
               // Validation errors
               const errors = xhr.responseJSON.errors;
-              $.each(errors, function(key, value) {
+              $.each(errors, function (key, value) {
                 $(`#${key}-error`).text(value[0]);
                 $(`#${key}`).addClass('is-invalid');
               });

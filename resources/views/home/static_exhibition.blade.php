@@ -3,19 +3,11 @@
 
     <span id="pp_page_instance_746"></span>
 
-    <div class="container-fluid align-" style="padding-top: 30px; padding-bottom: 30px; background: #fff;">
-        <div class="container">
-            <div class="infoHeaderBoxedImage" data-animations="">
-                <picture class="picture" style="--picture-aspect-ratio: 16/9">
-                    <source media="(max-width: 991px)"
-                        srcset="https://img.thelowry.com/iS1FHr8tnmGsTwmLtXA8wVHWoTSgFKNmVC4qaxJ0psM/c:8021:4533:fp:0.5:0.33/s:690:390:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc">
-                    <source media="(min-width: 992px)"
-                        srcset="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc">
-                    <img class="picture__image"
-                        src="https://img.thelowry.com/15fmDdPEuQ9T-0gb2DlmVwAxcW4169AZcVGi5nngCDk/c:8021:4511:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzNjRfb3JpZy5qcGc"
-                        alt="Arielle Art Studio Permanent Collection">
-                </picture>
-            </div>
+    <div class="container-fluid" style="padding: 0; position: relative; overflow: hidden; max-height: 400px;">
+        <img src="{{ asset('images/permanent-collection.png') }}" alt="Arielle Art Studio Permanent Collection" style="width: 100%; height: 400px; object-fit: cover; display: block; filter: brightness(0.7);">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
+            <h1 style="font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 52px); font-weight: 600; margin: 0; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">Permanent Collection</h1>
+            <p style="font-size: 1.1rem; margin-top: 12px; opacity: 0.9; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Masterpieces from renowned contemporary artists</p>
         </div>
     </div>
 

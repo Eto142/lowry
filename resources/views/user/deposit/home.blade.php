@@ -110,7 +110,7 @@
   <nav class="navbar navbar-light bg-white border-bottom">
     <div class="container d-flex justify-content-between">
       <a class="navbar-brand fw-bold fs-3" href="{{route('home')}}">
-        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="arielle-artstudio">
+        <img class="sticky-logo" src="{{asset('images/logo.png')}}" width="100" alt="zyrelisgallery">
       </a>
       <div class="d-flex align-items-center">
         <span class="me-3 fw-bold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span>
@@ -190,7 +190,7 @@
   </div>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       // Initialize toastr
       toastr.options = {
         "closeButton": true,
@@ -200,7 +200,7 @@
       };
 
       // Show wallet address based on selection
-      $('#cryptoType').change(function() {
+      $('#cryptoType').change(function () {
         $('.wallet-info').hide();
         const selected = $(this).val();
         if (selected === 'USDT (TRC20)') {
@@ -213,7 +213,7 @@
       });
 
       // Copy to clipboard function
-      window.copyToClipboard = function(elementId, cryptoType) {
+      window.copyToClipboard = function (elementId, cryptoType) {
         const text = document.getElementById(elementId).innerText;
         navigator.clipboard.writeText(text).then(() => {
           toastr.success(`${cryptoType} wallet address copied to clipboard`);
@@ -224,47 +224,47 @@
       };
 
       // Form submission
-      $('#depositForm').on('submit', function(e) {
+      $('#depositForm').on('submit', function (e) {
         e.preventDefault();
-        
+
         // Reset error messages
         $('.invalid-feedback').text('');
         $('.form-control').removeClass('is-invalid');
-        
+
         // Disable button and show spinner
         const submitBtn = $('#submitBtn');
         const originalBtnText = submitBtn.html();
         submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Processing...');
         $('#spinner').show();
-        
+
         // Create FormData object
         let formData = new FormData(this);
-        
+
         $.ajax({
           url: "{{ route('deposit.store') }}",
           type: "POST",
           data: formData,
           processData: false,
           contentType: false,
-          success: function(response) {
+          success: function (response) {
             toastr.success(response.message);
             $('#depositForm')[0].reset();
             $('.wallet-info').hide();
             $('#cryptoType').val('').trigger('change');
-           // Redirect to homepage after 2 seconds
-            setTimeout(function() {
-           window.location.href = "{{ route('home') }}";
-           }, 2000);
+            // Redirect to homepage after 2 seconds
+            setTimeout(function () {
+              window.location.href = "{{ route('home') }}";
+            }, 2000);
           },
-          error: function(xhr) {
+          error: function (xhr) {
             // Re-enable button and restore original text
             submitBtn.prop('disabled', false).html(originalBtnText);
             $('#spinner').hide();
-            
-            if(xhr.status === 422) {
+
+            if (xhr.status === 422) {
               // Validation errors
               const errors = xhr.responseJSON.errors;
-              $.each(errors, function(key, value) {
+              $.each(errors, function (key, value) {
                 $(`#${key}-error`).text(value[0]);
                 $(`#${key}`).addClass('is-invalid');
               });

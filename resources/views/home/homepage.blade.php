@@ -1,272 +1,372 @@
 @include('home.header')
+
+<link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+
 <main id="content">
 
     <span id="pp_page_instance_746"></span>
 
-    <div class="container-fluid align-" style="padding-top: 30px; padding-bottom: 30px; background: #fff;">
-        <div class="container">
-            <div class="infoHeaderBoxedImage" data-animations="">
-                <picture class="picture" style="--picture-aspect-ratio: 16/9">
-                    <source media="(max-width: 991px)" srcset="images/home.jpg">
-                    <source media="(min-width: 992px)" srcset="images/home.jpg">
-                    <img class="picture__image" src="images/home.jpg" alt="Exhibition Hall">
-                </picture>
+    {{-- ===== HERO SECTION WITH IMAGE SLIDER ===== --}}
+    <section class="hp-hero" id="hp-hero">
+        <div class="hp-hero__slider">
+            <div class="hp-hero__slide active">
+                <img src="{{ asset('images/hero-gallery.png') }}" alt="Arielle Art Studio Gallery">
+            </div>
+            <div class="hp-hero__slide">
+                <img src="{{ asset('images/gallery-exhibition.png') }}" alt="Contemporary Exhibition">
+            </div>
+            <div class="hp-hero__slide">
+                <img src="{{ asset('images/abstract-painting.png') }}" alt="Abstract Art Collection">
             </div>
         </div>
-    </div>
-    <!-- About Us Section Added Here -->
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 30px; padding-bottom: 30px; background: #f8f9fa;">
-        <div class="container">
-            <div class="richtext">
-                <h2>About Arielle Art Studio</h2>
-                <p>Welcome to Arielle Art Studio, a vibrant online space where creativity meets
-                    connection. We are a forward-thinking digital art gallery and marketplace dedicated to showcasing
-                    contemporary art from emerging and established artists around the world.</p>
-
-                <p>At Arielle , we believe art is more than just visual expression — it's a powerful dialogue between
-                    the
-                    artist and the viewer. Our platform is designed to celebrate that dialogue by making contemporary
-                    art accessible, discoverable, and collectible for everyone, everywhere.</p>
-
-                <p>Whether you're an art enthusiast, a seasoned collector, or simply looking to bring more beauty into
-                    your space, Arielle offers a curated selection of paintings, illustrations, drawings, mixed media
-                    works, and more — all available for purchase directly from the artists. We provide a seamless
-                    experience that connects creators with collectors, helping to support the global art community and
-                    elevate new voices in contemporary art.</p>
-
-                <p>Arielle is not just a gallery — it's a movement. We are passionate about nurturing artistic talent
-                    and giving artists the visibility they deserve in today's digital world. Join us on this journey and
-                    discover a world of contemporary art that inspires, challenges, and resonates.</p>
-            </div>
+        <div class="hp-hero__overlay"></div>
+        <div class="hp-hero__content">
+            <p class="hp-hero__tagline">Contemporary Art &middot; Since 2020</p>
+            <h1 class="hp-hero__title">Where Art Meets Imagination</h1>
+            <p class="hp-hero__subtitle">Discover extraordinary contemporary art from emerging and established artists around the world.</p>
+            <a href="{{ route('current.exhibitions') }}" class="hp-hero__cta">
+                Explore Exhibitions
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+            </a>
         </div>
-    </div>
+        <div class="hp-hero__dots">
+            <span class="hp-hero__dot active" data-slide="0"></span>
+            <span class="hp-hero__dot" data-slide="1"></span>
+            <span class="hp-hero__dot" data-slide="2"></span>
+        </div>
+    </section>
 
-    <div class="container-fluid infoHeaderWrapper type-page align-"
-        style="padding-top: 30px; padding-bottom: 30px; background: #fff;">
-        <div class="container">
-            <div class="infoHeaderContent">
-                <div class="inner">
-                    <h1>Current Exhibitions</h1>
+    {{-- ===== ABOUT SECTION ===== --}}
+    <section class="hp-section" id="hp-about">
+        <div class="hp-container">
+            <div class="hp-about">
+                <div class="hp-about__image hp-animate">
+                    <img src="{{ asset('images/artist-at-work.png') }}" alt="Artist at Work">
+                    <div class="hp-about__image-accent"></div>
+                </div>
+                <div class="hp-about__content hp-animate hp-animate--delay-2">
+                    <span class="hp-about__label">Our Story</span>
+                    <h2 class="hp-about__title">A Vibrant Space Where Creativity Meets Connection</h2>
+                    <p class="hp-about__text">
+                        Welcome to Arielle Art Studio, a forward-thinking digital art gallery and marketplace dedicated to showcasing contemporary art from emerging and established artists around the world.
+                    </p>
+                    <p class="hp-about__text">
+                        At Arielle, we believe art is more than just visual expression — it's a powerful dialogue between the artist and the viewer. Our platform celebrates that dialogue by making contemporary art accessible, discoverable, and collectible for everyone, everywhere.
+                    </p>
+                    <div class="hp-about__stats">
+                        <div class="hp-stat">
+                            <span class="hp-stat__number">500+</span>
+                            <span class="hp-stat__label">Artworks</span>
+                        </div>
+                        <div class="hp-stat">
+                            <span class="hp-stat__number">120+</span>
+                            <span class="hp-stat__label">Artists</span>
+                        </div>
+                        <div class="hp-stat">
+                            <span class="hp-stat__number">50+</span>
+                            <span class="hp-stat__label">Exhibitions</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 30px; padding-bottom: 30px; background: #CCD5D8;">
-        <div class="container">
-            <div class="richtext">
-                <p>Our Exhibition Halls are located in the main gallery complex and are free to enter for all visitors.
-                    Donations are welcome to support our programs.</p>
-                <p style="text-align: center;"><strong>Exhibition Halls opening hours</strong></p>
-                <p style="text-align: center;">Tuesday – Friday | 11:00–17:00<br>Saturday - Sunday | 10:00 –
-                    17:00<br>Monday | closed</p>
-                <p style="text-align: left;"><br>We welcome everyone to our Exhibition Spaces. You can find out more
-                    about which exhibitions are currently showing and what is upcoming, plus more information on how to
-                    <a href="mailto:support@arielle-artstudio.com ">plan your visit</a>
-
-
-                </p>
-                <p>&nbsp;</p>
-                <h4>Visiting our Exhibitions this season</h4>
-                <p>To ensure the best experience for all visitors, we are allocating time slots for both
-                    <strong>IMMERSIVE 360</strong> and the <strong>Modern Perspectives: Contemporary Art
-                        Exhibition</strong>.
-                </p>
-                <p>One <strong>FREE</strong> ticket will allow access to <strong>Modern Perspectives</strong>, and you
-                    should plan about one hour for this exhibition. There will be interactive activities throughout the
-                    venue.</p>
-                <p><strong>IMMERSIVE 360</strong> requires a separate <strong>FREE</strong> ticket with 15 minute time
-                    slots.</p>
-                <p>(Please remember to book separately for each experience, as a ticket to one does not grant access to
-                    the other).</p>
-                <p>All our exhibitions are <strong>FREE</strong>, and we greatly appreciate any donations.</p>
-                <p>When you arrive at the Exhibition Welcome Desk, our staff will be there to guide you and answer any
-                    questions.</p>
-                <p>We look forward to welcoming you soon!</p>
-                <p>(We will make every effort to keep to the time slots but please bear with us at busy times).</p>
-                <p style="text-align: left;">&nbsp;</p>
-                <h4 style="text-align: left;">Special Exhibition Events</h4>
-                <p style="text-align: left;"><strong><a href="/relaxed-sessions">Relaxed Sessions</a></strong> -
-                    Designed for individuals and families who would prefer to experience our exhibitions in a calmer
-                    environment.</p>
+    {{-- ===== IMAGE MOSAIC GALLERY ===== --}}
+    <section class="hp-section hp-section--warm" id="hp-gallery">
+        <div class="hp-container">
+            <div class="hp-section__header hp-animate">
+                <span class="hp-section__label">Gallery</span>
+                <h2 class="hp-section__title">Explore Our Spaces</h2>
+                <div class="hp-section__divider"></div>
+                <p class="hp-section__desc">Step inside our world of curated exhibitions and immersive art experiences.</p>
+            </div>
+            <div class="hp-mosaic hp-animate hp-animate--delay-1">
+                <div class="hp-mosaic__item">
+                    <img src="{{ asset('images/hero-gallery.png') }}" alt="Main Gallery Hall">
+                    <div class="hp-mosaic__overlay">
+                        <span class="hp-mosaic__caption">Main Gallery Hall</span>
+                    </div>
+                </div>
+                <div class="hp-mosaic__item">
+                    <img src="{{ asset('images/gallery-exhibition.png') }}" alt="Exhibition Wing">
+                    <div class="hp-mosaic__overlay">
+                        <span class="hp-mosaic__caption">Exhibition Wing</span>
+                    </div>
+                </div>
+                <div class="hp-mosaic__item">
+                    <img src="{{ asset('images/sculpture-gallery.png') }}" alt="Sculpture Garden">
+                    <div class="hp-mosaic__overlay">
+                        <span class="hp-mosaic__caption">Sculpture Garden</span>
+                    </div>
+                </div>
+                <div class="hp-mosaic__item">
+                    <img src="{{ asset('images/abstract-painting.png') }}" alt="Modern Art Collection">
+                    <div class="hp-mosaic__overlay">
+                        <span class="hp-mosaic__caption">Modern Art Collection</span>
+                    </div>
+                </div>
+                <div class="hp-mosaic__item">
+                    <img src="{{ asset('images/gallery-event.png') }}" alt="Gallery Events">
+                    <div class="hp-mosaic__overlay">
+                        <span class="hp-mosaic__caption">Gallery Events</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 50px; padding-bottom: 20px; background: #fff;">
-        <div class="container">
-            <div class="richtext">
-                <h2>Past Exhibitions</h2>
+    {{-- ===== CURRENT EXHIBITIONS ===== --}}
+    <section class="hp-section hp-exhibitions" id="hp-exhibitions">
+        <div class="hp-container">
+            <div class="hp-section__header hp-animate">
+                <span class="hp-section__label">Now Showing</span>
+                <h2 class="hp-section__title">Current Exhibitions</h2>
+                <div class="hp-section__divider"></div>
+                <p class="hp-section__desc">Discover what's on view in our galleries today.</p>
+            </div>
+            <div class="hp-exhibitions__grid">
+                <a class="hp-exhibition-card hp-animate hp-animate--delay-1" href="{{ route('current.exhibitions') }}">
+                    <div class="hp-exhibition-card__image">
+                        <img src="{{ asset('images/gallery-exhibition.png') }}" alt="Current Exhibition">
+                        <span class="hp-exhibition-card__badge">Now Open</span>
+                    </div>
+                    <div class="hp-exhibition-card__body">
+                        <h3 class="hp-exhibition-card__title">Current Exhibition</h3>
+                        <span class="hp-exhibition-card__meta">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            Open Now &middot; Free Entry
+                        </span>
+                    </div>
+                    <div class="hp-exhibition-card__arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                </a>
+
+                @auth
+                <a class="hp-exhibition-card hp-animate hp-animate--delay-2" href="{{ route('future.exhibitions') }}">
+                @else
+                <a class="hp-exhibition-card hp-animate hp-animate--delay-2" href="{{ route('login') }}">
+                @endauth
+                    <div class="hp-exhibition-card__image">
+                        <img src="{{ asset('images/abstract-painting.png') }}" alt="Upcoming Exhibition">
+                        <span class="hp-exhibition-card__badge">Coming Soon</span>
+                    </div>
+                    <div class="hp-exhibition-card__body">
+                        <h3 class="hp-exhibition-card__title">Future Exhibition</h3>
+                        <span class="hp-exhibition-card__meta">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            Upcoming &middot; Preview Available
+                        </span>
+                    </div>
+                    <div class="hp-exhibition-card__arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                </a>
+
+                <a class="hp-exhibition-card hp-animate hp-animate--delay-3" href="{{ route('past.exhibitions') }}">
+                    <div class="hp-exhibition-card__image">
+                        <img src="{{ asset('images/sculpture-gallery.png') }}" alt="Past Exhibition">
+                        <span class="hp-exhibition-card__badge">Archive</span>
+                    </div>
+                    <div class="hp-exhibition-card__body">
+                        <h3 class="hp-exhibition-card__title">Past Exhibitions</h3>
+                        <span class="hp-exhibition-card__meta">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            Browse Archive
+                        </span>
+                    </div>
+                    <div class="hp-exhibition-card__arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
-        <div class="container">
-            {{-- <ul class="media-list">
-                @foreach($pastExhibitions as $exhibition)
-                <li class="media-item">
-                    @if(!empty($exhibition->video_url))
-                    <video controls class="media-element">
-                        <source src="{{ $exhibition->video_url }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    @else
-                    <img class="media-element"
-                        src="{{ $exhibition->picture_url ?? 'https://via.placeholder.com/855x600' }}"
-                        alt="Exhibition media">
-                    @endif
-                </li>
-                @endforeach
-            </ul> --}}
-        </div>
-
-        <style>
-            .media-list {
-                list-style: none;
-                padding: 0;
-                display: grid;
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 20px;
-            }
-
-            .media-item {
-                aspect-ratio: 16/9;
-            }
-
-            .media-element {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                display: block;
-            }
-
-            video.media-element {
-                background: #000;
-            }
-        </style>
-    </div>
-
-
-
-    <div class="container-fluid desc2Wrapper variant- align-"
-        style="padding-top: 50px; padding-bottom: 20px; background: #fff;">
-        <div class="container">
-            <div class="richtext">
-                <h2>Art Marketplace</h2>
-                <p>Browse and purchase artwork directly from our platform. Our secure payment system connects you with
-                    the artists.</p>
+    {{-- ===== VISITING INFORMATION ===== --}}
+    <section class="hp-section hp-section--warm" id="hp-visit">
+        <div class="hp-container">
+            <div class="hp-section__header hp-animate">
+                <span class="hp-section__label">Plan Your Visit</span>
+                <h2 class="hp-section__title">Visit Our Gallery</h2>
+                <div class="hp-section__divider"></div>
+            </div>
+            <div class="hp-visit hp-animate hp-animate--delay-1">
+                <div class="hp-visit__info">
+                    <h3 class="hp-visit__title">Opening Hours</h3>
+                    <ul class="hp-visit__hours">
+                        <li><span>Monday</span><strong>Closed</strong></li>
+                        <li><span>Tuesday – Friday</span><strong>11:00 – 17:00</strong></li>
+                        <li><span>Saturday – Sunday</span><strong>10:00 – 17:00</strong></li>
+                    </ul>
+                    <div class="hp-visit__note">
+                        <strong>Free Entry.</strong> Our Exhibition Halls are located in the main gallery complex and are free to enter for all visitors. Donations are welcome to support our programs.
+                    </div>
+                </div>
+                <div class="hp-visit__features">
+                    <div class="hp-feature-card">
+                        <div class="hp-feature-card__icon">🎨</div>
+                        <h4 class="hp-feature-card__title">IMMERSIVE 360</h4>
+                        <p class="hp-feature-card__desc">15-minute immersive time slots. Separate free ticket required.</p>
+                    </div>
+                    <div class="hp-feature-card">
+                        <div class="hp-feature-card__icon">🖼️</div>
+                        <h4 class="hp-feature-card__title">Modern Perspectives</h4>
+                        <p class="hp-feature-card__desc">Contemporary art exhibition. Plan about one hour for the full experience.</p>
+                    </div>
+                    <div class="hp-feature-card">
+                        <div class="hp-feature-card__icon">🧘</div>
+                        <h4 class="hp-feature-card__title">Relaxed Sessions</h4>
+                        <p class="hp-feature-card__desc">Calm viewing environment for individuals and families who prefer a quieter experience.</p>
+                    </div>
+                    <div class="hp-feature-card">
+                        <div class="hp-feature-card__icon">🎟️</div>
+                        <h4 class="hp-feature-card__title">Free Tickets</h4>
+                        <p class="hp-feature-card__desc">All exhibitions are free. Book separate tickets for each experience.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
-        <div class="container">
-            <ul data-animations="zoom" class="listItems variant-">
-                @foreach($availableArtworks as $artwork)
-                <li data-entry-id="{{ $artwork->id }}"
-                    class="eventCard context-default production-type-default variant-default topdate">
-                    <style>
-                        [data-entry-id="{{ $artwork->id }}"] .thumb .image {
-                            background-image: url('{{ $artwork->image_url ?? ' https: //via.placeholder.com/855x600' }}');
-                            }
-                    </style>
-                    <div class="listItemWrapper">
-                        <div class="thumb">
-                            <a class="image" href="/artworks/{{ $artwork->id }}" tabindex="-1"></a>
-                        </div>
-                        <div class="inner">
-                            <div class="descMetaContainer">
-                                <a class="desc" href="/artworks/{{ $artwork->id }}">
-                                    <h2 class="title">{{ $artwork->title }}</h2>
-                                    <div class="subtitle">{{ Str::limit($artwork->description, 100) }}</div>
-                                    <div class="venue">By {{ $artwork->artist_name }}</div>
-                                    <div class="price">${{ number_format($artwork->price, 2) }}</div>
-                                    @if($artwork->is_auction)
-                                    <div class="auction-info">
-                                        <strong>Live Auction:</strong> {{ $artwork->auction_end->format('D d M Y H:i')
-                                        }}
-                                    </div>
-                                    @endif
-                                </a>
-                                <div class="meta">
-                                    <div class="meta-group">
-                                        <ul class="genres">
-                                            <li class="genres__item"><a class="genres__link" href="#">{{
-                                                    $artwork->medium }}</a></li>
-                                            <li class="genres__item"><a class="genres__link" href="#">{{
-                                                    $artwork->category }}</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="meta-group button">
-                                        <a href="/artworks/{{ $artwork->id }}" class="btn btn-active">View Details</a>
-                                        <a href="/checkout/{{ $artwork->id }}" class="btn btn-primary">Purchase</a>
-                                        @if($artwork->is_auction)
-                                        <a href="/auctions/{{ $artwork->id }}" class="btn btn-secondary">Place Bid</a>
-                                        @endif
+    {{-- ===== ART MARKETPLACE ===== --}}
+    <section class="hp-section" id="hp-marketplace">
+        <div class="hp-container">
+            <div class="hp-section__header hp-animate">
+                <span class="hp-section__label">Collect</span>
+                <h2 class="hp-section__title">Art Marketplace</h2>
+                <div class="hp-section__divider"></div>
+                <p class="hp-section__desc">Browse and purchase artwork directly from our platform. Our secure payment system connects you with the artists.</p>
+            </div>
+        </div>
+
+        <div class="container-fluid listWrapper theme" style="padding-top: 0px; padding-bottom: 0px; background: #fff;">
+            <div class="container">
+                <ul data-animations="zoom" class="listItems variant-">
+                    @foreach($availableArtworks as $artwork)
+                        <li data-entry-id="{{ $artwork->id }}"
+                            class="eventCard context-default production-type-default variant-default topdate">
+                            <style>
+                                [data-entry-id="{{ $artwork->id }}"] .thumb .image {
+                                    background-image: url('{{ $artwork->image_url ?? 'https://via.placeholder.com/855x600' }}');
+                                }
+                            </style>
+                            <div class="listItemWrapper">
+                                <div class="thumb">
+                                    <a class="image" href="/artworks/{{ $artwork->id }}" tabindex="-1"></a>
+                                </div>
+                                <div class="inner">
+                                    <div class="descMetaContainer">
+                                        <a class="desc" href="/artworks/{{ $artwork->id }}">
+                                            <h2 class="title">{{ $artwork->title }}</h2>
+                                            <div class="subtitle">{{ Str::limit($artwork->description, 100) }}</div>
+                                            <div class="venue">By {{ $artwork->artist_name }}</div>
+                                            <div class="price">${{ number_format($artwork->price, 2) }}</div>
+                                            @if($artwork->is_auction)
+                                                <div class="auction-info">
+                                                    <strong>Live Auction:</strong> {{ $artwork->auction_end->format('D d M Y H:i') }}
+                                                </div>
+                                            @endif
+                                        </a>
+                                        <div class="meta">
+                                            <div class="meta-group">
+                                                <ul class="genres">
+                                                    <li class="genres__item"><a class="genres__link" href="#">{{ $artwork->medium }}</a></li>
+                                                    <li class="genres__item"><a class="genres__link" href="#">{{ $artwork->category }}</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="meta-group button">
+                                                <a href="/artworks/{{ $artwork->id }}" class="btn btn-active">View Details</a>
+                                                <a href="/checkout/{{ $artwork->id }}" class="btn btn-primary">Purchase</a>
+                                                @if($artwork->is_auction)
+                                                    <a href="/auctions/{{ $artwork->id }}" class="btn btn-secondary">Place Bid</a>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </li>
-                @endforeach
-            </ul>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
+    </section>
 
-
-
-    <div class="container-fluid mediaWrapper multi variant-masonry arrows" data-animations=""
-        style="padding-top: 20px; padding-bottom: 30px; background: #fff;">
-        <div class="container">
-            <div class="grid-root">
-                @auth
-                <a class="imageCard" href="{{route('future.exhibitions')}}">
-                    <div class="wrapper">
-                        <img src="https://img.thelowry.com/BM1_oS6aAg-1k_afGjgIkul3gNhaaBEO3G62hBYcpRc/c:5350:5350/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzODZfb3JpZy5qcGc"
-                            alt="Book a Tour">
-                    </div>
-                    <div class="content">
-                        <div class="title">Future Exhibition</div>
-                    </div>
-                </a>
-                @else
-                <a class="imageCard" href="{{route('login')}}">
-                    <div class="wrapper">
-                        <img src="https://img.thelowry.com/BM1_oS6aAg-1k_afGjgIkul3gNhaaBEO3G62hBYcpRc/c:5350:5350/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzODZfb3JpZy5qcGc"
-                            alt="Book a Tour">
-                    </div>
-                    <div class="content">
-                        <div class="title">Future Exhibition</div>
-                    </div>
-                </a>
-                @endauth
-
-                <a class="imageCard" href="{{route('current.exhibitions')}}">
-                    <div class="wrapper">
-                        <img src="https://img.thelowry.com/hvowjLzFRgW1YiE1b0zSJMwjklIE5AXdzWIJg8o_-g8/c:5464:5464/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzEzODdfb3JpZy5qcGc"
-                            alt="Plan Your Visit">
-                    </div>
-                    <div class="content">
-                        <div class="title">Current Exhibition</div>
-                    </div>
-                </a>
-
-                <a class="imageCard" href="{{route('past.exhibitions')}}">
-                    <div class="wrapper">
-                        <img src="https://img.thelowry.com/kE6e9bt_boJCLFzAjRoni07kf5oY9XTUG45UH6bC-Vg/c:5464:5464/s:900:900:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzE0MThfb3JpZy5qcGc"
-                            alt="Exhibition Shop">
-                    </div>
-                    <div class="content">
-                        <div class="title">Past Exhibition</div>
-                    </div>
+    {{-- ===== CTA BANNER ===== --}}
+    <section class="hp-section" id="hp-cta" style="padding-bottom: 100px;">
+        <div class="hp-cta-banner hp-animate">
+            <div class="hp-cta-banner__bg">
+                <img src="{{ asset('images/gallery-event.png') }}" alt="Join Arielle">
+            </div>
+            <div class="hp-cta-banner__overlay"></div>
+            <div class="hp-cta-banner__content">
+                <h2 class="hp-cta-banner__title">Join Our Creative Community</h2>
+                <p class="hp-cta-banner__text">Whether you're an art enthusiast, a seasoned collector, or simply looking to bring more beauty into your space.</p>
+                <a href="{{ route('login') }}" class="hp-cta-banner__btn">
+                    Get Started
+                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
             </div>
         </div>
-    </div>
+    </section>
+
 </main>
+
+{{-- ===== HERO SLIDER SCRIPT ===== --}}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Hero slider
+    const slides = document.querySelectorAll('.hp-hero__slide');
+    const dots = document.querySelectorAll('.hp-hero__dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function goToSlide(n) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = n;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+    }
+
+    function nextSlide() {
+        goToSlide((currentSlide + 1) % slides.length);
+    }
+
+    function startSlider() {
+        slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            clearInterval(slideInterval);
+            goToSlide(parseInt(this.dataset.slide));
+            startSlider();
+        });
+    });
+
+    startSlider();
+
+    // Scroll animations
+    const animateElements = document.querySelectorAll('.hp-animate');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    animateElements.forEach(el => observer.observe(el));
+});
+</script>
+
 @include('home.footer')

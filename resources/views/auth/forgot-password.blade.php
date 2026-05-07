@@ -9,7 +9,7 @@
           <div class="text-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
               <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
-                  src="{{asset('images/logo.png')}}" alt="arielle-artstudio" width="150px"></text>
+                  src="{{asset('images/logo.png')}}" alt="zyrelisgallery" width="150px"></text>
             </svg>
             <h3 class="mt-3">Reset Your Password</h3>
           </div>
@@ -63,7 +63,7 @@
 </style>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     toastr.options = {
       "closeButton": true,
       "positionClass": "toast-top-right",
@@ -71,15 +71,15 @@
     };
 
     // Form submission
-    $('#forgot-password-form').submit(function(e) {
+    $('#forgot-password-form').submit(function (e) {
       e.preventDefault();
       const form = $(this);
       const submitBtn = form.find('[type="submit"]');
-      
+
       // Reset validation
       form.find('.is-invalid').removeClass('is-invalid');
       form.find('.invalid-feedback').text('').hide();
-      
+
       // Validate email
       const email = $('#email').val();
       if (!email) {
@@ -87,7 +87,7 @@
         $('.email-error').text('Email is required').show();
         return;
       }
-      
+
       // Email format validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
@@ -95,27 +95,27 @@
         $('.email-error').text('Invalid email format').show();
         return;
       }
-      
+
       // Loading state
       submitBtn.prop('disabled', true).html(`
         <span class="spinner-border spinner-border-sm" role="status"></span> Sending...
       `);
-      
+
       // AJAX request
       $.ajax({
         url: form.attr('action'),
         type: "POST",
         data: form.serialize(),
-        success: function(response) {
+        success: function (response) {
           toastr.success('Password reset link sent to your email');
           submitBtn.prop('disabled', false).text('Send Reset Link');
         },
-        error: function(xhr) {
+        error: function (xhr) {
           submitBtn.prop('disabled', false).text('Send Reset Link');
-          
+
           if (xhr.status === 422) {
             const errors = xhr.responseJSON.errors;
-            $.each(errors, function(key, value) {
+            $.each(errors, function (key, value) {
               $(`#${key}`).addClass('is-invalid');
               $(`.${key}-error`).text(value[0]).show();
             });

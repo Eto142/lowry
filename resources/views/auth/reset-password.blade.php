@@ -9,7 +9,7 @@
           <div class="text-center mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="200" height="80" viewBox="0 0 200 80">
               <text x="10" y="50" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#333"><img
-                  src="{{asset('images/logo.png')}}" alt="arielle-artstudio" width="150px"></text>
+                  src="{{asset('images/logo.png')}}" alt="zyrelisgallery" width="150px"></text>
             </svg>
             <h3 class="mt-3">Create New Password</h3>
           </div>
@@ -74,7 +74,7 @@
 </style>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     toastr.options = {
       "closeButton": true,
       "positionClass": "toast-top-right",
@@ -85,53 +85,53 @@
     function validatePassword() {
       const password = $('#password').val();
       const confirm = $('#password-confirm').val();
-      
+
       if (password.length < 8) {
         $('#password').addClass('is-invalid');
         $('.password-error').text('Password must be at least 8 characters').show();
         return false;
       }
-      
+
       if (password !== confirm) {
         $('#password-confirm').addClass('is-invalid');
         $('.password-error').text('Passwords do not match').show();
         return false;
       }
-      
+
       return true;
     }
 
     // Form submission
-    $('#reset-password-form').submit(function(e) {
+    $('#reset-password-form').submit(function (e) {
       e.preventDefault();
-      
+
       if (!validatePassword()) return;
-      
+
       const form = $(this);
       const submitBtn = form.find('[type="submit"]');
-      
+
       // Loading state
       submitBtn.prop('disabled', true).html(`
         <span class="spinner-border spinner-border-sm" role="status"></span> Resetting...
       `);
-      
+
       // AJAX request
       $.ajax({
         url: form.attr('action'),
         type: "POST",
         data: form.serialize(),
-        success: function(response) {
+        success: function (response) {
           toastr.success('Password reset successfully!');
           setTimeout(() => {
             window.location.href = "{{ route('login') }}";
           }, 2000);
         },
-        error: function(xhr) {
+        error: function (xhr) {
           submitBtn.prop('disabled', false).text('Reset Password');
-          
+
           if (xhr.status === 422) {
             const errors = xhr.responseJSON.errors;
-            $.each(errors, function(key, value) {
+            $.each(errors, function (key, value) {
               $(`#${key}`).addClass('is-invalid');
               $(`.${key}-error`).text(value[0]).show();
             });
@@ -141,9 +141,9 @@
         }
       });
     });
-    
+
     // Real-time password validation
-    $('#password, #password-confirm').on('input', function() {
+    $('#password, #password-confirm').on('input', function () {
       validatePassword();
     });
   });

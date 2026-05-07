@@ -18,9 +18,9 @@
                     <div class="container">
                         <div class="infoHeaderBoxedImage" data-animations="">
                                     <picture class="picture"  style="--picture-aspect-ratio: 16/9" >
-                                    <source media="(max-width: 991px)" srcset="https://img.thelowry.com/7N5NjXjZX2fqRVrlhigruImKqX2NdvqOWp2hjHGe7EM/c:8192:4630:fp:0.5:0.33/s:690:390:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzA3MzBfb3JpZy5qcGc">
-                            <source media="(min-width: 992px)" srcset="https://img.thelowry.com/8rRzsCRaXGCXoUtspD09tHuLwbsby8U86-NoA37UU4I/c:8192:4608:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzA3MzBfb3JpZy5qcGc">
-                        <img class="picture__image" src="https://img.thelowry.com/8rRzsCRaXGCXoUtspD09tHuLwbsby8U86-NoA37UU4I/c:8192:4608:fp:0.5:0.33/s:1920:1080:1/aHR0cHM6Ly90aGVsb3dyeS5jb20vL2Ntc19maWxlcy9zeXN0ZW0vaW1hZ2VzL2ltZzA3MzBfb3JpZy5qcGc" alt="">
+                                    <source media="(max-width: 991px)" srcset="{{ asset('images/permanent-collection.png') }}">
+                            <source media="(min-width: 992px)" srcset="{{ asset('images/permanent-collection.png') }}">
+                        <img class="picture__image" src="{{ asset('images/permanent-collection.png') }}" alt="LS Lowry Collection">
             </picture>
 
                                                                 

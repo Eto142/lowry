@@ -11,7 +11,7 @@
     <div class="footerWrapper">
         <div class="inner">
             <section class="column">
-                <div><img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="arielle-artstudio" width="150px">
+                <div><img class="sticky-logo" src="{{asset('images/logo.png')}}" alt="zyrelisgallery" width="150px">
                 </div>
             </section>
 
@@ -87,7 +87,7 @@
                     <div class="richtext">
                         <p><br>
                             <a class="btn btn-active" title="Sign up for the mailing list"
-                                href="mailto:support@arielle-artstudio.com ">
+                                href="mailto:support@zyrelisgallery.com ">
                                 Join our mailing list
                             </a>
                         </p>
@@ -112,7 +112,7 @@
     <div id="postFooter" class="variant-boxedLeftRight">
         <div class="inner">
             <section class="column">
-                &copy; arielle-artstudio
+                &copy; zyrelisgallery
             </section>
 
 
@@ -288,8 +288,8 @@
 
 <script>
     let pep_global_config = {};
-pep_global_config['app_environment'] = 'prod';
-pep_global_config['http_host'] = 'thelowry.com';
+    pep_global_config['app_environment'] = 'prod';
+    pep_global_config['http_host'] = 'thelowry.com';
 </script>
 
 <script crossorigin type="module" src="{{asset('dist/vite/site/js/lib.K6C4ivlm.js')}}"></script>
@@ -299,8 +299,8 @@ pep_global_config['http_host'] = 'thelowry.com';
 
 <script>
     dataLayer.push({
-'event': 'datalayer_ready'
-});
+        'event': 'datalayer_ready'
+    });
 </script>
 
 </body>

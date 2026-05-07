@@ -1,15 +1,12 @@
 @include('home.header')
 
 <main id="content">
-    <div class="container-fluid hero-section" style="padding-top: 80px; padding-bottom: 80px; background: #f8f9fa;">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
-                    <h1 class="display-4 mb-4">About Arielle Contemporary</h1>
-                    <p class="lead">Where creativity meets connection in the digital art world.</p>
-                </div>
-
-            </div>
+    <!-- Hero Banner Image -->
+    <div class="container-fluid" style="padding: 0; position: relative; overflow: hidden; max-height: 450px;">
+        <img src="{{ asset('images/about-hero.png') }}" alt="About Arielle Art Studio" style="width: 100%; height: 450px; object-fit: cover; display: block; filter: brightness(0.7);">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
+            <h1 class="display-4 mb-3" style="font-family: 'Playfair Display', serif; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">About Arielle Contemporary</h1>
+            <p class="lead" style="font-size: 1.3rem; max-width: 600px; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Where creativity meets connection in the digital art world.</p>
         </div>
     </div>
 
@@ -96,7 +93,7 @@
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Team Member">
+                        <img src="{{ asset('images/team-alex.png') }}" class="card-img-top" alt="Alex Morgan" style="height: 280px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="card-title">Alex Morgan</h4>
                             <p class="text-muted">Founder & Creative Director</p>
@@ -107,7 +104,7 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Team Member">
+                        <img src="{{ asset('images/team-samira.png') }}" class="card-img-top" alt="Samira Khan" style="height: 280px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="card-title">Samira Khan</h4>
                             <p class="text-muted">Head of Artist Relations</p>
@@ -117,7 +114,7 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0">
-                        <img src="https://via.placeholder.com/400x300" class="card-img-top" alt="Team Member">
+                        <img src="{{ asset('images/team-jordan.png') }}" class="card-img-top" alt="Jordan Lee" style="height: 280px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="card-title">Jordan Lee</h4>
                             <p class="text-muted">Technology Director</p>
