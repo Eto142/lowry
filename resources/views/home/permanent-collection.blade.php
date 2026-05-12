@@ -3,10 +3,15 @@
 <main id="content">
     <!-- Hero Section -->
     <div class="container-fluid" style="padding: 0; position: relative; overflow: hidden; max-height: 450px;">
-        <img src="{{ asset('images/permanent-collection.png') }}" alt="Permanent Collection" style="width: 100%; height: 450px; object-fit: cover; display: block; filter: brightness(0.7);">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
-            <h1 class="display-4 mb-3" style="font-family: 'Playfair Display', serif; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">LS Arielle Art Studio Permanent Collection</h1>
-            <p class="lead" style="font-size: 1.3rem; max-width: 650px; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">A curated selection of significant works that define our artistic legacy</p>
+        <img src="{{ asset('images/permanent-collection.png') }}" alt="Permanent Collection"
+            style="width: 100%; height: 450px; object-fit: cover; display: block; filter: brightness(0.7);">
+        <div
+            style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
+            <h1 class="display-4 mb-3"
+                style="font-family: 'Playfair Display', serif; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                LS Zyrelis Gallery Permanent Collection</h1>
+            <p class="lead" style="font-size: 1.3rem; max-width: 650px; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">A
+                curated selection of significant works that define our artistic legacy</p>
         </div>
     </div>
 
@@ -17,7 +22,7 @@
                 <div class="col-lg-8 mx-auto">
                     <div class="richtext text-center">
                         <h2 class="mb-4">Our Enduring Collection</h2>
-                        <p class="mb-4">The LS Arielle Permanent Collection represents the cornerstone of our gallery's
+                        <p class="mb-4">The LS Zyrelis Gallery Permanent Collection represents the cornerstone of our gallery's
                             identity, featuring seminal works that have shaped contemporary art discourse. This
                             carefully assembled collection spans multiple mediums, movements, and generations of
                             artists.</p>
@@ -141,7 +146,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <h2 class="mb-4">Collection History</h2>
-                    <p>The LS Arielle Permanent Collection began with a core group of 12 works donated by our founding
+                    <p>The LS Zyrelis Gallery Permanent Collection began with a core group of 12 works donated by our founding
                         artists. Through thoughtful acquisition and the generous support of our patrons, the collection
                         has grown to encompass over 200 significant contemporary works.</p>
                     <p>Our collection strategy focuses on:</p>

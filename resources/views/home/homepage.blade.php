@@ -10,7 +10,7 @@
     <section class="hp-hero" id="hp-hero">
         <div class="hp-hero__slider">
             <div class="hp-hero__slide active">
-                <img src="{{ asset('images/hero-gallery.png') }}" alt="Arielle Art Studio Gallery">
+                <img src="{{ asset('images/hero-gallery.png') }}" alt="Zyrelis Gallery Gallery">
             </div>
             <div class="hp-hero__slide">
                 <img src="{{ asset('images/gallery-exhibition.png') }}" alt="Contemporary Exhibition">
@@ -50,10 +50,10 @@
                     <span class="hp-about__label">Our Story</span>
                     <h2 class="hp-about__title">A Vibrant Space Where Creativity Meets Connection</h2>
                     <p class="hp-about__text">
-                        Welcome to Arielle Art Studio, a forward-thinking digital art gallery and marketplace dedicated to showcasing contemporary art from emerging and established artists around the world.
+                        Welcome to Zyrelis Gallery, a forward-thinking digital art gallery and marketplace dedicated to showcasing contemporary art from emerging and established artists around the world.
                     </p>
                     <p class="hp-about__text">
-                        At Arielle, we believe art is more than just visual expression — it's a powerful dialogue between the artist and the viewer. Our platform celebrates that dialogue by making contemporary art accessible, discoverable, and collectible for everyone, everywhere.
+                        At Zyrelis Gallery, we believe art is more than just visual expression — it's a powerful dialogue between the artist and the viewer. Our platform celebrates that dialogue by making contemporary art accessible, discoverable, and collectible for everyone, everywhere.
                     </p>
                     <div class="hp-about__stats">
                         <div class="hp-stat">
@@ -146,9 +146,9 @@
                 </a>
 
                 @auth
-                <a class="hp-exhibition-card hp-animate hp-animate--delay-2" href="{{ route('future.exhibitions') }}">
+                    <a class="hp-exhibition-card hp-animate hp-animate--delay-2" href="{{ route('future.exhibitions') }}">
                 @else
-                <a class="hp-exhibition-card hp-animate hp-animate--delay-2" href="{{ route('login') }}">
+                    <a class="hp-exhibition-card hp-animate hp-animate--delay-2" href="{{ route('login') }}">
                 @endauth
                     <div class="hp-exhibition-card__image">
                         <img src="{{ asset('images/abstract-painting.png') }}" alt="Upcoming Exhibition">
@@ -300,7 +300,7 @@
     <section class="hp-section" id="hp-cta" style="padding-bottom: 100px;">
         <div class="hp-cta-banner hp-animate">
             <div class="hp-cta-banner__bg">
-                <img src="{{ asset('images/gallery-event.png') }}" alt="Join Arielle">
+                <img src="{{ asset('images/gallery-event.png') }}" alt="Join Zyrelis Gallery">
             </div>
             <div class="hp-cta-banner__overlay"></div>
             <div class="hp-cta-banner__content">

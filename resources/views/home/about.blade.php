@@ -3,10 +3,15 @@
 <main id="content">
     <!-- Hero Banner Image -->
     <div class="container-fluid" style="padding: 0; position: relative; overflow: hidden; max-height: 450px;">
-        <img src="{{ asset('images/about-hero.png') }}" alt="About Arielle Art Studio" style="width: 100%; height: 450px; object-fit: cover; display: block; filter: brightness(0.7);">
-        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
-            <h1 class="display-4 mb-3" style="font-family: 'Playfair Display', serif; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">About Arielle Contemporary</h1>
-            <p class="lead" style="font-size: 1.3rem; max-width: 600px; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Where creativity meets connection in the digital art world.</p>
+        <img src="{{ asset('images/about-hero.png') }}" alt="About Zyrelis Gallery"
+            style="width: 100%; height: 450px; object-fit: cover; display: block; filter: brightness(0.7);">
+        <div
+            style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; text-align: center; padding: 40px;">
+            <h1 class="display-4 mb-3"
+                style="font-family: 'Playfair Display', serif; font-weight: 600; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                About Zyrelis Gallery Contemporary</h1>
+            <p class="lead" style="font-size: 1.3rem; max-width: 600px; text-shadow: 0 1px 5px rgba(0,0,0,0.3);">Where
+                creativity meets connection in the digital art world.</p>
         </div>
     </div>
 
@@ -16,13 +21,13 @@
                 <div class="col-lg-8 mx-auto">
                     <div class="richtext">
                         <h2 class="mb-4">Our Story</h2>
-                        <p class="mb-4">Founded in 2023, Arielle Art Studio emerged from a passion to
+                        <p class="mb-4">Founded in 2023, Zyrelis Gallery emerged from a passion to
                             democratize access to contemporary art. We recognized that the traditional gallery model
                             excluded many talented artists and art lovers, so we built a digital platform that
                             transcends geographical boundaries.</p>
 
                         <h2 class="mb-4">Our Mission</h2>
-                        <p class="mb-4">At Arielle , we believe art is more than just visual expression — it's a
+                        <p class="mb-4">At Zyrelis Gallery , we believe art is more than just visual expression — it's a
                             powerful
                             dialogue between the artist and the viewer. Our mission is to celebrate that dialogue by
                             making contemporary art accessible, discoverable, and collectible for everyone, everywhere.
@@ -30,7 +35,7 @@
 
                         <div class="mission-card p-4 mb-5" style="background: #CCD5D8; border-left: 4px solid #000;">
                             <h3 class="mb-3">"To create a world where art knows no boundaries"</h3>
-                            <p class="mb-0">— Arielle Founding Principle</p>
+                            <p class="mb-0">— Zyrelis Gallery Founding Principle</p>
                         </div>
 
                         <h2 class="mb-4">What We Offer</h2>
@@ -93,7 +98,8 @@
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0">
-                        <img src="{{ asset('images/team-alex.png') }}" class="card-img-top" alt="Alex Morgan" style="height: 280px; object-fit: cover;">
+                        <img src="{{ asset('images/team-alex.png') }}" class="card-img-top" alt="Alex Morgan"
+                            style="height: 280px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="card-title">Alex Morgan</h4>
                             <p class="text-muted">Founder & Creative Director</p>
@@ -104,7 +110,8 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0">
-                        <img src="{{ asset('images/team-samira.png') }}" class="card-img-top" alt="Samira Khan" style="height: 280px; object-fit: cover;">
+                        <img src="{{ asset('images/team-samira.png') }}" class="card-img-top" alt="Samira Khan"
+                            style="height: 280px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="card-title">Samira Khan</h4>
                             <p class="text-muted">Head of Artist Relations</p>
@@ -114,7 +121,8 @@
                 </div>
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 border-0">
-                        <img src="{{ asset('images/team-jordan.png') }}" class="card-img-top" alt="Jordan Lee" style="height: 280px; object-fit: cover;">
+                        <img src="{{ asset('images/team-jordan.png') }}" class="card-img-top" alt="Jordan Lee"
+                            style="height: 280px; object-fit: cover;">
                         <div class="card-body">
                             <h4 class="card-title">Jordan Lee</h4>
                             <p class="text-muted">Technology Director</p>

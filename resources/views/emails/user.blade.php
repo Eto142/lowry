@@ -473,7 +473,7 @@
                                             All
                                             rights reserved.</p>
                                         <p class="f-fallback sub align-center">
-                                            Arielle Art Studio
+                                            Zyrelis Gallery
                                             <br>https://zyrelisgallery.com /
                                         </p>
                                     </td>

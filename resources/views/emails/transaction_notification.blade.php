@@ -11,7 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Quicksand:300,400,700' rel='stylesheet'>
     <!--<![endif]-->
 
-    <title>Arielle Art Studio</title>
+    <title>Zyrelis Gallery</title>
 
     <style type='text/css'>
         body {
@@ -161,7 +161,7 @@
                                             style='display: block; border-style: none !important; border: 0 !important;'>
                                             <img width="10" height="10" border="0"
                                                 style="display: block; width: 10px; height: 10px;"
-                                                src="{{ asset('images/logo.png') }}" alt="Arielle Art Studio" />
+                                                src="{{ asset('images/logo.png') }}" alt="Zyrelis Gallery" />
 
                                         </a>
                                     </td>
@@ -194,7 +194,7 @@
                                 <li>Date: {{ $date }}</li>
                             </ul>
                             <p>Thank you for using our service!</p>
-                            <p>Kind Regards,<br>Arielle Art Studio.</p>
+                            <p>Kind Regards,<br>Zyrelis Gallery.</p>
                         </td>
                     </tr>
                 </table>

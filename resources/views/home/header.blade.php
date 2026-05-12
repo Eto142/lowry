@@ -31,7 +31,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="{{asset('dist/site-libb1d1.css')}}">
     <link rel="stylesheet" href="{{asset('dist/site-bundleb1d1.css')}}">
@@ -64,29 +66,32 @@
 
 
     <script>
-        var dataLayer = [{"cookie_consent":"","cookieConsent":"","currency_code":"GBP","location_category":"content","order_code":"","order_delivery_method":"","order_items":[],"order_payment_method":"","order_status":"","order_value":0,"visitor_is_logged_in":false,"detail_items":[]}];
+        var dataLayer = [{ "cookie_consent": "", "cookieConsent": "", "currency_code": "GBP", "location_category": "content", "order_code": "", "order_delivery_method": "", "order_items": [], "order_payment_method": "", "order_status": "", "order_value": 0, "visitor_is_logged_in": false, "detail_items": [] }];
     </script>
 
 
 
 
     <script>
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    '../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5WT37G');
+        (function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    '../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-5WT37G');
     </script>
     <!-- Smartsupp Live Chat script -->
     <script type="text/javascript">
         var _smartsupp = _smartsupp || {};
-_smartsupp.key = '6aba53ff744ead05661b392afc5d94f1f980dab6';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
+        _smartsupp.key = '6aba53ff744ead05661b392afc5d94f1f980dab6';
+        window.smartsupp || (function (d) {
+            var s, c, o = smartsupp = function () { o._.push(arguments) }; o._ = [];
+            s = d.getElementsByTagName('script')[0]; c = d.createElement('script');
+            c.type = 'text/javascript'; c.charset = 'utf-8'; c.async = true;
+            c.src = 'https://www.smartsuppchat.com/loader.js?'; s.parentNode.insertBefore(c, s);
+        })(document);
     </script>
     <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
 
@@ -235,13 +240,13 @@ window.smartsupp||(function(d) {
 
                 <script>
                     // Override the existing anchor menu behavior for these specific links
-                document.querySelectorAll('#anchor-nav a[href*="exhibitions"], #anchor-nav a[href*="login"]').forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        // Completely bypass the smooth scroll/preventDefault logic
-                        window.location = this.href;
-                        return false;
-                    }, true); // Use capturing phase to trigger before other handlers
-                });
+                    document.querySelectorAll('#anchor-nav a[href*="exhibitions"], #anchor-nav a[href*="login"]').forEach(link => {
+                        link.addEventListener('click', function (e) {
+                            // Completely bypass the smooth scroll/preventDefault logic
+                            window.location = this.href;
+                            return false;
+                        }, true); // Use capturing phase to trigger before other handlers
+                    });
                 </script>
 
 
@@ -267,7 +272,7 @@ window.smartsupp||(function(d) {
                                                 </li>
                                                 <li class="">
                                                     <a href="{{url('collections')}}" tabindex="-1">
-                                                        <span>LS Arielle Art Studio</span>
+                                                        <span>LS Zyrelis Gallery</span>
                                                     </a>
                                                 </li>
 
@@ -465,85 +470,85 @@ window.smartsupp||(function(d) {
 
 
         <style>
+            .popup-container {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                z-index: 9999;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .popup {
+                background: linear-gradient(135deg, #fdf8ed, #f5efe0);
+                color: #5a4a1e;
+                border-left: 4px solid #c49b2a;
+                padding: 14px 20px;
+                border-radius: 12px;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+                display: flex;
+                align-items: center;
+                min-width: 260px;
+                animation: fadeInOut 6s ease forwards;
+                font-size: 14px;
+                font-family: 'Inter', -apple-system, sans-serif;
+                backdrop-filter: blur(8px);
+            }
+
+            .popup .avatar {
+                background: linear-gradient(135deg, #c49b2a, #8b6914);
+                color: white;
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 600;
+                margin-right: 12px;
+                flex-shrink: 0;
+                font-size: 13px;
+            }
+
+            @keyframes fadeInOut {
+                0% {
+                    opacity: 0;
+                    transform: translateY(10px);
+                }
+
+                10% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+
+                80% {
+                    opacity: 1;
+                }
+
+                100% {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+            }
+
+            @media (max-width: 600px) {
                 .popup-container {
-                    position: fixed;
-                    bottom: 20px;
-                    left: 20px;
-                    z-index: 9999;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px;
+                    left: 10px;
+                    bottom: 10px;
                 }
 
                 .popup {
-                    background: linear-gradient(135deg, #fdf8ed, #f5efe0);
-                    color: #5a4a1e;
-                    border-left: 4px solid #c49b2a;
-                    padding: 14px 20px;
-                    border-radius: 12px;
-                    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-                    display: flex;
-                    align-items: center;
-                    min-width: 260px;
-                    animation: fadeInOut 6s ease forwards;
                     font-size: 14px;
-                    font-family: 'Inter', -apple-system, sans-serif;
-                    backdrop-filter: blur(8px);
+                    padding: 10px 14px;
                 }
+            }
+        </style>
 
-                .popup .avatar {
-                    background: linear-gradient(135deg, #c49b2a, #8b6914);
-                    color: white;
-                    width: 36px;
-                    height: 36px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-weight: 600;
-                    margin-right: 12px;
-                    flex-shrink: 0;
-                    font-size: 13px;
-                }
+        <div class="popup-container" id="popupContainer"></div>
 
-                @keyframes fadeInOut {
-                    0% {
-                        opacity: 0;
-                        transform: translateY(10px);
-                    }
-
-                    10% {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-
-                    80% {
-                        opacity: 1;
-                    }
-
-                    100% {
-                        opacity: 0;
-                        transform: translateY(-10px);
-                    }
-                }
-
-                @media (max-width: 600px) {
-                    .popup-container {
-                        left: 10px;
-                        bottom: 10px;
-                    }
-
-                    .popup {
-                        font-size: 14px;
-                        padding: 10px 14px;
-                    }
-                }
-            </style>
-
-            <div class="popup-container" id="popupContainer"></div>
-
-            <script>
-                const names = [
+        <script>
+            const names = [
                 "Emily Rose", "John Daniels", "Sophia Mei", "Liam Knight", "Noah Silvers", "Olivia Belle",
                 "Ava Taylor", "Ethan Walker", "Mia Luna", "Lucas James", "Chloe Rain", "Jackson Lee",
                 "Ella Grace", "Mason Oliver", "Lily Aurora", "Benjamin Cruz", "Harper Jade", "Henry Bloom",
@@ -552,14 +557,14 @@ window.smartsupp||(function(d) {
                 "Ruby Fox", "Theo Aspen", "Clara Dawn", "Maxwell Grey", "Naomi Lake", "Finn Wilder",
                 "Daisy Vale", "Wesley Storm", "Elsie Plum", "Gavin Blue", "Freya Hope", "Ezra Orion",
                 "Camila Snow", "Silas Green", "Eliana Cloud", "Micah Ray", "Sienna Rose", "Kai Dusk"
-              ];
-            
-              const amounts = [
-                "50", "75", "100", "125", "150", "200", "250", "300", "350", "400", 
+            ];
+
+            const amounts = [
+                "50", "75", "100", "125", "150", "200", "250", "300", "350", "400",
                 "450", "500", "600", "700", "800", "900", "1000", "1200", "1500", "2000"
-              ];
-            
-              const messages = [
+            ];
+
+            const messages = [
                 "{name} just placed a winning bid of ${amount}! 🎉",
                 "💵 {name} secured a piece for ${amount} – gallery is buzzing!",
                 "🔥 {name} made a bold bid of ${amount} and won!",
@@ -572,57 +577,57 @@ window.smartsupp||(function(d) {
                 "👏 {name} closed the deal at ${amount} – well negotiated!",
                 "🛒 {name} just bought exhibition tickets for ${amount}",
                 "🚀 {name} made a quick bid of ${amount} and won the auction!"
-              ];
-            
-              function getRandom(arr) {
+            ];
+
+            function getRandom(arr) {
                 return arr[Math.floor(Math.random() * arr.length)];
-              }
-            
-              function getInitials(name) {
+            }
+
+            function getInitials(name) {
                 return name.split(' ').map(n => n[0]).join('');
-              }
-            
-              function createPopup(message, name) {
+            }
+
+            function createPopup(message, name) {
                 const container = document.getElementById("popupContainer");
                 const popup = document.createElement("div");
                 popup.className = "popup";
-            
+
                 const avatar = document.createElement("div");
                 avatar.className = "avatar";
                 avatar.textContent = getInitials(name);
-            
+
                 const text = document.createElement("div");
                 text.textContent = message;
-            
+
                 popup.appendChild(avatar);
                 popup.appendChild(text);
                 container.appendChild(popup);
-            
+
                 setTimeout(() => popup.remove(), 6000); // Auto-remove after 6 seconds
-              }
-            
-              function showPopups() {
+            }
+
+            function showPopups() {
                 const shuffledNames = [...names].sort(() => 0.5 - Math.random()); // Shuffle names
                 const maxPopups = Math.min(12, names.length); // Ensure we don't exceed names
-                
+
                 let count = 0;
                 const interval = setInterval(() => {
-                  if (count >= maxPopups) {
-                    clearInterval(interval);
-                    return;
-                  }
-            
-                  const name = shuffledNames[count];
-                  const amount = getRandom(amounts);
-                  const messageTemplate = getRandom(messages);
-                  const message = messageTemplate
-                    .replace("{name}", name)
-                    .replace("{amount}", amount);
-            
-                  createPopup(message, name);
-                  count++;
+                    if (count >= maxPopups) {
+                        clearInterval(interval);
+                        return;
+                    }
+
+                    const name = shuffledNames[count];
+                    const amount = getRandom(amounts);
+                    const messageTemplate = getRandom(messages);
+                    const message = messageTemplate
+                        .replace("{name}", name)
+                        .replace("{amount}", amount);
+
+                    createPopup(message, name);
+                    count++;
                 }, 1800); // New popup every 1.8 seconds
-              }
-            
-              window.onload = () => setTimeout(showPopups, 1000); // Start after 1 second
-            </script>
+            }
+
+            window.onload = () => setTimeout(showPopups, 1000); // Start after 1 second
+        </script>
